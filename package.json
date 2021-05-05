@@ -8,6 +8,8 @@
     "test": "jest -c jest.config.json",
     "test:watch": "jest -c jest.config.json --watch",
     "test:coverage": "jest -c jest.config.json --coverage",
+    "staging": "ng build --configuration=staging",
+    "production": "ng build --configuration=production",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

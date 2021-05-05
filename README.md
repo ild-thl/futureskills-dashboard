@@ -1,4 +1,4 @@
-# FutureskillsDashboard
+# Futureskills Dashboard
 
 - Das Projekt basiert auf Angular.       
 [Angular CLI](https://github.com/angular/angular-cli) version 11.2.11. 
@@ -18,6 +18,12 @@
 - Dev: ```npm run build``` oder ```ng build```
 - Staging: ```npm run staging``` oder ```ng build --configuration=staging```
 - Production: ```npm run production``` oder ```ng build --prod```
+
+### Tests
+- Unit-Tests per Jest: ```npm run test```
+  - mit Watcher: ```npm run test:watch```
+  - mit Coverage: ```npm run test:coverage```
+- e2e-Tests per Protractor: ```npm run e2e```
 
 ## Extensions für Visual Studio Code
 Neu - Einheitliche Formatierung des Quellcodes mit prettier.  
@@ -50,7 +56,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Jest](https://jestjs.io).
 
 ## Running end-to-end tests
 
