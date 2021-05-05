@@ -1,0 +1,27 @@
+:root 
+{
+--color-tech: #786fad;
+--color-digital: #00a1aa;
+--color-classic: #048acb;
+--color-primary-blue: #003064;
+--color-primary-blue-dark: #002853;
+--color-primary-red: #d4004b;
+}
+
+body {
+    min-width: 320px;
+}
+
+:focus {
+    outline: none;
+}
+
+.main-wrapper{
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    flex: 1;
+}
