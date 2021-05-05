@@ -1,0 +1,15 @@
+export const environment = {
+  production: true,
+
+  logFiles: false, // don't change this in production Environment
+  staticURL: 'https://static.futureskills-sh.de/',
+
+  apiURL: 'http://localhost:8000',
+
+  clientLoginData: {
+    grantType: 'password',
+    clientId: '',
+    clientSecret: ''
+  }
+
+};
