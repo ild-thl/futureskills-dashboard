@@ -112,7 +112,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
+            "protractorConfig": "test/e2e/protractor.conf.js",
             "devServerTarget": "futureskills-dashboard:serve"
           },
           "configurations": {

@@ -1,0 +1,9 @@
+{
+  "preset": "jest-preset-angular",
+  "setupFilesAfterEnv": ["<rootDir>/src/setup-jest.ts"],
+  "verbose": true,
+  "testMatch": [
+    "<rootDir>/test/jest/**/*.spec.ts?(x)",
+    "<rootDir>/src/**/*.spec.ts?(x)"
+  ]
+}

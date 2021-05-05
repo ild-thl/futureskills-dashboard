@@ -15,7 +15,8 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "esModuleInterop": true, // easier import paths
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false
