@@ -1,0 +1,155 @@
+@import "breakpoints";
+
+.herocontainer {
+  background-color: #a10018;
+  background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: top left;
+  height: 100%;
+  max-height: 682px;
+  width: 100%;
+  position: relative;
+
+  &.noselect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  & .carousel-inner {
+    overflow: visible;
+
+    & .carousel-item {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1.2s ease-in-out, visibility 1.2s;
+    }
+    & .carousel-item.active{
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  .hero-persona {
+    position: absolute;
+    bottom: -3rem;
+    left: 0;
+    animation: moveToLeft 4s ease-in-out;
+  }
+  .speechballoon {
+    max-width: 750px;
+    width: 100%;
+    animation: moveToRight 4s ease-in-out;
+    z-index: 10;
+    position: relative;
+
+    .speechballoon-center {
+      fill: #fff;
+    }
+    &.classic .speechballoon-border {
+      fill: var(--color-classic);
+    }
+    &.tech .speechballoon-border {
+      fill: var(--color-tech);
+    }
+    &.digital .speechballoon-border {
+      fill: var(--color-digital);
+    }
+    .st2 {
+      opacity: 1;
+    }
+    .st3 {
+      font-family:'ArchitectsDaughter';
+    }
+    .st4 {
+      font-size:29px;
+    }
+  }
+}
+
+
+@media(min-width: $lg) {
+  .herocontainer {
+    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-lg.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+
+    .speechballoon {
+      width: 70%;
+    }
+  }
+}
+@media(max-width: $md) {
+  .herocontainer {
+    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-md.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+
+    .hero-persona {
+      bottom: -3rem;
+    }
+    .speechballoon {
+      width: 70%;
+    }
+  }
+}
+@media(max-width: $sm) {
+  .herocontainer {
+    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-sm.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+
+    .hero-persona {
+      bottom: -1.5rem;
+    }
+    .speechballoon {
+      width: 70%;
+    }
+  }
+}
+@media(max-width: $xs) {
+  .herocontainer {
+    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-xs.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+
+    .hero-persona {
+      bottom: -1rem;
+    }
+    .speechballoon {
+      width: 70%;
+    }
+  }
+}
+
+@keyframes moveToLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  60% {
+    transform: translateX(-20px);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes moveToRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) scale(1.1);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(20px) scale(1);
+  }
+  80% {
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+ngb-carousel {
+  width: inherit;
+  height: inherit;
+}

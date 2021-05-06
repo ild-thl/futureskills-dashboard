@@ -1,0 +1,56 @@
+<section class="coursecarousel py-md-5 py-5">
+
+  <div class="container mb-2">
+    <div class="row">
+
+      <div class="col-12 col-md-10 col-lg-7">
+        <h3 class="h1">Kurse entdecken</h3>
+        <p>Ahoi! Du studierst in Schleswig-Holstein? Herzlichen Glückwunsch, denn das war die richtige Wahl
+          für deine Zukunft! Unsere Hochschulen haben ab jetzt noch mehr für dich an Bord. Hier auf der
+          FutureSkills-Plattform kannst du Kurse belegen, die dich fit für die digitale Zukunft machen.
+          Steig direkt ein und finde die Kurse, die am besten zu dir passen. Du bist völlig flexibel, kannst
+          jederzeit starten und in deinem Tempo segeln. Und weil wir im Norden nur Handfestes zu bieten haben,
+          gibt es Zertifikate oben drauf. Auf geht's, mit Handbreit Wasser unterm Kiel!</p>
+      </div>
+
+    </div> <!-- end of .row -->
+  </div> <!-- end of .container -->
+
+  <div class="fs-car-container">
+    <div class="fs-car">
+      <div class="fs-car-controller fs-car-controller-left">
+        <span (click)="scrollLeft()">❮</span>
+      </div>
+
+      <div *ngIf="loadedOffers.length === 0">
+       <!--Keine Angebote -->
+      </div>
+
+      <div #coursecarousel class="fs-car-tiles">
+        <ng-container *ngFor="let offer of loadedOffers; let i=index">
+          <app-offer-tile
+            class="fs-car-tile"
+            [offerForTile]="offer"
+            [isSubscribed]=false
+            displayMode="full">
+          </app-offer-tile>
+        </ng-container>
+      </div>
+
+      <div class="fs-car-controller fs-car-controller-right" ngController="carRight">
+        <span (click)="scrollRight()">❯</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-12 text-right mt-4">
+        <app-fsbutton [routerLink]="['/offers']">Zeige alle Kurse</app-fsbutton>
+      </div>
+
+    </div> <!-- end of .row -->
+  </div> <!-- end of .container -->
+
+</section>

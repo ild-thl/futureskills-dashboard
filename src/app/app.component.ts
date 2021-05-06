@@ -1,9 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { DataHandlerService } from 'src/app/core/http/data/data-handler.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'futureskills-dashboard';
+  title = 'futureskills-client';
+
+  constructor(
+    private dataInitService: DataHandlerService
+  ) {}
+
+  ngOnInit(): void {
+    // AutoLogin and initialize data-caching
+    this.dataInitService.initialize();
+  }
 }

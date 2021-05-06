@@ -1,0 +1,76 @@
+@import "breakpoints";
+
+.embed-responsive {
+    min-height: 270px;
+}
+.fs-consent-video {
+    background: #fff;
+    color: var(--color-primary-blue);
+
+    &:hover {
+        .fs-consent-video-form {
+            background-size: 103%;
+            transition: 3s;
+        }
+    }
+
+    @media(max-width: $xs) {
+        &:before {
+            content: none;
+        }
+    }
+
+    &-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 0 1rem;
+        background-size: 100%; // black hairline occouring on 'contain'
+        background-position: center center;
+        transition: .5s;
+
+        @media(max-width: $xs) {
+            display: contents;
+        }
+
+        div {
+            max-width: 480px;
+            padding: 1rem;
+            background: #fff;
+            box-shadow: 0px 3px 4px #102d5d6e;
+
+            @media(max-width: $xs) {
+                margin: 0 auto;
+                box-shadow: none;
+            }
+        }
+
+        button {
+            overflow: hidden;
+            
+            &:hover {
+                img {
+                    transform: translate(40px, -40px);
+                    transition: 0.15s;
+                }
+            }
+        }
+    }
+
+    img {
+        width: 32px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    p {
+        color: var(--color-primary-blue);
+    }
+}

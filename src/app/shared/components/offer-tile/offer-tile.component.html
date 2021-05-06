@@ -1,0 +1,56 @@
+<div class="offer-tile-wrapper" [routerLink]="['/offer', offerForTile.id]">
+  <div class="offer-tile-header">
+    <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + offerForTile.image_path + ')'}"></div>
+
+    <div *ngIf="displayMode == 'full'"> <!-- vorbereitung für eine kompaktere darstellung in wunschliste -->
+
+    </div>
+    <div class="offer-tile-header-content pl-2 pr-2">
+      <p class="offer-tile-header-text float-left m-0">
+        <!--erstmal leer-->
+      </p>
+      <div class="float-right stars">
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <fa-icon class="half" [icon]="['far', 'star']"></fa-icon><fa-icon [icon]="['fas', 'star']"></fa-icon>
+          </span>
+        </ng-template>
+
+        <ngb-rating [(rate)]="selected" [max]="max" [starTemplate]="t" [readonly]="readonly"></ngb-rating>
+      </div>
+    </div>
+  </div>
+
+  <div class="offer-tile-body">
+    <div class="pb-1">
+      <p class="offer-tile-body-header">
+        <span class="offer-tile-title font-weight-bold d-block"><fa-icon *ngIf="isSubscribed == true" [icon]="['fas', 'check']" class="pr-1"></fa-icon>{{offerForTile.title}}</span>
+        <!--<small class="offer-tile-author" [innerHTML]="offerForTile.offer.institution.title"></small>-->
+      </p>
+
+      <ul class="list-group">
+        <li class="list-group-item">
+          <fa-icon [icon]="['fas', 'door-open']" class="fa-fw"></fa-icon>
+          &nbsp;{{offerForTile.institution?.title}}
+        </li>
+        <li class="list-group-item">
+          <fa-icon [icon]="['fas', 'chalkboard-teacher']" class="fa-fw"></fa-icon>
+          &nbsp;<span>{offerForTile.type, select, online-course {Online Kurs} webinar {Webinar} presence-event {Präsenz Veranstaltung} presence-series {Präsenz Veranstaltungsreihe} self-study-course {Selbstlernkurs} course-package {Kurspaket} blended-learning {Blended Learning}}</span>
+        </li>
+        <li class="list-group-item">
+          <fa-icon [icon]="['fas', 'comment-alt']" class="fa-fw"></fa-icon>
+          &nbsp;<span *ngIf="offerForTile.competence_tech==true">Tech</span>
+          <span *ngIf="offerForTile.competence_tech==true && ( offerForTile.competence_digital==true || offerForTile.competence_classic==true)">, </span>
+          <span *ngIf="offerForTile.competence_digital==true">Digital Basic</span>
+          <span *ngIf="offerForTile.competence_digital==true && offerForTile.competence_classic==true">, </span>
+          <span *ngIf="offerForTile.competence_classic==true">Classic</span>
+          <span *ngIf="offerForTile.competence_tech!=true && offerForTile.competence_digital!=true && offerForTile.competence_classic!=true">keine Angabe</span>
+        </li>
+        <li class="list-group-item">
+          <fa-icon [icon]="['fas', 'globe-europe']" class="fa-fw"></fa-icon>
+          &nbsp;{offerForTile.language, select, de {Deutsch} en {Englisch}}
+        </li>
+      </ul>
+  </div>
+</div>
+

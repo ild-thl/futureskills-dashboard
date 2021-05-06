@@ -1,0 +1,48 @@
+@import "breakpoints";
+
+footer {
+  a,
+  a:hover {
+    color: #fff;
+  }
+
+  ul {
+    flex-flow: column;
+  }
+
+  li {
+    list-style-type: square;
+
+    @media(min-width: $md) {
+      list-style: none;
+    }
+  }
+}
+
+.footer-main {
+  ul {
+    @media(min-width: $md) {
+      columns: 2;
+      max-width: 510px;
+    }
+  }
+}
+
+.footer-fundamentals {
+  ul {
+    flex-flow: row-reverse;
+
+    li {
+      padding: 0 0 0 2rem;
+
+      @media(max-width: $md) {
+        padding: 0 0 0 1rem;
+      }
+    }
+
+    @media(max-width: $sm) {
+      flex-flow: column-reverse;
+      margin-left: -15px;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+<header class="container">
+  <div class="row py-sm-3 py-md-4 py-3">
+    <div class="col-6">
+      <a [routerLink]="['/']">
+        <img class="logo" src="assets/logos/logo_sh.svg">
+      </a>
+    </div>
+
+    <div class="col-6 text-right">
+      <!--<div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Sprache</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem *ngFor="let lang of languages"><a *ngIf="lang.code !== localeId" href="/{{lang.code}}/"  >{{lang.label}}</a></button>
+          <button ngbDropdownItem *ngFor="let lang of languages" class="font-weight-bold"><span *ngIf="lang.code === localeId">{{lang.label}}</span></button>
+        </div>
+      </div>-->
+
+
+      <div ngbDropdown class="d-inline-block" *ngIf="isAuthenticated">
+        <button class="btn btn-primary" id="dropdownBasic2" ngbDropdownToggle><fa-icon [icon]="['fas', 'user']"></fa-icon> {{user.name}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+          <button ngbDropdownItem class="font-weight-bold" (click)="onLogout()">Logout</button>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="button"
+        aria-pressed="false"
+        *ngIf="!isAuthenticated"
+        [routerLink]="['/auth']"
+        routerLinkActive="router-link-active">Login
+      </button>
+    </div>
+  </div>
+</header>
+
+
+
+
+<!-- <div fxLayout="row wrap" fxLayoutAlign="center start" >
+  <div fxFlex="0 1 1440px"  fxLayout="row wrap" fxLayoutAlign="start start" >
+
+<div>
+    <div >
+      <img src="/assets/Schleswig-Holstein_logo.svg" style="width:100px;"/>
+      <span class="toolbar-fill-remaining-space"></span>
+      <button *ngIf="!isAuthenticated" [routerLink]="['/auth']" routerLinkActive="router-link-active" mat-raised-button>Login</button>
+      <button *ngIf="isAuthenticated"  mat-raised-button (click)="onLogout()" >Logout</button>
+
+
+      <div >
+      <button div-item *ngFor="let lang  of languages">
+
+          <a *ngIf="lang.code !== localeId" href="/{{lang.code}}/"  >{{lang.label}}</a>
+
+        <span *ngIf="lang.code === localeId">{{lang.label}}</span>
+
+      </button>
+      </div>
+      <button for="langMenu">
+        <span>Sprache</span><div>arrow_drop_down</div>
+      </button>
+
+
+    </div>
+
+    <div >
+      <button [routerLink]="['/']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}" mat-raised-button>Home</button> &nbsp;
+      <button [routerLink]="['/offers']" routerLinkActive="router-link-active" *ngIf="isAuthenticated" mat-raised-button><span i18n="Navlink to offers|A Text for the navigation Link to the offers list.@@naviagtionLinkOffers">Offers</span></button>
+    </div>
+</div>
+
+</div>
+</div> -->

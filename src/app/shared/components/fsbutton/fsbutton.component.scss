@@ -1,0 +1,100 @@
+@import "breakpoints";
+
+.fs-btn {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 60px;
+    background-color: var(--color-primary-blue);
+    border: 3px solid #ffffff;
+    display: inline-block;
+    font-size: 30px;
+    border-radius: 100px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all .1s ease-in-out;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+
+    &:visited {
+      color: #ffffff;
+    }
+    &:hover {
+      text-decoration: none;
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+    &:active {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+    }
+    .chevron-right {
+      padding-left: 10px;
+    }
+  }
+
+  :host-context(.btn-cta) .fs-btn {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 100;
+
+    &:hover {
+      text-decoration: none;
+      color: #ffffff;
+      transform: translate(-50%, 47%);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+    &:active {
+      transform: translate(-50%, 49%);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+    }
+    &::after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-primary-blue);
+      left: 0;
+      bottom: 0;
+      border-radius: 100px;
+      transition: all .4s ease-in-out;
+      z-index: -1;
+    }
+    &:hover::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+    }
+  }
+
+@media(max-width: $md) {
+  .fs-btn {
+    padding: 10px 30px;
+    border: 2px solid #ffffff;
+    font-size: 24px;
+  }
+}
+
+@media(max-width: $sm) {
+  .fs-btn {
+    padding: 8px 17px;
+    border: 2px solid #ffffff;
+    font-size: 20px;
+  }
+}
+
+@media(max-width: $xs) {
+    .fs-btn {
+      padding: 8px 17px;
+      border: 2px solid #ffffff;
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 381px) {
+    .fs-btn {
+      padding: 8px 10px;
+      border: 2px solid #ffffff;
+      font-size: 14px;
+    }
+  } 

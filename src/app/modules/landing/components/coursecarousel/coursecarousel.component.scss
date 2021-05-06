@@ -1,0 +1,81 @@
+@import "breakpoints";
+
+.fs-car {
+    display: flex;
+}
+
+.fs-car-container {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+    display: block;
+    
+    @media(min-width: $lg) {
+        max-width: 1300px; //temporär bis Festlegung
+    }
+}
+
+.fs-car-tiles {
+    display: flex;
+    overflow: hidden;    
+    scroll-behavior: smooth;
+    max-width: 1180px; // (220px + 16px) * 5
+    margin: 0 auto;
+}
+
+/* override offer */
+.fs-car-tile {
+    max-width: inherit;
+    padding-right: 1rem;
+    position: relative;
+
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+.fs-car-controller {
+    &-left {
+        cursor: pointer;
+        position: relative;
+        min-width: 2rem;
+
+        span {
+            padding: 0 1rem 0 0;
+            user-select: none;
+
+            &:hover {
+                transform: translate(-2px, 0);
+            }
+        }
+    }
+
+    &-right {
+        cursor: pointer;
+        position: relative;
+        min-width: 2rem;
+        
+        span {
+            padding: 0 0 0 1rem;
+            user-select: none;
+
+            &:hover {
+                transform: translate(2px, 0);
+            }
+        }
+    }
+
+    span {
+        position: absolute;
+        top: 50%;
+        line-height: 0;
+        width: 100%;
+        font-size: 2rem;
+        transition: .02s;
+
+        &:hover {
+            color: theme-color("secondary");
+            transition: 0.05s;
+        }
+    }
+}
