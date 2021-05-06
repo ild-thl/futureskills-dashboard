@@ -11,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Components
-import { AppComponent } from './app.component';
+import { AppComponent } from 'src/app/app.component';
 
 @NgModule({
   declarations: [
