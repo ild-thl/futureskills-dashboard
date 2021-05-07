@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { tap, concatMap, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { User } from 'src/app/shared//models/user';
-import { UserData } from 'src/app/core/http/data/user/user-data.interface';
-import { AuthResponseData } from 'src/app/core/http/api.interfaces';
-import { ApiService } from 'src/app/core/http/api.service';
-import { CookieDataService } from 'src/app/core/http/tools/cookie-data.service';
+import { User } from 'src/app/core/models/user';
+import { UserData } from 'src/app/core/data/user/user-data.interface';
+import { AuthResponseData } from 'src/app/core/http/api/api.interfaces';
+import { ApiService } from 'src/app/core/http/api/api.service';
+import { CookieDataService } from 'src/app/core/services/cookie/cookie-data.service';
 
 /**
  * auth.service.ts

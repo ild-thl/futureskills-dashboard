@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { OfferDataService } from 'src/app/core/http/data/offer/offer-data.service';
-import { MetaDataService } from 'src/app/core/http/data/meta/meta-data.service';
-import { UserData } from 'src/app/core/http/data/user/user-data.interface';
+import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
+import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
+import { UserData } from 'src/app/core/data/user/user-data.interface';
 
-import { Offer } from 'src/app/shared/models/offer';
-import { FilterList } from 'src/app/shared/models/meta';
+import { Offer } from 'src/app/core/models/offer';
+import { FilterList } from 'src/app/core/models/meta';
 
 @Component({
   selector: 'app-offer-list',

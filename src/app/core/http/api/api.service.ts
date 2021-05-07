@@ -6,9 +6,9 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
-import { Institution } from 'src/app/shared/models/institution';
-import { Offer, PartialOffer } from 'src/app/shared/models/offer';
-import { User } from 'src/app/shared/models/user';
+import { Institution } from 'src/app/core/models/institution';
+import { Offer, PartialOffer } from 'src/app/core/models/offer';
+import { User } from 'src/app/core/models/user';
 import { AuthResponseData, SubscriptionData, FilterTagResponse, OfferToAPI } from './api.interfaces';
 
 /**

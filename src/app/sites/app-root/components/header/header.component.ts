@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, LOCALE_ID, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { UserData } from 'src/app/core/http/data/user/user-data.interface';
+import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { User } from '../../shared/models/user';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-header',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CookieData, ICookieData } from 'src/app/shared/models/cookie-data';
+import { CookieData, ICookieData } from 'src/app/core/models/cookie-data';
 import { CookieService } from 'ngx-cookie-service';
 import { StaticService } from 'src/app/config/static.service';
 

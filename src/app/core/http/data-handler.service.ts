@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { OfferService } from 'src/app/core/services/offer/offer.service';
-import { UserDataErrorResponse } from 'src/app/core/http/api.interfaces';
+import { OfferService } from 'src/app/core/http/offer/offer.service';
+import { UserDataErrorResponse } from 'src/app/core/http/api/api.interfaces';
 
 @Injectable({
   providedIn: 'root',

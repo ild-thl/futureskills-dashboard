@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Offer } from 'src/app/shared/models/offer';
+import { Offer } from 'src/app/core/models/offer';
 
 @Component({
   selector: 'fs-offer-tile',

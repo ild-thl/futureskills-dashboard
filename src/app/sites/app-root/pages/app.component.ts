@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { DataHandlerService } from 'src/app/core/http/data/data-handler.service';
+import { DataHandlerService } from 'src/app/core/http/data-handler.service';
 
 @Component({
   selector: 'app-root',

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ApiService } from 'src/app/core/http/api.service';
-import { FilterTagResponse, FilterItemResponse } from 'src/app/core/http/api.interfaces';
+import { ApiService } from 'src/app/core/http/api/api.service';
+import { FilterTagResponse, FilterItemResponse } from 'src/app/core/http/api/api.interfaces';
 
-import { FilterList } from 'src/app/shared/models/meta';
+import { FilterList } from 'src/app/core/models/meta';
 
 @Injectable({
   providedIn: 'root',

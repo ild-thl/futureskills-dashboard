@@ -5,9 +5,9 @@ import {
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { ApiService } from 'src/app/core/http/api.service';
-import { OfferToAPI } from 'src/app/core/http/api.interfaces';
-import { Offer, PartialOffer } from 'src/app/shared/models/offer';
+import { ApiService } from 'src/app/core/http/api/api.service';
+import { OfferToAPI } from 'src/app/core/http/api/api.interfaces';
+import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from './offer.store';
 
 /**

@@ -1,5 +1,5 @@
-import { Offer } from 'src/app/shared/models/offer';
-import { User } from 'src/app/shared/models/user';
+import { Offer } from 'src/app/core/models/offer';
+import { User } from 'src/app/core/models/user';
 
 export interface UserData {
   isAuth: boolean;

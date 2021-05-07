@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { Offer } from 'src/app/shared/models/offer';
+import { Offer } from 'src/app/core/models/offer';
 
 export const LOAD = 'LOAD';
 export const ADD = 'ADD';

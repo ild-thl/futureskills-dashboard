@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding, Output, EventEmitter } from '@angular/core';
-import { FilterList, FilterItem, FilterFunctionCallbackItem } from 'src/app/shared/models/meta';
+import { FilterList, FilterItem, FilterFunctionCallbackItem } from 'src/app/core/models/meta';
 
 @Component({
   selector: 'app-filter-combo-box',

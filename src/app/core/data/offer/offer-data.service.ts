@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { concatMap, filter, map } from 'rxjs/operators';
 
-import { UserDataErrorResponse, OfferToAPI } from 'src/app/core/http/api.interfaces';
+import { UserDataErrorResponse, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { OfferService } from 'src/app/core/services/offer/offer.service';
-import { UserData, UserOfferData } from 'src/app/core/http/data/user/user-data.interface';
-import { DataHandlerService } from 'src/app/core/http/data/data-handler.service';
+import { OfferService } from 'src/app/core/http/offer/offer.service';
+import { UserData, UserOfferData } from 'src/app/core/data/user/user-data.interface';
+import { DataHandlerService } from 'src/app/core/http/data-handler.service';
 
-import { User } from 'src/app/shared/models/user';
-import { Offer, SmallOfferListForEditForm, PartialOffer } from 'src/app/shared/models/offer';
+import { User } from 'src/app/core/models/user';
+import { Offer, SmallOfferListForEditForm, PartialOffer } from 'src/app/core/models/offer';
 
 @Injectable({
   providedIn: 'root',

@@ -6,8 +6,8 @@ import {
   ElementRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { OfferDataService } from 'src/app/core/http/data/offer/offer-data.service';
-import { Offer } from 'src/app/shared/models/offer';
+import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
+import { Offer } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 
 @Component({
