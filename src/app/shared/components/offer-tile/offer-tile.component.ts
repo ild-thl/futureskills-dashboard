@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Offer } from 'src/app/core/models/offer';
+import { StaticService } from 'src/app/config/static.service';
 
 @Component({
   selector: 'fs-offer-tile',
@@ -11,7 +12,9 @@ export class OfferTileComponent implements OnInit {
   @Input() isSubscribed: boolean;
   @Input() displayMode: string;
 
-  constructor() {}
+  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+
+  constructor(private staticConfig: StaticService) {}
 
   selected = 0;
   hovered = 0;

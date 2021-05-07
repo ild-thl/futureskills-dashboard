@@ -5,16 +5,24 @@
 export const CustomConfig = {
   cookies: {
     preferenceCookieName: 'FS_USER_COOKIEPREFS',
-    technical:{
+    technical: {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
-    }
+    },
   },
   paths: {
+    lnkLanding: '/',
     lnkOffers: '/kurse',
     lnkInfoTeaching: '/info-teaching',
-    lnkInfoStudents: "/info-students",
-    lnkImprint: "/impressum",
-    lnkPrivacy: "/datenschutz",
-    lnkLanding: "/"
-  }
+    lnkInfoStudents: '/info-students',
+    lnkImprint: '/impressum',
+    lnkPrivacy: '/datenschutz',
+    lnkLogin: '/login',
+    lnkAdminOfferEdit: '/admin/kurs/edit',
+    lnkAdminOfferNew: '/admin/kurs/neu'
+  },
+  routingInfo: {
+    lnkAfterLogin: '/kurse',
+    lnkAfterLogout: '/',
+    lnkTrailerAboutUs: '/info-teaching'
+  },
 };

@@ -4,29 +4,34 @@ import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
-
+import { StaticService } from 'src/app/config/static.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit, OnDestroy {
+
+  lnkAfterLogin = this.staticConfig.getRoutingInfo().lnkAfterLogin;
+
   loginSubscription: Subscription;
   authSubsription: Subscription;
   isLoading = false;
   error: string = null;
   @ViewChild('authForm') authForm: NgForm;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private staticConfig: StaticService
+  ) {}
   ngOnInit() {
-    this.authSubsription = this.authService.userAuthenticated$.subscribe(
-      (userData) => {
-        if (userData.isAuth) {
-          console.log('AuthComponent: User is logged in.', userData.user);
-        }
+    this.authSubsription = this.authService.userAuthenticated$.subscribe((userData) => {
+      if (userData.isAuth) {
+        console.log('AuthComponent: User is logged in.', userData.user);
       }
-    );
+    });
   }
 
   onSubmit(form: NgForm) {
@@ -43,7 +48,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       (resData) => {
         //console.log('AuthComponent:', resData);
         this.isLoading = false;
-        this.router.navigate(['/offers']);
+        this.router.navigate([this.lnkAfterLogin]);
       },
       (errorMessage) => {
         console.log('AuthComponent Error:', errorMessage);

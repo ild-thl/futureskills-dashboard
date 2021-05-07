@@ -1,0 +1,138 @@
+@import "breakpoints";
+
+.offer-detail {
+    th {
+        border-top: 0;
+    }
+}
+
+.offer-detail-structure {
+    ol {
+        counter-reset: item;
+        padding-inline-start: 1rem;
+    }
+
+    ol > li {
+        counter-increment: item;
+    }
+
+    ol ol > li {
+        display: block;
+    }
+
+    ol ol > li:before {
+        content: counters(item, ".") ". ";
+        // margin-left: -20px;
+    }
+}
+
+.offer-detail-metas {
+    border-top: 3px solid #e7eaee;
+    border-bottom: 3px solid #e7eaee;
+    background: #f8f8fa;
+
+    td:nth-child(even) {
+        font-weight: 600;
+    }
+
+    td {
+        width: 1%;
+    }
+
+    td:nth-child(3) {
+        width: 100%;
+    }
+
+    .btn-secondary:hover {
+        transform: scale(1.05);
+        transition: .1s;
+    }
+
+    @media(max-width: $xs) {
+        border-top: none;
+        border-bottom: none;
+        background: var(--color-primary-blue);
+        color: #fff;
+    }
+
+    table {
+        @media(max-width: $xs) {
+            color: #fff;
+        }
+    }
+
+    .offer-detail-image {
+        min-height: 160px;
+        max-width: 160px;
+
+        img {
+            margin: 0 auto;
+            display: block;
+            max-width: 160px;
+            width: 100%;
+        }
+    }
+
+    table .ng-fa-icon {
+        color: var(--color-primary-blue);
+
+        @media(max-width: $xs) {
+            color: #fff;
+        }
+    }
+}
+
+.offer-detail-strip {
+    @media(max-width: $sm) {
+        width: 100%;
+    }
+
+    @media(max-width: $xs) {
+        button {
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+.offer-detail-rating {
+    display: inline-block;
+    margin-right: 1rem;
+
+    @media(max-width: $sm) {
+        display: block;
+        margin-right: 0;
+        margin-bottom: .5rem;
+    }
+
+    @media(max-width: $xs) {
+        text-align: center;
+        margin-bottom: 0;
+    }
+}
+
+.offer-title {
+    h1 {
+        display: inline;
+    }
+
+    .dropdown {
+        display: inline;
+
+        .cog {
+            margin-top: -0.7rem;
+            margin-left: .5rem;
+            padding: 0;
+            color: var(--color-primary-red);
+
+            .ng-fa-icon {
+                color: var(--color-primary-red)
+            }
+
+            @media(max-width: $xs) {
+                border: none;
+                background: none;
+            }
+        }
+    }
+}

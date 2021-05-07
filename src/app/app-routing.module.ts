@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from 'src/app/core/guards/auth-guard';
+
 // Pages
 import { LandingComponent } from 'src/app/sites/landing/pages/landing/landing.components';
 import { OfferListComponent } from 'src/app/sites/offers/pages/offer-list/offer-list.component';
@@ -10,6 +12,9 @@ import { PrivacyComponent } from 'src/app/sites/privacy/pages/privacy/privacy.co
 import { NotfoundComponent } from 'src/app/sites/not-found/pages/notfound/notfound.component';
 import { InfoStudentsComponent } from 'src/app/sites/info-students/pages/info-students/info-students.component';
 import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-teaching/info-teaching.component';
+import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
+import { OfferEditComponent } from 'src/app//sites/admin/pages/offer-edit/offer-edit.component';
+
 
 
 // Routing
@@ -23,6 +28,20 @@ const routes: Routes = [
   {
     path: 'kurse',
     component: OfferListComponent,
+  },
+  {
+    path: 'kurse/:id',
+    component: OfferDetailComponent,
+  },
+  {
+    path: 'admin/kurs/edit/:id',
+    component: OfferEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/kurs/neu',
+    component: OfferEditComponent,
+    canActivate: [AuthGuard],
   },
   { path: 'login', component: AuthComponent },
   {

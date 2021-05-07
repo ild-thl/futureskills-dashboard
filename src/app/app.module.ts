@@ -34,11 +34,15 @@ import { ConsentVideoComponent } from 'src/app/sites/landing/components/trailer/
 
 // Offers (Todo: eigenes Modul)
 import { OfferListComponent } from 'src/app/sites/offers/pages/offer-list/offer-list.component';
+import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
 import { SkeletonOffersComponent } from 'src/app/sites/offers/components/skeleton-offers/skeleton-offers.component';
 
 import { FilterComboGroupComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-group.component';
 import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
 import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
+
+// Admin
+import { OfferEditComponent } from './sites/admin/pages/offer-edit/offer-edit.component';
 
 // Sonst
 import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
@@ -64,7 +68,12 @@ import {
   faChalkboardTeacher,
   faGlobeEurope,
   faCommentAlt,
+  faUser,
+  faPen,
+  faTrashAlt,
+  faCog
 } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -88,6 +97,7 @@ import {
     FilterComboBoxComponent,
     SkeletonOffersComponent,
     OfferTileComponent,
+    OfferDetailComponent,
     AuthComponent,
     ImprintComponent,
     PrivacyComponent,
@@ -95,6 +105,7 @@ import {
     ErrorBackTextComponent,
     InfoStudentsComponent,
     InfoTeachingComponent,
+    OfferEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,7 +137,11 @@ export class AppModule {
       faDoorOpen,
       faCommentAlt,
       faChalkboardTeacher,
-      faGlobeEurope
+      faGlobeEurope,
+      faUser,
+      faPen,
+      faTrashAlt,
+      faCog
     );
   }
 }

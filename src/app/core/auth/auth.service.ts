@@ -8,6 +8,7 @@ import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthResponseData } from 'src/app/core/http/api/api.interfaces';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { CookieDataService } from 'src/app/core/services/cookie/cookie-data.service';
+import { StaticService } from 'src/app/config/static.service';
 
 /**
  * auth.service.ts
@@ -27,10 +28,13 @@ export class AuthService {
   public userForInterceptor$ = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
+  lnkAfterLogout = this.staticConfig.getRoutingInfo().lnkAfterLogout;
+
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private cookieDataService: CookieDataService
+    private cookieDataService: CookieDataService,
+    private staticConfig: StaticService
   ) {
     this.userAuthenticated$ = this.user$.pipe(
       map((user: User) => {
@@ -91,7 +95,7 @@ export class AuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
-    this.router.navigate(['/auth']);
+    this.router.navigate([this.lnkAfterLogout]);
   }
 
   autoLogout(expirationDuration: number) {

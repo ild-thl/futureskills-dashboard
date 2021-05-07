@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { User } from 'src/app/core/models/user';
+import { StaticService } from 'src/app/config/static.service';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,9 @@ import { User } from 'src/app/core/models/user';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
+  lnkLanding = this.staticConfig.getPathInfo().lnkLanding;
   private userSubscription: Subscription;
   isAuthenticated = false;
   public user: User;
@@ -22,6 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private staticConfig: StaticService,
     @Inject(LOCALE_ID) public localeId: string
   ) {}
 

@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
+import { StaticService } from 'src/app/config/static.service';
 
 import { Offer } from 'src/app/core/models/offer';
 import { FilterList } from 'src/app/core/models/meta';
@@ -17,6 +18,9 @@ import { FilterList } from 'src/app/core/models/meta';
 export class OfferListComponent implements OnInit, OnDestroy {
   private onDataChange: Subscription;
   private onIsAuthenticated: Subscription;
+
+  lnkAdminOfferNew = this.staticConfig.getPathInfo().lnkAdminOfferNew;
+
   allOffers: Offer[] = [];
   loadedOffers: Offer[] = [];
 
@@ -32,7 +36,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
   constructor(
     private offerDataService: OfferDataService,
     private authService: AuthService,
-    private metaDataService: MetaDataService
+    private metaDataService: MetaDataService,
+    private staticConfig: StaticService
   ) {}
 
   ngOnInit() {

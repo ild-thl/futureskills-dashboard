@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { Component } from '@angular/core';
+//import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { StaticService } from 'src/app/config/static.service';
 
 @Component({
   selector: 'app-trailer',
   templateUrl: './trailer.component.html',
   styleUrls: ['./trailer.component.scss']
 })
-export class TrailerComponent implements OnInit {
+export class TrailerComponent {
 
-  chevronIcon = faChevronRight;
+ // chevronIcon = faChevronRight;
+  lnkTrailerAboutUs = this.staticConfig.getRoutingInfo().lnkTrailerAboutUs;
 
-  constructor() {}
+  constructor(private staticConfig: StaticService) {}
 
-  ngOnInit(): void {}
 }

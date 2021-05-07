@@ -15,4 +15,7 @@ export class StaticService {
   getPathInfo(): any {
     return CustomConfig.paths;
   }
+  getRoutingInfo(): any {
+    return CustomConfig.routingInfo;
+  }
 }
