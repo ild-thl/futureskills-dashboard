@@ -1,0 +1,114 @@
+<div class="">
+  <div class="container">
+    <div>
+      <div *ngIf="error">
+          <p>{{ error }}</p>
+      </div>
+      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading" class="d-flex justify-content-center">
+
+        <div class="card login-card mb-5">
+          <div class="row no-gutters">
+
+            <div class="col-md-6 col-sm-12">
+              <div class="card-body left">
+                <h3 class="h3">Login auf FutureSkills!</h3>
+                <div class="card-text">
+                  <p>Ab 2021 kannst du dich mit deinen persönlichen Zugangsdaten der Hochschulen in Schleswig-Holstein anmelden.</p>
+                  <div class="alert alert-info" role="alert">
+                    Derzeit benötigst du kein Login, um zu den Kursen zu gelangen.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 d-flex align-items-center">
+              <div class="card-body right">
+                <h3 class="h3">Admin Login</h3>
+                <div class="card-text">
+                  <input placeholder="E-Mail" type="email" id="email" ngModel name="email" class="form-control mb-2" required email>
+                </div>
+                <div>
+                  <input placeholder="Passwort" type="password" id="password" ngModel name="password" class="form-control mb-3" required minlength="5" />
+                </div>
+                <button [disabled]="!authForm.valid" class="form-control btn btn-primary">Login</button>
+              </div>
+            </div>
+
+          </div> <!-- end of .row -->
+        </div> <!-- end of .card -->
+
+      </form>
+
+      <div class="row">
+        <div class="col-12 mb-2 mt-5 login-partner">
+
+          <div class="row">
+            <div class="col-12 col-md-10 col-lg-8">
+              <h2 class="mb-3 h3">Single-Sign-On mit unseren Partnerhochschulen</h2>
+              <p>Zukünftig wirst du dich mit deinen Zugangsdaten deine Hochschule anmelden können.</p>
+            </div>
+          </div>
+
+        </div>
+      </div> <!-- end of .row -->
+      <!--Evtl. Komponente app-partnership einbauen-->
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 d-flex align-items-center university-logogroup">
+        <!-- <div class="card-deck"> -->
+
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_cau.svg" alt="Christian-Albrechts-Universität zu Kiel">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_eufb.svg" alt="Europa Universität Flensburg">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_fhk.svg" alt="Fachhochschule Kiel">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_fhwk.png" alt="Fachhochschule Westküste">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_hsfb.png" alt="Hochschule Flensburg  ">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_mhl.jpg" alt="Musik Hochschule Lübeck">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_mkh.png" alt="Muthesius KunstHochschule">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_fhvd.jpg" alt="Fachhochschule für Verwaltung und Dienstleistung">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_thl.svg" alt="Technische Hochschule Lübeck">
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <img class="card-img-top" src="assets/logos/logo_uhl.svg" alt="Universität zu Lübeck">
+          </div>
+        </div>
+        <!-- </div> -->
+      </div> <!-- end of .row -->
+
+    </div>
+
+  </div> <!-- end of .container -->
+</div>

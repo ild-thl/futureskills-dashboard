@@ -1,0 +1,15 @@
+<div ngbDropdown class="d-inline-block">
+  <button class="btn btn-light" id="dropdownFilter" ngbDropdownToggle>
+    {{ currentText }}
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownFilter">
+    <button
+      [ngClass]="{ 'font-weight-bold': currentIndex === listItem.id }"
+      *ngFor="let listItem of filterItems; let i = index"
+      ngbDropdownItem
+      (click)="setFilter(listItem)"
+    >
+      {{ listItem.description }}
+    </button>
+  </div>
+</div>

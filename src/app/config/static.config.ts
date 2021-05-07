@@ -8,5 +8,13 @@ export const CustomConfig = {
     technical:{
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     }
+  },
+  paths: {
+    lnkOffers: '/kurse',
+    lnkInfoTeaching: '/info-teaching',
+    lnkInfoStudents: "/info-students",
+    lnkImprint: "/impressum",
+    lnkPrivacy: "/datenschutz",
+    lnkLanding: "/"
   }
 };

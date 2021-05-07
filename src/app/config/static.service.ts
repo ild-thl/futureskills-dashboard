@@ -12,4 +12,7 @@ export class StaticService {
   getCookieOptions(): any {
     return CustomConfig.cookies;
   }
+  getPathInfo(): any {
+    return CustomConfig.paths;
+  }
 }

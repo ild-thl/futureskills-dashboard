@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { OfferUserData, Offer } from 'src/app/shared/models/offer';
+import { Offer } from 'src/app/shared/models/offer';
 
 @Component({
-  selector: 'app-offer-tile',
+  selector: 'fs-offer-tile',
   templateUrl: './offer-tile.component.html',
   styleUrls: ['./offer-tile.component.scss']
 })
