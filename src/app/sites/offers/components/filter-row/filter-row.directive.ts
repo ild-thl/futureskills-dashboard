@@ -7,8 +7,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FilterComboBoxComponent } from './filter-combo-box/filter-combo-box.component';
-import { FilterFunctionCallbackItem } from 'src/app/models/meta';
-import { Offer } from 'src/app/models/offer';
+import { FilterFunctionCallbackItem } from 'src/app/core/models/meta';
+import { Offer } from 'src/app/core/models/offer';
 
 @Directive({ selector: 'app-filter-row, [app-filter-row]' })
 export class FilterRowDirective implements AfterContentInit {

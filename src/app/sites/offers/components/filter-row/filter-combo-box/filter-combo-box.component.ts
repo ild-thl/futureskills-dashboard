@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FilterList, FilterItem, FilterFunctionCallbackItem } from 'src/app/core/models/meta';
 
 @Component({

@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
-// Extern
+// Externe Module
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   FaIconLibrary,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import { CookieService } from 'ngx-cookie-service';
+
+// Interne Module
 
 // Services
 import { AuthInterceptorService } from 'src/app/core/interceptors/auth-interceptor.service';
@@ -32,6 +34,11 @@ import { ConsentVideoComponent } from 'src/app/sites/landing/components/trailer/
 
 // Offers (Todo: eigenes Modul)
 import { OfferListComponent } from 'src/app/sites/offers/pages/offer-list/offer-list.component';
+import { SkeletonOffersComponent } from 'src/app/sites/offers/components/skeleton-offers/skeleton-offers.component';
+
+import { FilterComboGroupComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-group.component';
+import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
+import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
 
 // Sonst
 import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
@@ -40,7 +47,6 @@ import { PrivacyComponent } from 'src/app/sites/privacy/pages/privacy/privacy.co
 import { NotfoundComponent } from 'src/app/sites/not-found/pages/notfound/notfound.component';
 import { InfoStudentsComponent } from './sites/info-students/pages/info-students/info-students.component';
 import { InfoTeachingComponent } from './sites/info-teaching/pages/info-teaching/info-teaching.component';
-
 
 // Shared
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
@@ -61,6 +67,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +83,10 @@ import {
     ConsentVideoComponent,
     RoundButton,
     OfferListComponent,
+    FilterComboGroupComponent,
+    FilterRowDirective,
+    FilterComboBoxComponent,
+    SkeletonOffersComponent,
     OfferTileComponent,
     AuthComponent,
     ImprintComponent,
