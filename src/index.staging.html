@@ -2,7 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Futureskills Staging</title>
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none';
+    font-src https://dev.futureskills-sh.de;
+    style-src 'unsafe-inline' https://dev.futureskills-sh.de/;
+    script-src https://dev.futureskills-sh.de/;
+    img-src
+      https://dev.futureskills-sh.de
+      https://devlms.futureskills-sh.de
+      https://devstatic.futureskills-sh.de
+      https://lms.futureskills-sh.de
+      https://static.futureskills-sh.de
+      https://open.vhb.org
+      https://docs.microsoft.com
+      https://ki-campus.org;
+    connect-src https://devapi.futureskills-sh.de/;
+    script-src-elem https://dev.futureskills-sh.de;
+    style-src-elem 'unsafe-inline' https://dev.futureskills-sh.de/;
+    style-src-attr 'unsafe-inline';
+    ">
+  <title>FutureSkills Staging</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="assets/favicons/favicon.ico">
@@ -25,6 +44,7 @@
 	<meta name="msapplication-TileColor" content="#FFFFFF">
 	<meta name="msapplication-TileImage" content="assets/favicons/favicon-144.png">
 	<meta name="msapplication-config" content="assets/favicons/browserconfig.xml">
+
 </head>
 <body>
   <app-root></app-root>
