@@ -2,7 +2,7 @@
 
 .herocontainer {
   background-color: #a10018;
-  background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+  background-image: url('~src/assets/backgrounds/background-halftone-one-stroke.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
   background-repeat: repeat-y;
   background-size: 100% auto;
   background-position: top left;
@@ -71,7 +71,7 @@
 
 @media(min-width: $lg) {
   .herocontainer {
-    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-lg.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+    background-image: url('~src/assets/backgrounds/background-halftone-one-stroke-lg.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
 
     .speechballoon {
       width: 70%;
@@ -80,7 +80,7 @@
 }
 @media(max-width: $md) {
   .herocontainer {
-    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-md.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+    background-image: url('~src/assets/backgrounds/background-halftone-one-stroke-md.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
 
     .hero-persona {
       bottom: -3rem;
@@ -92,7 +92,7 @@
 }
 @media(max-width: $sm) {
   .herocontainer {
-    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-sm.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+    background-image: url('~src/assets/backgrounds/background-halftone-one-stroke-sm.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
 
     .hero-persona {
       bottom: -1.5rem;
@@ -104,7 +104,7 @@
 }
 @media(max-width: $xs) {
   .herocontainer {
-    background-image: url(../../../../../assets/backgrounds/background-halftone-one-stroke-xs.svg), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+    background-image: url('~src/assets/backgrounds/background-halftone-one-stroke-xs.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
 
     .hero-persona {
       bottom: -1rem;
