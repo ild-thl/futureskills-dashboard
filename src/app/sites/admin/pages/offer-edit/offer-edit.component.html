@@ -1,11 +1,20 @@
 <div class="container pl-0 pr-0">
   <form [formGroup]="offerEditForm">
     <div class="row">
-      <div class="col-12">
-        <button type="button" class="btn btn-outline-primary mb-3" [routerLink]="[lnkOffers, offer.id]">
+      <div class="col-12" *ngIf="offer.id; else new_Offer">
+        <button type="button" class="btn btn-outline-primary mb-3" [routerLink]="[lnkOffers, offer?.id]">
           Zur Detailseite
         </button>
       </div>
+
+      <ng-template #new_Offer>
+        <div class="col-12">
+          <button type="button" class="btn btn-outline-primary mb-3" [routerLink]="lnkOffers">
+            Zur Kursliste
+          </button>
+        </div>
+      </ng-template>
+
     </div>
     <div class="row">
       <div class="col-12 col-md-6">

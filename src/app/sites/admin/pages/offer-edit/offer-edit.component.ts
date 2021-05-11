@@ -68,6 +68,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    const offerId = +this.route.snapshot.params.id;
+
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
       title: new FormControl(null, Validators.required),
@@ -97,8 +99,6 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       competence_digital: new FormControl(null),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
-
-    const offerId = +this.route.snapshot.params.id;
 
     if (offerId) {
       this.createNewOffer = false;
