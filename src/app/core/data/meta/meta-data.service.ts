@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { FilterTagResponse, FilterItemResponse } from 'src/app/core/http/api/api.interfaces';
 
-import { FilterList } from 'src/app/core/models/meta';
+import { FilterList } from 'src/app/core/models/offer-filter';
 
 @Injectable({
   providedIn: 'root',

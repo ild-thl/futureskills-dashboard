@@ -1,3 +1,7 @@
+/**
+ * Typen, die sich auf die Filter für die Kurse beziehen
+ * (Inistitutionen, Sprache etc)
+ */
 export type FilterFunctionCallbackItem = {
     type: string,
     id: number

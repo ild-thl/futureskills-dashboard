@@ -8,7 +8,7 @@ import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 
 import { Offer } from 'src/app/core/models/offer';
-import { FilterList } from 'src/app/core/models/meta';
+import { FilterList } from 'src/app/core/models/offer-filter';
 
 @Component({
   selector: 'app-offer-list',

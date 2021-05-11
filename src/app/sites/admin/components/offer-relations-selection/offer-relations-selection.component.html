@@ -1,0 +1,61 @@
+<div class="w-100 my-2 additional-course">
+  <label>Empfohlene Kurse (max. {{maxRelatedOffers}}):</label>
+
+  <ng-template #relatedOffertemplate let-r="result">
+    <ngb-highlight [result]="r.title"></ngb-highlight>
+  </ng-template>
+
+  <div class="row mb-2" *ngIf="offerListIsLoaded">
+    <div class="card-wrapper col-6 col-lg-4 mb-2" *ngFor="let course of relatedOffersArray; let i = index">
+      <div class="card" *ngIf="i <= maxRelatedOffers">
+        <div class="row no-gutters align-items-center h-100">
+          <div class="col-4 d-none d-md-block card-image h-100"
+            [ngStyle]="{ 'background-image': 'url(' + course.image + ')' }"></div>
+          <div class="col-10 col-md-6">
+            <h5 class="ml-2 mr-1">
+              {{ course.title | slice: 0:maxRelatedOfferTitleLength }}
+              <span *ngIf="course.title.length > maxRelatedOfferTitleLength">...</span>
+            </h5>
+          </div>
+          <div class="col-2">
+            <a class="card-button-circle delete position-absolute" (click)="deleteOffer(i)"
+              ngbTooltip="Kursempfehlung entfernen">
+              <p class="text-center position-relative">
+                <fa-icon class="icon" [icon]="['fas', 'trash']"></fa-icon>
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-wrapper col-6 col-lg-4" *ngIf="relatedOffersArray.length < maxRelatedOffers">
+      <div class="card add" [ngClass]="{'cursor-pointer': !inputState}">
+        <div class="row no-gutters align-items-center h-100" (click)="toggleInputState()" *ngIf="!inputState">
+          <div class="col-12">
+            <h5 class="ml-2 text-center">
+              + Kursempfehlung hinzufügen
+            </h5>
+          </div>
+        </div>
+        <div class="row no-gutters align-items-center h-100" *ngIf="inputState">
+          <div class="col-10 h-100">
+            <input id="relatedOfferSelector" type="text" class="form-control h-100"
+              placeholder="Kursnamen eingeben und bestätigen." [ngbTypeahead]="relatedOfferSearch"
+              [inputFormatter]="relatedOfferFormatter" [resultTemplate]="relatedOffertemplate"
+              [(ngModel)]="selectedOfferModel" [editable]='false' (selectItem)="onItemSelection($event)"
+              [showHint]='true' (keyup.enter)="approveOffer()" autofocus />
+          </div>
+          <a class="col-2 h-100 card-button approve" [ngClass]="{'enabled': selectedOfferModel}"
+            (click)="approveOffer()" [ngbTooltip]="buttonMessage">
+            <p class="text-center position-relative">
+              <fa-icon class="icon" [icon]="['fas', 'check']"></fa-icon>
+            </p>
+          </a>
+        </div>
+      </div>
+      <p class="mt-2 pb-0" *ngFor="let alert of alerts">
+        <ngb-alert [type]="alert.type" (closed)="closeaAllAlerts()">{{ alert.message }}</ngb-alert>
+      </p>
+    </div>
+  </div>
+</div>

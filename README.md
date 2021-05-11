@@ -11,8 +11,9 @@
 - ClientId und ClientSecret eintragen (die Werte werden bei der Einrichtung des Backends generiert).
 
 ### Development Server
-- Starten des Development-Servers: `ng serve`  
-- URL: `http://localhost:4200/`
+- Starten des Development-Servers: `ng serve`  (`http://localhost:4200`)
+- Starten des Development-Servers mit npm: `npm run start`  (`http://localhost:4201`)
+
 
 ### Build Environments
 - Dev: ```npm run build``` oder ```ng build```

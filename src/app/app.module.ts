@@ -42,7 +42,8 @@ import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/f
 import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
 
 // Admin
-import { OfferEditComponent } from './sites/admin/pages/offer-edit/offer-edit.component';
+import { OfferEditComponent } from 'src/app/sites/admin/pages/offer-edit/offer-edit.component';
+import { OfferRelationsSelectionComponent } from 'src/app/sites/admin/components/offer-relations-selection/offer-relations-selection.component';
 
 // Sonst
 import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
@@ -70,6 +71,7 @@ import {
   faCommentAlt,
   faUser,
   faPen,
+  faTrash,
   faTrashAlt,
   faCog
 } from '@fortawesome/free-solid-svg-icons';
@@ -106,6 +108,7 @@ import {
     InfoStudentsComponent,
     InfoTeachingComponent,
     OfferEditComponent,
+    OfferRelationsSelectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -141,6 +144,7 @@ export class AppModule {
       faUser,
       faPen,
       faTrashAlt,
+      faTrash,
       faCog
     );
   }

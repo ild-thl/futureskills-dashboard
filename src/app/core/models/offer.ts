@@ -1,4 +1,6 @@
-import { OfferTimeStamp } from './timestamp';
+/**
+ * Typen und Klassen, die das Kurs(Offer) Objekt beschreiben
+ */
 
 export class Offer {
   public id: number;
@@ -17,16 +19,10 @@ export class Offer {
   public offertype_id: number;
   public subtitle: string;
   public language: string;
-  public meta: any;
+  public meta: OfferMeta;
   public hashtag: string;
-  public ects: number;
   public timestamps: OfferTimeStamp;
-  public time_requirement: string;
   public author: string;
-  public sponsor: string;
-  public exam: string;
-  public requirements: string;
-  public niveau: string;
   public target_group: string;
   public url: string;
   public sort_flag: number;
@@ -42,12 +38,37 @@ export class Offer {
   }
 }
 
+// Parts of an Offer
+export type PartialOffer = Partial <Offer>;
+
+// Meta Data for Offer
+export class OfferMeta {
+  public ects: number;
+  public sponsor: string;
+  public exam: string;
+  public requirements: string;
+  public niveau: string;
+  public time_requirement: string;
+}
+
+// TimeStampData for Offer
+export class OfferTimeStamp {
+  public executed_from: Date;
+  public executed_until: Date;
+  public listed_from: Date;
+  public listed_until: Date;
+
+  public getConvertedTimeStamp(): void{
+    // TODO
+  }
+}
+
+// Combines User and Offerdata
 export class OfferUserData {
   constructor(public offer: Offer, public isSubscribed: boolean = false) {}
 }
 
-export type PartialOffer = Partial <Offer>;
-
+// For related offers in EditForm
 export type SmallOfferListForEditForm = {
   id: number;
   image: string;
