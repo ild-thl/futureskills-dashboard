@@ -21,6 +21,7 @@
     }
 
     &-form {
+        background-image: url('~src/assets/backgrounds/fs-trailer-background.jpg');
         display: flex;
         align-items: center;
         justify-content: center;
@@ -54,7 +55,7 @@
 
         button {
             overflow: hidden;
-            
+
             &:hover {
                 img {
                     transform: translate(40px, -40px);
