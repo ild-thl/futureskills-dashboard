@@ -60,6 +60,11 @@ const routes: Routes = [
     path: 'info-students',
     component: InfoStudentsComponent,
   },
+  {
+    path: 'ki-tools',
+    loadChildren: () =>
+      import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
+  },
   { path: 'notfound', component: NotfoundComponent },
   { path: '**', redirectTo: '/notfound' }, // this must be the last route!
 ];
