@@ -50,8 +50,8 @@ import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
 import { ImprintComponent } from 'src/app/sites/imprint/pages/imprint/imprint.component';
 import { PrivacyComponent } from 'src/app/sites/privacy/pages/privacy/privacy.component';
 import { NotfoundComponent } from 'src/app/sites/not-found/pages/notfound/notfound.component';
-import { InfoStudentsComponent } from './sites/info-students/pages/info-students/info-students.component';
-import { InfoTeachingComponent } from './sites/info-teaching/pages/info-teaching/info-teaching.component';
+import { InfoStudentsComponent } from 'src/app/sites/info-students/pages/info-students/info-students.component';
+import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-teaching/info-teaching.component';
 
 // Shared
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
