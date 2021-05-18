@@ -27,16 +27,3 @@ export const CustomConfig = {
     lnkTrailerAboutUs: '/info-teaching'
   },
 };
-
-
-/**
- * Liste der externen Scripts, die nachgeladen werden können
- */
-export interface Scripts {
-  name: string;
-  src: string;
-}
-export const ExternScripts: Scripts[] = [
-  { name: 'tensorflow', src: 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js' },
-  { name: 'ml5:', src: 'https://unpkg.com/ml5@latest/dist/ml5.min.js'},
-];

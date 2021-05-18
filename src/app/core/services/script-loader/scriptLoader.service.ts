@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExternScripts } from 'src/app/config/static.config'
+import { ExternScripts } from 'src/app/config/extern-scripts.config'
 
 declare var document: any;
 
