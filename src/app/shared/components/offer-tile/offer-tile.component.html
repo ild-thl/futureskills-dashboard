@@ -5,7 +5,7 @@
     <div *ngIf="displayMode == 'full'"> <!-- vorbereitung für eine kompaktere darstellung in wunschliste -->
 
     </div>
-    <div class="offer-tile-header-content pl-2 pr-2">
+    <div class="offer-tile-header-content">
       <p class="offer-tile-header-text float-left m-0">
         <!--erstmal leer-->
       </p>
@@ -22,7 +22,7 @@
   </div>
 
   <div class="offer-tile-body">
-    <div class="pb-1">
+    <div class="offer-tile-body-container">
       <p class="offer-tile-body-header">
         <span class="offer-tile-title font-weight-bold d-block"><fa-icon *ngIf="isSubscribed == true" [icon]="['fas', 'check']" class="pr-1"></fa-icon>{{offerForTile.title}}</span>
         <!--<small class="offer-tile-author" [innerHTML]="offerForTile.offer.institution.title"></small>-->
