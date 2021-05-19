@@ -3,6 +3,12 @@
 
 ## [Unreleased]
 
+
+## 2021-05-19/ml
+### Added
+- courseCarousel as a module
+- added Hammerjs
+
 ## 2021-05-19/ml
 - script-loader added (dynamically loading javascript-files)
 - KI-Tools are lazy loaded
