@@ -1,6 +1,4 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-//import { ScriptLoaderService } from 'src/app/core/services/script-loader/scriptLoader.service';
 import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
 
 declare var tf: any;
@@ -13,33 +11,25 @@ declare var tf: any;
 })
 export class KiToolsComponent implements OnInit {
   isLoadingScripts: boolean;
+  isLoadingError: boolean;
 
-  constructor(
-    @Inject(DOCUMENT) private doc: Document,
-    private scriptLoader: ScriptLoaderService,
-    private renderer: Renderer2
-  ) {}
+  constructor(private scriptLoader: ScriptLoaderService, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.isLoadingScripts = true;
+    this.isLoadingError = false;
     this.loadScripts();
-  }
-
-  loadExternLibrary(src: string) {
-    setTimeout(() => {
-      let script = this.renderer.createElement('script');
-      script.src = src;
-      this.renderer.appendChild(this.doc.head, script);
-    });
   }
 
   loadScripts() {
     this.scriptLoader.load(this.renderer, ['tensorflow']).subscribe(
       (value) => {
         console.log('Loaded Scripts: ', value);
+        this.isLoadingError = false;
       },
       (error) => {
         console.log('Error: ', error);
+        this.isLoadingError = true;
       },
       () => {
         this.isLoadingScripts = false;

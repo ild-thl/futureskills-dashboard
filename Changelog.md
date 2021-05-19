@@ -5,6 +5,7 @@
 
 ## 2021-05-19/ml
 - script-loader added (dynamically loading javascript-files)
+- KI-Tools are lazy loaded
 
 ## 2021-05-18/ml
 - Shared Module (fonts, bootstrap Modules and Shared Components)

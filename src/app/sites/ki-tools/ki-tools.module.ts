@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { KiToolsComponent } from 'src/app/sites/ki-tools/pages/ki-tools.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
+import { KiToolsRoutingModule } from './ki-tools-routing.module';
+import { KiToolsComponent } from './pages/ki-tools.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [KiToolsComponent],
   imports: [
-    CommonModule,
-    RouterModule.forChild([{
-      path: '', component: KiToolsComponent
-    }])
+    SharedModule,
+    KiToolsRoutingModule,
   ]
 })
 export class KiToolsModule { }
