@@ -1,3 +1,7 @@
-<div *ngIf="isLoadingScripts">is Loading ...</div>
-
-<div class="container">KI-Tools</div>
+<div id="ki-tools">
+  <div class="container">
+    <div *ngIf="isLoadingScripts" class="d-flex justify-content-center pt-5">
+      <fs-loading-spinner></fs-loading-spinner>
+    </div>
+  </div>
+</div>
