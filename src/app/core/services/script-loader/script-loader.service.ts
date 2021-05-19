@@ -1,62 +1,48 @@
-import { Injectable, Renderer2 } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import { Inject, Injectable, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { IExternScripts } from 'src/app/config/extern-scripts.config';
+import { forkJoin, Observable } from 'rxjs';
 import { ExternScripts } from 'src/app/config/extern-scripts.config';
-
-declare var document: any;
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScriptLoaderService {
-  private scripts: any = {};
-  private isInitialized: boolean;
+  private scriptMap = new Map();
   private renderer: Renderer2;
 
-  constructor() {
-    this.isInitialized = false;
-
-    ExternScripts.forEach((script: any) => {
-      this.scripts[script.name] = {
-        loaded: false,
-        src: script.src,
-      };
+  constructor(@Inject(DOCUMENT) private doc: Document) {
+    ExternScripts.forEach((script: IExternScripts) => {
+      this.scriptMap.set(script.name, { loaded: false, src: script.src });
     });
-  }
-
-  init(renderer: Renderer2) {
-    this.renderer = renderer;
-    this.isInitialized = true;
-    console.log('Inizialized');
   }
 
   load(renderer: Renderer2, scripts: string[]): Observable<any> {
     this.renderer = renderer;
-    const streams: Observable<any>[] = [];
-
-    for (var script of scripts) {
-      streams.push(this.loadScript(script));
-    }
-    return forkJoin(streams);
+    const streamArr: Observable<any>[] = [];
+    scripts.forEach((script) => streamArr.push(this.loadScript(script)));
+    return forkJoin(streamArr);
   }
 
   loadScript(name: string): Observable<any> {
     return new Observable((subscriber) => {
-      if (!this.scripts[name]) {
+      if (!this.scriptMap.has(name)) {
         subscriber.next({ script: name, loaded: false, status: 'Unknown Scriptname' });
         subscriber.complete();
       } else {
-        if (!this.scripts[name].loaded) {
-          console.log('Script to load: ', name);
-          let script = document.createElement('script');
+        if (this.scriptMap.get(name).loaded) {
+          subscriber.next({ script: name, loaded: true, status: 'Already Loaded' });
+          subscriber.complete();
+        } else {
+          let script = this.renderer.createElement('script');
+          script.src = this.scriptMap.get(name).src;
           script.type = 'text/javascript';
-          script.src = this.scripts[name].src;
 
           if (script.readyState) {
-            //IE
             script.onreadystatechange = () => {
               if (script.readyState === 'loaded' || script.readyState === 'complete') {
                 script.onreadystatechange = null;
-                this.scripts[name].loaded = true;
+                this.scriptMap.get(name).loaded = true;
                 subscriber.next({ script: name, loaded: true, status: 'Loaded' });
                 subscriber.complete();
               }
@@ -64,7 +50,7 @@ export class ScriptLoaderService {
           } else {
             //Others
             script.onload = () => {
-              this.scripts[name].loaded = true;
+              this.scriptMap.get(name).loaded = true;
               subscriber.next({ script: name, loaded: true, status: 'Loaded' });
               subscriber.complete();
             };
@@ -75,10 +61,7 @@ export class ScriptLoaderService {
             subscriber.complete();
           };
 
-          document.getElementsByTagName('head')[0].appendChild(script);
-        } else {
-          subscriber.next({ script: name, loaded: true, status: 'Already Loaded' });
-          subscriber.complete();
+          this.renderer.appendChild(this.doc.head, script);
         }
       }
     });

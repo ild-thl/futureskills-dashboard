@@ -3,6 +3,8 @@
 
 ## [Unreleased]
 
+## 2021-05-19/ml
+- script-loader added (dynamically loading javascript-files)
 
 ## 2021-05-18/ml
 - Shared Module (fonts, bootstrap Modules and Shared Components)

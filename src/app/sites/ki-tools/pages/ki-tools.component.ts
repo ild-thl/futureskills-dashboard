@@ -36,7 +36,7 @@ export class KiToolsComponent implements OnInit {
   loadScripts() {
     this.scriptLoader.load(this.renderer, ['tensorflow']).subscribe(
       (value) => {
-        console.log('Value: ', value);
+        console.log('Loaded Scripts: ', value);
       },
       (error) => {
         console.log('Error: ', error);
