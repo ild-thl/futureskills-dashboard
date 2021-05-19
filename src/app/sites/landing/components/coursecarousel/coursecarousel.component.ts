@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
@@ -24,7 +24,14 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
   private onOffersChange: Subscription;
   loadedOffers: Offer[] = [];
 
-  tilewidth: number = 220; // css: min-width
+  resizeObservable$: Observable<Event>
+  resizeSubscription: Subscription
+  tilewidth: number = 220;
+  tilemargin: number = 16;
+  tileshow: number = 0;
+  scrollwidth: number = 1;
+  carouselWidth: number = 0;
+  called: boolean = false;
 
   constructor(private offerDataService: OfferDataService, private staticConfig: StaticService) {}
 
@@ -35,6 +42,12 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
       .subscribe(
         (offersForTiles) => {
           this.loadedOffers = offersForTiles;
+
+          // trigger resize event to set tile width as soon as offers are loaded
+          setTimeout( () => {
+            window.dispatchEvent(new Event('resize'));
+          },0)
+
         },
         (error) => {
           // Handle Data
@@ -42,33 +55,88 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
           this.loadedOffers = [];
         }
       );
+
+      // set tile width on each window resize event and reset position to 0
+      this.resizeObservable$ = fromEvent(window, 'resize')
+      this.resizeSubscription = this.resizeObservable$.subscribe( evt => {
+        this.carouselWidth = this.coursecarousel.nativeElement.offsetWidth;
+        this.coursecarousel.nativeElement.scrollLeft = 0;
+        this.setTileWidth();
+      })
   }
 
   ngOnDestroy(): void {
     this.onOffersChange.unsubscribe();
+    this.resizeSubscription.unsubscribe();
   }
 
+
+  setTileWidth(): number {
+    let width = document.documentElement.clientWidth;
+
+    // bootstrap breakpoints
+    if(width >= 1300) {
+      this.tileshow = 5;
+    } else if(width >= 1030) {
+      this.tileshow = 4;
+    } else if(width >= 820) {
+      this.tileshow = 3;
+    } else if(width >= 576) {
+      this.tileshow = 2;
+    } else if(width < 576) {
+      this.tileshow = 1;
+    }
+
+    this.tilewidth = this.getTileWidth();
+
+    return this.tilewidth;
+  }
+
+  getTileWidth(forScroll: boolean = false): number {
+    let res = (((Math.floor(this.carouselWidth) + this.tilemargin) / this.tileshow) - this.tilemargin);
+    let width = document.documentElement.clientWidth;
+
+    if(forScroll) {
+      if(width >= 768) {
+        let w = (res + this.tilemargin) * 2;
+        res = w;
+      } else {
+        let w = res + this.tilemargin;
+        res = w;
+      }
+    }
+
+    return Math.floor(res);
+  }
+
+
   scrollLeft(): void {
-    this.coursecarousel.nativeElement.scrollLeft -= this.getScrollWidth();
+    let elem = this.coursecarousel.nativeElement;
+
+    if ( elem.scrollLeft === 0) {
+      let carousel = document.querySelector('.fs-car-tiles');
+      let childcount = carousel.querySelectorAll('.fs-car-tile').length;
+      this.coursecarousel.nativeElement.scrollLeft += this.getTileWidth(true) * childcount;
+    } else {
+      this.coursecarousel.nativeElement.scrollLeft -= this.getTileWidth(true);
+    }
   }
 
   scrollRight(): void {
-    this.coursecarousel.nativeElement.scrollLeft += this.getScrollWidth();
-  }
+    let elem = this.coursecarousel.nativeElement;
 
-  getScrollWidth(): number {
-    if (document.documentElement.clientWidth >= 1000) {
-      return this.tilewidth * 4 + 16 * 4;
+    if ( elem.scrollLeft + elem.offsetWidth === elem.scrollWidth) {
+      elem.scrollLeft = 0;
+    } else {
+      elem.scrollLeft += this.getTileWidth(true);
     }
-    return this.tilewidth + 16;
   }
-
 
   onSwipeRight(event, data) {
-
+    this.scrollLeft();
   }
 
   onSwipeLeft(event, data) {
-
+    this.scrollRight();
   }
 }
