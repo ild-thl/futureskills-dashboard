@@ -18,7 +18,8 @@ export const CustomConfig = {
     lnkPrivacy: '/datenschutz',
     lnkLogin: '/login',
     lnkAdminOfferEdit: '/admin/kurs/edit',
-    lnkAdminOfferNew: '/admin/kurs/neu'
+    lnkAdminOfferNew: '/admin/kurs/neu',
+    lnkKITools: '/ki-tools',
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
