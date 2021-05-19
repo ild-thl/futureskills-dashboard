@@ -7,6 +7,7 @@
 ## 2021-05-18/ml
 - Shared Module (fonts, bootstrap Modules and Shared Components)
 - LandingPage has its own module now
+- Shared Component LoadingSpinner
 
 ## 2021-05-06/ml    
 New Project with Angular 11
