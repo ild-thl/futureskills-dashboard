@@ -62,4 +62,13 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
     }
     return this.tilewidth + 16;
   }
+
+
+  onSwipeRight(event, data) {
+
+  }
+
+  onSwipeLeft(event, data) {
+
+  }
 }
