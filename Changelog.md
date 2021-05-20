@@ -3,6 +3,10 @@
 
 ## [Unreleased]
 
+## 2021-05-20/avz
+# Changes   
+- changed mediaquery to hide the list-style-type dots in the footer 
+
 ## 2021-05-06/ml    
 New Project with Angular 11
 
