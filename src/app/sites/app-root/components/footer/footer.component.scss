@@ -13,7 +13,7 @@ footer {
   li {
     list-style-type: square;
 
-    @media(min-width: $md) {
+    @media(min-width: $sm) {
       list-style: none;
     }
   }
