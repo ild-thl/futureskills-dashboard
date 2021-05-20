@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 2021-05-20/ml
+# Changed
+- fs-round-button (Padding and font fix)
+
 ## 2021-05-06/avz
 # Changes
 - added shy to title when breaking on small screens
