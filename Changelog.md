@@ -3,6 +3,10 @@
 
 ## [Unreleased]
 
+## 2021-05-06/avz
+# Changes
+- added shy to title when breaking on small screens
+
 ## 2021-05-06/ml    
 New Project with Angular 11
 
