@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
-## 2021-05-06/avz
+## 2021-05-20/dk
+# Changes
+- fixed production CSP
+
+## 2021-05-20/avz
 # Changes
 - added shy to title when breaking on small screens
 - changed mediaquery to hide the list-style-type dots in the footer 
