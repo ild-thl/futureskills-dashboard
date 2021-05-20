@@ -16,7 +16,7 @@
     </div> <!-- end of .row -->
   </div> <!-- end of .container -->
 
-  <div class="fs-car-container">
+  <div ngSwipe class="fs-car-container" (swipeleft)="onSwipeLeft($event,-1)" (swiperight)="onSwipeRight($event,1)">
     <div class="fs-car">
       <div class="fs-car-controller fs-car-controller-left">
         <span (click)="scrollLeft()">❮</span>
@@ -32,7 +32,9 @@
             class="fs-car-tile"
             [offerForTile]="offer"
             [isSubscribed]=false
-            displayMode="full">
+            displayMode="full"
+            [ngStyle]="{'min-width.px': tilewidth}"
+            >
           </fs-offer-tile>
         </ng-container>
       </div>

@@ -3,7 +3,7 @@ app-offer-tile {
 }
 
 .offer-tile-wrapper {
-  background-color: #edeef1;
+  // background-color: #edeef1;
   min-width: 220px;
   border: 1px solid #102d5d21;
   overflow: hidden;
@@ -16,20 +16,30 @@ app-offer-tile {
       transition: .2s;
     }
   }
+
+  .list-group {
+    padding-bottom: .1rem;
+  }
+}
+.offer-tile-header {
+  background: rgb(212, 221, 230);
+  background: linear-gradient(180deg, rgba(2, 0, 36, 0) 0%, rgb(212, 221, 230) 100%);
 }
 
 .offer-tile-header-image {
   min-height: 220px;
   min-width: 220px;
+  width: 220px;
+  margin: 0 auto;
   height: auto;
   background-size: cover;
   background-position: center center;
 }
 
 .offer-tile-header-content {
+  width: 220px;
+  margin: 0 auto;
   height: 1.5rem;
-  background: rgb(0 48 100 / 0.5); // fallback
-  background: linear-gradient(90deg, rgb(255 255 255 / 30%) 30%, #a7b6c8 100%);
 }
 
 .offer-tile-header-text span {
@@ -45,6 +55,11 @@ app-offer-tile {
   align-items: center;
   display: inline-flex;
   width: 100%;
+}
+
+.offer-tile-body-container {
+  max-width: 220px;
+  margin: 0 auto;
 }
 
 .stars {
@@ -89,6 +104,10 @@ app-offer-tile {
   border-left: 0;
   border-right: 0;
   font-size: 0.8rem;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .offer-tile-wrapper .ng-fa-icon {
