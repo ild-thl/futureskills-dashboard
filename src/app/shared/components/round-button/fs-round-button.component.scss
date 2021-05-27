@@ -28,13 +28,13 @@
       box-shadow: 0 5px 10px rgba(0,0,0,0.5);
     }
     .chevron-right {
-      padding-left: 10px;
+      padding-left: 20px;
     }
   }
 
   :host-context(.btn-cta) .fs-btn {
     position: absolute;
-    bottom: 0;
+    bottom: -3rem;
     left: 50%;
     transform: translate(-50%, 50%);
     z-index: 100;

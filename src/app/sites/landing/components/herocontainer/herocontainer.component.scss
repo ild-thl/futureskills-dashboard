@@ -1,6 +1,6 @@
 @import "breakpoints";
 
-.herocontainer {
+::ng-deep .herocontainer {
   background-color: #a10018;
   background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
   background-repeat: repeat-y;
@@ -10,6 +10,7 @@
   max-height: 682px;
   width: 100%;
   position: relative;
+  padding-bottom: 3rem;
 
   &.noselect {
     -webkit-user-select: none;
@@ -33,7 +34,7 @@
   }
   .hero-persona {
     position: absolute;
-    bottom: -3rem;
+    bottom: 0;
     left: 0;
     animation: moveToLeft 4s ease-in-out;
   }
@@ -72,16 +73,27 @@
 @media(min-width: $lg) {
   .herocontainer {
     background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-lg.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
-
+    .hero-persona {
+      bottom: -3rem;
+    }
     .speechballoon {
       width: 70%;
+    }
+  }
+}
+@media(max-width: $lg) {
+  .herocontainer {
+    .hero-persona {
+      bottom: -3rem;
     }
   }
 }
 @media(max-width: $md) {
   .herocontainer {
     background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-md.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
-
+    .speechballoon {
+      width: 70%;
+    }
     .hero-persona {
       bottom: -3rem;
     }
@@ -95,7 +107,7 @@
     background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-sm.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
 
     .hero-persona {
-      bottom: -1.5rem;
+      bottom: -3rem;
     }
     .speechballoon {
       width: 70%;
@@ -105,10 +117,6 @@
 @media(max-width: $xs) {
   .herocontainer {
     background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-xs.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
-
-    .hero-persona {
-      bottom: -1rem;
-    }
     .speechballoon {
       width: 70%;
     }

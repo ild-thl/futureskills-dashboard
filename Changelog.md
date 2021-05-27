@@ -2,7 +2,12 @@
 
 ## [Unreleased]
 
-## 2021-05-26/ml
+
+## 2021-05-27/dn/dk
+### Changed
+- Padding fix in hero carousel
+
+## 2021-05-27/ml
 # Added
 - getAllOfferShortList (Short OfferList)
 - filter are offerProperties now
