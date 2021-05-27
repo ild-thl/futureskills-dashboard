@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## 2021-05-26/ml
+# Added
+- getAllOfferShortList (Short OfferList)
+- filter are offerProperties now
+- properties are loaded once when needed
+
 ## 2021-05-20/ml
 # Changed
 - fs-round-button (Padding and font fix)

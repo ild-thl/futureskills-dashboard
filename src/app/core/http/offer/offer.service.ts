@@ -49,6 +49,27 @@ export class OfferService {
     return this.offers$;
   }
 
+  getAllOfferShortList(): Observable<PartialOffer[]> {
+    this.apiService
+      .getAllOffers()
+      .pipe(
+        tap((offers) => {
+          this.offerStore.dispatch({ type: LOAD, data: offers });
+        })
+      )
+      .subscribe(
+        (offers) => {
+          //console.log('Offers geladen', offers);
+        },
+        (error) => {
+          console.log('getAllOffer_Error:', error);
+          let message = error; // Anpassen wenn nötig
+          this.offers$.error(message);
+        }
+      );
+    return this.offers$;
+  }
+
   getOffer(id: number): Observable<Offer> {
     return this.apiService.getOffer(id);
   }

@@ -1,41 +1,51 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { AsyncSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/core/http/api/api.service';
-import { FilterTagResponse, FilterItemResponse } from 'src/app/core/http/api/api.interfaces';
+//import { FilterTagResponse, FilterItemResponse } from 'src/app/core/http/api/api.interfaces';
 
-import { FilterList } from 'src/app/core/models/offer-filter';
+import { OfferPropertyList } from 'src/app/core/models/offer-properties';
+import { OfferPropertyItemResponse, OfferPropertyTagResponse } from '../../http/api/api.interfaces';
+//import { FilterList } from 'src/app/core/models/offer-filter';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MetaDataService {
-  filterList: FilterList[] = undefined;
+  /**
+   * PropertyList Async Subject
+   */
+  private offerPropertyList$: AsyncSubject<any>;
   constructor(private apiService: ApiService) {}
 
   // //////////////////////////////////
-  // get FilterTags
+  // get OfferProperties
   // //////////////////////////////////
 
-  public getFilterTags(): Observable<FilterList[]> {
-    if (this.filterList == undefined) {
-      return this.apiService.getFilterTags().pipe(
-        map((data: FilterTagResponse) => {
-          const filterArray: FilterItemResponse[] = data.filter;
-          this.filterList = this.mapMetaDataToFilterLists_de(filterArray);
-          //console.log('Filterlist: ', this.filterList);
-          return this.filterList;
-        })
-      );
-    } else {
-      //console.log('Filterlist already loaded.');
-      return of(this.filterList);
-    }
+  public getOfferProperties(): Observable<OfferPropertyList[]> {
+    return new Observable((observer$) => {
+      if (!this.offerPropertyList$) {
+        this.offerPropertyList$ = new AsyncSubject();
+        this.apiService.getOfferProperties().pipe(
+          map((data: OfferPropertyTagResponse) => {
+            const propArray: OfferPropertyItemResponse[] = data.filter;
+            const filterList = this.mapMetaDataToProprtyList_de(propArray);
+            //console.log('New Offer Property List: ', filterList);
+            return filterList;
+          })
+        ).subscribe(this.offerPropertyList$);
+      }
+      return this.offerPropertyList$.subscribe(observer$);
+    });
   }
 
-  private mapMetaDataToFilterLists_de(dataArray): FilterList[] {
-    return dataArray.map((item: FilterItemResponse) => {
+  public getFilterTags(): Observable<OfferPropertyList[]> {
+    return this.getOfferProperties();
+  }
+
+  private mapMetaDataToProprtyList_de(dataArray): OfferPropertyList[] {
+    return dataArray.map((item: OfferPropertyItemResponse) => {
       const tempList = item.list.map((listItem) => {
         return {
           id: listItem.id,
@@ -43,7 +53,7 @@ export class MetaDataService {
           description: listItem.description.de,
         };
       });
-      return new FilterList(item.tag, tempList);
+      return new OfferPropertyList(item.tag, tempList);
     });
   }
 }

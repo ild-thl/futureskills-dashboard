@@ -18,16 +18,12 @@ export interface UserDataErrorResponse {
   message: string;
 }
 
-export interface FilterTagResponse {
-  filter: FilterItemResponse[];
+export interface OfferPropertyTagResponse {
+  filter: OfferPropertyItemResponse[];
 }
 
-export interface FilterItemResponse {
+export interface OfferPropertyItemResponse {
   tag: string;
-  title: {
-    de: string;
-    en?: string;
-  };
   list: {
     id: number;
     identifier: string;

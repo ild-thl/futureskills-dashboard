@@ -1,8 +1,10 @@
+import { concatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferService } from 'src/app/core/http/offer/offer.service';
+import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { UserDataErrorResponse } from 'src/app/core/http/api/api.interfaces';
 
 @Injectable({
@@ -23,7 +25,8 @@ export class DataHandlerService {
 
   constructor(
     private authService: AuthService,
-    private offerService: OfferService
+    private offerService: OfferService,
+    private metaDataService: MetaDataService
   ) {}
 
   /**
@@ -38,8 +41,20 @@ export class DataHandlerService {
     // Versuchen einzuloggen
     this.authService.autoLogin();
 
+    // Load OfferProperties
+    this.loadOfferProperties();
+
     // Load Offerdata from start
     this.loadOfferData();
+  }
+
+  private loadOfferProperties(){
+    this.metaDataService.getOfferProperties().subscribe(
+      next => {
+        console.log('OfferProperties: ', next)
+      },
+      error => console.log('error: ', error)
+    );
   }
 
   /**
@@ -49,6 +64,7 @@ export class DataHandlerService {
     console.log('loadOfferData');
     this.offerService.getAllOffers().subscribe(
       (value) => {
+        //console.log("OfferData: ", value);
         this._offersAreLoaded$.next({
           isLoaded: true,
           isError: false,
