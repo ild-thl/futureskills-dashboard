@@ -3,15 +3,16 @@
 ## [Unreleased]
 
 
-## 2021-05-27/dn/dk
-### Changed
-- Padding fix in hero carousel
-
 ## 2021-05-27/ml
 # Added
 - getAllOfferShortList (Short OfferList)
 - filter are offerProperties now
 - properties are loaded once when needed
+- padding fs-round button to 10px
+
+## 2021-05-27/dn/dk
+### Changed
+- Padding fix in hero carousel
 
 ## 2021-05-20/ml
 # Changed
