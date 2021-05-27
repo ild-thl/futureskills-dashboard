@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 2021-05-27/dn/dk
+### Changed
+- Padding fix in hero carousel
+
 ## 2021-05-20/ml
 # Changed
 - fs-round-button (Padding and font fix)
