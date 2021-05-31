@@ -53,9 +53,9 @@ export type OfferToAPI = {
   target_group: string;
   url: string;
   sort_flag: number;
-  competence_tech: boolean;
-  competence_digital: boolean;
-  competence_classic: boolean;
+  competence_tech: boolean | number;
+  competence_digital: boolean | number;
+  competence_classic: boolean | number;
   relatedOffers: number[];
 }
 

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  AsyncSubject,
-  BehaviorSubject,
-  Observable
-} from 'rxjs';
+import { AsyncSubject, BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/core/http/api/api.service';
+import { CachedDataService } from 'src/app/core/http/api/cache-data.service';
+
 import { OfferToAPI } from 'src/app/core/http/api/api.interfaces';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
+import { PropertyItem } from 'src/app/core/models/offer-properties';
 
 /**
  * offer.service.ts
@@ -23,24 +22,27 @@ import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/off
 })
 export class OfferService {
   offers$: BehaviorSubject<Offer[]>;
-  private offerShortList$: AsyncSubject<any>;
   //offerChanged$ = new BehaviorSubject({});
 
-  constructor(private apiService: ApiService, private offerStore: OfferStore) {
+  constructor(
+    private apiService: ApiService,
+    private offerStore: OfferStore,
+    private cachedDataService: CachedDataService
+  ) {
     this.offers$ = offerStore.items$;
   }
 
-  getAllOffers(): Observable<Offer[]> {
+  alt_getAllOffers(): Observable<Offer[]> {
     this.apiService
       .getAllOffers()
       .pipe(
         tap((offers) => {
-          this.offerStore.dispatch({ type: LOAD, data: offers });
+          //this.offerStore.dispatch({ type: LOAD, data: offers });
         })
       )
       .subscribe(
         (offers) => {
-          //console.log('Offers geladen', offers);
+          console.log('Offers geladen', offers);
         },
         (error) => {
           console.log('getAllOffer_Error:', error);
@@ -51,18 +53,78 @@ export class OfferService {
     return this.offers$;
   }
 
-  getAllOfferShortList(): Observable<PartialOffer[]> {
-    return new Observable((observer$)=>{
-      if (!this.offerShortList$) {
-        this.offerShortList$ = new AsyncSubject();
-        this.apiService.getAllOfferShortList().pipe(
-          tap((shortOffers) => {
-            this.offerStore.dispatch({ type: LOAD, data: shortOffers });
-          })
-        ).subscribe(this.offerShortList$);
-      }
-      return this.offerShortList$.subscribe(observer$);
-    })
+  getAllOfferShortList(): any {
+    const property$ = this.cachedDataService.loadOfferProperties();
+    const shortOffer$ = this.cachedDataService.loadShortOfferList();
+
+    // Parallel laden, aber erst auswerten wenn beide completed sind
+    forkJoin([shortOffer$, property$])
+      .pipe(
+        tap((results) => {
+          const offers = results[0];
+          const properties = results[1];
+          const propertyMap = new Map();
+
+          //console.log('ShortOffers:', offers);
+          //console.log('Properties:', properties);
+          properties.forEach((element) => propertyMap.set(element.type, element.list));
+          //console.log('PropertyMap: ', propertyMap);
+          const institutionsProp: PropertyItem[] = propertyMap.get('institutions');
+          const languagesProp: PropertyItem[] = propertyMap.get('languages');
+          const competencesProp: PropertyItem[] = propertyMap.get('competences');
+          const formatsProp: PropertyItem[] = propertyMap.get('formats');
+
+          offers.forEach((offerItem) => {
+            const institution = institutionsProp.find(
+              (value) => value.id === offerItem.institution_id
+            );
+            const language = languagesProp.find((value) => value.id === offerItem.language_id);
+            const format = formatsProp.find((value) => value.id === offerItem.offertype_id);
+
+            offerItem.institution = {
+              id: offerItem.institution_id,
+              title: institution.identifier,
+              url: undefined,
+            };
+
+            offerItem.language = language.identifier;
+            offerItem.type = format.identifier;
+
+            const techCompetence = competencesProp.find((value) => value.identifier == 'tech');
+            const digitalCompetence = competencesProp.find(
+              (value) => value.identifier == 'digital'
+            );
+            const classicCompetence = competencesProp.find(
+              (value) => value.identifier == 'classic'
+            );
+
+            offerItem.competence_classic = offerItem.competences.includes(classicCompetence.id)
+              ? 1
+              : 0;
+            offerItem.competence_digital = offerItem.competences.includes(digitalCompetence.id)
+              ? 1
+              : 0;
+            offerItem.competence_tech = offerItem.competences.includes(techCompetence.id) ? 1 : 0;
+          });
+
+          console.log('NewOffers:', offers);
+          this.offerStore.dispatch({ type: LOAD, data: offers });
+        })
+      )
+      .subscribe(
+        (results) => {},
+        (error) => {
+          console.log('getAllOfferShortList:', error);
+          let message = error; // Anpassen wenn nötig
+          this.offers$.error(message);
+        },
+        () => {
+          //console.log('getAllOfferShortList completed');
+        }
+      );
+
+
+      return this.offers$;
   }
 
   getOffer(id: number): Observable<Offer> {
@@ -81,13 +143,13 @@ export class OfferService {
   }
 
   // Angedacht für die Sortierungsliste.
-  storePartialOfferList(offerList: PartialOffer[]){
+  storePartialOfferList(offerList: PartialOffer[]) {
     const sentList = offerList.filter((offer) => offer.id !== null);
     return this.apiService.updatePartialOfferList(sentList).pipe(
-      tap(savedOffers => {
+      tap((savedOffers) => {
         // TODO: Einzelne Datensätze updaten oder besser die Datensätze neu laden
       })
-    )
+    );
   }
 
   updateOffer(id: number, data: OfferToAPI) {

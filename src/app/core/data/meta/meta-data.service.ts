@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
-import { PropertyService } from 'src/app/core/http/properties/property.service';
+import { OfferPropertyService } from 'src/app/core/http/offer/offer-property.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MetaDataService {
-  constructor(private propertyService: PropertyService) {}
+  constructor(private propertyService: OfferPropertyService) {}
 
   public getOfferProperties(): Observable<OfferPropertyList[]> {
     return this.propertyService.getOfferProperties();

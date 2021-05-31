@@ -42,10 +42,13 @@ export class DataHandlerService {
     this.authService.autoLogin();
 
     // Load OfferProperties
-    this.loadOfferProperties();
+   // this.loadOfferProperties();
 
     // Load Offerdata from start
     this.loadOfferData();
+
+    //this.offerService.getAllOfferShortList();
+    this.offerService.alt_getAllOffers();
   }
 
   private loadOfferProperties(){
@@ -62,7 +65,7 @@ export class DataHandlerService {
    */
   private loadOfferData() {
     console.log('loadOfferData');
-    this.offerService.getAllOffers().subscribe(
+    this.offerService.getAllOfferShortList().subscribe(
       (value) => {
         //console.log("OfferData: ", value);
         this._offersAreLoaded$.next({

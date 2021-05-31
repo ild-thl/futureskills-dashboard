@@ -26,9 +26,9 @@ export class Offer {
   public target_group: string;
   public url: string;
   public sort_flag: number;
-  public competence_tech: boolean;
-  public competence_digital: boolean;
-  public competence_classic: boolean;
+  public competence_tech: boolean | number;
+  public competence_digital: boolean | number;
+  public competence_classic: boolean | number;
   public relatedOffers: number[];
 
   constructor(
