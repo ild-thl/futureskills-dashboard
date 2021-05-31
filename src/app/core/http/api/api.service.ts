@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { Institution } from 'src/app/core/models/institution';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
-import { AuthResponseData, SubscriptionData, FilterTagResponse, OfferToAPI } from './api.interfaces';
+import { AuthResponseData, SubscriptionData, OfferToAPI, OfferPropertyTagResponse } from './api.interfaces';
 
 /**
  * api.service.ts
@@ -48,6 +48,12 @@ export class ApiService {
   public getAllOffers(): Observable<Offer[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/offer')
+      .pipe(catchError(this.handleError));
+  }
+
+  public getAllOfferShortList(): Observable<Offer[]> {
+    return this.http
+      .get<Offer[]>(environment.apiURL + '/api/offer/short')
       .pipe(catchError(this.handleError));
   }
 
@@ -235,10 +241,15 @@ export class ApiService {
   // META DATA
   ///////////////////////////////////////////////
 
-  public getFilterTags(): Observable<FilterTagResponse> {
+  public getFilterTags(): Observable<OfferPropertyTagResponse> {
     return this.http
-    .get<FilterTagResponse>(environment.apiURL + '/api/filter/tags')
+    .get<OfferPropertyTagResponse>(environment.apiURL + '/api/filter/tags')
     .pipe(catchError(this.handleError));
+  }
+
+  // Die Filter sind im Moment identisch mit den Properties
+  public getOfferProperties(): Observable<OfferPropertyTagResponse> {
+    return this.getFilterTags();
   }
 
   ////////////////////////////////////////////////
