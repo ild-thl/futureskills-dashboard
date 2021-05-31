@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferToAPI } from 'src/app/core/http/api/api.interfaces';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
-import { LOAD, ADD, EDIT, REMOVE, OfferStore } from './offer.store';
+import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
 
 /**
  * offer.service.ts
