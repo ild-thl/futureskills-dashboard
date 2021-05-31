@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AsyncSubject, Observable, of } from 'rxjs';
-import { map} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { PartialOffer } from 'src/app/core/models/offer';
@@ -10,7 +10,6 @@ import { OfferPropertyItemResponse, OfferPropertyTagResponse } from './api.inter
   providedIn: 'root',
 })
 export class CachedDataService {
-
   /**
    * OfferList
    */
@@ -19,6 +18,12 @@ export class CachedDataService {
    * PropertyList
    */
   private offerPropertyList$: AsyncSubject<any>;
+
+  public institutionMap = new Map<number, string>();
+  public languageMap = new Map<number, string>();
+  public formatMap = new Map<number, string>();
+  public competencesMap = new Map<string, number>();
+
   constructor(private apiService: ApiService) {}
 
   ////////////////////////////////////////////////
@@ -41,17 +46,23 @@ export class CachedDataService {
     return new Observable((observer$) => {
       if (!this.offerPropertyList$) {
         this.offerPropertyList$ = new AsyncSubject();
-        this.apiService.getOfferProperties().pipe(
-          map((data: OfferPropertyTagResponse) => {
-            const propArray: OfferPropertyItemResponse[] = data.filter;
-            return this.mapMetaDataToPropertyList_de(propArray);
-          })
-        ).subscribe(this.offerPropertyList$);
+        this.apiService
+          .getOfferProperties()
+          .pipe(
+            tap((values) => this.createPropertyTextMaps(values.filter)),
+            map((data: OfferPropertyTagResponse) => {
+              const propArray: OfferPropertyItemResponse[] = data.filter;
+              return this.mapMetaDataToPropertyList_de(propArray);
+            })
+          )
+          .subscribe(this.offerPropertyList$);
       }
       return this.offerPropertyList$.subscribe(observer$);
     });
   }
-  private mapMetaDataToPropertyList_de(dataArray): OfferPropertyList[] {
+  private mapMetaDataToPropertyList_de(
+    dataArray: OfferPropertyItemResponse[]
+  ): OfferPropertyList[] {
     return dataArray.map((item: OfferPropertyItemResponse) => {
       const tempList = item.list.map((listItem) => {
         return {
@@ -63,6 +74,20 @@ export class CachedDataService {
       return new OfferPropertyList(item.tag, tempList);
     });
   }
+  private createPropertyTextMaps(properties: OfferPropertyItemResponse[]) {
+    const propertyList_de = this.mapMetaDataToPropertyList_de(properties);
+
+    const institutionsProp = propertyList_de.find((value) => value.type == 'institutions').list;
+    const languagesProp = propertyList_de.find((value) => value.type == 'languages').list;
+    const competencesProp = propertyList_de.find((value) => value.type == 'competences').list;
+    const formatsProp = propertyList_de.find((value) => value.type == 'formats').list;
+
+    institutionsProp.forEach((item) => this.institutionMap.set(item.id, item.identifier));
+    languagesProp.forEach((item) => this.languageMap.set(item.id, item.identifier));
+    formatsProp.forEach((item) => this.formatMap.set(item.id, item.identifier));
+    competencesProp.forEach((item) => this.competencesMap.set(item.identifier, item.id));
+  }
+
   ////////////////////////////////////////////////
   ////////////////////////////////////////////////
 }

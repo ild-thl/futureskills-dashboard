@@ -61,53 +61,35 @@ export class OfferService {
     forkJoin([shortOffer$, property$])
       .pipe(
         tap((results) => {
-          const offers = results[0];
-          const properties = results[1];
-          const propertyMap = new Map();
-
-          //console.log('ShortOffers:', offers);
-          //console.log('Properties:', properties);
-          properties.forEach((element) => propertyMap.set(element.type, element.list));
-          //console.log('PropertyMap: ', propertyMap);
-          const institutionsProp: PropertyItem[] = propertyMap.get('institutions');
-          const languagesProp: PropertyItem[] = propertyMap.get('languages');
-          const competencesProp: PropertyItem[] = propertyMap.get('competences');
-          const formatsProp: PropertyItem[] = propertyMap.get('formats');
+          let offers = results[0];
+          //console.log(results);
 
           offers.forEach((offerItem) => {
-            const institution = institutionsProp.find(
-              (value) => value.id === offerItem.institution_id
-            );
-            const language = languagesProp.find((value) => value.id === offerItem.language_id);
-            const format = formatsProp.find((value) => value.id === offerItem.offertype_id);
-
             offerItem.institution = {
               id: offerItem.institution_id,
-              title: institution.identifier,
+              title: this.cachedDataService.institutionMap.get(offerItem.institution_id),
               url: undefined,
             };
-
-            offerItem.language = language.identifier;
-            offerItem.type = format.identifier;
-
-            const techCompetence = competencesProp.find((value) => value.identifier == 'tech');
-            const digitalCompetence = competencesProp.find(
-              (value) => value.identifier == 'digital'
-            );
-            const classicCompetence = competencesProp.find(
-              (value) => value.identifier == 'classic'
-            );
-
-            offerItem.competence_classic = offerItem.competences.includes(classicCompetence.id)
+            offerItem.language = this.cachedDataService.languageMap.get(offerItem.language_id);
+            offerItem.type = this.cachedDataService.formatMap.get(offerItem.offertype_id);
+            offerItem.competence_classic = offerItem.competences.includes(
+              this.cachedDataService.competencesMap.get('classic')
+            )
               ? 1
               : 0;
-            offerItem.competence_digital = offerItem.competences.includes(digitalCompetence.id)
+            offerItem.competence_digital = offerItem.competences.includes(
+              this.cachedDataService.competencesMap.get('digital')
+            )
               ? 1
               : 0;
-            offerItem.competence_tech = offerItem.competences.includes(techCompetence.id) ? 1 : 0;
+            offerItem.competence_tech = offerItem.competences.includes(
+              this.cachedDataService.competencesMap.get('tech')
+            )
+              ? 1
+              : 0;
           });
 
-          console.log('NewOffers:', offers);
+          console.log('ShortOffers:', offers);
           this.offerStore.dispatch({ type: LOAD, data: offers });
         })
       )
@@ -123,8 +105,7 @@ export class OfferService {
         }
       );
 
-
-      return this.offers$;
+    return this.offers$;
   }
 
   getOffer(id: number): Observable<Offer> {

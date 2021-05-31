@@ -38,6 +38,21 @@ export class Offer {
   }
 }
 
+// export class ShortOffer {
+//   public id: number;
+//   public title: string;
+//   public image_path: string;
+//   public competences: number[];
+//   public offertype: {id: number, identifier: string};
+//   public language: {id: number, identifier: string};
+//   public institution: {id: number, identifier: string};
+//   public competence_tech: boolean | number;
+//   public competence_digital: boolean | number;
+//   public competence_classic: boolean | number;
+// }
+
+
+
 // Parts of an Offer
 export type PartialOffer = Partial <Offer>;
 

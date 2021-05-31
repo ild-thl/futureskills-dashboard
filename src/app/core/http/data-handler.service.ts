@@ -48,7 +48,7 @@ export class DataHandlerService {
     this.loadOfferData();
 
     //this.offerService.getAllOfferShortList();
-    this.offerService.alt_getAllOffers();
+    //this.offerService.alt_getAllOffers();
   }
 
   private loadOfferProperties(){
