@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  AsyncSubject,
   BehaviorSubject,
   Observable
 } from 'rxjs';
@@ -22,6 +23,7 @@ import { LOAD, ADD, EDIT, REMOVE, OfferStore } from './offer.store';
 })
 export class OfferService {
   offers$: BehaviorSubject<Offer[]>;
+  private offerShortList$: AsyncSubject<any>;
   //offerChanged$ = new BehaviorSubject({});
 
   constructor(private apiService: ApiService, private offerStore: OfferStore) {
@@ -50,24 +52,17 @@ export class OfferService {
   }
 
   getAllOfferShortList(): Observable<PartialOffer[]> {
-    this.apiService
-      .getAllOffers()
-      .pipe(
-        tap((offers) => {
-          this.offerStore.dispatch({ type: LOAD, data: offers });
-        })
-      )
-      .subscribe(
-        (offers) => {
-          //console.log('Offers geladen', offers);
-        },
-        (error) => {
-          console.log('getAllOffer_Error:', error);
-          let message = error; // Anpassen wenn nötig
-          this.offers$.error(message);
-        }
-      );
-    return this.offers$;
+    return new Observable((observer$)=>{
+      if (!this.offerShortList$) {
+        this.offerShortList$ = new AsyncSubject();
+        this.apiService.getAllOfferShortList().pipe(
+          tap((shortOffers) => {
+            this.offerStore.dispatch({ type: LOAD, data: shortOffers });
+          })
+        ).subscribe(this.offerShortList$);
+      }
+      return this.offerShortList$.subscribe(observer$);
+    })
   }
 
   getOffer(id: number): Observable<Offer> {
