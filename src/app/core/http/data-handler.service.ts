@@ -41,31 +41,16 @@ export class DataHandlerService {
     // Versuchen einzuloggen
     this.authService.autoLogin();
 
-    // Load OfferProperties
-   // this.loadOfferProperties();
-
     // Load Offerdata from start
-    this.loadOfferData();
-
-    //this.offerService.getAllOfferShortList();
-    //this.offerService.alt_getAllOffers();
-  }
-
-  private loadOfferProperties(){
-    this.metaDataService.getOfferProperties().subscribe(
-      next => {
-        console.log('OfferProperties: ', next)
-      },
-      error => console.log('error: ', error)
-    );
+    this.preLoadOfferData();
   }
 
   /**
    * loads All Offers and saves reply/error
    */
-  private loadOfferData() {
+  private preLoadOfferData() {
     console.log('loadOfferData');
-    this.offerService.getAllOfferShortList().subscribe(
+    this.offerService.preloadAllOfferShortList().subscribe(
       (value) => {
         //console.log("OfferData: ", value);
         this._offersAreLoaded$.next({
