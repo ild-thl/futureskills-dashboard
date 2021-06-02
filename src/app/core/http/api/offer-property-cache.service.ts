@@ -19,6 +19,7 @@ export class OfferPropertyCache {
    * OfferList
    */
   private offerShortList$: AsyncSubject<any>;
+  private offerLongList$: AsyncSubject<any>;
   /**
    * PropertyList
    */
@@ -42,6 +43,16 @@ export class OfferPropertyCache {
         this.apiService.getAllOfferShortList().subscribe(this.offerShortList$);
       }
       return this.offerShortList$.subscribe(observer$);
+    });
+  }
+
+  public loadLongOfferList(): Observable<PartialOffer[]> {
+    return new Observable((observer$) => {
+      if (!this.offerLongList$) {
+        this.offerLongList$ = new AsyncSubject();
+        this.apiService.getAllOffers().subscribe(this.offerLongList$);
+      }
+      return this.offerLongList$.subscribe(observer$);
     });
   }
 

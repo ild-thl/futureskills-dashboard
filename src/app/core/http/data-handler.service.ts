@@ -25,8 +25,7 @@ export class DataHandlerService {
 
   constructor(
     private authService: AuthService,
-    private offerService: OfferService,
-    private metaDataService: MetaDataService
+    private offerService: OfferService
   ) {}
 
   /**

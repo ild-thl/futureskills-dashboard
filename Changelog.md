@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## 2021-06-02/ml
+- Offer-Object (Offer-Short + Properties)
+- generated competence-text
 
 ## 2021-05-27/ml
 # Added

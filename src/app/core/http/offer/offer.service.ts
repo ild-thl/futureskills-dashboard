@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AsyncSubject, BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/core/http/api/api.service';
@@ -45,17 +45,16 @@ export class OfferService {
     forkJoin([shortOffer$, property$])
       .pipe(
         tap((results) => {
-          console.log(results);
           let offers = this.mapDataInOfferStructure(results[0]);
-
-          console.log('ShortOffers:', offers);
           this.offerStore.dispatch({ type: LOAD, data: offers });
         })
       )
       .subscribe(
-        (results) => {},
+        (offers) => {
+          console.log('Offers(short) geladen', offers);
+        },
         (error) => {
-          console.log('getAllOfferShortList:', error);
+          console.log('getAllOfferShortList_error:', error);
           let message = error; // Anpassen wenn nötig
           this.offers$.error(message);
         },
@@ -74,10 +73,13 @@ export class OfferService {
    * @returns
    */
    preloadAllOffers(): Observable<Offer[]> {
-    this.apiService
-      .getAllOffers()
+    const property$ = this.offerPropertyCache.loadOfferProperties();
+    const longOffer$ = this.offerPropertyCache.loadLongOfferList();
+
+    forkJoin([longOffer$, property$])
       .pipe(
-        tap((offers) => {
+        tap((results) => {
+          let offers = results[0];
           for (const offerItem of offers) {
             offerItem.competence_text = this.createCompetenceString(offerItem.competences);
           }
@@ -86,7 +88,7 @@ export class OfferService {
       )
       .subscribe(
         (offers) => {
-          console.log('Offers geladen', offers);
+          console.log('Offers(long) geladen', offers);
         },
         (error) => {
           console.log('getAllOffer_Error:', error);
@@ -106,6 +108,7 @@ export class OfferService {
       tap((savedOffer) => {
         console.log('New Offer:', savedOffer);
         // this.offerChanged$.next(savedOffer);
+        savedOffer.competence_text = this.createCompetenceString(savedOffer.competences);
         const action = { type: ADD, data: savedOffer };
         this.offerStore.dispatch(action);
       })
@@ -128,6 +131,7 @@ export class OfferService {
       tap((savedOffer) => {
         // this.offerChanged$.next(savedOffer);
         console.log('Updated Offer:', savedOffer);
+        savedOffer.competence_text = this.createCompetenceString(savedOffer.competences);
         const action = { type: EDIT, data: savedOffer };
         this.offerStore.dispatch(action);
       })
