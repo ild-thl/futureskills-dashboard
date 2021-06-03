@@ -164,18 +164,30 @@ export class OfferService {
     if (competences.length == 0) {
       competenceStr = 'keine Angabe';
     } else {
-      if (competences.includes(this.offerPropertyCache.competencesMap.get('tech'))) {
-        competenceArr.push('Tech');
-      }
-      if (competences.includes(this.offerPropertyCache.competencesMap.get('digital'))) {
-        competenceArr.push('Digital Basic');
-      }
-      if (competences.includes(this.offerPropertyCache.competencesMap.get('classic'))) {
-        competenceArr.push('Classic');
+
+      for (const competence of competences) {
+        const competenceText = this.offerPropertyCache.competencesMap.get(competence);
+        competenceArr.push(this.compworkaroundForText(competenceText));
       }
       competenceStr = competenceArr.join(', ');
     }
     return competenceStr;
+  }
+
+  /**
+   * Die Funktion sorgt dafür dass die Kompetenztexte so angezeigt werden wie vorher
+   * Todo: Besser die einheitliche Description benutzen (siehe offer-property-cache.service)
+   * Die ist im Moment recht lang (siehe Texte in den Filtern)
+   * @param text
+   * @returns
+   */
+  private compworkaroundForText(text: string): string {
+    switch(text){
+      case 'tech': return 'Tech';
+      case 'digital': return 'Digital Basic';
+      case 'classic': return 'Classic';
+      default: return 'NA';
+    }
   }
 
   mapDataInOfferStructure(offers: Partial<Offer>[]): Partial<Offer>[] {

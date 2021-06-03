@@ -29,7 +29,7 @@ export class OfferPropertyCache {
   public institutionMap = new Map<number, string>();
   public languageMap = new Map<number, string>();
   public formatMap = new Map<number, string>();
-  public competencesMap = new Map<string, number>();
+  public competencesMap = new Map<number, string>();
 
   constructor(private apiService: ApiService) {}
 
@@ -116,7 +116,7 @@ export class OfferPropertyCache {
       this.formatMap.set(format.id, format.identifier);
     }
     for (const comp of competencesProp) {
-      this.competencesMap.set(comp.identifier, comp.id);
+      this.competencesMap.set(comp.id, comp.identifier);
     }
   }
 
