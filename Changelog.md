@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ## 2021-06-02/ml
-- Offer-Object (Offer-Short + Properties)
+- Offer-Object (short) is created out of Offer-Short + Properties
 - generated competence-text
 
 ## 2021-05-27/ml
