@@ -1,0 +1,177 @@
+@import "breakpoints";
+
+.student-info {
+
+  &.mission {
+    background-color: tomato;
+    color: #ffffff;
+  }
+  &.about {
+    background-color: lightblue;
+
+    .gc-image {
+      background-image: url(//placehold.it/500x200);
+    }
+    .gc-text {
+      color: green;
+    }
+  }
+  &.competence {
+    background-color: lightpink;
+
+    .gc-image {
+      background-image: url(//placehold.it/500x200);
+    }
+    .gc-text {
+      color: red;
+    }
+  }
+  &.ki {
+    background-color: black;
+
+    .gc-image {
+      background-image: url(~/src/assets/images/robot_web_1920x1080.jpg);
+    }
+    .gc-text {
+      color: white;
+    }
+  }
+  &.example {
+    background-color: lightseagreen;
+
+    .image-container {
+      position: relative;
+
+      .image-item {
+        display: inline-block;
+        position: relative;
+
+        &.image1 {
+          left: 0;
+          top: 0;
+          border: 1px solid green;
+          background-color: chocolate;
+        }
+        &.image2 {
+          left: -10%;
+          top: 4                                                                                                                                                                              0%;
+          border: 1px solid brown;
+          background-color: chocolate;
+        }
+        &.image3 {
+          left: 15%;
+          top: 15%;
+          border: 1px solid yellow;
+          background-color: chocolate;
+        }
+        &.image4 {
+          left: 20%;
+          top: 20%;
+          border: 1px solid red;
+          background-color: chocolate;
+        }
+        &.image5 {
+          left: 25%;
+          top: 25%;
+          border: 1px solid pink;
+          background-color: chocolate;
+        }
+        &.image6 {
+          left: 30%;
+          top: 30%;
+          border: 1px solid blue;
+          background-color: chocolate;
+        }
+      }
+    }
+  }
+  .grid-container {
+    display: grid;
+    grid-template-rows: 200px 1fr;
+    grid-template-columns: 15px repeat(12, 1fr) 15px;
+    align-items: center;
+
+    .gc-image {
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 200px;
+
+      &.col-number {
+        grid-column: 1 / 15;
+      }
+    }
+    .gc-text {
+
+      h1, h2, h3 {
+        padding: 0 15px;
+        margin-bottom: -5px;
+      }
+      p {
+        padding: 15px;
+        margin: 0;
+      }
+      &.col-number {
+        grid-column: 1 / 15;
+      }
+    }
+
+    @media(min-width: $xs) {
+      /* 540/12 */
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr repeat(12, 45px) 1fr;
+      &.about-grid,
+      &.ki-grid {
+        .gc-image {
+          &.col-number {
+            grid-column: 1 / 8;
+          }
+        }
+        .gc-text {
+          &.col-number {
+            grid-column: 8 / 14;
+          }
+        }
+      }
+      &.competence-grid {
+        .gc-image {
+          &.col-number {
+            grid-column: 8 / 15;
+          }
+        }
+        .gc-text {
+          &.col-number {
+            grid-column: 2 / 8;
+          }
+        }
+      }
+    }
+    @media(min-width: $sm) {
+      /* 720/12 */
+      grid-template-columns: 1fr repeat(12, 60px) 1fr;
+    }
+    @media(min-width: $md) {
+      /* 960/12 */
+      grid-template-columns: 1fr repeat(12, 80px) 1fr;
+      &.about-grid,
+      &.ki-grid {
+        .gc-text {
+          &.col-number {
+            grid-column: 8 / 14;
+          }
+        }
+      }
+      &.competence-grid {
+        .gc-text {
+          &.col-number {
+            grid-column: 2 / 8;
+          }
+        }
+      }
+    }
+    @media(min-width: $lg) {
+      /* 1140/12 */
+      grid-template-columns: 1fr repeat(12, 95px) 1fr;
+    }
+  }
+}
