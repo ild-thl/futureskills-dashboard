@@ -74,10 +74,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
 
   loadFilterMetaData() {
     this.metaDataService.getFilterTags().subscribe(
-      (data: OfferPropertyList[]) => {
-        for (var filterItem of data) {
-          this.filterMap.set(filterItem.type, filterItem);
-        }
+      (filterMap: Map<string, OfferPropertyList>) => {
+        this.filterMap = filterMap;
         this.filterListLoaded = true;
       },
       (error) => {

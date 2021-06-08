@@ -25,8 +25,7 @@ export class DataHandlerService {
 
   constructor(
     private authService: AuthService,
-    private offerService: OfferService,
-    private metaDataService: MetaDataService
+    private offerService: OfferService
   ) {}
 
   /**
@@ -41,28 +40,16 @@ export class DataHandlerService {
     // Versuchen einzuloggen
     this.authService.autoLogin();
 
-    // Load OfferProperties
-    this.loadOfferProperties();
-
     // Load Offerdata from start
-    this.loadOfferData();
-  }
-
-  private loadOfferProperties(){
-    this.metaDataService.getOfferProperties().subscribe(
-      next => {
-        console.log('OfferProperties: ', next)
-      },
-      error => console.log('error: ', error)
-    );
+    this.preLoadOfferData();
   }
 
   /**
    * loads All Offers and saves reply/error
    */
-  private loadOfferData() {
+  private preLoadOfferData() {
     console.log('loadOfferData');
-    this.offerService.getAllOffers().subscribe(
+    this.offerService.preloadAllOfferShortList().subscribe(
       (value) => {
         //console.log("OfferData: ", value);
         this._offersAreLoaded$.next({

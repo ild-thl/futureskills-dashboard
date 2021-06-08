@@ -53,7 +53,7 @@ export class ApiService {
 
   public getAllOfferShortList(): Observable<Offer[]> {
     return this.http
-      .get<Offer[]>(environment.apiURL + '/api/offer/short')
+      .get<Offer[]>(environment.apiURL + '/api/list/offer/short')
       .pipe(catchError(this.handleError));
   }
 
