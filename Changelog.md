@@ -7,6 +7,7 @@
 - new static vars for KI
 - new environment var for model path
 - Default Model-Files in assets
+- new Drawable Canvas Component
 # Changed
 - Ki-Tools Page preparing
 

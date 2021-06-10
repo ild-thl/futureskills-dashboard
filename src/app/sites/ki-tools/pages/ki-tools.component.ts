@@ -40,6 +40,7 @@ export class KiToolsComponent implements OnInit {
   }
 
   initializeKITools() {
+    this.isLoadingScripts = true;
     // Erst die Scripte, dann die Modelle laden
     this.scriptLoader
       .load(this.renderer, ['tensorflow'])

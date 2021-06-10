@@ -1,27 +1,26 @@
 <div id="ki-tools">
   <div class="container">
-    <div *ngIf="kitoolsAreOnline==true; then kiOnline else kiOffline"></div>
+    <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
 
     <ng-template #kiOnline>
-      {{ message }}
+      <div *ngIf="!isLoadingScripts; else loading" class="d-flex justify-content-left pt-5">
 
-      <div *ngIf="isLoadingScripts" class="d-flex justify-content-center pt-5">
-        <fs-loading-spinner></fs-loading-spinner>
+        <div class="canvas_border">
+          <fs-number-canvas [width]=300 [height]=300 class="number_canvas"></fs-number-canvas>
+        </div>
+
+
       </div>
-
-
-
-
-
-
+      <ng-template #loading>
+        <div class="d-flex justify-content-center pt-5">
+          <fs-loading-spinner></fs-loading-spinner>
+        </div>
+      </ng-template>
     </ng-template>
     <ng-template #kiOffline>
       <div class="alert alert-primary mt-3" role="alert">
-        Die KI-Tools sind aktuell nicht online.<br>
+        Die KI-Tools sind aktuell nicht online.<br />
       </div>
     </ng-template>
-
-
-
   </div>
 </div>
