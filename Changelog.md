@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## 2021-06-10/ml
+# Added
+- new static vars for KI
+- new environment var for model path
+- Default Model-Files in assets
+# Changed
+- Ki-Tools Page preparing
+
 ## 2021-06-02/ml
 - Offer-Object (short) is created out of Offer-Short + Properties
 - generated competence-text
