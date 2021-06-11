@@ -24,6 +24,7 @@ export const CustomConfig = {
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-tools',
+    lnkKITools_mnist: '/ki-tools/mnist'
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',

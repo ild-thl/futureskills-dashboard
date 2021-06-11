@@ -1,10 +1,10 @@
 <div id="fs-numberCanvas">
   <div class="canvas_border">
-    <fs-drawable-canvas fs-number-prediction [width]=300 [height]=300 (newImage)="predictImage($event)"></fs-drawable-canvas>
-  <!-- <canvas fs-drawable-canvas [width]=width [height]=height>
-    <div class="alert alert-primary mt-3" role="alert">
-      Dein Browser unterstützt kein HTML-Canvas.<br />
-    </div>
-  </canvas> -->
+    <fs-drawable-canvas
+      fs-number-prediction
+      [width]="300"
+      [height]="300"
+      (newImage)="predictImage($event)"
+    ></fs-drawable-canvas>
   </div>
 </div>

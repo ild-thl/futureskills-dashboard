@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'fs-number-canvas',
   templateUrl: './mnist-example.component.html',

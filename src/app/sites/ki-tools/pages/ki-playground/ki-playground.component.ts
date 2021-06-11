@@ -1,9 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
 import { StaticService } from 'src/app/config/static.service';
-import { environment } from 'src/environments/environment';
-
-declare var tf: any;
+import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 
 @Component({
   selector: 'app-ki-playground',
@@ -14,13 +11,13 @@ export class KIPlaygroundComponent implements OnInit {
   isLoadingScripts: boolean;
   isLoadingError: boolean;
   kitoolsAreOnline: boolean;
-  kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
+  lnkKITools_mnist = this.staticService.getPathInfo().lnkKITools_mnist;
   additionalText = '';
 
   constructor(
-    private scriptLoader: ScriptLoaderService,
     private renderer: Renderer2,
-    private staticService: StaticService
+    private staticService: StaticService,
+    private kiStatusService: KiStatusService
   ) {}
 
   ngOnInit(): void {
@@ -29,14 +26,12 @@ export class KIPlaygroundComponent implements OnInit {
 
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
     if (this.kitoolsAreOnline) {
-      this.loadKiPackages();
+      this.loadKIPackages();
     }
   }
 
-  loadKiPackages() {
-    this.isLoadingScripts = true;
-
-    this.scriptLoader.load(this.renderer, ['tensorflow']).subscribe(
+  loadKIPackages(){
+    this.kiStatusService.loadKIScript(this.renderer).subscribe(
       (value) => {
         console.log('init: ', value);
         this.isLoadingError = false;
