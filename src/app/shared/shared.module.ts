@@ -5,7 +5,9 @@ import { RouterModule } from '@angular/router';
 import { RoundButton } from 'src/app/shared/components/round-button/fs-round-button.component';
 import { OfferTileComponent } from 'src/app/shared/components/offer-tile/offer-tile.component';
 import { ErrorBackTextComponent} from 'src/app/shared/components/error-back-text/error-back-text.component';
-import { LoadingSpinnerComponent } from 'src/app/shared//components/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
+import { InfoBannerComponent } from 'src/app/shared/components/info-banner/info-banner.component';
+import { ConsentVideoComponent } from 'src/app/shared/components/consent-video/consent-video.component';
 
 import {
   FaIconLibrary,
@@ -33,7 +35,9 @@ declarations: [
   RoundButton,
   OfferTileComponent,
   ErrorBackTextComponent,
-  LoadingSpinnerComponent
+  LoadingSpinnerComponent,
+  InfoBannerComponent,
+  ConsentVideoComponent
 ],
 imports: [
   CommonModule,
@@ -48,7 +52,9 @@ exports: [
   RoundButton,
   OfferTileComponent,
   ErrorBackTextComponent,
-  LoadingSpinnerComponent
+  LoadingSpinnerComponent,
+  InfoBannerComponent,
+  ConsentVideoComponent
 ]
 })
 

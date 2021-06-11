@@ -8,7 +8,6 @@ import { PreviewInfoBannerComponent } from 'src/app/sites/landing/components/ban
 import { HerocontainerComponent } from 'src/app/sites/landing/components/herocontainer/herocontainer.component';
 import { PartnershipComponent } from 'src/app/sites/landing/components/partnership/partnership.component';
 import { TrailerComponent } from 'src/app/sites/landing/components/trailer/trailer.component';
-import { ConsentVideoComponent } from 'src/app/sites/landing/components/trailer//consent-video/consent-video.component';
 import { CoursecarouselModule } from 'src/app/sites/landing/components/coursecarousel/coursecarousel.module';
 
 @NgModule({
@@ -18,8 +17,7 @@ import { CoursecarouselModule } from 'src/app/sites/landing/components/coursecar
     PreviewInfoBannerComponent,
     HerocontainerComponent,
     PartnershipComponent,
-    TrailerComponent,
-    ConsentVideoComponent,
+    TrailerComponent
   ],
   imports: [RouterModule, SharedModule, CoursecarouselModule],
   exports: [],

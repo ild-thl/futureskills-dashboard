@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## 2021-06-11/ml
+# added
+- shared info banner component
+- consent-video moved to shared
+
 ## 2021-06-02/ml
 - Offer-Object (short) is created out of Offer-Short + Properties
 - generated competence-text
