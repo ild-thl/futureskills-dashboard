@@ -7,6 +7,7 @@ import { OfferTileComponent } from 'src/app/shared/components/offer-tile/offer-t
 import { ErrorBackTextComponent} from 'src/app/shared/components/error-back-text/error-back-text.component';
 import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
 import { InfoBannerComponent } from 'src/app/shared/components/info-banner/info-banner.component';
+import { ConsentVideoComponent } from 'src/app/shared/components/consent-video/consent-video.component';
 
 import {
   FaIconLibrary,
@@ -28,13 +29,15 @@ import {
   faCog
 } from '@fortawesome/free-solid-svg-icons';
 
+
 @NgModule({
 declarations: [
   RoundButton,
   OfferTileComponent,
   ErrorBackTextComponent,
   LoadingSpinnerComponent,
-  InfoBannerComponent
+  InfoBannerComponent,
+  ConsentVideoComponent
 ],
 imports: [
   CommonModule,
@@ -50,7 +53,8 @@ exports: [
   OfferTileComponent,
   ErrorBackTextComponent,
   LoadingSpinnerComponent,
-  InfoBannerComponent
+  InfoBannerComponent,
+  ConsentVideoComponent
 ]
 })
 

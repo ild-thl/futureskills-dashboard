@@ -3,7 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-consent-video',
+  selector: 'fs-consent-video',
   templateUrl: './consent-video.component.html',
   styleUrls: ['./consent-video.component.scss']
 })
