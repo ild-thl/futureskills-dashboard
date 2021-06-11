@@ -3,37 +3,75 @@
 .student-info {
 
   &.mission {
-    background-color: tomato;
+    background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-xs.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
     color: #ffffff;
   }
   &.about {
-    background-color: lightblue;
+    background-color: #ffffff;
 
-    .gc-image {
-      background-image: url(//placehold.it/500x200);
+    .gc-video {
+      iframe {
+        height: 200px;
+        width: 100%;
+      }
     }
-    .gc-text {
-      color: green;
+    .card-container {
+      margin: 0 0 25px 0;
+
+      .card {
+        border: 1px solid #f9f9f9;
+        box-shadow:
+          0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+          0 12.5px 10px rgba(0, 0, 0, 0.035),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+          0 100px 80px rgba(0, 0, 0, 0.07)
+      ;;
+
+        .card-text {
+          padding: 15px;
+        }
+        .blob {
+          width: 100px;
+          height: 100px;
+          margin: 10px;
+          border-right: 4px solid rgba(0,0,0,0.2);
+          &.comic-header {
+            font-size: 70px;
+            -webkit-text-stroke: 2px #fff;
+          }
+          &.var-1 {
+            background-color: rgb(30,174,156);
+            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+          }
+          &.var-2 {
+            background-color: rgb(214,47,135);
+            border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%;
+          }
+          &.var-3 {
+            background-color: rgb(0,160,201);
+            border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%;
+          }
+          &.var-4 {
+            background-color: rgb(181,92,156);
+            border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
+          }
+        }
+
+      }
     }
   }
   &.competence {
-    background-color: lightpink;
-
-    .gc-image {
-      background-image: url(//placehold.it/500x200);
-    }
-    .gc-text {
-      color: red;
-    }
+    background-color: #dddddd;
   }
   &.ki {
     background-color: black;
+    position: relative;
+    color: #ffffff;
 
-    .gc-image {
-      background-image: url(~/src/assets/images/robot_web_1920x1080.jpg);
-    }
-    .gc-text {
-      color: white;
+    .gc-bg-full-image {
+      background-image: url(~src/styles/ressources/backgrounds/robot_web_1920x1080.jpg);
     }
   }
   &.example {
@@ -85,93 +123,99 @@
       }
     }
   }
-  .grid-container {
-    display: grid;
-    grid-template-rows: 200px 1fr;
-    grid-template-columns: 15px repeat(12, 1fr) 15px;
-    align-items: center;
+  .gc-image {
 
-    .gc-image {
-      background-position: center center;
+    .img-right {
+      width: 100vw;
+      max-width: 100vw;
+      right: -50%;
+      position: relative;
+      margin-left: -50vw;
+    }
+    .caption-right {
+      text-align: right;
+      font-style: italic;
+      border-top: 1px dotted #aaa;
+      color: #aaa;
+      font-size: 12px;
+      padding: 10px 0;
+    }
+    &.gc-bg-full-image {
       background-size: cover;
+      background-position: center center;
       background-repeat: no-repeat;
-      height: 200px;
+      position:absolute;
+      top:0;
+      bottom:0;
+      right: 0;
+      left: 0;
+    }
+  }
+  .text-bg {
+    padding: 10px;
+    background-color: rgba(0,0,0,0.7);
+  }
 
-      &.col-number {
-        grid-column: 1 / 15;
-      }
+  @media(min-width: $xs) {
+  }
+  @media(min-width: $sm) {
+    &.mission {
+      background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-sm.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
     }
-    .gc-text {
+    .text-bg {
+      padding: 15px;
+      background-color: transparent;
+    }
+    .gc-image {
 
-      h1, h2, h3 {
-        padding: 0 15px;
-        margin-bottom: -5px;
+      &.gc-bg-full-image {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        position:absolute;
+        top:0;
+        bottom:0;
+        right: 50%;
+        left: 0;
       }
-      p {
-        padding: 15px;
-        margin: 0;
-      }
-      &.col-number {
-        grid-column: 1 / 15;
+      .img-right {
+        width: 50vw;
+        max-width: 700px;
+        left: 95%;
+        position: relative;
+        margin-left: -100%;
       }
     }
+  }
+  @media(min-width: $md) {
+    &.mission {
+      background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-md.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+    }
+    .comic-header {
+      font-size: 55px;
+    }
+    .card-container {
+      .card {
+        min-height: 200px;
 
-    @media(min-width: $xs) {
-      /* 540/12 */
-      grid-template-rows: 1fr;
-      grid-template-columns: 1fr repeat(12, 45px) 1fr;
-      &.about-grid,
-      &.ki-grid {
-        .gc-image {
-          &.col-number {
-            grid-column: 1 / 8;
-          }
-        }
-        .gc-text {
-          &.col-number {
-            grid-column: 8 / 14;
-          }
-        }
-      }
-      &.competence-grid {
-        .gc-image {
-          &.col-number {
-            grid-column: 8 / 15;
-          }
-        }
-        .gc-text {
-          &.col-number {
-            grid-column: 2 / 8;
-          }
+        .row {
+          min-height: 200px;
         }
       }
     }
-    @media(min-width: $sm) {
-      /* 720/12 */
-      grid-template-columns: 1fr repeat(12, 60px) 1fr;
+  }
+  @media(min-width: $lg) {
+    &.mission {
+      background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-lg.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
     }
-    @media(min-width: $md) {
-      /* 960/12 */
-      grid-template-columns: 1fr repeat(12, 80px) 1fr;
-      &.about-grid,
-      &.ki-grid {
-        .gc-text {
-          &.col-number {
-            grid-column: 8 / 14;
-          }
+    .card-container {
+      .card {
+        min-height: 180px;
+
+        .row {
+          min-height: 180px;
         }
       }
-      &.competence-grid {
-        .gc-text {
-          &.col-number {
-            grid-column: 2 / 8;
-          }
-        }
-      }
-    }
-    @media(min-width: $lg) {
-      /* 1140/12 */
-      grid-template-columns: 1fr repeat(12, 95px) 1fr;
     }
   }
 }
