@@ -2,8 +2,13 @@
 
 ## [Unreleased]
 
+## 2021-06-11/ml
+# added
+- shared info banner component
+- consent-video moved to shared
+
 ## 2021-06-10/ml
-# Added
+# added
 - new static vars for KI
 - new environment var for model path
 - Default Model-Files in assets

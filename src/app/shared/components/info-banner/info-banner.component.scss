@@ -1,0 +1,15 @@
+.fs-info-banner {
+  color: #aaa;
+  background-color: #eee;
+
+  p {
+    margin: 0;
+
+    &.fs-info-banner-important-note {
+      background-color: #aaaaaa;
+      color: #ffffff;
+      padding: 0 5px 2px 5px;
+      display: inline-block;
+    }
+  }
+}
