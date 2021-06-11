@@ -39,12 +39,7 @@
         </li>
         <li class="list-group-item">
           <fa-icon [icon]="['fas', 'comment-alt']" class="fa-fw"></fa-icon>
-          &nbsp;<span *ngIf="offerForTile.competence_tech==true">Tech</span>
-          <span *ngIf="offerForTile.competence_tech==true && ( offerForTile.competence_digital==true || offerForTile.competence_classic==true)">, </span>
-          <span *ngIf="offerForTile.competence_digital==true">Digital Basic</span>
-          <span *ngIf="offerForTile.competence_digital==true && offerForTile.competence_classic==true">, </span>
-          <span *ngIf="offerForTile.competence_classic==true">Classic</span>
-          <span *ngIf="offerForTile.competence_tech!=true && offerForTile.competence_digital!=true && offerForTile.competence_classic!=true">keine Angabe</span>
+          &nbsp;{{ offerForTile?.competence_text }}
         </li>
         <li class="list-group-item">
           <fa-icon [icon]="['fas', 'globe-europe']" class="fa-fw"></fa-icon>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FilterList, FilterItem, FilterFunctionCallbackItem } from 'src/app/core/models/offer-filter';
+import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
+import { FilterFunctionCallbackItem } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
 
 @Component({
   selector: 'app-filter-combo-box',
@@ -14,11 +15,11 @@ import { FilterList, FilterItem, FilterFunctionCallbackItem } from 'src/app/core
 })
 export class FilterComboBoxComponent implements OnInit {
   @Input() defaultText: string;
-  @Input() filterList: FilterList;
+  @Input() filterList: OfferPropertyList;
   @Output() valueChanged = new EventEmitter<FilterFunctionCallbackItem>();
 
   currentText: string = '';
-  filterItems: FilterItem[];
+  filterItems: PropertyItem[];
   currentIndex: number = -1;
 
   constructor() {}
@@ -30,7 +31,7 @@ export class FilterComboBoxComponent implements OnInit {
     this.loadData();
   }
 
-  setFilter(item: FilterItem) {
+  setFilter(item: PropertyItem) {
     if (item.id === this.currentIndex) return;
 
     this.currentIndex = item.id;

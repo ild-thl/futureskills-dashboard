@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## 2021-06-11/ml
+# added
+- shared info banner component
+- consent-video moved to shared
+
+## 2021-06-02/ml
+- Offer-Object (short) is created out of Offer-Short + Properties
+- generated competence-text
+
+## 2021-05-27/ml
+# Added
+- getAllOfferShortList (Short OfferList)
+- filter are offerProperties now
+- properties are loaded once when needed
+- padding fs-round button to 10px
+
 ## 2021-05-27/dn/dk
 ### Changed
 - Padding fix in hero carousel

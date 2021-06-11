@@ -8,7 +8,7 @@ import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 
 import { Offer } from 'src/app/core/models/offer';
-import { FilterList } from 'src/app/core/models/offer-filter';
+import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 
 @Component({
   selector: 'app-offer-list',
@@ -74,10 +74,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
 
   loadFilterMetaData() {
     this.metaDataService.getFilterTags().subscribe(
-      (data: FilterList[]) => {
-        for (var filterItem of data) {
-          this.filterMap.set(filterItem.type, filterItem);
-        }
+      (filterMap: Map<string, OfferPropertyList>) => {
+        this.filterMap = filterMap;
         this.filterListLoaded = true;
       },
       (error) => {

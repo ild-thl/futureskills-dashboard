@@ -14,6 +14,7 @@ export class Offer {
     url: string;
   };
   public competences: number[];
+  public competence_text: string;
   public institution_id: number;
   public language_id: number;
   public offertype_id: number;
@@ -26,9 +27,9 @@ export class Offer {
   public target_group: string;
   public url: string;
   public sort_flag: number;
-  public competence_tech: boolean;
-  public competence_digital: boolean;
-  public competence_classic: boolean;
+  public competence_tech: boolean | number;
+  public competence_digital: boolean | number;
+  public competence_classic: boolean | number;
   public relatedOffers: number[];
 
   constructor(
@@ -37,6 +38,17 @@ export class Offer {
     this.id = id;
   }
 }
+
+// unused, für später
+// export class ShortOfferTileData {
+//   public id: number;
+//   public title: string;
+//   public image_path: string;
+//   public offertype: {id: number, text: string};
+//   public language: {id: number, text: string};
+//   public institution: {id: number, text: string};
+//   public competence: {ids: number[], text: string};
+// }
 
 // Parts of an Offer
 export type PartialOffer = Partial <Offer>;

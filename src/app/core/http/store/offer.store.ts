@@ -46,7 +46,7 @@ export class OfferStore {
           return editedOffer;
         });
       case REMOVE:
-        return offers.filter((task) => task.id !== action.data.id);
+        return offers.filter((offer) => offer.id !== action.data.id);
       default:
         return offers;
     }
