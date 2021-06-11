@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
 import { StaticService } from 'src/app/config/static.service';
 import { empty, of } from 'rxjs';
-import { delay, startWith, concatMap, tap } from 'rxjs/operators';
+import { delay, startWith, concatMap, tap, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 declare var tf: any;
@@ -16,9 +16,8 @@ export class KiToolsComponent implements OnInit {
   isLoadingScripts: boolean;
   isLoadingError: boolean;
   kitoolsAreOnline: boolean;
-  mnistModel: any;
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
-  additionalText=''
+  additionalText = '';
 
   delayedMessage = (message, delayedTime = 1000) => {
     return empty().pipe(startWith(message), delay(delayedTime));
@@ -36,40 +35,27 @@ export class KiToolsComponent implements OnInit {
 
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
     if (this.kitoolsAreOnline) {
-      this.initializeKITools();
+      this.loadKiPackages();
     }
   }
 
-  initializeKITools() {
+  loadKiPackages() {
     this.isLoadingScripts = true;
-    // Erst die Scripte, dann die Modelle laden
-    this.scriptLoader
-      .load(this.renderer, ['tensorflow'])
-      .pipe(
-        tap((value) => {
-          console.log('Scripte:', value)
-        }),
-        concatMap((val) => this.loadModels().pipe())
-      )
-      .subscribe(
-        (value) => {
-          console.log('init: ', value);
-          this.isLoadingError = false;
-        },
-        (error) => {
-          console.log('Error: ', error);
-          this.isLoadingError = true;
-        },
-        () => {
-          console.log('Completed: ');
-          this.additionalText = '';
-          this.isLoadingScripts = false;
-        }
-      );
-  }
 
-  loadModels() {
-    console.log('PAth to Models', this.kiToolsModelPath);
-    return of('Todo: Modelle laden');
+    this.scriptLoader.load(this.renderer, ['tensorflow']).subscribe(
+      (value) => {
+        console.log('init: ', value);
+        this.isLoadingError = false;
+      },
+      (error) => {
+        console.log('Error: ', error);
+        this.isLoadingError = true;
+      },
+      () => {
+        console.log('Completed: ');
+        this.additionalText = '';
+        this.isLoadingScripts = false;
+      }
+    );
   }
 }

@@ -1,31 +1,89 @@
 <div id="ki-tools">
-  <div>
-    <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
+  <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
 
-    <ng-template #kiOnline>
-      <div *ngIf="!isLoadingScripts; else loading">
-        <!--<div class="canvas_border">
+  <ng-template #kiOnline>
+    <div *ngIf="!isLoadingScripts; else loading">
+      <section class="py-md-5 pt-4 pb-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-10 col-lg-7">
+              <h3 class="h1">KI-Playground</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+                eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+                consetetur sadipscing elitr, sed diam
+              </p>
+            </div>
+          </div>
+          <!-- end of .row -->
+
+          <div class="card-deck">
+            <div class="card">
+              <img src="assets/images/mnist_top.png" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">MNIST Beispiel</h5>
+                <p class="card-text">
+                  Das Standard-Beispiel für Bilderkennung: Die Klassifizierung handgeschriebener
+                  Ziffern.
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"> <a class="card-link">Beispiel starten</a></small>
+              </div>
+            </div>
+
+            <div class="card">
+              <!--<img src="..." class="card-img-top" alt="..." />-->
+              <div class="card-body">
+                <h5 class="card-title">Sentiment-Analyse</h5>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+                  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"> <a class="card-link">Beispiel starten</a></small>
+              </div>
+            </div>
+
+
+            <div class="card bg-dark text-white">
+              <img src="assets/images/mnist.png" class="card-img overlay" alt="..." />
+              <div class="card-img-overlay">
+                <h5 class="card-title">MNIST Beispiel</h5>
+                <p class="card-text">
+                  Das Standard-Beispiel für Bilderkennung: Die Klassifizierung handgeschriebener
+                  Ziffern.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container -->
+      </section>
+
+      <!--<div class="canvas_border">
           <fs-number-canvas [width]=300 [height]=300 class="number_canvas"></fs-number-canvas>
         </div>-->
-      </div>
-      <ng-template #loading>
+    </div>
 
-        <div class="alert alert-primary mt-3" role="alert">
-          Ki-Tools werden geladen. {{ additionalText }}
-        </div>
-
-        <div class="d-flex justify-content-center pt-5">
-
-
-
-          <fs-loading-spinner></fs-loading-spinner>
-        </div>
-      </ng-template>
-    </ng-template>
-    <ng-template #kiOffline>
-      <div class="alert alert-primary mt-3" role="alert">
-        Die KI-Tools sind aktuell nicht online.<br />
+    <ng-template #loading>
+      <fs-info-banner>
+        <p>Ki-Tools werden geladen.</p>
+        <p>{{ additionalText }}</p>
+      </fs-info-banner>
+      <div class="d-flex justify-content-center pt-5">
+        <fs-loading-spinner></fs-loading-spinner>
       </div>
     </ng-template>
-  </div>
+  </ng-template>
+
+  <ng-template #kiOffline>
+    <fs-info-banner>
+      <p>Die KI-Tools sind aktuell nicht online.</p>
+    </fs-info-banner>
+  </ng-template>
 </div>
