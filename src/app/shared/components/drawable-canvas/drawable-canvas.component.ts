@@ -7,23 +7,21 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
-  Inject,
   Renderer2,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fs-drawable-canvas',
   templateUrl: './drawable-canvas.component.html',
-  styleUrls: ['./drawable-canvas.component.scss'],
+  styles: [],
 })
 export class DrawableCanvasComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) public canvas: ElementRef;
   @Input() public width = 200;
   @Input() public height = 200;
-  @Input() public imageSize = 28
+  @Input() public imageSize = 28;
   @Output() newImage = new EventEmitter();
 
   offScreenCanvas: any;
@@ -32,7 +30,7 @@ export class DrawableCanvasComponent implements OnInit, OnDestroy {
   mouseDrawingEventSubscription: Subscription;
   mouseLeavingEventSubscription: Subscription;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: Document) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
   ngOnInit(): void {
     this.offScreenCanvas = this.renderer.createElement('canvas');
     this.offScreenCanvas.height = this.imageSize;

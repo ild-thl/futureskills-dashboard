@@ -16,8 +16,9 @@ export class KiToolsComponent implements OnInit {
   isLoadingScripts: boolean;
   isLoadingError: boolean;
   kitoolsAreOnline: boolean;
+  mnistModel: any;
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
-  message = '';
+  additionalText=''
 
   delayedMessage = (message, delayedTime = 1000) => {
     return empty().pipe(startWith(message), delay(delayedTime));
@@ -45,7 +46,9 @@ export class KiToolsComponent implements OnInit {
     this.scriptLoader
       .load(this.renderer, ['tensorflow'])
       .pipe(
-        tap((value) => console.log('Scripte:', value)),
+        tap((value) => {
+          console.log('Scripte:', value)
+        }),
         concatMap((val) => this.loadModels().pipe())
       )
       .subscribe(
@@ -58,7 +61,8 @@ export class KiToolsComponent implements OnInit {
           this.isLoadingError = true;
         },
         () => {
-          //console.log('Completed: ');
+          console.log('Completed: ');
+          this.additionalText = '';
           this.isLoadingScripts = false;
         }
       );

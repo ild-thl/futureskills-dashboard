@@ -7,10 +7,11 @@ import { NumberCanvasComponent } from './components/number-canvas/number-canvas.
 import { PredictNumberDirective } from './components/number-canvas/predict-number.directive';
 
 @NgModule({
-  declarations: [KiToolsComponent, NumberCanvasComponent, PredictNumberDirective],
-  imports: [
-    SharedModule,
-    KiToolsRoutingModule,
-  ]
+  declarations: [
+    KiToolsComponent,
+    NumberCanvasComponent,
+    PredictNumberDirective
+  ],
+  imports: [SharedModule, KiToolsRoutingModule],
 })
-export class KiToolsModule { }
+export class KiToolsModule {}

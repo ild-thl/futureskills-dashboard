@@ -1,18 +1,23 @@
 <div id="ki-tools">
-  <div class="container">
+  <div>
     <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
 
     <ng-template #kiOnline>
-      <div *ngIf="!isLoadingScripts; else loading" class="d-flex justify-content-left pt-5">
-
-        <div class="canvas_border">
+      <div *ngIf="!isLoadingScripts; else loading">
+        <!--<div class="canvas_border">
           <fs-number-canvas [width]=300 [height]=300 class="number_canvas"></fs-number-canvas>
-        </div>
-
-
+        </div>-->
       </div>
       <ng-template #loading>
+
+        <div class="alert alert-primary mt-3" role="alert">
+          Ki-Tools werden geladen. {{ additionalText }}
+        </div>
+
         <div class="d-flex justify-content-center pt-5">
+
+
+
           <fs-loading-spinner></fs-loading-spinner>
         </div>
       </ng-template>
