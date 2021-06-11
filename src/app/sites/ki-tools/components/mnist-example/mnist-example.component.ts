@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'fs-number-canvas',
-  templateUrl: './number-canvas.component.html',
-  styleUrls: ['./number-canvas.component.scss']
+  templateUrl: './mnist-example.component.html',
+  styleUrls: ['./mnist-example.component.scss']
 })
-export class NumberCanvasComponent implements OnInit {
+export class MNISTExampleComponent implements OnInit {
   @Input() public width = 200;
   @Input() public height = 200;
   constructor() { }
