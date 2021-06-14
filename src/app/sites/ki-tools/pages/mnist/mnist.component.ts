@@ -1,10 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
-import { environment } from 'src/environments/environment';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { from } from 'rxjs';
-import { tap, concatMap } from 'rxjs/operators';
-declare var tf: any;
 
 @Component({
   selector: 'app-mnist',
@@ -17,7 +13,7 @@ export class MnistComponent implements OnInit {
   kitoolsAreOnline: boolean;
   model: any;
   lnkKITools = this.staticService.getPathInfo().lnkKITools;
-  kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
+  scriptIsLoaded = false;
 
   constructor(
     private renderer: Renderer2,
@@ -35,27 +31,18 @@ export class MnistComponent implements OnInit {
     }
   }
 
+  // Falls die Scripte nicht geladen sind
   loadKIPackages() {
-    this.kiStatusService
-      .loadKIScript(this.renderer).subscribe(
-        (model) => {
-          this.loadModel();
-        },
-        (error) => {
-          console.log('Error: ', error);
-          this.isError = true;
-        }
-      );
-  }
-
-  loadMnistModel() {
-    this.model = from(tf.loadLayersModel(this.kiToolsModelPath));
-    return this.model;
-  }
-
-  async loadModel() {
-    this.model = await tf.loadLayersModel(this.kiToolsModelPath);
-   // console.log(this.model.summary());
-    this.isLoading = false;
+    this.kiStatusService.loadKIScript(this.renderer).subscribe(
+      (script) => {
+        this.scriptIsLoaded = true;
+        this.isError = false;
+      },
+      (error) => {
+        console.log('Error: ', error);
+        this.scriptIsLoaded = false;
+        this.isError = true;
+      }
+    );
   }
 }

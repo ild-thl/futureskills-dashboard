@@ -1,10 +1,12 @@
 import { Injectable, Renderer2 } from '@angular/core';
 import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
-import { AsyncSubject, Observable } from 'rxjs';
+import { AsyncSubject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class KiStatusService {
   private scriptLoading$: AsyncSubject<any>;
+  public imageDraw: BehaviorSubject<any> = new BehaviorSubject(null);
+
   constructor(private scriptLoader: ScriptLoaderService) {}
 
   public loadKIScript(renderer: Renderer2): Observable<any> {

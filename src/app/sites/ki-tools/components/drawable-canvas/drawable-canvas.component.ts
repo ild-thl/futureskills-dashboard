@@ -1,3 +1,4 @@
+import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import {
   Component,
   ElementRef,
@@ -19,27 +20,48 @@ import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 })
 export class DrawableCanvasComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) public canvas: ElementRef;
+  //@ViewChild('scaleCanvas', { static: true }) public scaleCanvas: ElementRef;
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() public imageSize = 28;
+  @Input() events: Observable<string>;
   @Output() newImage = new EventEmitter();
 
-  offScreenCanvas: any;
-  ctx: CanvasRenderingContext2D;
-  canvasHtmlElement: HTMLCanvasElement;
+  canvasHtmlElement: HTMLCanvasElement; //Zeichencanvas
+  ctx: CanvasRenderingContext2D; // Zeichencanvas Context
+  scalingCanvasHTMLElement: HTMLCanvasElement; // Scaling Canvas
+  scaling_ctx: CanvasRenderingContext2D;
+
   mouseDrawingEventSubscription: Subscription;
   mouseLeavingEventSubscription: Subscription;
+  eventSubscription: Subscription;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private kiService: KiStatusService
+  ) {}
+
   ngOnInit(): void {
-    this.offScreenCanvas = this.renderer.createElement('canvas');
-    this.offScreenCanvas.height = this.imageSize;
-    this.offScreenCanvas.width = this.imageSize;
+    this.eventSubscription = this.events.subscribe(event =>{
+      if (event==='action:clear'){
+        this.clear();
+      }
+    })
   }
+
   ngAfterViewInit(): void {
     this.canvasHtmlElement = this.canvas.nativeElement as HTMLCanvasElement;
     this.ctx = this.canvasHtmlElement.getContext('2d');
+    this.canvasHtmlElement.width = this.width;
+    this.canvasHtmlElement.height = this.height;
     this.styleCanvas();
+
+    //this.scalingCanvasHTMLElement = this.scaleCanvas.nativeElement as HTMLCanvasElement;
+    this.scalingCanvasHTMLElement = this.renderer.createElement('canvas') as HTMLCanvasElement;
+    this.scaling_ctx = this.scalingCanvasHTMLElement.getContext('2d');
+    this.scalingCanvasHTMLElement.height = this.imageSize;
+    this.scalingCanvasHTMLElement.width = this.imageSize;
 
     this.mouseDrawingEventSubscription = this.captureDrawingCanvasEvents().subscribe(
       (mouseEvnt: [MouseEvent, MouseEvent]) => {
@@ -58,14 +80,16 @@ export class DrawableCanvasComponent implements OnInit, OnDestroy {
 
     this.mouseLeavingEventSubscription = fromEvent(this.canvasHtmlElement, 'mouseup').subscribe(
       (leaveEvent: MouseEvent) => {
-        const image = this.offScreenCanvas.getContext('2d').drawImage(this.canvasHtmlElement, 0, 0, 28, 28);
-
-        //const image = this.ctx.drawImage(this.canvasHtmlElement, 0, 0, 28, 28);
-        const imageData = this.ctx.getImageData(0, 0, 28, 28);
-        this.newImage.emit(imageData);
+        this.newImage.emit(this.scaleImageData());
       }
     );
   }
+
+  scaleImageData(): ImageData {
+    this.scaling_ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
+    return this.scaling_ctx.getImageData(0, 0, this.imageSize, this.imageSize);
+  }
+
   ngOnDestroy(): void {
     if (this.mouseDrawingEventSubscription) this.mouseDrawingEventSubscription.unsubscribe();
     if (this.mouseLeavingEventSubscription) this.mouseLeavingEventSubscription.unsubscribe();
@@ -97,10 +121,12 @@ export class DrawableCanvasComponent implements OnInit, OnDestroy {
     }
   }
 
+  public clear(): void {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.scaling_ctx.clearRect(0, 0, this.imageSize, this.imageSize);
+  }
+
   private styleCanvas() {
-    this.canvasHtmlElement.width = this.width;
-    this.canvasHtmlElement.height = this.height;
-    //this.ctx.font = '50px Arial';
     this.ctx.fillStyle = '#FFFFFF';
     this.ctx.fillRect(0, 0, this.canvasHtmlElement.width, this.canvasHtmlElement.height); //for white background
     //this.ctx.globalCompositeOperation = 'source-over';

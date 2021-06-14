@@ -7,13 +7,15 @@ import { MNISTExampleComponent } from './components/mnist-example/mnist-example.
 import { PredictNumberDirective } from './components/mnist-example/predict-number.directive';
 import { KIPlaygroundComponent } from './pages/ki-playground/ki-playground.component';
 import { MnistComponent } from './pages/mnist/mnist.component';
+import { DrawableCanvasComponent } from './components/drawable-canvas/drawable-canvas.component';
 
 @NgModule({
   declarations: [
     MNISTExampleComponent,
     PredictNumberDirective,
     KIPlaygroundComponent,
-    MnistComponent
+    MnistComponent,
+    DrawableCanvasComponent
   ],
   imports: [SharedModule, KiToolsRoutingModule],
   providers: [KiStatusService]
