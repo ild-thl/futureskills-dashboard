@@ -73,7 +73,7 @@
         </div>
 
       </div>
-      <div class="col-12 col-lg-6 pt-md-4">
+      <div class="col-12 col-lg-6 pt-lg-4">
 
         <div class="card-container">
           <div class="card">
@@ -132,10 +132,10 @@
             <li>digitale Grundfähigkeiten und</li>
             <li>klassische Fähigkeiten.</li>
           </ul>
-
-          <img class="img-fluid pyramide" src="assets/images/projekt-fs-pyramide.png">
-          <figcaption class="caption-right">Das FutureSkills-Kompetenzraster</figcaption>
-
+          <figure>
+            <img class="img-fluid pyramide" src="assets/images/projekt-fs-pyramide.png">
+            <figcaption class="caption-center">Die FutureSkills Pyramide</figcaption>
+          </figure>
           <p>Daher werden auf den FutureSkills-Kursinformationsseiten die Angebote in die Programme Tech,
             Digital und Classic eingeordnet und Du kannst die Plattform danach gezielt durchsuchen.
           </p>
@@ -144,8 +144,11 @@
           </p>
       </div>
       <div class="gc-image col-12 col-md-6 order-2">
-        <img class="img-fluid img-right" src="assets/images/Kompetenzraster-Desktop.png">
-        <figcaption class="caption-right">Das FutureSkills-Kompetenzraster</figcaption>
+        <figure>
+          <img class="img-fluid img-right d-none d-sm-block desktop-image" src="assets/images/Kompetenzraster-Desktop_web.png">
+          <img class="img-fluid img-right d-block d-sm-none mobile-image" src="assets/images/Kompetenzraster-mobile_web.png">
+          <figcaption class="caption-right">Das FutureSkills-Kompetenzraster</figcaption>
+        </figure>
       </div>
   </div>
   </div>
@@ -165,41 +168,11 @@
           in welchen Bereichen sie bereits eingesetzt wird und wie sie uns zukünftig unterstützen kann. Die FutureSkills-Plattform
           schenkt dem Thema besondere Beachtung und bietet spezielle Kurse an, um Zusammenhänge zu erklären und dir Begriffe wie
           DataScience, Machine Learning und DeepLearning näher zu bringen.</p>
-          <p>Hier [Link] findest du Beispiele was Machine Learning bereits leistet und weitere Verweise zu Seiten,
-            die spannende Anwendungen demonstrieren.</p>
       </div>
     </div>
   </div>
 
 </section>
-
-<!--<section class="student-info example py-md-5 pt-4 pb-5">
-
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-
-      <div class="col-6">
-        <div class="image-container">
-          <div class="image-item image1"><img src="//placehold.it/300"></div>
-          <div class="image-item image2"><img src="//placehold.it/400"></div>
-          <div class="image-item image3"><img src="//placehold.it/200"></div>
-          <div class="image-item image4"><img src="//placehold.it/200"></div>
-          <div class="image-item image5"><img src="//placehold.it/300"></div>
-          <div class="image-item image6"><img src="//placehold.it/300"></div>
-        </div>
-      </div>
-      <div class="col-6">
-        <h3>Ein FutureSkills Beispiel</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Quis, soluta ullam? Enim, voluptatibus. Minus sed magni ab
-          veritatis modi aut fugiat eveniet cupiditate, provident
-          quibusdam totam aliquid deleniti laborum fugit.</p>
-      </div>
-
-    </div>
-  </div>
-
-</section>-->
 
 <section class="student-info project-cta py-5">
 
@@ -207,10 +180,10 @@
     <div class="row">
 
       <div class="col-12 d-flex justify-content-center align-items-center">
-        <h3 class="comic-header text-left">Schaut doch mal hier rein.</h3>
+        <h3 class="comic-header text-left">Schaut doch mal rein >></h3>
       </div>
       <div class="col-12 d-flex justify-content-center align-items-center">
-        <fs-round-button>Alle Kurse</fs-round-button>
+        <fs-round-button [routerLink]="lnkOffers">Zeige alle Kurse</fs-round-button>
       </div>
 
     </div> <!-- end of .row -->
