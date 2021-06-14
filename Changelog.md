@@ -6,6 +6,10 @@
 # added
 - Re-added the angular editor for offer edit
 
+## 2021-06-14/avz
+# added
+- added student info page
+
 ## 2021-06-11/ml
 # added
 - shared info banner component
