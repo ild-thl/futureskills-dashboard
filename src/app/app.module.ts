@@ -32,6 +32,7 @@ import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-
 // Admin
 import { OfferEditComponent } from 'src/app/sites/admin/pages/offer-edit/offer-edit.component';
 import { OfferRelationsSelectionComponent } from 'src/app/sites/admin/components/offer-relations-selection/offer-relations-selection.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 // Sonst
 import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
@@ -73,7 +74,8 @@ import { HeaderComponent } from 'src/app/sites/app-root/components/header/header
     FormsModule,
     ReactiveFormsModule,
     LandingPageModule,
-    SharedModule
+    SharedModule,
+    AngularEditorModule
   ],
   providers: [
     CookieService,
