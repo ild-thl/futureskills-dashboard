@@ -4,7 +4,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { KiToolsRoutingModule } from './ki-tools-routing.module';
 import { MNISTExampleComponent } from './components/mnist-example/mnist-example.component';
-import { PredictNumberDirective } from './components/mnist-example/predict-number.directive';
 import { KIPlaygroundComponent } from './pages/ki-playground/ki-playground.component';
 import { MnistComponent } from './pages/mnist/mnist.component';
 import { DrawableCanvasComponent } from './components/drawable-canvas/drawable-canvas.component';
@@ -12,7 +11,6 @@ import { DrawableCanvasComponent } from './components/drawable-canvas/drawable-c
 @NgModule({
   declarations: [
     MNISTExampleComponent,
-    PredictNumberDirective,
     KIPlaygroundComponent,
     MnistComponent,
     DrawableCanvasComponent
