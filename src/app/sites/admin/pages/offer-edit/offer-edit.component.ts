@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer, OfferMeta } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
+import { AngularEditorModule, AngularEditorConfig } from '@kolkov/angular-editor';
 
 interface Alert {
   type: string;
@@ -42,30 +43,27 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     private staticConfig: StaticService
   ) {}
 
-  // todo: Für den Editor noch einen Ersatz finden
-
-  // editorConfig: AngularEditorConfig = {
-  //   editable: true,
-  //   spellcheck: false,
-  //   translate: 'no',
-  //   enableToolbar: true,
-  //   showToolbar: true,
-  //   toolbarPosition: 'top',
-  //   width: '100%',
-  //   toolbarHiddenButtons: [
-  //     [
-  //       'strikeThrough',
-  //       'heading',
-  //       'fontName',
-  //       'cut',
-  //       'copy',
-  //       'delete',
-  //       'removeFormat',
-  //       'backgroundColorPicker',
-  //     ],
-  //   ],
-  // };
-
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: false,
+    translate: 'no',
+    enableToolbar: true,
+    showToolbar: true,
+    toolbarPosition: 'top',
+    width: '100%',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'heading',
+        'fontName',
+        'cut',
+        'copy',
+        'delete',
+        'removeFormat',
+        'backgroundColorPicker',
+      ],
+    ],
+  };
 
   ngOnInit() {
     const offerId = +this.route.snapshot.params.id;
