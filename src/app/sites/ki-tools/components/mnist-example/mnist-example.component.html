@@ -1,17 +1,15 @@
-<div class="row">
-  <div class="col-sm drawable_canvas_border">
-    <fs-drawable-canvas
-      fs-number-prediction
-      [width]="300"
-      [height]="300"
-      [events]="eventSubject.asObservable()"
-      (newImage)="predict($event)"
-    ></fs-drawable-canvas>
-
-
-  <button class="btn btn-sm btn-info" (click)="clearButtonClicked()">Löschen</button>
-  </div>
-  <div class="col-sm">
-    Zahl:  {{ predicted }}
+<div class="mnist-example">
+  <div class="row justify-content-center">
+    <div class="col-sm">
+      <div class="canvas-border">
+        <fs-drawable-canvas
+          [width]="300"
+          [height]="300"
+          (newImage)="predict($event)"
+        ></fs-drawable-canvas>
+      </div>
+      <button class="btn btn-sm btn-info" (click)="onClearButtonClicked()">Löschen</button>
+    </div>
+    <div class="col-sm">Zahl: {{ predicted }}</div>
   </div>
 </div>

@@ -1,4 +1,3 @@
-import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import {
   Component,
   ElementRef,
@@ -9,6 +8,7 @@ import {
   Output,
   EventEmitter,
   Renderer2,
+  AfterViewInit,
 } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
@@ -18,13 +18,11 @@ import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
   templateUrl: './drawable-canvas.component.html',
   styles: [],
 })
-export class DrawableCanvasComponent implements OnInit, OnDestroy {
+export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) public canvas: ElementRef;
-  //@ViewChild('scaleCanvas', { static: true }) public scaleCanvas: ElementRef;
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() public imageSize = 28;
-  @Input() events: Observable<string>;
   @Output() newImage = new EventEmitter();
 
   canvasHtmlElement: HTMLCanvasElement; //Zeichencanvas
@@ -37,27 +35,21 @@ export class DrawableCanvasComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
 
   constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private kiService: KiStatusService
+    private renderer: Renderer2
   ) {}
 
-  ngOnInit(): void {
-    this.eventSubscription = this.events.subscribe(event =>{
-      if (event==='action:clear'){
-        this.clear();
-      }
-    })
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.canvasHtmlElement = this.canvas.nativeElement as HTMLCanvasElement;
     this.ctx = this.canvasHtmlElement.getContext('2d');
     this.canvasHtmlElement.width = this.width;
     this.canvasHtmlElement.height = this.height;
-    this.styleCanvas();
+    this.ctx.lineWidth = 11;
+    this.ctx.lineCap = 'round';
+    this.ctx.strokeStyle = '#111111';
+    //this.resetCanvas();
 
-    //this.scalingCanvasHTMLElement = this.scaleCanvas.nativeElement as HTMLCanvasElement;
     this.scalingCanvasHTMLElement = this.renderer.createElement('canvas') as HTMLCanvasElement;
     this.scaling_ctx = this.scalingCanvasHTMLElement.getContext('2d');
     this.scalingCanvasHTMLElement.height = this.imageSize;
@@ -85,9 +77,17 @@ export class DrawableCanvasComponent implements OnInit, OnDestroy {
     );
   }
 
-  scaleImageData(): ImageData {
-    this.scaling_ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
-    return this.scaling_ctx.getImageData(0, 0, this.imageSize, this.imageSize);
+  public clearCanvas(): void {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.scaling_ctx.clearRect(0, 0, this.imageSize, this.imageSize);
+    //this.resetCanvas();
+  }
+
+  private scaleImageData(): ImageData {
+    // this.scaling_ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
+    // return this.scaling_ctx.getImageData(0, 0, this.imageSize, this.imageSize);
+    this.ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
+    return this.ctx.getImageData(0, 0, this.imageSize, this.imageSize);
   }
 
   ngOnDestroy(): void {
@@ -121,19 +121,10 @@ export class DrawableCanvasComponent implements OnInit, OnDestroy {
     }
   }
 
-  public clear(): void {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    this.scaling_ctx.clearRect(0, 0, this.imageSize, this.imageSize);
+  private resetCanvas(){
+     this.ctx.fillStyle = '#FFFFFF';
+     this.ctx.fillRect(0, 0, this.canvasHtmlElement.width, this.canvasHtmlElement.height);
   }
 
-  private styleCanvas() {
-    this.ctx.fillStyle = '#FFFFFF';
-    this.ctx.fillRect(0, 0, this.canvasHtmlElement.width, this.canvasHtmlElement.height); //for white background
-    //this.ctx.globalCompositeOperation = 'source-over';
 
-    this.ctx.lineWidth = 11;
-    this.ctx.lineCap = 'round';
-    this.ctx.strokeStyle = '#111111';
-    //this.ctx.strokeRect(0, 0, this.canvasHtmlElement.width, this.canvasHtmlElement.height);
-  }
 }

@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { from, Subject } from 'rxjs';
+import { from } from 'rxjs';
+import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.component';
 
 declare var tf: any;
 
@@ -15,32 +16,24 @@ export class MNISTExampleComponent implements OnInit {
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() scriptLoaded = false;
-  //@ViewChild('minicanvas', { static: true }) public minicanvas: ElementRef;
+  @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
 
+  private modelLoaded = false;
   private model: any;
   predicted: string = '';
-  private modelLoaded = false;
   public predictions = new Array(10);
   miniCanvasHTMLElement: HTMLCanvasElement;
   miniCanvasHTMLContext: CanvasRenderingContext2D;
 
   constructor(private kiService: KiStatusService, private staticService: StaticService) {}
 
-  eventSubject: Subject<string> = new Subject<string>();
-
   lnkKITools = this.staticService.getPathInfo().lnkKITools;
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
 
   ngOnChanges() {
-    console.log('Scripts loaded: ', this.scriptLoaded);
-    if (this.scriptLoaded) {
+    if (this.scriptLoaded && !this.modelLoaded) {
       this.loadingModel();
     }
-  }
-
-  ngAfterViewInit() {
-    //this.miniCanvasHTMLElement = this.minicanvas.nativeElement;
-    //this.miniCanvasHTMLContext = this.miniCanvasHTMLElement.getContext('2d');
   }
 
   ngOnInit(): void {}
@@ -48,8 +41,8 @@ export class MNISTExampleComponent implements OnInit {
   loadingModel() {
     from(tf.loadLayersModel(this.kiToolsModelPath)).subscribe((model) => {
       this.model = model;
-      //console.log(this.model.summary());
       this.modelLoaded = true;
+      console.log(this.model.summary());
     });
   }
 
@@ -80,7 +73,8 @@ export class MNISTExampleComponent implements OnInit {
     });
   }
 
-  clearButtonClicked(){
-    this.eventSubject.next('action:clear');
+  onClearButtonClicked(){
+    this.drawablecanvas.clearCanvas();
+    this.predicted='';
   }
 }
