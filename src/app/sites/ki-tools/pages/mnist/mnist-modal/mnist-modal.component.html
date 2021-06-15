@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title">MNIST - Beispiel Handschrifterkennung</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('crossbutton')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>
+    <fs-mnist-example [scriptLoaded]="true"></fs-mnist-example>
+  </p>
+</div>

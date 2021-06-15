@@ -1,16 +1,4 @@
 .mnist-example {
-  .canvas-border{
-    display: inline-flex;
-    justify-content: flex-end;
-    outline: 0.5px solid #afb1b4;
-    height: 300px;
-    width: 300px;
-    &:hover {
-      outline: 0.5px solid #7589a7;
-      transition: border-color 0.2s ease-in;
-    }
-  }
-
   fs-drawable-canvas {
     cursor: crosshair;
   }

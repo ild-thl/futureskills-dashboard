@@ -1,15 +1,26 @@
 <div class="mnist-example">
-  <div class="row justify-content-center">
-    <div class="col-sm">
-      <div class="canvas-border">
-        <fs-drawable-canvas
-          [width]="300"
-          [height]="300"
-          (newImage)="predict($event)"
-        ></fs-drawable-canvas>
+  <p>[Beschreibungstext zu MNIST]</p>
+  <p>Schreibe eine Ziffer (0-9) in das Feld:</p>
+
+  <div class="container-flex">
+    <div class="row">
+      <div class="col-sm mb-5">
+        <div class="row-sm">
+          <fs-drawable-canvas
+            [width]="300"
+            [height]="300"
+            (newImage)="predict($event)"
+          ></fs-drawable-canvas>
+        </div>
+        <div class="row-sm mt-2">
+          <button class="btn btn-sm btn-info float-left" (click)="onClearButtonClicked()">
+            Löschen
+          </button>
+        </div>
       </div>
-      <button class="btn btn-sm btn-info" (click)="onClearButtonClicked()">Löschen</button>
+      <div class="col-sm">
+        <div class="col-sm">Zahl: {{ predicted }}</div>
+      </div>
     </div>
-    <div class="col-sm">Zahl: {{ predicted }}</div>
   </div>
 </div>

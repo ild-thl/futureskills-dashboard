@@ -1,15 +1,19 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
+import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnist-modal/mnist-modal.component';
 
 @Component({
   selector: 'app-ki-playground',
   templateUrl: './ki-playground.component.html',
-  styleUrls: ['./ki-playground.component.scss']
+  styleUrls: ['./ki-playground.component.scss'],
 })
 export class KIPlaygroundComponent implements OnInit {
   isLoadingScripts: boolean;
   isLoadingError: boolean;
+  scriptsAreLoaded: boolean;
   kitoolsAreOnline: boolean;
   lnkKITools_mnist = this.staticService.getPathInfo().lnkKITools_mnist;
   additionalText = '';
@@ -17,7 +21,9 @@ export class KIPlaygroundComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     private staticService: StaticService,
-    private kiStatusService: KiStatusService
+    private kiStatusService: KiStatusService,
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,21 +36,40 @@ export class KIPlaygroundComponent implements OnInit {
     }
   }
 
-  loadKIPackages(){
+  loadKIPackages() {
     this.kiStatusService.loadKIScript(this.renderer).subscribe(
       (value) => {
-        console.log('init: ', value);
         this.isLoadingError = false;
+        this.scriptsAreLoaded = true;
       },
       (error) => {
         console.log('Error: ', error);
         this.isLoadingError = true;
+        this.scriptsAreLoaded = false;
       },
       () => {
-        console.log('Completed: ');
         this.additionalText = '';
         this.isLoadingScripts = false;
       }
     );
+  }
+
+  onLoadMnistExample(modal: boolean) {
+    {
+      if (modal) {
+        const modalRef = this.modalService.open(NgbdMnistModalComponent, {
+          size: 'xl',
+        });
+        modalRef.result.then(
+          (result) => {},
+          (reason) => {
+            // Cancel by button or ModalDismissReasons
+            console.log('Cancel ', reason);
+          }
+        );
+      } else {
+        this.router.navigate([this.lnkKITools_mnist]);
+      }
+    }
   }
 }

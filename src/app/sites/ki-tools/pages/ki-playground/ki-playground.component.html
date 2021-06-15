@@ -30,8 +30,9 @@
                 </p>
               </div>
               <div class="card-footer">
-                <small class="text-muted float-left"> <a [routerLink]="lnkKITools_mnist" class="card-link">Beispiel starten</a></small>
-                <small class="text-muted float-right"> Download: 9MB</small>
+                <small class="float-left card-link" *ngIf="scriptsAreLoaded; else btnNotClickable"><a [routerLink]="" (click)="onLoadMnistExample(false)">Beispiel laden</a></small>
+                <ng-template #btnNotClickable><small class="text-muted">Wird geladen ...</small></ng-template>
+                <small class="text-muted float-right">9MB</small>
               </div>
             </div>
 
@@ -63,10 +64,6 @@
         </div>
         <!-- end of .container -->
       </section>
-
-      <!--<div class="canvas_border">
-          <fs-number-canvas [width]=300 [height]=300 class="number_canvas"></fs-number-canvas>
-        </div>-->
     </div>
 
     <ng-template #loading>

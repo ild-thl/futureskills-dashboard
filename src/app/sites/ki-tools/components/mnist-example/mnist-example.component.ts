@@ -39,11 +39,12 @@ export class MNISTExampleComponent implements OnInit {
   ngOnInit(): void {}
 
   loadingModel() {
-    from(tf.loadLayersModel(this.kiToolsModelPath)).subscribe((model) => {
+    this.kiService.loadMNISTModel().subscribe(model=>{
       this.model = model;
       this.modelLoaded = true;
-      console.log(this.model.summary());
-    });
+      //console.log(this.model.summary());
+    })
+
   }
 
   async predict(imageData: ImageData) {

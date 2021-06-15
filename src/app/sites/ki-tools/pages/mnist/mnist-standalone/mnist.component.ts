@@ -4,8 +4,7 @@ import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.servi
 
 @Component({
   selector: 'app-mnist',
-  templateUrl: './mnist.component.html',
-  styleUrls: ['./mnist.component.scss'],
+  templateUrl: './mnist.component.html'
 })
 export class MnistComponent implements OnInit {
   isLoading: boolean;
