@@ -30,8 +30,12 @@
                 </p>
               </div>
               <div class="card-footer">
-                <small class="float-left card-link" *ngIf="scriptsAreLoaded; else btnNotClickable"><a [routerLink]="" (click)="onLoadMnistExample(false)">Beispiel laden</a></small>
-                <ng-template #btnNotClickable><small class="text-muted">Wird geladen ...</small></ng-template>
+                <small class="float-left card-link" *ngIf="scriptsAreLoaded && !modelIsLoading; else btnNotClickable"
+                  ><a [routerLink]="" (click)="onLoadMnistExample(true)">Beispiel laden</a>
+                </small>
+                <ng-template #btnNotClickable
+                  ><small class="text-muted">Wird geladen ...</small>
+                </ng-template>
                 <small class="text-muted float-right">9MB</small>
               </div>
             </div>
@@ -83,4 +87,3 @@
     </fs-info-banner>
   </ng-template>
 </div>
-

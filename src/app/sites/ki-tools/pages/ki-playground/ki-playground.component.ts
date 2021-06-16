@@ -14,6 +14,7 @@ export class KIPlaygroundComponent implements OnInit {
   isLoadingScripts: boolean;
   isLoadingError: boolean;
   scriptsAreLoaded: boolean;
+  modelIsLoading: boolean;
   kitoolsAreOnline: boolean;
   lnkKITools_mnist = this.staticService.getPathInfo().lnkKITools_mnist;
   additionalText = '';
@@ -29,6 +30,8 @@ export class KIPlaygroundComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingScripts = false;
     this.isLoadingError = false;
+    this.scriptsAreLoaded = false;
+    this.modelIsLoading = false;
 
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
     if (this.kitoolsAreOnline) {
@@ -55,7 +58,10 @@ export class KIPlaygroundComponent implements OnInit {
   }
 
   onLoadMnistExample(modal: boolean) {
-    {
+    this.modelIsLoading = true;
+
+    this.kiStatusService.loadMNISTModel().subscribe(model => {
+     this.modelIsLoading = false;
       if (modal) {
         const modalRef = this.modalService.open(NgbdMnistModalComponent, {
           size: 'xl',
@@ -70,6 +76,6 @@ export class KIPlaygroundComponent implements OnInit {
       } else {
         this.router.navigate([this.lnkKITools_mnist]);
       }
-    }
+    }, (error) => console.log('Error: ', error))
   }
 }
