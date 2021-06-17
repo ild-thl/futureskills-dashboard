@@ -20,9 +20,9 @@ export class MNISTExampleComponent implements OnInit {
 
   private modelLoaded = false;
   private model: any;
-  summary: any;
   isCollapsed = true;
   predicted: string = '';
+  predicted_available: boolean = false;
   miniCanvasHTMLElement: HTMLCanvasElement;
   miniCanvasHTMLContext: CanvasRenderingContext2D;
   predictions = [];
@@ -63,7 +63,6 @@ export class MNISTExampleComponent implements OnInit {
       // Predictions
       const output = this.model.predict(img) as any;
       let predictionArr = Array.from(output.dataSync());
-      console.log('Predictions:', predictionArr);
       return predictionArr;
     });
     console.log('Predictions => ', pred);
@@ -89,55 +88,21 @@ export class MNISTExampleComponent implements OnInit {
   }
 
   showResults(predictionArr: any[]) {
-    this.predicted = this.getPredictedNumberOnly100Percent(predictionArr);
+    this.predicted = this.getPredictedNumber(predictionArr);
+    this.predicted_available = true;
     for (let i = 0; i < predictionArr.length; i++) {
       this.predictions[i] = predictionArr[i].toFixed(2);
     }
     console.log("AllPredictions: ",  this.predictions);
   }
 
-  calculateValues(predictionArr: any[]) {
-    // Zahlen als float
-    let predNumberArr = [];
-
-    for (let i = 0; i < predictionArr.length; i++) {
-      if (predictionArr[i] === 1) {
-        this.predicted = i.toString();
-        console.log('Sicher eine: ', i);
-      }
-      const rounded: string = predictionArr[i].toFixed(4);
-      const percent = +rounded;
-
-      predNumberArr.push({ number: i, value: rounded, percent });
-    }
-    console.log(predNumberArr);
-  }
-
-  calc2(pred) {
-    console.log(pred);
-
-    this.calculateValues(pred);
-    return;
-
-    for (let i = 0; i < pred.length; i++) {
-      let nrPred = +pred[i];
-      pred[i] = nrPred.toFixed(2).toString();
-
-      if (pred[i] == '1') {
-        this.predicted = i.toString();
-      } else {
-      }
-    }
-    if (this.predicted == '') {
-      this.predicted = ':(';
-    }
-  }
-
   onClearButtonClicked() {
     this.drawablecanvas.clearCanvas();
     this.predicted = '';
+    this.predicted_available = false;
     this.clearPredictions();
   }
+
   clearPredictions(){
     this.predictions = ['0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00']
   }

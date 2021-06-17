@@ -64,6 +64,7 @@ export class KIPlaygroundComponent implements OnInit {
      this.modelIsLoading = false;
       if (modal) {
         const modalRef = this.modalService.open(NgbdMnistModalComponent, {
+          scrollable: true,
           size: 'xl',
         });
         modalRef.result.then(

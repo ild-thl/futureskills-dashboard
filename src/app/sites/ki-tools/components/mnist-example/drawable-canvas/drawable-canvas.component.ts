@@ -16,7 +16,7 @@ import { pairwise, switchMap, takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'fs-drawable-canvas',
   templateUrl: './drawable-canvas.component.html',
-  styles: [],
+  styleUrls: ['./drawable-canvas.component.scss'],
 })
 export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) public canvas: ElementRef;
@@ -34,9 +34,7 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   mouseLeavingEventSubscription: Subscription;
   eventSubscription: Subscription;
 
-  constructor(
-    private renderer: Renderer2
-  ) {}
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {}
 
@@ -48,7 +46,7 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     this.ctx.lineWidth = 11;
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = '#111111';
-    //this.resetCanvas();
+    this.resetCanvas();
 
     this.scalingCanvasHTMLElement = this.renderer.createElement('canvas') as HTMLCanvasElement;
     this.scaling_ctx = this.scalingCanvasHTMLElement.getContext('2d');
@@ -78,16 +76,17 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   public clearCanvas(): void {
+    this.resetCanvas();
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.scaling_ctx.clearRect(0, 0, this.imageSize, this.imageSize);
-    //this.resetCanvas();
+
   }
 
   private scaleImageData(): ImageData {
-    // this.scaling_ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
-    // return this.scaling_ctx.getImageData(0, 0, this.imageSize, this.imageSize);
-    this.ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
-    return this.ctx.getImageData(0, 0, this.imageSize, this.imageSize);
+    this.scaling_ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
+    return this.scaling_ctx.getImageData(0, 0, this.imageSize, this.imageSize);
+    //this.ctx.drawImage(this.canvasHtmlElement, 0, 0, this.imageSize, this.imageSize);
+    //return this.ctx.getImageData(0, 0, this.imageSize, this.imageSize);
   }
 
   ngOnDestroy(): void {
@@ -121,10 +120,8 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-  private resetCanvas(){
-     this.ctx.fillStyle = '#FFFFFF';
-     this.ctx.fillRect(0, 0, this.canvasHtmlElement.width, this.canvasHtmlElement.height);
+  private resetCanvas() {
+    //this.ctx.fillStyle = '#FFFFFF';
+    //this.ctx.fillRect(0, 0, this.canvasHtmlElement.width, this.canvasHtmlElement.height);
   }
-
-
 }
