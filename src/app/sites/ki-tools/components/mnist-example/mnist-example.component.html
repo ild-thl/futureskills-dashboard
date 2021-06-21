@@ -6,39 +6,41 @@
   <div class="row">
     <div class="col-sm">
       <div class="bubble bubble-small  d-sm-block d-md-none">
-        <span *ngIf="predicted_available; else emptyBubble;">Die geschriebene Zahl ist eine: {{ predicted }}</span>
+        <span *ngIf="prediction_available; else emptyBubble;">Die geschriebene Zahl ist eine: {{ predicted }}</span>
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm mb-5">
-
+      <canvas #miniCanvas class="scaled-mini-canvas"></canvas>
       <div class="row-sm">
         <fs-drawable-canvas
           [width]="400"
           [height]="400"
           (newImage)="predict($event)"
+          (canvasResized)="onCanvasResized($event)"
         ></fs-drawable-canvas>
       </div>
       <div class="row-sm mt-2">
-        <button class="btn btn-sm btn-outline-primary float-left" (click)="onClearButtonClicked()">
+        <button class="btn btn-primary float-left" (click)="onClearButtonClicked()">
           Löschen
         </button>
       </div>
     </div>
     <div class="col-md">
       <div class="bubble bubble-large d-none d-md-block">
-        <span *ngIf="predicted_available; else emptyBubble;">Die geschriebene Zahl ist eine: {{ predicted }}</span>
+        <span *ngIf="prediction_available; else emptyBubble;">Die geschriebene Zahl ist eine: {{ predicted }}</span>
       </div>
         <ng-template #emptyBubble>
           Schreibe eine Ziffer (0-9) in das Feld.
         </ng-template>
     </div>
   </div>
-  <div>
+  <div class="row">
+    <div class="col">
     <ngb-accordion [closeOthers]="true" #acc="ngbAccordion">
-      <ngb-panel id="toggle-1" title="Auswertung pro Zahl">
+      <ngb-panel id="toggle-1" title="Auswertung pro Zahl" class="accordion-panel">
         <ng-template ngbPanelContent>
           <table class="table table-striped">
             <tr>
@@ -51,5 +53,6 @@
         </ng-template>
       </ngb-panel>
     </ngb-accordion>
+    </div>
   </div>
 </div>
