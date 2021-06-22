@@ -237,24 +237,18 @@
 
 // additional scss for teacher page to be unified
 
-.student-info .howtouse {
+.student-info.howtouse {
     background: #F9F9F9;
-
-    .col-2 {
-        background: rgb(228, 141, 141);
-    }
-
-    .col-10 {
-        background: rgb(118, 172, 118);
-    }
 
     .fs-blob {
         width: 100%;
-        height: auto;
         max-width: 100px;
         max-height: 100px;
         margin: 0 auto;
         border-right: 4px solid rgba(0,0,0,0.2);
+        margin-top: -1rem;
+        min-width: 70px;
+
         &.comic-header {
           font-size: 70px;
           -webkit-text-stroke: 2px #fff;
@@ -283,7 +277,7 @@
 .teaching-example {
     // background: #f3f3f3;
     color: #000;
-    box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 1%), 0 6.7px 5.3px rgb(0 0 0 / 2%), 0 12.5px 10px rgb(0 0 0 / 3%), 0 22.3px 17.9px rgb(0 0 0 / 3%), 0 41.8px 33.4px rgb(0 0 0 / 4%), 0 100px 80px rgb(0 0 0 / 6%);
+    box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 1%), 0 6.7px 5.3px rgb(0 0 0 / 2%), 0 12.5px 10px rgb(0 0 0 / 3%), 0 22.3px 17.9px rgb(0 0 0 / 3%), 0 41.8px 33.4px rgb(0 0 0 / 2%), 0 100px 80px rgb(0 0 0 / 3%);
 
     a {
       font-weight: 500;
