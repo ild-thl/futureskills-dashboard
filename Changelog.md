@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+
+## 2021-06-22/ml
+# changed
+- Login gets id and name from from access-token
+
 ## 2021-06-14/dk
 # added
 - Re-added the angular editor for offer edit

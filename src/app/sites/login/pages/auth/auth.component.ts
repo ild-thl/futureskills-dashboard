@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { StaticService } from 'src/app/config/static.service';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-auth',
@@ -45,7 +46,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.error = '';
 
     this.loginSubscription = this.authService.login(email, password).subscribe(
-      (resData) => {
+      (resData: User) => {
         //console.log('AuthComponent:', resData);
         this.isLoading = false;
         this.router.navigate([this.lnkAfterLogin]);
