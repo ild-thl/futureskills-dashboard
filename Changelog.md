@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## 2021-06-22/dn
+### Added
+- teacher info page #48
+
+### Changed
+- typos and text
+
 ## 2021-06-14/dk
 # added
 - Re-added the angular editor for offer edit
