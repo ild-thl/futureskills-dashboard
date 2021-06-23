@@ -1,4 +1,15 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  AfterViewInit,
+  ViewChildren,
+  QueryList,
+  Renderer2,
+} from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
@@ -13,17 +24,19 @@ declare var tf: any;
   templateUrl: './mnist-example.component.html',
   styleUrls: ['./mnist-example.component.scss'],
 })
-export class MNISTExampleComponent implements OnInit, OnDestroy {
+export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() scriptLoaded = false;
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
-  @ViewChild('miniCanvas', { static: true }) public miniCanvas: ElementRef;
+  @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
 
   private MODEL_SIZE = 28;
   private modelLoaded = false;
+  private viewIsInitialized = false;
+  //isCollapsed = false;
+
   private model: any;
-  isCollapsed = true;
   predicted: string = '';
   prediction_available: boolean = false;
   miniCanvasHTMLElement: HTMLCanvasElement;
@@ -31,7 +44,13 @@ export class MNISTExampleComponent implements OnInit, OnDestroy {
   predictions = [];
   predictionIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  constructor(private kiService: KiStatusService, private staticService: StaticService) {}
+  private tableRowSubscription: Subscription;
+
+  constructor(
+    private kiService: KiStatusService,
+    private staticService: StaticService,
+    private renderer: Renderer2
+  ) {}
 
   lnkKITools = this.staticService.getPathInfo().lnkKITools;
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
@@ -44,24 +63,43 @@ export class MNISTExampleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.clearText();
-    this.isCollapsed = false;
-
-    this.miniCanvasHTMLElement = this.miniCanvas.nativeElement as HTMLCanvasElement;
+    this.miniCanvasHTMLElement = this.renderer.createElement('canvas') as HTMLCanvasElement;
     this.miniCanvasHTMLContext = this.miniCanvasHTMLElement.getContext('2d');
     this.miniCanvasHTMLElement.width = this.MODEL_SIZE;
     this.miniCanvasHTMLElement.height = this.MODEL_SIZE;
     this.clearMiniCanvas();
   }
 
-  ngOnDestroy(): void {}
+  ngAfterViewInit(): void {
+    if (this.tablerow.first && !this.viewIsInitialized) {
+      const td = this.tablerow.first.nativeElement;
+      this.renderer.appendChild(td, this.miniCanvasHTMLElement);
+    }
+
+    this.tableRowSubscription = this.tablerow.changes.subscribe((value) => {
+      const tableRow = this.tablerow.first;
+      console.log('Panel ', tableRow);
+      if (tableRow) {
+        const td = this.tablerow.first.nativeElement;
+        this.renderer.appendChild(td, this.miniCanvasHTMLElement);
+      }
+    });
+    this.viewIsInitialized = true;
+  }
+
+  ngOnDestroy(): void {
+    if (this.tableRowSubscription) this.tableRowSubscription.unsubscribe();
+  }
 
   onClearButtonClicked() {
-    // Message to Canvas
     this.clearContexts();
   }
 
   onCanvasResized(event: { width: number; height: number }) {
-    this.clearContexts();
+    // could be called before View is available
+    if (this.viewIsInitialized) {
+      this.clearContexts();
+    }
   }
 
   public async predict(imageData: ImageData) {

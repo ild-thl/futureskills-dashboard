@@ -41,8 +41,10 @@
   }
 
   .scaled-mini-canvas{
-    width: 28px;
-    height:28px;
-    border: 1px solid $bubbleBorderColor;
+    canvas{
+      width: 28px;
+      height:28px;
+      border: 1px solid $bubbleBorderColor;
+    }
   }
 }

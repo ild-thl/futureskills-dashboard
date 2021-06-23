@@ -53,7 +53,7 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     this.scalingCanvasHTMLElement.height = this.imageSize;
     this.scalingCanvasHTMLElement.width = this.imageSize;
 
-    this.resizeCanvasToDisplaySize(this.canvasHtmlElement, true);
+    this.resizeCanvasToDisplaySize(true);
     this.clearCanvas();
     this.listenToEvents();
   }
@@ -98,7 +98,7 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     this.resizingEventSubscription = fromEvent(window, 'resize')
       .pipe(debounceTime(500))
       .subscribe((evt) => {
-        this.resizeCanvasToDisplaySize(this.canvasHtmlElement);
+        this.resizeCanvasToDisplaySize();
       });
   }
 
@@ -119,12 +119,14 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     return this.scaling_ctx.getImageData(0, 0, this.imageSize, this.imageSize);
   }
 
-  private resizeCanvasToDisplaySize(canvas: HTMLCanvasElement, force: boolean = false) {
+  private resizeCanvasToDisplaySize(force: boolean = false) {
     let wasChanged = false;
+    const canvas = this.canvasHtmlElement;
+    const ctx =  this.ctx;
+
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     let quadr = false;
-    const ctx = canvas.getContext('2d');
 
     // 1. Quadratisch!
     if (width !== height) {
@@ -165,4 +167,41 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
       this.ctx.stroke();
     }
   }
+
+
+
+
+  private rresizeCanvasToDisplaySize(canvas: HTMLCanvasElement, force: boolean = false) {
+    let wasChanged = false;
+    let width = canvas.clientWidth;
+    let height = canvas.clientHeight;
+    let quadr = false;
+    const ctx = canvas.getContext('2d');
+
+    // 1. Quadratisch!
+    if (width !== height) {
+      height = width;
+      quadr = true;
+    }
+
+    // Calc canvas-size if css-size changed
+    if (canvas.width !== width || canvas.height !== height || quadr || force) {
+      canvas.width = width;
+      canvas.height = height;
+      wasChanged = true;
+
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#111111';
+      if (width < 250) {
+        ctx.lineWidth = 5;
+      } else {
+        ctx.lineWidth = 10;
+      }
+      ctx.fillStyle = '#FFFFFF';
+      this.canvasResized.emit({ width: canvas.width, height: canvas.height });
+      console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
+    }
+    return wasChanged;
+  }
+
 }

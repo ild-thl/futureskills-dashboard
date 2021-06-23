@@ -34,8 +34,7 @@
                   <small
                     class="float-left card-link"
                     *ngIf="scriptsAreLoaded && !modelIsLoading; else btnNotClickable"
-                    >Start: <a [routerLink]="" (click)="onLoadMnistExample(true)">Modal</a> oder
-                    <a [routerLink]="" (click)="onLoadMnistExample(false)">URL</a>
+                    ><a [routerLink]="" (click)="onLoadMnistExample(true)">Beispiel laden</a>
                   </small>
                   <ng-template #btnNotClickable
                     ><small class="text-muted">Wird geladen ...</small>
