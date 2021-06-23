@@ -53,15 +53,16 @@ const routes: Routes = [
     component: PrivacyComponent,
   },
   {
-    path: 'info-teaching',
+    path: 'info-lehrende',
     component: InfoTeachingComponent,
   },
   {
-    path: 'info-students',
+    path: 'info-studierende',
     component: InfoStudentsComponent,
   },
   {
-    path: 'ki-tools',
+    path: 'ki-playground',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
   },
