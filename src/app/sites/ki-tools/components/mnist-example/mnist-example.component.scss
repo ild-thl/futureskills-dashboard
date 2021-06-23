@@ -1,50 +1,74 @@
 .mnist-example {
   $bubbleBorderColor: var(--color-primary-blue);
-  $bubbleBorderRadius: 10px;
+  $bubbleBorder: 2px;
+  $bubbleBorderRadius: 5px;
+  $bubbleSmallPosition: 140px;
 
   .bubble {
-    &.bubble-large {
-      position: relative;
-      padding: 1rem;
-      border: 4px solid $bubbleBorderColor;
-      margin: 0 auto;
-      -webkit-border-radius: $bubbleBorderRadius;
-      -moz-border-radius: $bubbleBorderRadius;
-      border-radius: $bubbleBorderRadius;
-      background: #fff;
-    }
-    &.bubble-large:before {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      left: 30px;
-      top: 100%;
-      border: 20px solid;
-      border-color: $bubbleBorderColor transparent transparent $bubbleBorderColor;
-    }
-
-    &.bubble-large:after {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      left: 34px;
-      top: 100%;
-      border: 15px solid;
-      border-color: #ffffff transparent transparent #ffffff;
-    }
-
-    &.bubble-small {
-      margin: 10px auto;
-    }
+    position: relative;
+    text-align: center;
+    line-height: 1.4em;
+    margin: 5px auto;
+    background-color: #fff;
+    border: $bubbleBorder solid $bubbleBorderColor;
+    border-radius: 30px;
+    font-family: sans-serif;
+    padding: 30px;
+    font-size: large;
+    width: 300px;
+    border-radius: $bubbleBorderRadius;
+    padding: 30px;
   }
 
-  .scaled-mini-canvas{
-    canvas{
+  .bubble:before,
+  .bubble:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: $bubbleSmallPosition;
+    bottom: -30px;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: $bubbleBorder solid $bubbleBorderColor;
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+    border-radius: 28px;
+  }
+
+  .thought:after {
+    width: 20px;
+    height: 20px;
+    left: $bubbleSmallPosition - 5px;
+    bottom: -40px;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
+  }
+
+  .scaled-mini-canvas {
+    canvas {
       width: 28px;
-      height:28px;
+      height: 28px;
       border: 1px solid $bubbleBorderColor;
     }
   }
+
+  .vertical-align {
+    min-height: 100px; /*Add a height or minimum height to the containers*/
+    position: relative;
+ }
+
+ .vertical-align img{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left:auto;
+    padding-bottom: 5px;
+ }
+
+
 }

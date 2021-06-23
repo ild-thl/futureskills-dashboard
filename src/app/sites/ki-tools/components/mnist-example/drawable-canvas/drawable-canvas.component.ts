@@ -142,11 +142,15 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
 
       ctx.lineCap = 'round';
       ctx.strokeStyle = '#111111';
-      if (width < 250) {
-        ctx.lineWidth = 5;
-      } else {
+
+      if (width <= 200) {
         ctx.lineWidth = 10;
+      } else if (width <= 300) {
+        ctx.lineWidth = 12;
+      } else if (width <= 400) {
+        ctx.lineWidth = 14;
       }
+
       ctx.fillStyle = '#FFFFFF';
       this.canvasResized.emit({ width: canvas.width, height: canvas.height });
       console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
