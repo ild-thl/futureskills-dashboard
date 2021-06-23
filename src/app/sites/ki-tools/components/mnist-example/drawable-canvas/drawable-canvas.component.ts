@@ -45,7 +45,7 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     this.ctx = this.canvasHtmlElement.getContext('2d');
     this.canvasHtmlElement.width = this.width;
     this.canvasHtmlElement.height = this.height;
-    this.resizeCanvasToDisplaySize(this.canvasHtmlElement, true);
+
 
     //CTX-Scaling Canvas
     this.scalingCanvasHTMLElement = this.renderer.createElement('canvas') as HTMLCanvasElement;
@@ -53,6 +53,8 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     this.scalingCanvasHTMLElement.height = this.imageSize;
     this.scalingCanvasHTMLElement.width = this.imageSize;
 
+    this.resizeCanvasToDisplaySize(this.canvasHtmlElement, true);
+    this.clearCanvas();
     this.listenToEvents();
   }
 
@@ -88,8 +90,6 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     // Mouse is leaving canvas
     this.mouseLeavingEventSubscription = fromEvent(this.canvasHtmlElement, 'mouseup').subscribe(
       (leaveEvent: MouseEvent) => {
-        const scaledImageData = this.scaleImageData();
-        this.newImage.emit(scaledImageData);
         this.newImage.emit(this.scaleImageData());
       }
     );

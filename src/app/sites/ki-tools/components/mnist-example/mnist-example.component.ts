@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { from } from 'rxjs';
+import { from, fromEvent, Subscription } from 'rxjs';
 import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.component';
+import { debounceTime } from 'rxjs/operators';
 
 declare var tf: any;
 
@@ -12,7 +13,7 @@ declare var tf: any;
   templateUrl: './mnist-example.component.html',
   styleUrls: ['./mnist-example.component.scss'],
 })
-export class MNISTExampleComponent implements OnInit {
+export class MNISTExampleComponent implements OnInit, OnDestroy {
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() scriptLoaded = false;
@@ -49,29 +50,18 @@ export class MNISTExampleComponent implements OnInit {
     this.miniCanvasHTMLContext = this.miniCanvasHTMLElement.getContext('2d');
     this.miniCanvasHTMLElement.width = this.MODEL_SIZE;
     this.miniCanvasHTMLElement.height = this.MODEL_SIZE;
-    this.miniCanvasHTMLContext.clearRect(
-      0,
-      0,
-      this.miniCanvasHTMLContext.canvas.width,
-      this.miniCanvasHTMLContext.canvas.height
-    );
+    this.clearMiniCanvas();
   }
+
+  ngOnDestroy(): void {}
 
   onClearButtonClicked() {
     // Message to Canvas
-    this.drawablecanvas.clearCanvas();
-    this.miniCanvasHTMLContext.clearRect(
-      0,
-      0,
-      this.miniCanvasHTMLContext.canvas.width,
-      this.miniCanvasHTMLContext.canvas.height
-    );
-    // Clear
-    this.clearText();
+    this.clearContexts();
   }
 
   onCanvasResized(event: { width: number; height: number }) {
-    this.clearText();
+    this.clearContexts();
   }
 
   public async predict(imageData: ImageData) {
@@ -115,6 +105,12 @@ export class MNISTExampleComponent implements OnInit {
     console.log('AllPredictions: ', this.predictions);
   }
 
+  private clearContexts() {
+    this.drawablecanvas.clearCanvas();
+    this.clearMiniCanvas();
+    this.clearText();
+  }
+
   private clearText() {
     this.predicted = '';
     this.prediction_available = false;
@@ -130,5 +126,14 @@ export class MNISTExampleComponent implements OnInit {
       '0.00',
       '0.00',
     ];
+  }
+
+  private clearMiniCanvas() {
+    this.miniCanvasHTMLContext.clearRect(
+      0,
+      0,
+      this.miniCanvasHTMLContext.canvas.width,
+      this.miniCanvasHTMLContext.canvas.height
+    );
   }
 }
