@@ -9,10 +9,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { map, take } from 'rxjs/operators';
+import { StaticService } from 'src/app/config/static.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
+  constructor(private authService: AuthService, private router: Router, private staticConfig: StaticService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot
@@ -30,7 +32,7 @@ export class AuthGuard implements CanActivate {
           return true;
         }
 
-        return this.router.createUrlTree(['/auth']);
+        return this.router.createUrlTree([this.lnkLogin]);
       })
     );
   }

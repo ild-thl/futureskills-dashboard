@@ -14,9 +14,9 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    // TODO: userChanged$ nehmen, wenn user_id mitgesendet wird
+
     console.log('HTTP Request', req);
-    return this.authService.userForInterceptor$.pipe(
+    return this.authService.user$.pipe(
       take(1),
       exhaustMap((user) => {
         if (!user) {

@@ -9,7 +9,8 @@ import { catchError } from 'rxjs/operators';
 import { Institution } from 'src/app/core/models/institution';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
-import { AuthResponseData, SubscriptionData, OfferToAPI, OfferPropertyTagResponse } from './api.interfaces';
+import { SubscriptionData, OfferToAPI, OfferPropertyTagResponse } from './api.interfaces';
+import { AuthResponseData} from 'src/app/core/auth/auth.interfaces';
 
 /**
  * api.service.ts

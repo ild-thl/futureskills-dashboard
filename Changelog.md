@@ -2,10 +2,19 @@
 
 ## [Unreleased]
 
+## 2021-06-23/ml
+### Changed
+- Pathnames in german
+- auth-guard path bug fixed
+- ki-playground with authGuard
+
+## 2021-06-22/ml
+# changed
+- Login gets id and name from from access-token
+
 ## 2021-06-22/dn
 ### Added
 - teacher info page #48
-
 ### Changed
 - typos and text
 

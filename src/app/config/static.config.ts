@@ -16,19 +16,19 @@ export const CustomConfig = {
   paths: {
     lnkLanding: '/',
     lnkOffers: '/kurse',
-    lnkInfoTeaching: '/info-teaching',
-    lnkInfoStudents: '/info-students',
+    lnkInfoTeaching: '/info-lehrende',
+    lnkInfoStudents: '/info-studierende',
     lnkImprint: '/impressum',
     lnkPrivacy: '/datenschutz',
     lnkLogin: '/login',
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
-    lnkKITools: '/ki-tools',
-    lnkKITools_mnist: '/ki-tools/mnist'
+    lnkKITools: '/ki-playground',
+    lnkKITools_mnist: '/ki-playground/mnist'
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
     lnkAfterLogout: '/',
-    lnkTrailerAboutUs: '/info-teaching'
+    lnkTrailerAboutUs: '/info-lehrende'
   },
 };

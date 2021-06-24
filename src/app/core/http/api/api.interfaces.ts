@@ -1,11 +1,3 @@
-export interface AuthResponseData {
-  id: number;
-  token_type: string;
-  expires_in: string;
-  access_token: string;
-  refresh_token: string;
-}
-
 export interface SubscriptionData {
   user_id: number;
   offer_id: number;
