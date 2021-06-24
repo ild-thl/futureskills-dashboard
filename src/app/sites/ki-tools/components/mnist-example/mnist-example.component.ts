@@ -13,9 +13,8 @@ import {
 import { environment } from 'src/environments/environment';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { from, fromEvent, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.component';
-import { debounceTime } from 'rxjs/operators';
 
 declare var tf: any;
 
@@ -32,9 +31,8 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
 
   private MODEL_SIZE = 28;
-  private modelLoaded = false;
+  modelLoaded = false;
   private viewIsInitialized = false;
-  //isCollapsed = false;
 
   private model: any;
   predicted: string = '';
@@ -78,7 +76,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.tableRowSubscription = this.tablerow.changes.subscribe((value) => {
       const tableRow = this.tablerow.first;
-      console.log('Panel ', tableRow);
+      //console.log('Panel ', tableRow);
       if (tableRow) {
         const td = this.tablerow.first.nativeElement;
         this.renderer.appendChild(td, this.miniCanvasHTMLElement);
@@ -116,7 +114,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
       let predictionArr = Array.from(output.dataSync());
       return predictionArr;
     });
-    console.log('Predictions => ', pred);
+    //console.log('Predictions => ', pred);
     this.showResults(pred);
   }
 
@@ -140,7 +138,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < predictionArr.length; i++) {
       this.predictions[i] = predictionArr[i].toFixed(2);
     }
-    console.log('AllPredictions: ', this.predictions);
+    //console.log('AllPredictions: ', this.predictions);
   }
 
   private clearContexts() {

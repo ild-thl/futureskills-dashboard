@@ -71,7 +71,7 @@ export class KIPlaygroundComponent implements OnInit {
           (result) => {},
           (reason) => {
             // Cancel by button or ModalDismissReasons
-            console.log('Cancel ', reason);
+            //console.log('Cancel ', reason);
           }
         );
       } else {

@@ -24,22 +24,35 @@
               <div class="card" style="height: 25rem">
                 <img src="assets/images/mnist_top.png" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title">MNIST Beispiel</h5>
+                  <h5 class="card-title">MNIST Datenbank</h5>
                   <p class="card-text">
-                    Das Standard-Beispiel für Bilderkennung: Die Klassifizierung handgeschriebener
-                    Ziffern.
+                    Das Standard-Beispiel für die Erkennung handgeschriebener Ziffern durch ein
+                    neuronales Netz.
                   </p>
                 </div>
                 <div class="card-footer">
-                  <small
-                    class="float-left card-link"
+
+                  <button
+                  *ngIf="scriptsAreLoaded && !modelIsLoading; else btnNotClickable"
+                  type="button"
+                  class="btn btn-outline-dark btn-sm mr-2"
+                  (click)="onLoadMnistExample(false)"
+                >
+                  Starten
+                </button>
+
+                  <button
                     *ngIf="scriptsAreLoaded && !modelIsLoading; else btnNotClickable"
-                    ><a [routerLink]="" (click)="onLoadMnistExample(true)">Beispiel laden</a>
-                  </small>
+                    type="button"
+                    class="btn btn-link btn-sm mr-2"
+                    (click)="onLoadMnistExample(true)"
+                  >
+                    Test modales Fenster
+                  </button>
                   <ng-template #btnNotClickable
                     ><small class="text-muted">Wird geladen ...</small>
                   </ng-template>
-                  <small class="text-muted float-right">9MB</small>
+                  <small class="text-muted float-right">Download: ca. 10MB</small>
                 </div>
               </div>
             </div>
