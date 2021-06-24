@@ -1,4 +1,4 @@
-<div class="mnist-example">
+<div class="mnist-example" [ngClass]="{'modus_window': modus === 'window', 'modus_modal' : modus === 'modal' }">
   <div class="row">
     <div class="col-10 mb-4">
       Die Erkennung handgeschriebener Ziffern mithilfe des MNIST-Datensatzes ist eines der

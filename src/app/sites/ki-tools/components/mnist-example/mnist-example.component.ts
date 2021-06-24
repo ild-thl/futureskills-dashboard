@@ -27,6 +27,8 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() scriptLoaded = false;
+  @Input() public modus = 'window';
+
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
 
