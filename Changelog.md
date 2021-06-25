@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## 2021-06-25/dn
+### Added
+- AI and video image for teacher page
+
+### Changed
+- typo
+- tweaks to responsive image css
+
 ## 2021-06-23/ml
 ### Changed
 - Pathnames in german
