@@ -4,6 +4,10 @@
 
 ## 2021-06-28/ml
 ### Changed
+- "Lehrenden-Seite": Header, Section2 in future tense
+
+## 2021-06-28/ml
+### Changed
 - Landing Page Button "Über uns" is commented out
 
 ## 2021-06-25/dn
