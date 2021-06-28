@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 2021-06-28/ml
+### Changed
+- Landing Page Button "Über uns" is commented out
+
 ## 2021-06-25/dn
 ### Added
 - AI and video image for teacher page
