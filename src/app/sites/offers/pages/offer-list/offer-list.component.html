@@ -1,0 +1,47 @@
+<div class="container page-offers">
+  <h3>Kursübersicht</h3>
+  <p>Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b></p>
+  <div *ngIf="!isError && isLoading">
+    <app-skeleton-offers></app-skeleton-offers>
+  </div>
+  <div *ngIf="!isLoading">
+    <div *ngIf="isError">
+      <p>{{ message }}</p>
+    </div>
+
+    <app-filter-combo-group app-filter-row (filterChanged)="onFilterChanged($event)" *ngIf="filterListLoaded && !isError">
+      <app-filter-combo-box [filterList]="filterMap.get('competences')" [defaultText]="'Alle Programme'" ></app-filter-combo-box>
+      <app-filter-combo-box [filterList]="filterMap.get('institutions')" [defaultText]="'Alle Anbieter'"></app-filter-combo-box>
+      <app-filter-combo-box [filterList]="filterMap.get('formats')" [defaultText]="'Alle Formate'"></app-filter-combo-box>
+      <app-filter-combo-box [filterList]="filterMap.get('languages')" [defaultText]="'Alle Sprachen'"></app-filter-combo-box>
+    </app-filter-combo-group>
+
+    <div *ngIf="!isError && loadedOffers.length === 0">
+      <p>Es wurden keine Angebote gefunden.</p>
+    </div>
+
+    <div class="mb-5 offers-grid" *ngIf="!isError">
+      <fs-offer-tile
+        class="pr-0 page-offers"
+        *ngFor="let offer of loadedOffers"
+        [offerForTile]="offer"
+        [isSubscribed]=false
+        displayMode="full"
+      ></fs-offer-tile>
+    </div>
+
+    <div class="row pr-3 pl-3">
+      <div *ngIf="isAuthenticated">
+        <button
+          type="button"
+          class="btn btn-outline-primary mb-3"
+          [routerLink]="[lnkAdminOfferNew]"
+          routerLinkActive="router-link-active"
+        >
+          <span>Neues Angebot erstellen</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

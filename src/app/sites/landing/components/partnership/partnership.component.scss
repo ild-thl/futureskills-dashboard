@@ -1,0 +1,104 @@
+@import "breakpoints";
+
+.partnership {
+    margin: 0 auto;
+
+    h3,
+    p {
+      color: #000000;
+    }
+    @media(min-width: $lg) {
+        max-width: 1300px; //temporär bis Logos mit SVGs oder höher aufgelöst eingebunden
+    }
+    .title-partnership {
+        font-size: 50px;
+        margin-top: 60px;
+    }
+    .text-partnership {
+        font-size: 30px;
+        margin-bottom: 50px;
+    }
+}
+
+.partnership-partners {
+    place-items: flex-end;
+
+    a {
+        width: 50%;
+        display: inline-flex;
+        margin-bottom: 1rem;
+
+        @media(min-width: $md) {
+            width: 25%;
+        }
+
+        @media(min-width: $lg) {
+            width: 20%;
+        }
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+    .partnership {
+        margin: 0 auto;
+
+        @media(min-width: $lg) {
+            max-width: 1300px; //temporär bis Logos mit SVGs oder höher aufgelöst eingebunden
+        }
+        .title-partnership {
+            font-size: 20px;
+            margin-top: -15px;
+        }
+        .text-partnership {
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+    }
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .partnership {
+        margin: 0 auto;
+
+        @media(min-width: $lg) {
+            max-width: 1300px; //temporär bis Logos mit SVGs oder höher aufgelöst eingebunden
+        }
+        .title-partnership {
+            font-size: 30px;
+            margin-top: 20px;
+        }
+        .text-partnership {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+    }
+ }
+
+// Large devices (tablet, 1024px and down)
+@media (min-width: 1024px) {
+    .partnership {
+        margin: 0 auto;
+
+        @media(min-width: $lg) {
+            max-width: 1300px; //temporär bis Logos mit SVGs oder höher aufgelöst eingebunden
+        }
+        .title-partnership {
+            font-size: 45px;
+            margin-top: 20px;
+        }
+        .text-partnership {
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+    }
+ }

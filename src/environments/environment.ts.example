@@ -1,0 +1,15 @@
+export const environment = {
+  production: false,
+
+  logFiles: true, // no effect (at the moment) when production is false
+  staticURL: 'https://devstatic.futureskills-sh.de/', // could also be a local adress
+
+  apiURL: 'http://localhost:8000',
+
+  clientLoginData: {
+    grantType: 'password',
+    clientId: '',
+    clientSecret: ''
+  }
+
+};

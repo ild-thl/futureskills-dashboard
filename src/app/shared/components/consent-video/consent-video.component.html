@@ -1,0 +1,33 @@
+<div class="embed-responsive embed-responsive-16by9 fs-consent-video">
+  <ng-container *ngIf="consent === false">
+    <div class="fs-consent-video-form">
+      <div>
+        <h4>Nur noch einen Schritt zu unserem Trailer!</h4>
+        <p>
+          Wenn du dieses Element öffnest, werden Inhalte von YouTube geladen und
+          dadurch deine IP-Adresse übertragen. Dafür werden externe Cookies
+          gesetzt. <a routerLink="/datenschutz">Datenschutzerklärung</a>
+        </p>
+        <button
+          (click)="setConsent()"
+          class="btn btn-secondary btn-block border-0"
+        >
+          <img src="assets/images/rocket_white.svg" />Inhalt ansehen und nicht erneut
+          fragen
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="consent === true">
+    <div class="">
+      <iframe
+        width="560"
+        height="315"
+        frameborder="0"
+        [src]="sansrc"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </ng-container>
+</div>

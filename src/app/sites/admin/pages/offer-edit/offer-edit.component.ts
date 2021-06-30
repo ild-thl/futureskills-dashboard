@@ -1,0 +1,240 @@
+import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+
+import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
+import { Offer, OfferMeta } from 'src/app/core/models/offer';
+import { StaticService } from 'src/app/config/static.service';
+import { AngularEditorModule, AngularEditorConfig } from '@kolkov/angular-editor';
+
+interface Alert {
+  type: string;
+  message: string;
+}
+
+@Component({
+  selector: 'app-offer-edit',
+  templateUrl: './offer-edit.component.html',
+  styleUrls: ['./offer-edit.component.scss'],
+})
+export class OfferEditComponent implements OnInit, OnDestroy {
+  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+
+  // Offer
+  public offer: Offer = new Offer(null);
+  private onOfferChange: Subscription;
+
+  public isLoading = true;
+  public createNewOffer = false;
+  public isCollapsed = true;
+  public isError = false;
+  alerts: Alert[] = [];
+
+  offerEditForm: FormGroup;
+
+  get relatedOfferFormArray() {
+    return this.offerEditForm.get('relatedOffers') as FormArray;
+  }
+
+  constructor(
+    private offerDataService: OfferDataService,
+    private route: ActivatedRoute,
+    private staticConfig: StaticService
+  ) {}
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: false,
+    translate: 'no',
+    enableToolbar: true,
+    showToolbar: true,
+    toolbarPosition: 'top',
+    width: '100%',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'heading',
+        'fontName',
+        'cut',
+        'copy',
+        'delete',
+        'removeFormat',
+        'backgroundColorPicker',
+      ],
+    ],
+  };
+
+  ngOnInit() {
+    const offerId = +this.route.snapshot.params.id;
+
+    this.offerEditForm = new FormGroup({
+      id: new FormControl(null),
+      title: new FormControl(null, Validators.required),
+      image_path: new FormControl(null),
+      type: new FormControl(null, Validators.required),
+      description: new FormControl(null),
+      institution_id: new FormControl(null, Validators.required),
+      subtitle: new FormControl(null),
+      language: new FormControl(null, Validators.required),
+      hashtag: new FormControl(null),
+      //ects: new FormControl({ value: 0, disabled: true }),
+      time_requirement: new FormControl(null),
+      executed_from: new FormControl({ value: 0, disabled: true }),
+      executed_until: new FormControl({ value: 0, disabled: true }),
+      listed_from: new FormControl({ value: 0, disabled: true }),
+      listed_until: new FormControl({ value: 0, disabled: true }),
+      author: new FormControl(null),
+      sponsor: new FormControl(null),
+      exam: new FormControl(null),
+      requirements: new FormControl(null),
+      niveau: new FormControl(null),
+      target_group: new FormControl(null),
+      url: new FormControl(null),
+      sort_flag: new FormControl(null),
+      competence_tech: new FormControl(null),
+      competence_classic: new FormControl(null),
+      competence_digital: new FormControl(null),
+      relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
+    });
+
+    if (offerId) {
+      this.createNewOffer = false;
+      this.loadOfferData(offerId);
+    } else {
+      this.createNewOffer = true;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.onOfferChange) this.onOfferChange.unsubscribe();
+  }
+
+  updateRelatedOffers(event) {
+    this.relatedOfferFormArray.reset(event);
+  }
+
+  /**
+   * SubmitEvent
+   * @param offerdata
+   */
+  onSaveData(offerdata: any) {
+    this.saveOfferData(offerdata);
+  }
+
+  //////////// DATA ////////////////
+
+  /**
+   * Loads Offer Data and fills form fields
+   * @param offerId
+   */
+  private loadOfferData(offerId: number) {
+    this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe(
+      (offer) => {
+        this.offer = offer;
+        this.offerEditForm.get('id').setValue(this.offer.id);
+        this.offerEditForm.get('title').setValue(this.offer.title);
+        this.offerEditForm.get('image_path').setValue(this.offer.image_path);
+        this.offerEditForm.get('type').setValue(this.offer.type);
+        this.offerEditForm.get('description').setValue(this.offer.description);
+        this.offerEditForm.get('institution_id').setValue(this.offer.institution.id);
+        this.offerEditForm.get('subtitle').setValue(this.offer.subtitle);
+        this.offerEditForm.get('language').setValue(this.offer.language);
+        this.offerEditForm.get('hashtag').setValue(this.offer.hashtag);
+        //this.offerEditForm.get('ects').setValue(this.offer.meta.ects);
+        this.offerEditForm.get('time_requirement').setValue(this.offer.meta.time_requirement);
+        this.offerEditForm.get('executed_from').setValue(this.offer.timestamps.executed_from);
+        this.offerEditForm.get('executed_until').setValue(this.offer.timestamps.executed_until);
+        this.offerEditForm.get('listed_from').setValue(this.offer.timestamps.listed_from);
+        this.offerEditForm.get('listed_until').setValue(this.offer.timestamps.listed_until);
+        this.offerEditForm.get('author').setValue(this.offer.author);
+        this.offerEditForm.get('sponsor').setValue(this.offer.meta.sponsor);
+        this.offerEditForm.get('exam').setValue(this.offer.meta.exam);
+        this.offerEditForm.get('requirements').setValue(this.offer.meta.requirements);
+        this.offerEditForm.get('niveau').setValue(this.offer.meta.niveau);
+        this.offerEditForm.get('exam').setValue(this.offer.meta.exam);
+        this.offerEditForm.get('target_group').setValue(this.offer.target_group);
+        this.offerEditForm.get('url').setValue(this.offer.url);
+        this.offerEditForm.get('sort_flag').setValue(this.offer.sort_flag);
+        this.offerEditForm.get('competence_tech').setValue(this.offer.competence_tech);
+        this.offerEditForm.get('competence_classic').setValue(this.offer.competence_classic);
+        this.offerEditForm.get('competence_digital').setValue(this.offer.competence_digital);
+        this.relatedOfferFormArray.reset(this.offer.relatedOffers);
+
+        //console.log('FormOfferData: ', this.offerEditForm.value);
+        //console.log('OfferData: ', this.offer);
+
+        this.isLoading = false;
+        this.isError = false;
+      },
+      (error) => {
+        this.isError = true;
+        this.isLoading = false;
+        console.log('Error loading OfferData', error);
+      }
+    );
+  }
+
+  /**
+   * Saves OfferData
+   * Abspeichern der Offer-Daten
+   * Abspeichern der zugeordneten Kurse aus this.relatedOfferFormArray.value
+   * @param offerdata
+   */
+  private saveOfferData(offerdata: any) {
+    this.isLoading = true;
+    this.closeaAllAlerts();
+
+    const id = this.createNewOffer ? null : this.offer.id;
+    const relatedIntOffers: number[] = this.mapRelatedOfferListToNumberList(
+      this.relatedOfferFormArray.value
+    );
+    offerdata.meta = this.mapMetaData(this.offerEditForm.value);
+
+    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
+      (offer: Offer) => {
+        this.offer = offer;
+        this.isLoading = false;
+        this.addAlert('success', 'Speichern war erfolgreich');
+      },
+      (error) => {
+        console.log('Error saving offer: ', error);
+        this.addAlert('danger', error);
+        this.isLoading = false;
+      }
+    );
+  }
+
+  /**
+   * Convert stringArray to intArray
+   * deletes entries with 0 values
+   * @param strList
+   */
+  private mapRelatedOfferListToNumberList(strList: string[]): number[] {
+    if (strList == null || strList.length == 0) return [];
+    return strList.map((item) => +item).filter((offer) => offer !== 0);
+  }
+
+  private mapMetaData(formData) {
+    let tmpMetas = new OfferMeta();
+    tmpMetas.ects = formData.ects;
+    tmpMetas.exam = formData.exam;
+    tmpMetas.niveau = formData.niveau;
+    tmpMetas.requirements = formData.requirements;
+    tmpMetas.sponsor = formData.sponsor;
+    tmpMetas.time_requirement = formData.time_requirement;
+    return tmpMetas;
+  }
+
+  // Alert Functions
+
+  addAlert(type: string, message: string) {
+    this.alerts.push({ type, message });
+  }
+  closeAlert(alert: Alert) {
+    this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+  closeaAllAlerts() {
+    this.alerts = [];
+  }
+}

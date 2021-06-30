@@ -1,0 +1,83 @@
+@import "breakpoints";
+
+.fs-car {
+    display: flex;
+}
+
+.fs-car-container {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+    display: block;
+    touch-action: pan-y !important;
+
+    @media(min-width: $lg) {
+        max-width: 1400px;
+    }
+}
+
+.fs-car-tiles {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    margin: 0 auto;
+    min-height: 286px; // magic number, temporary until final offer height is known
+}
+
+/* override offer */
+.fs-car-tile {
+    margin-right: 1rem;
+    padding-right: 0;
+    position: relative;
+    display: inline-table;
+
+    &:last-child {
+        padding: 0;
+    }
+}
+
+.fs-car-controller {
+    &-left {
+        cursor: pointer;
+        position: relative;
+        min-width: 2rem;
+
+        span {
+            padding: 0 1rem 0 0;
+            user-select: none;
+
+            &:hover {
+                transform: translate(-2px, 0);
+            }
+        }
+    }
+
+    &-right {
+        cursor: pointer;
+        position: relative;
+        min-width: 2rem;
+
+        span {
+            padding: 0 0 0 1rem;
+            user-select: none;
+
+            &:hover {
+                transform: translate(2px, 0);
+            }
+        }
+    }
+
+    span {
+        position: absolute;
+        top: 50%;
+        line-height: 0;
+        width: 100%;
+        font-size: 2rem;
+        transition: .02s;
+
+        &:hover {
+            color: theme-color("secondary");
+            transition: 0.05s;
+        }
+    }
+}

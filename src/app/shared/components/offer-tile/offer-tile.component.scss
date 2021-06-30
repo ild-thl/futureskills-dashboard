@@ -1,0 +1,115 @@
+app-offer-tile {
+  max-width: 220px;
+}
+
+.offer-tile-wrapper {
+  // background-color: #edeef1;
+  min-width: 220px;
+  border: 1px solid #102d5d21;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+
+    .offer-tile-body {
+      background: theme-color("primary");
+      transition: .2s;
+    }
+  }
+
+  .list-group {
+    padding-bottom: .1rem;
+  }
+}
+.offer-tile-header {
+  background: rgb(212, 221, 230);
+  background: linear-gradient(180deg, rgba(2, 0, 36, 0) 0%, rgb(212, 221, 230) 100%);
+}
+
+.offer-tile-header-image {
+  min-height: 220px;
+  min-width: 220px;
+  width: 220px;
+  margin: 0 auto;
+  height: auto;
+  background-size: cover;
+  background-position: center center;
+}
+
+.offer-tile-header-content {
+  width: 220px;
+  margin: 0 auto;
+  height: 1.5rem;
+}
+
+.offer-tile-header-text span {
+  vertical-align: sub;
+}
+
+.offer-tile-body-header {
+  line-height: 1.2rem;
+  background: #fff;
+  margin-bottom: 0;
+  padding: .5rem;
+  min-height: 3.5rem;
+  align-items: center;
+  display: inline-flex;
+  width: 100%;
+}
+
+.offer-tile-body-container {
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.stars {
+  line-height: 1.4rem;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  font-size: 0.9rem;
+  padding-left: .1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+.full {
+  color: theme-color("primary");
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.offer-tile-title {
+  -webkit-line-clamp: 2; // line-clamp someday; buts already works on all relevant browsers
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box !important;
+}
+
+.offer-tile-body {
+  margin-bottom: 0;
+  transition: .2s;
+}
+
+.offer-tile-wrapper .list-group-item {
+  padding: .4rem;
+  border-left: 0;
+  border-right: 0;
+  font-size: 0.8rem;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.offer-tile-wrapper .ng-fa-icon {
+  display: inline-block;
+}

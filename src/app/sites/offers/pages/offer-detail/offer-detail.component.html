@@ -1,0 +1,197 @@
+<div *ngIf="isError && !isLoading" class="container">
+  <div class="row">
+    <div class="col-12">
+      <fs-error-back-text [errorText]="errMessage"></fs-error-back-text>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isError">
+<div class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mb-2">
+        <a [routerLink]="lnkOffers"> zur Übersicht </a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row pt-4 pb-0 mb-3 mb-md-4 pb-2 offer-detail-metas"
+    *ngIf="!isLoading"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-5 col-md-3 col-lg-2">
+          <div class="mt-md-2 mb-3 offer-detail-image">
+            <img src="{{ offer?.image_path }}" />
+          </div>
+        </div>
+        <div class="col-12 col-sm-7 col-md-9 col-lg-10">
+          <div class="offer-title">
+            <h1 class="h2 pl-1">
+              {{ offer?.title }}
+              <span *ngIf="offer?.hashtag" class="text-uppercase"
+                >#{{ offer?.hashtag }}</span
+              >
+            </h1>
+            <div ngbDropdown *ngIf="isAuthenticated">
+              <!-- todo: Nur Admins! -->
+              <button
+                class="btn btn-light cog"
+                id="dropdownBasic1"
+                ngbDropdownToggle
+              >
+                <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button
+                  class="btn btn-primary"
+                  [routerLink]="[lnkAdminOfferEdit, offer?.id]"
+                  ngbDropdownItem
+                >
+                  <fa-icon [icon]="['fas', 'pen']"></fa-icon> Editieren
+                </button>
+                <button
+                  class="btn btn-primary"
+                  ngbDropdownItem
+                  (click)="showModalWindowDeleteOffer()"
+                >
+                  <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon> Löschen
+                </button>
+              </div>
+            </div>
+          </div>
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><fa-icon [icon]="['fas', 'door-open']"></fa-icon></td>
+                <td>Institution</td>
+                <td>{{ offer?.institution?.title }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <fa-icon [icon]="['fas', 'comment-alt']"></fa-icon>
+                </td>
+                <td>Programm</td>
+                <td>
+                  <span *ngIf="offer?.competence_tech==true">Tech</span>
+                  <span *ngIf="offer?.competence_tech==true && ( offer?.competence_digital==true || offer?.competence_classic==true)">, </span>
+                  <span *ngIf="offer?.competence_digital==true">Digital Basic</span>
+                  <span *ngIf="offer?.competence_digital==true && offer?.competence_classic==true">, </span>
+                  <span *ngIf="offer?.competence_classic==true">Classic</span>
+                  <span *ngIf="offer?.competence_tech!=true && offer?.competence_digital!=true && offer?.competence_classic!=true">keine Angabe</span>
+                </td>
+              </tr>
+              <tr>
+                <td><fa-icon [icon]="['fas', 'globe-europe']"></fa-icon></td>
+                <td>Sprache</td>
+                <td>{offer?.language, select, de {Deutsch} en {Englisch}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <fa-icon [icon]="['fas', 'chalkboard-teacher']"></fa-icon>
+                </td>
+                <td>Format</td>
+                <td>
+                  {offer?.type, select, online-course {Online Kurs} webinar
+                  {webinar} presence-event {Präsenzveranstaltung}
+                  presence-series {Präsenzveranstaltungsreihe} self-study-course
+                  {Selbstlernkurs} course-package {Kurspaket} blended-learning {Blended Learning}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="float-right offer-detail-strip">
+            <div class="offer-detail-rating">
+              <!--<fa-icon [icon]="['fas', 'star']"></fa-icon>
+              <fa-icon [icon]="['fas', 'star']"></fa-icon>
+              <fa-icon [icon]="['fas', 'star']"></fa-icon>
+              <fa-icon [icon]="['fas', 'star']"></fa-icon>-->
+              <fa-icon class="half" [icon]="['far', 'star']"></fa-icon>
+              <fa-icon class="half" [icon]="['far', 'star']"></fa-icon>
+              <fa-icon class="half" [icon]="['far', 'star']"></fa-icon>
+              <fa-icon class="half" [icon]="['far', 'star']"></fa-icon>
+              <fa-icon class="half" [icon]="['far', 'star']"></fa-icon>
+            </div>
+            <!-- <button type="button" class="btn btn-primary">+ Merken</button>
+            <button type="button" class="btn btn-secondary" (click)="subscribeToOffer()" *ngIf="!subscribed">Jetzt einschreiben</button>
+          <button type="button" class="btn btn-secondary" (click)="forwardToLMS()" *ngIf="subscribed">Zum Kurs</button> -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="showModalWindowToLMS()"
+            >
+              Zum Kurs
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container offer-detail" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col">
+      <p class="lead mb-md-4">
+        {{ offer?.subtitle }}
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 mb-3 offer-detail-desc">
+      <div class="mb-4">
+        <h2 class="h4">Was erwartet dich im Kurs?</h2>
+        <div [innerHTML]="offer?.description"></div>
+      </div>
+      <!--<div class="mb-4">
+        <h2 class="h4">Lorem ipsum dolor sit</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua.
+        </p>
+      </div>-->
+    </div>
+
+    <div class="col-md-4 mb-3 offer-detail-structure">
+      <div class="mb-4">
+        <div class="mb-4" *ngIf="offer?.author">
+          <h4>Autor/innen</h4>
+          {{ offer?.author }}
+        </div>
+      </div>
+      <div class="mb-4">
+        <div class="mb-4" *ngIf="offer?.meta.time_requirement">
+          <h4>Arbeitsaufwand</h4>
+          {{ offer?.meta.time_requirement }}
+        </div>
+      </div>
+      <div class="mb-4">
+        <div class="mb-4" *ngIf="offer?.meta.requirements">
+          <h4>Voraussetzungen</h4>
+          {{ offer?.meta.requirements }}
+        </div>
+      </div>
+      <div class="mb-4">
+        <div class="mb-4" *ngIf="offer?.meta.niveau">
+          <h4>Niveau</h4>
+          {{ offer?.meta.niveau }}
+        </div>
+      </div>
+      <div class="mb-4">
+        <div class="mb-4" *ngIf="offer?.meta.exam">
+          <h4>Prüfung</h4>
+          {{ offer?.meta.exam }}
+        </div>
+      </div>
+      <div class="mb-4">
+        <div class="mb-4" *ngIf="offer?.meta.sponsor">
+          <h4>Sponsor</h4>
+          {{ offer?.meta.sponsor }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

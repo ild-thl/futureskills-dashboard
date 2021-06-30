@@ -1,0 +1,37 @@
+<header class="container">
+  <div class="row py-sm-3 py-md-4 py-3">
+    <div class="col-6">
+      <a [routerLink]="[lnkLanding]">
+        <img class="logo" src="assets/logos/logo_sh.svg">
+      </a>
+    </div>
+
+    <div class="col-6 text-right">
+      <!--<div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Sprache</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem *ngFor="let lang of languages"><a *ngIf="lang.code !== localeId" href="/{{lang.code}}/"  >{{lang.label}}</a></button>
+          <button ngbDropdownItem *ngFor="let lang of languages" class="font-weight-bold"><span *ngIf="lang.code === localeId">{{lang.label}}</span></button>
+        </div>
+      </div>-->
+
+
+      <div ngbDropdown class="d-inline-block" *ngIf="isAuthenticated">
+        <button class="btn btn-primary" id="dropdownBasic2" ngbDropdownToggle><fa-icon [icon]="['fas', 'user']"></fa-icon> {{user.name}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+          <button ngbDropdownItem class="font-weight-bold" (click)="onLogout()">Logout</button>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="button"
+        aria-pressed="false"
+        *ngIf="!isAuthenticated"
+        [routerLink]="lnkLogin"
+        routerLinkActive="router-link-active">Login
+      </button>
+    </div>
+  </div>
+</header>

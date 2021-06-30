@@ -1,0 +1,55 @@
+.advantages {
+  background-color: #DDDDDD;
+
+  h3,
+  h4,
+  p,
+  li {
+    color: #000000;
+  }
+  .card {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    overflow: hidden;
+
+    &.tech {
+      background-color: #786FAD;
+    }
+    &.classic {
+      background-color: #00A1AA;
+    }
+    &.digital {
+      background-color: #048ACB;
+    }
+
+    .card-img-top {
+      max-width: 100px;
+      width: 100%;
+      position: inherit;
+      z-index: 1;
+    }
+    .card-body {
+      background-color: #F9F9F9;
+      position: relative;
+
+      ul {
+        padding-left: 15px;
+
+        li {
+          list-style-type: circle;
+        }
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        top: -48px;
+        left: -20px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 0 50px 550px;
+        border-color: transparent transparent #F9F9F9 transparent;
+      }
+    }
+  }
+}

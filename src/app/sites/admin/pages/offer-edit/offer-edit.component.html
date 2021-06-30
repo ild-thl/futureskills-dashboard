@@ -1,0 +1,215 @@
+<div class="container pl-0 pr-0">
+  <form [formGroup]="offerEditForm">
+    <div class="row">
+      <div class="col-12" *ngIf="offer.id; else new_Offer">
+        <button type="button" class="btn btn-outline-primary mb-3" [routerLink]="[lnkOffers, offer?.id]">
+          Zur Detailseite
+        </button>
+      </div>
+
+      <ng-template #new_Offer>
+        <div class="col-12">
+          <button type="button" class="btn btn-outline-primary mb-3" [routerLink]="lnkOffers">
+            Zur Kursliste
+          </button>
+        </div>
+      </ng-template>
+
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="mb-2">
+          <label for="title">Titel</label>*
+          <input class="form-control" formControlName="title" type="text" id="title" name="title" required />
+        </div>
+
+        <div class="mb-2">
+          <label for="hashtag">Hashtag</label>
+          <input formControlName="hashtag" class="form-control" type="text" id="hashtag" name="hashtag" />
+        </div>
+
+        <div class="mb-2">
+          <label for="institution_id">Institution</label>*
+          <select formControlName="institution_id" class="form-control" id="institution_id" name="institution_id"
+            deactivated>
+            <option value="1">FutureSkills</option>
+            <option value="2">Microsoft Learn</option>
+            <option value="3">OPEN vhb</option>
+            <option value="4">KI-Campus,</option>
+            <!--TODO Institutions-->
+          </select>
+        </div>
+
+        <div class="mb-2">
+          <label for="url">Kurs-URL</label>
+          <input formControlName="url" class="form-control" type="url" id="url" name="url" />
+        </div>
+
+        <div class="mb-2">
+          <label for="type">Format</label>*
+          <select formControlName="type" class="form-control" id="type" name="type">
+            <option value="online-course">Online Kurs</option>
+            <option value="self-study-course">Selbstlernkurs</option>
+            <option value="webinar">Webinar</option>
+            <option value="presence-event">Präsenz Veranstaltung</option>
+            <option value="presence-series">Präsenz Veranstaltungsreihe</option>
+            <option value="course-package">Kurspaket</option>
+            <option value="blended-learning">Blended Learning</option>
+          </select>
+        </div>
+
+        <div class="mb-2">
+          <label for="subtitle">Kurzbeschreibung</label>
+          <input formControlName="subtitle" class="form-control" type="text" id="subtitle" name="subtitle" />
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="mb-2">
+          <label for="sort_flag">Sortierung (je höher, desto weiter oben)</label>
+          <input formControlName="sort_flag" class="form-control" type="number" id="sort_flag" name="sort_flag"
+            value="0" />
+        </div>
+
+        <div class="mb-2">
+          <label for="image_path">Bild URL</label>
+          <input formControlName="image_path" class="form-control" type="text" id="image_path" name="image_path" />
+        </div>
+
+        <div class="mb-0">
+          <label>Programm</label>
+          <div class="row">
+            <div class="col-4 pr-0">
+              <input formControlName="competence_classic" class="form-control d-inline-block" type="checkbox"
+                id="competence_classic" name="competence_classic" />
+              <label class="align-text-bottom pl-1" for="competence_classic">Classic</label>
+            </div>
+            <div class="col-4 pl-1 pr-0">
+              <input formControlName="competence_digital" class="form-control d-inline-block" type="checkbox"
+                id="competence_digital" name="competence_digital" />
+              <label class="align-text-bottom pl-1" for="competence_digital">Digital</label>
+            </div>
+            <div class="col-4 pl-0">
+              <input formControlName="competence_tech" class="form-control d-inline-block" type="checkbox"
+                id="competence_tech" name="competence_tech" />
+              <label class="align-text-bottom pl-md-2 pl-1" for="competence_tech">Tech</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="language">Sprache</label>*
+          <select formControlName="language" class="form-control" id="language" name="language" value="de">
+            <option value="de" selected="selected">Deutsch</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+
+        <div class="mb-2">
+          <label for="author">Autor/innen</label>
+          <input formControlName="author" class="form-control" type="author" id="author" name="author" />
+        </div>
+
+        <div class="mb-2">
+          <label for="target_group">Zielgruppe</label>
+          <input formControlName="target_group" class="form-control" type="target_group" id="target_group"
+            name="target_group" />
+        </div>
+      </div>
+
+      <app-offer-relations-selection formControlArray="relatedOfferFormArray"
+        (relatedOffersOutput)="updateRelatedOffers($event)" [offer]="offer" *ngIf="!isLoading"
+        class="col-12 no-gutters">
+      </app-offer-relations-selection>
+
+      <div class="form-group col-12 mb-3">
+        <div class="mb-2">
+          <label for="description">Beschreibung</label>
+          <angular-editor formControlName="description" name="description" id="description" class="w-100"
+            [config]="editorConfig"></angular-editor>
+        </div>
+        <button type="button" class="btn btn-outline-primary mb-3" (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          Weitere Felder
+        </button>
+      </div>
+    </div>
+
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="row">
+      <div class="col-12 col-md-6">
+        <!--
+        <div class="mb-2">
+          <label for="ects">ECTS</label>
+          <input formControlName="ects" class="form-control" type="number" id="ects" name="ects" value="0" />
+        </div>
+        -->
+
+        <div class="mb-2">
+          <label for="time_requirement">Arbeitsaufwand</label>
+          <input formControlName="time_requirement" class="form-control" type="time_requirement" id="time_requirement"
+            name="time_requirement" />
+        </div>
+
+        <div class="mb-2">
+          <label for="sponsor">Sponsor</label>
+          <input formControlName="sponsor" class="form-control" type="sponsor" id="sponsor" name="sponsor" />
+        </div>
+
+        <div class="mb-2">
+          <label for="exam">Prüfung</label>
+          <input formControlName="exam" class="form-control" type="exam" id="exam" name="exam" />
+        </div>
+
+        <div class="mb-2">
+          <label for="requirements">Voraussetzungen</label>
+          <input formControlName="requirements" class="form-control" type="requirements" id="requirements"
+            name="requirements" />
+        </div>
+
+        <div class="mb-2">
+          <label for="niveau">Niveau</label>
+          <input formControlName="niveau" class="form-control" type="niveau" id="niveau" name="niveau" />
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="mb-2">
+          <label for="executed_from">Ausführung ab</label>
+          <input formControlName="executed_from" class="form-control" type="executed_from" id="executed_from"
+            name="executed_from" />
+        </div>
+
+        <div class="mb-2">
+          <label for="executed_until">Ausführung bis</label>
+          <input formControlName="executed_until" class="form-control" type="executed_until" id="executed_until"
+            name="executed_until" />
+        </div>
+
+        <div class="mb-2">
+          <label for="listed_from">Listung ab</label>
+          <input formControlName="listed_from" class="form-control" type="listed_from" id="listed_from"
+            name="listed_from" />
+        </div>
+
+        <div class="mb-2">
+          <label for="listed_until">Listung bis</label>
+          <input formControlName="listed_until" class="form-control" type="listed_until" id="listed_until"
+            name="executed_until" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-12 p-0">
+      <button (click)="onSaveData(offerEditForm.value)" class="btn btn-primary mb-3" type="button"
+        *ngIf="!createNewOffer">
+        Speichern
+      </button>
+      <button (click)="onSaveData(offerEditForm.value)" class="btn btn-primary mb-3" type="button"
+        *ngIf="createNewOffer">
+        Anlegen
+      </button>
+    </div>
+  </form>
+
+  <p *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type" (closed)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+</div>
