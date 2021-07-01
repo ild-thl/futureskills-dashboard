@@ -60,7 +60,7 @@
     <!--Accordion>-->
     <div class="row mt-5">
       <div class="col-sm">
-        <ngb-accordion [closeOthers]="false" #acc="ngbAccordion" activeIds="toggle-1">
+        <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="toggle-1">
           <ngb-panel id="toggle-1" title="Auswertung" class="accordion-panel">
             <ng-template ngbPanelContent>
               <div class="table-responsive-sm">
@@ -89,13 +89,13 @@
                     weitere 10000 Bilder zum Testen des Modells
                   </li>
                   <li>Eine MNIST Ziffer ist 28x28 Pixel groß und hat 8Bit (Graustufen)</li>
+                  <li>Die ersten zwölf Zahlen:<br>  <img src="assets/images/mnist-numbers.png" alt="Beispiel MNIST-Zahlen"></li>
                 </ul>
-
-                <p>to be continued ...</p>
+                <p>...</p>
               </div>
             </ng-template>
           </ngb-panel>
-          <ngb-panel id="toggle-2" title="Weitere Infos" class="accordion-panel">
+          <ngb-panel id="toggle-3" title="Weitere Infos" class="accordion-panel">
             <ng-template ngbPanelContent>
               <div>
                 Mögliche Inhalte
