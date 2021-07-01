@@ -1,6 +1,22 @@
 # Changelog
 
-## [Unreleased]
+## [Released] v0.4
+
+## 2021-06-28/ml
+### Changed
+- "Lehrenden-Seite": Header, Section2 in future tense
+
+## 2021-06-28/ml
+### Changed
+- Landing Page Button "Über uns" is commented out
+
+## 2021-06-25/dn
+### Added
+- AI and video image for teacher page
+
+### Changed
+- typo
+- tweaks to responsive image css
 
 ## 2021-06-23/ml
 ### Changed
