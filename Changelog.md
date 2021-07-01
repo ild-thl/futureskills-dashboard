@@ -1,5 +1,14 @@
 # Changelog
 
+## [UnReleased]
+## 2021-06-10/ml
+# added
+- new static vars for KI
+- new environment var for model path
+- Default Model-Files in assets
+- new Drawable Canvas Component
+- Prediction for number
+
 ## [Released] v0.4
 
 ## 2021-06-28/ml
@@ -46,15 +55,6 @@
 # added
 - shared info banner component
 - consent-video moved to shared
-
-## 2021-06-10/ml
-# added
-- new static vars for KI
-- new environment var for model path
-- Default Model-Files in assets
-- new Drawable Canvas Component
-# Changed
-- Ki-Tools Page preparing
 
 ## 2021-06-02/ml
 - Offer-Object (short) is created out of Offer-Short + Properties

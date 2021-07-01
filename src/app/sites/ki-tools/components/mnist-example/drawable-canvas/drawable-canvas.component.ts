@@ -173,39 +173,4 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
 
-
-
-  private rresizeCanvasToDisplaySize(canvas: HTMLCanvasElement, force: boolean = false) {
-    let wasChanged = false;
-    let width = canvas.clientWidth;
-    let height = canvas.clientHeight;
-    let quadr = false;
-    const ctx = canvas.getContext('2d');
-
-    // 1. Quadratisch!
-    if (width !== height) {
-      height = width;
-      quadr = true;
-    }
-
-    // Calc canvas-size if css-size changed
-    if (canvas.width !== width || canvas.height !== height || quadr || force) {
-      canvas.width = width;
-      canvas.height = height;
-      wasChanged = true;
-
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#111111';
-      if (width < 250) {
-        ctx.lineWidth = 5;
-      } else {
-        ctx.lineWidth = 10;
-      }
-      ctx.fillStyle = '#FFFFFF';
-      this.canvasResized.emit({ width: canvas.width, height: canvas.height });
-      console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
-    }
-    return wasChanged;
-  }
-
 }
