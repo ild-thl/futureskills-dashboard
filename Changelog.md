@@ -1,5 +1,14 @@
 # Changelog
 
+## [UnReleased]
+## 2021-06-10/ml
+# added
+- new static vars for KI
+- new environment var for model path
+- Default Model-Files in assets
+- new Drawable Canvas Component
+- Prediction for number
+
 ## [Released] v0.4
 
 ## 2021-06-28/ml

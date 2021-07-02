@@ -24,7 +24,7 @@ export class ScriptLoaderService {
     return forkJoin(streamArr);
   }
 
-  loadScript(name: string): Observable<any> {
+  private loadScript(name: string): Observable<any> {
     return new Observable((subscriber) => {
       if (!this.scriptMap.has(name)) {
         subscriber.next({ script: name, loaded: false, status: 'Unknown Scriptname' });

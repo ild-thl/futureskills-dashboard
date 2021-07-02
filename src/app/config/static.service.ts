@@ -18,4 +18,7 @@ export class StaticService {
   getRoutingInfo(): any {
     return CustomConfig.routingInfo;
   }
+  getKIConfig(): any {
+    return CustomConfig.kiConfig;
+  }
 }

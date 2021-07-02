@@ -9,6 +9,10 @@ export const CustomConfig = {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     },
   },
+  kiConfig: {
+    online: true,
+    mnistPath: 'mnistnumber/model.json',
+  },
   paths: {
     lnkLanding: '/',
     lnkOffers: '/kurse',
@@ -20,6 +24,7 @@ export const CustomConfig = {
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
+    lnkKITools_mnist: '/ki-playground/mnist'
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
