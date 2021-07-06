@@ -15,7 +15,7 @@
     <div class="row d-block d-sm-none">
       <div class="col">
         <div *ngIf="prediction_available; else emptyBubble_small" class="bubble">
-          Ich glaube die Zahl ist eine {{ predicted }}
+          {{textPrediction}} {{ predicted }}
         </div>
         <ng-template #emptyBubble_small>
           <div class="bubble">Schreibe eine Ziffer (0-9) in das Feld.</div>
@@ -36,7 +36,7 @@
       <div class="col vertical-align d-none d-sm-block">
         <div class="row">
           <div *ngIf="prediction_available; else emptyBubble" class="bubble thought">
-            Ich glaube die Zahl ist eine {{ predicted }}
+            {{textPrediction}} {{ predicted }}
           </div>
           <ng-template #emptyBubble>
             <div class="bubble thought">Schreibe eine Ziffer (0-9) in das Feld.</div>
@@ -50,7 +50,7 @@
 
     <!-- Button -->
     <div class="row">
-      <div class="col">
+      <div class="col col-md-4">
         <button class="btn btn-outline-primary btn-sm float-left" (click)="onClearButtonClicked()">
           Löschen
         </button>

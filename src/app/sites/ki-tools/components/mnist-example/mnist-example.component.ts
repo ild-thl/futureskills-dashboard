@@ -32,6 +32,9 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
 
+  private THRESHOLD = 1.0;
+  private MAYBE = 0.95;
+
   private MODEL_SIZE = 28;
   modelLoaded = false;
   private viewIsInitialized = false;
@@ -41,10 +44,18 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   prediction_available: boolean = false;
   miniCanvasHTMLElement: HTMLCanvasElement;
   miniCanvasHTMLContext: CanvasRenderingContext2D;
-  predictions = [];
+  predictions: string[] = [];
   predictionIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   private tableRowSubscription: Subscription;
+
+  textIfSure = [
+    'Ich glaube die Zahl ist eine ',
+    'Ich denke die Zahl ist eine '
+  ];
+  textIfUnknown = 'Ich kann die Zahl nicht erkennen.';
+  textMayBe = 'Ich kann die Zahl nicht genau erkennen. Vielleicht ist es eine ';
+  textPrediction = '';
 
   constructor(
     private kiService: KiStatusService,
@@ -107,16 +118,12 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const pred = await tf.tidy(() => {
       // Convert Image
-      let img = tf.browser.fromPixels(imageData, 1);
-      let imgtmp = img.reshape([1, this.MODEL_SIZE, this.MODEL_SIZE, 1]);
-      img = tf.cast(imgtmp, 'float32');
-
-      // Predictions
-      const output = this.model.predict(img) as any;
-      let predictionArr = Array.from(output.dataSync());
-      return predictionArr;
+      const img = tf.browser.fromPixels(imageData, 1);
+      const resized = tf.image.resizeBilinear(img, [28, 28]);
+      const tensor = resized.expandDims(0);
+      const prediction = this.model.predict(tensor);
+      return prediction;
     });
-    //console.log('Predictions => ', pred);
     this.showResults(pred);
   }
 
@@ -128,19 +135,33 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private getPredictedNumber(predictions: number[]) {
-    return predictions
-      .map((x: any, i: any) => [x, i])
-      .reduce((b: any, a: any) => (a[0] > b[0] ? a : b))[1];
-  }
+  private showResults(prediction: any) {
+    let predictionArr = Array.from(prediction.dataSync()) as number[];
+    console.log('Predictions => ', predictionArr);
 
-  private showResults(predictionArr: any[]) {
-    this.predicted = this.getPredictedNumber(predictionArr);
-    this.prediction_available = true;
-    for (let i = 0; i < predictionArr.length; i++) {
-      this.predictions[i] = predictionArr[i].toFixed(2);
+    const maxValue = tf.argMax(prediction, 1).dataSync()[0];
+    const pMaxValue = tf.max(prediction, 1).dataSync()[0];
+    console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
+    
+
+
+    if (pMaxValue >= this.THRESHOLD) {
+      this.textPrediction = this.textIfSure[this.randomNumber(0,this.textIfSure.length-1)];
+      this.predicted = maxValue.toString() + '.';
+    } else if (pMaxValue >= this.MAYBE) {
+      this.textPrediction = this.textMayBe;
+      this.predicted = maxValue.toString() + '.';
+    } else {
+      this.textPrediction = this.textIfUnknown;
+      this.predicted = '';
     }
-    //console.log('AllPredictions: ', this.predictions);
+
+    this.prediction_available = true;
+
+    for (let i = 0; i < predictionArr.length; i++) {
+      const tempStr = predictionArr[i].toFixed(10).substr(0,4);
+      this.predictions[i] = tempStr;
+    }
   }
 
   private clearContexts() {
@@ -173,5 +194,20 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
       this.miniCanvasHTMLContext.canvas.width,
       this.miniCanvasHTMLContext.canvas.height
     );
+  }
+
+  private randomNumber(min: number, max: number) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  /**
+   * 
+   * @param predictions @deprecated
+   * @returns 
+   */
+  private getPredictedNumber(predictions: any[]) {
+    return predictions
+      .map((x: any, i: any) => [x, i])
+      .reduce((b: any, a: any) => (a[0] > b[0] ? a : b))[1];
   }
 }
