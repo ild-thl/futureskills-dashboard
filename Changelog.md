@@ -1,6 +1,11 @@
 # Changelog
 
 ## [UnReleased]
+
+## 2021-06-06
+- MNIST: probabilities are shown and recognized
+- different texts
+
 ## 2021-06-10/ml
 # added
 - new static vars for KI
