@@ -36,12 +36,12 @@
                   *ngIf="scriptsAreLoaded && !modelIsLoading; else btnNotClickable"
                   type="button"
                   class="btn btn-outline-dark btn-sm mr-2"
-                  (click)="onLoadMnistExample(false)"
+                  (click)="onLoadMnistExample(true)"
                 >
                   Starten
                 </button>
 
-                  <button
+                  <!-- <button
                     *ngIf="scriptsAreLoaded && !modelIsLoading; else btnNotClickable"
                     type="button"
                     class="btn btn-link btn-sm mr-2"
@@ -51,8 +51,8 @@
                   </button>
                   <ng-template #btnNotClickable
                     ><small class="text-muted">Wird geladen ...</small>
-                  </ng-template>
-                  <small class="text-muted float-right">Download: ca. 10MB</small>
+                  </ng-template> -->
+                  <small class="text-muted float-right">Download: ca. 3MB</small>
                 </div>
               </div>
             </div>
