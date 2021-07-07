@@ -3,7 +3,7 @@
 ## [UnReleased]
 
 ## 2021-06-07/ml
-- modale Window has 98% size of parent
+- MNIST-window has 98% size of parent
 - components are responsive now
 
 ## 2021-06-06/ml
