@@ -13,7 +13,7 @@
   <div [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoaded == false }">
     <!-- Bubble < xs-->
     <div class="row d-block d-sm-none">
-      <div class="col">
+      <div class="col col-md-4">
         <div *ngIf="prediction_available; else emptyBubble_small" class="bubble">
           {{textPrediction}} {{ predicted }}
         </div>

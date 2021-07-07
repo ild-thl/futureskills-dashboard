@@ -1,7 +1,7 @@
 #ki-tools {
   .ki-main {
     background-color: #dddddd;
-    a{
+    a {
       text-decoration: underline;
     }
     .card {
@@ -20,4 +20,9 @@
       }
     }
   }
+}
+
+::ng-deep .ki-tools-modal-class .modal-dialog {
+  max-width: 97%;
+  width: 97%;
 }

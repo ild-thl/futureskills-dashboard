@@ -23,15 +23,40 @@
     font-size: large;
     width: 300px;
     border-radius: $bubbleBorderRadius;
-    @media (max-width: $sm) {
-      margin: 0px;
-      margin-bottom: 5px;
-      max-width: 250px;
-      padding: 20px;
+  }
+
+  &.modus_modal {
+    // modales Fenster
+    .bubble {
+    
+      @media (max-width: $sm) {
+        margin: 0px;
+        margin-bottom: 5px;
+        max-width: 200px;
+        padding: 20px;
+      }
+      @media (max-width: $xs) {
+        width: 250px;
+        max-width: 250px;
+        padding: 10px;
+      }
     }
-    @media (max-width: $xs) {
-      width: 250px;
-      padding: 10px;
+  }
+  &.modus_window {
+    // normales Fenster
+    .bubble {
+   
+      @media (max-width: $sm) {
+        margin: 0px;
+        margin-bottom: 5px;
+        max-width: 250px;
+        padding: 20px;
+      }
+      @media (max-width: $xs) {
+        width: 250px;
+        max-width: 250px;
+        padding: 10px;
+      }
     }
   }
 
@@ -65,19 +90,6 @@
     border-radius: 18px;
     @media (max-width: $sm) {
       left: $bubbleSmallPosition - 15px;
-    }
-  }
-
-  &.modus_modal {
-    // modales Fenster
-    .bubble {
-      background-color: #fff;
-    }
-  }
-  &.modus_window {
-    // normales Fenster
-    .bubble {
-      background-color: #fff;
     }
   }
 

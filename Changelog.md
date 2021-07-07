@@ -2,7 +2,11 @@
 
 ## [UnReleased]
 
-## 2021-06-06
+## 2021-06-07/ml
+- MNIST-window has 98% size of parent
+- components are responsive now
+
+## 2021-06-06/ml
 - MNIST: probabilities are shown and recognized
 - different texts
 
