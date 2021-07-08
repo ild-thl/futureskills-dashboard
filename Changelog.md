@@ -2,6 +2,9 @@
 
 ## [UnReleased]
 
+## 2021-06-08/ml
+- MNIST Text is not selectable anymore
+
 ## 2021-06-07/ml
 - MNIST-window has 98% size of parent
 - components are responsive now
