@@ -6,7 +6,8 @@
       kann.
     </div>
   </div>
-  <!--wait if loaded-->
+
+  <!--wait until loaded-->
   <div *ngIf="modelLoaded == false || scriptLoaded == false">
     <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
   </div>
@@ -14,36 +15,34 @@
     <!-- Bubble < xs-->
     <div class="row d-block d-sm-none">
       <div class="col col-md-4">
-        <div *ngIf="prediction_available; else emptyBubble_small" class="bubble">
+        <div *ngIf="prediction_available; else emptyBubble_small" class="bubble user-select-none">
           {{textPrediction}} {{ predicted }}
         </div>
         <ng-template #emptyBubble_small>
-          <div class="bubble">Schreibe eine Ziffer (0-9) in das Feld.</div>
+          <div class="bubble user-select-none">Schreibe eine Ziffer (0-9) in das Feld.</div>
         </ng-template>
       </div>
     </div>
 
     <!-- Canvas and Bubble > xs-->
     <div class="row">
-      <div class="col col-md-4">
+      <div class="col">
         <fs-drawable-canvas
-          [width]="400"
-          [height]="400"
           (newImage)="predict($event)"
           (canvasResized)="onCanvasResized($event)"
         ></fs-drawable-canvas>
       </div>
       <div class="col vertical-align d-none d-sm-block">
         <div class="row">
-          <div *ngIf="prediction_available; else emptyBubble" class="bubble thought">
+          <div *ngIf="prediction_available; else emptyBubble" class="bubble thought user-select-none">
             {{textPrediction}} {{ predicted }}
           </div>
           <ng-template #emptyBubble>
-            <div class="bubble thought">Schreibe eine Ziffer (0-9) in das Feld.</div>
+            <div class="bubble thought user-select-none">Schreibe eine Ziffer (0-9) in das Feld.</div>
           </ng-template>
         </div>
         <div class="row">
-          <img class="align-baseline" src="assets/images/nadia-persona-lg.png" />
+          <img class="align-baseline user-select-none" src="assets/images/nadia-persona-lg.png" />
         </div>
       </div>
     </div>

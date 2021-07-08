@@ -2,6 +2,11 @@
 
 ## [UnReleased]
 
+## 2021-06-08/ml
+### Changed
+- MNIST Text is not selectable anymore
+- CANVAS Default Size is 250px (works always), Cursor is crosshair now
+
 ## 2021-06-07/ml
 - MNIST-window has 98% size of parent
 - components are responsive now
