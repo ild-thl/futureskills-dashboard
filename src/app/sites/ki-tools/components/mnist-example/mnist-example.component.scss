@@ -14,14 +14,13 @@
     position: relative;
     text-align: center;
     line-height: 1.2em;
-    margin: 5px auto;
     background-color: #fff;
     border: $bubbleBorder solid $bubbleBorderColor;
     border-radius: 30px;
     font-family: sans-serif;
     padding: 30px;
     font-size: large;
-    width: 300px;
+    width: 400px;
     border-radius: $bubbleBorderRadius;
   }
 
@@ -29,17 +28,17 @@
     // modales Fenster
     .bubble {
     
-      @media (max-width: $sm) {
-        margin: 0px;
-        margin-bottom: 5px;
-        max-width: 200px;
-        padding: 20px;
-      }
-      @media (max-width: $xs) {
-        width: 250px;
-        max-width: 250px;
-        padding: 10px;
-      }
+      // @media (max-width: $sm) {
+      //   margin: 0px;
+      //   margin-bottom: 5px;
+      //   max-width: 200px;
+      //   padding: 20px;
+      // }
+      // @media (max-width: $xs) {
+      //   width: 250px;
+      //   max-width: 250px;
+      //   padding: 10px;
+      // }
     }
   }
   &.modus_window {

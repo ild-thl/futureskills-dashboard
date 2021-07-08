@@ -2,6 +2,10 @@
 
 ## [UnReleased]
 
+## 2021-07-08/dn
+### Changed
+- Fixed responsive KI tools
+
 ## 2021-06-08/ml
 ### Changed
 - MNIST Text is not selectable anymore
