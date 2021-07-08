@@ -1,4 +1,5 @@
 @import 'breakpoints';
+
 .mnist-example {
   $bubbleBorderColor: var(--color-primary-blue);
   $bubbleBorder: 2px;
@@ -24,23 +25,6 @@
     border-radius: $bubbleBorderRadius;
   }
 
-  &.modus_modal {
-    // modales Fenster
-    .bubble {
-    
-      // @media (max-width: $sm) {
-      //   margin: 0px;
-      //   margin-bottom: 5px;
-      //   max-width: 200px;
-      //   padding: 20px;
-      // }
-      // @media (max-width: $xs) {
-      //   width: 250px;
-      //   max-width: 250px;
-      //   padding: 10px;
-      // }
-    }
-  }
   &.modus_window {
     // normales Fenster
     .bubble {
