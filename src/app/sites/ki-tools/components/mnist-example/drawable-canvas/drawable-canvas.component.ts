@@ -20,8 +20,8 @@ import { debounceTime, pairwise, switchMap, takeUntil } from 'rxjs/operators';
 })
 export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('drawCanvas', { static: true }) public canvas: ElementRef;
-  @Input() public width = 200;
-  @Input() public height = 200;
+  @Input() public width = 250;
+  @Input() public height = 250;
   @Input() public imageSize = 28;
   @Output() newImage = new EventEmitter();
   @Output() canvasResized = new EventEmitter();

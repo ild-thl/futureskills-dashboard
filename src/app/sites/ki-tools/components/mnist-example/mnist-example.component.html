@@ -26,10 +26,8 @@
 
     <!-- Canvas and Bubble > xs-->
     <div class="row">
-      <div class="col col-md-4">
+      <div class="col">
         <fs-drawable-canvas
-          [width]="400"
-          [height]="400"
           (newImage)="predict($event)"
           (canvasResized)="onCanvasResized($event)"
         ></fs-drawable-canvas>
