@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { debounceTime, pairwise, switchMap, takeUntil } from 'rxjs/operators';
+import { CanvasPosition } from './event-canvas.directive';
 
 @Component({
   selector: 'fs-drawable-canvas',
@@ -100,6 +101,10 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
       .subscribe((evt) => {
         this.resizeCanvasToDisplaySize();
       });
+  }
+
+  onDrawingEvent(positionData: CanvasPosition) {
+   // TODO: Hier auf die Events aus der Directive reagieren
   }
 
   private captureDrawingCanvasEvents(): Observable<[Event, Event]> {

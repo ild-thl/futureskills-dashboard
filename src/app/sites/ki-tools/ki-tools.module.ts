@@ -9,6 +9,7 @@ import { DrawableCanvasComponent } from './components/mnist-example/drawable-can
 import { NgbdMnistModalComponent } from './pages/mnist/mnist-modal/mnist-modal.component';
 import { MnistComponent } from './pages/mnist/mnist-standalone/mnist.component';
 import { MnistLinkFooterComponent } from './components/mnist-example/mnist-link-footer/mnist-link-footer.component';
+import { EventCanvasDirective } from './components/mnist-example/drawable-canvas/event-canvas.directive';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MnistLinkFooterComponent } from './components/mnist-example/mnist-link-
     MnistComponent,
     DrawableCanvasComponent,
     NgbdMnistModalComponent,
-    MnistLinkFooterComponent
+    MnistLinkFooterComponent,
+    EventCanvasDirective
   ],
   imports: [SharedModule, KiToolsRoutingModule],
   providers: [KiStatusService]
