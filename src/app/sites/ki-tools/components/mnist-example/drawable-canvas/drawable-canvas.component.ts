@@ -10,8 +10,8 @@ import {
   Renderer2,
   AfterViewInit,
 } from '@angular/core';
-import { fromEvent, Observable, Subscription } from 'rxjs';
-import { debounceTime, pairwise, switchMap, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { CanvasPosition } from './event-canvas.directive';
 
 @Component({
@@ -31,22 +31,19 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   ctx: CanvasRenderingContext2D; // Zeichencanvas Context
   scalingCanvasHTMLElement: HTMLCanvasElement; // Scaling Canvas
   scaling_ctx: CanvasRenderingContext2D; //Scaling Canvas Context
-
-  mouseDrawingEventSubscription: Subscription;
-  mouseLeavingEventSubscription: Subscription;
   resizingEventSubscription: Subscription;
+  drawing = false;
 
   constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    // CTX-Drawig Canvas
+    // CTX-Drawing Canvas
     this.canvasHtmlElement = this.canvas.nativeElement as HTMLCanvasElement;
     this.ctx = this.canvasHtmlElement.getContext('2d');
     this.canvasHtmlElement.width = this.width;
     this.canvasHtmlElement.height = this.height;
-
 
     //CTX-Scaling Canvas
     this.scalingCanvasHTMLElement = this.renderer.createElement('canvas') as HTMLCanvasElement;
@@ -56,12 +53,11 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.resizeCanvasToDisplaySize(true);
     this.clearCanvas();
-    this.listenToEvents();
+    //this.listenToEvents();
+    this.listenToWindowsResize();
   }
 
   ngOnDestroy(): void {
-    if (this.mouseDrawingEventSubscription) this.mouseDrawingEventSubscription.unsubscribe();
-    if (this.mouseLeavingEventSubscription) this.mouseLeavingEventSubscription.unsubscribe();
     if (this.resizingEventSubscription) this.resizingEventSubscription.unsubscribe();
   }
 
@@ -71,52 +67,32 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
     this.scaling_ctx.clearRect(0, 0, this.imageSize, this.imageSize);
   }
 
-  private listenToEvents() {
-    // Mouse is Drawing on Canvas
-    this.mouseDrawingEventSubscription = this.captureDrawingCanvasEvents().subscribe(
-      (mouseEvnt: [MouseEvent, MouseEvent]) => {
-        const rect = this.canvasHtmlElement.getBoundingClientRect();
-        const previousPosition = {
-          x: mouseEvnt[0].clientX - rect.left,
-          y: mouseEvnt[0].clientY - rect.top,
-        };
-        const currentPosition = {
-          x: mouseEvnt[1].clientX - rect.left,
-          y: mouseEvnt[1].clientY - rect.top,
-        };
-        this.draw(previousPosition, currentPosition);
-      }
-    );
+  // Mouse and TouchMoves from Directive
+  onDrawingEvent(positionData: CanvasPosition) {
 
-    // Mouse is leaving canvas
-    this.mouseLeavingEventSubscription = fromEvent(this.canvasHtmlElement, 'mouseup').subscribe(
-      (leaveEvent: MouseEvent) => {
+    switch(positionData.type){
+      case 'start': 
+        this.drawing = true;
+      break;
+      case 'stop': 
+        this.drawing = false;
         this.newImage.emit(this.scaleImageData());
-      }
-    );
+        break;
+      case 'move': 
+        if (this.drawing){
+          this.draw(positionData.previousPosition, positionData.currentPosition);
+        }
+        break;
+      default: break;
+    }
+  }
 
-    // Window Resize
+  private listenToWindowsResize() {
     this.resizingEventSubscription = fromEvent(window, 'resize')
       .pipe(debounceTime(500))
       .subscribe((evt) => {
         this.resizeCanvasToDisplaySize();
       });
-  }
-
-  onDrawingEvent(positionData: CanvasPosition) {
-   // TODO: Hier auf die Events aus der Directive reagieren
-  }
-
-  private captureDrawingCanvasEvents(): Observable<[Event, Event]> {
-    return fromEvent(this.canvasHtmlElement, 'mousedown').pipe(
-      switchMap((event) => {
-        return fromEvent(this.canvasHtmlElement, 'mousemove').pipe(
-          takeUntil(fromEvent(this.canvasHtmlElement, 'mouseup')),
-          takeUntil(fromEvent(this.canvasHtmlElement, 'mouseleave')),
-          pairwise()
-        );
-      })
-    );
   }
 
   private scaleImageData(): ImageData {
@@ -127,13 +103,13 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   private resizeCanvasToDisplaySize(force: boolean = false) {
     let wasChanged = false;
     const canvas = this.canvasHtmlElement;
-    const ctx =  this.ctx;
+    const ctx = this.ctx;
 
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     let quadr = false;
 
-    // 1. Quadratisch!
+    // Squared canvas
     if (width !== height) {
       height = width;
       quadr = true;
@@ -176,6 +152,4 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
       this.ctx.stroke();
     }
   }
-
-
 }

@@ -3,8 +3,8 @@ import { HostListener, Directive, ElementRef, Output, EventEmitter } from '@angu
 export type CanvasPosition = {
   type: string;
   target: string;
-  lastPos: { x: number; y: number };
-  currentPos: { x: number; y: number };
+  previousPosition: { x: number; y: number };
+  currentPosition: { x: number; y: number };
 };
 
 @Directive({
@@ -27,6 +27,7 @@ export class EventCanvasDirective {
     }
     this.send('start', 'touch', this.getTouchPosition(event));
   }
+
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
     this.send('start', 'mouse', this.getMousePosition(event));
@@ -40,6 +41,9 @@ export class EventCanvasDirective {
     }
     this.send('stop', 'touch', null);
   }
+
+  // Vielleicht das mouseleave noch anders behandeln
+  @HostListener('mouseleave', ['$event'])
   @HostListener('mouseup', ['$event'])
   onMouseUp(event: MouseEvent) {
     this.send('stop', 'mouse', null);
@@ -58,12 +62,6 @@ export class EventCanvasDirective {
     this.send('move', 'mouse', this.getMousePosition(event));
   }
 
-  // RESIZE
-  @HostListener('resize', ['$event'])
-  onResize(event: Event) {
-    console.log('Resize');
-  }
-
   constructor(private el: ElementRef) {
     this.canvas = this.el.nativeElement as HTMLCanvasElement;
     this.ctx = this.canvas.getContext('2d');
@@ -76,13 +74,13 @@ export class EventCanvasDirective {
     this.lastPos = this.pos;
     this.pos = newPosition;
 
-    if (!this.drawing && type=="move") return;
+    if (!this.drawing && type == 'move') return;
 
     this.changed.emit({
       type,
       target,
-      lastPos: this.lastPos,
-      currentPos: this.pos,
+      previousPosition: this.lastPos,
+      currentPosition: this.pos,
     });
 
     if (type == 'start') this.drawing = true;
@@ -109,6 +107,4 @@ export class EventCanvasDirective {
       y,
     };
   }
-
-  private setCanvasPosition(event) {}
 }

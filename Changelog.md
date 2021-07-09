@@ -2,6 +2,11 @@
 
 ## [UnReleased]
 
+
+## 2021-06-09/ml
+### added
+- MNIST: Touch and MouseEvents are handled in new Directive
+
 ## 2021-06-08/ml
 ### Changed
 - MNIST Text is not selectable anymore
