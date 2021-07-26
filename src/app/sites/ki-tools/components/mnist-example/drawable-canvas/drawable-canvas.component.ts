@@ -32,7 +32,6 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   scalingCanvasHTMLElement: HTMLCanvasElement; // Scaling Canvas
   scaling_ctx: CanvasRenderingContext2D; //Scaling Canvas Context
   resizingEventSubscription: Subscription;
-  drawing = false;
 
   constructor(private renderer: Renderer2) {}
 
@@ -53,7 +52,6 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.resizeCanvasToDisplaySize(true);
     this.clearCanvas();
-    //this.listenToEvents();
     this.listenToWindowsResize();
   }
 
@@ -69,21 +67,15 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
 
   // Mouse and TouchMoves from Directive
   onDrawingEvent(positionData: CanvasPosition) {
-
-    switch(positionData.type){
-      case 'start': 
-        this.drawing = true;
-      break;
-      case 'stop': 
-        this.drawing = false;
+    switch (positionData.type) {
+      case 'stop':
         this.newImage.emit(this.scaleImageData());
         break;
-      case 'move': 
-        if (this.drawing){
-          this.draw(positionData.previousPosition, positionData.currentPosition);
-        }
+      case 'move':
+        this.draw(positionData.previousPosition, positionData.currentPosition);
         break;
-      default: break;
+      default:
+        break;
     }
   }
 

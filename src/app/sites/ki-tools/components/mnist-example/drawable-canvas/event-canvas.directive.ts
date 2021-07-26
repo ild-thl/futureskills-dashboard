@@ -17,7 +17,7 @@ export class EventCanvasDirective {
   ctx: CanvasRenderingContext2D;
   pos: { x: number; y: number };
   lastPos: { x: number; y: number };
-  drawing: boolean;
+  isDrawing: boolean = false;
 
   // START
   @HostListener('touchstart', ['$event'])
@@ -25,11 +25,13 @@ export class EventCanvasDirective {
     if (event.target == this.canvas) {
       event.preventDefault();
     }
+    this.isDrawing = true;
     this.send('start', 'touch', this.getTouchPosition(event));
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
+    this.isDrawing = true;
     this.send('start', 'mouse', this.getMousePosition(event));
   }
 
@@ -40,6 +42,7 @@ export class EventCanvasDirective {
       event.preventDefault();
     }
     this.send('stop', 'touch', null);
+    this.isDrawing = false;
   }
 
   // Vielleicht das mouseleave noch anders behandeln
@@ -47,6 +50,7 @@ export class EventCanvasDirective {
   @HostListener('mouseup', ['$event'])
   onMouseUp(event: MouseEvent) {
     this.send('stop', 'mouse', null);
+    this.isDrawing = false;
   }
 
   // MOVE
@@ -67,24 +71,22 @@ export class EventCanvasDirective {
     this.ctx = this.canvas.getContext('2d');
     this.pos = { x: 0, y: 0 };
     this.lastPos = { x: 0, y: 0 };
-    this.drawing = false;
   }
 
   private send(type: string, target: string, newPosition: { x: number; y: number }) {
     this.lastPos = this.pos;
     this.pos = newPosition;
+    if (!this.isDrawing) return;
+    this.emitEvent(type, target, newPosition);
+  }
 
-    if (!this.drawing && type == 'move') return;
-
+  private emitEvent(type: string, target: string, newPosition: { x: number; y: number }) {
     this.changed.emit({
       type,
       target,
       previousPosition: this.lastPos,
       currentPosition: this.pos,
     });
-
-    if (type == 'start') this.drawing = true;
-    if (type == 'stop') this.drawing = false;
   }
 
   // Calc Position Touch
