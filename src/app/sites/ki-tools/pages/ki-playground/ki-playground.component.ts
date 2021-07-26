@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
@@ -18,13 +18,15 @@ export class KIPlaygroundComponent implements OnInit {
   kitoolsAreOnline: boolean;
   lnkKITools_mnist = this.staticService.getPathInfo().lnkKITools_mnist;
   additionalText = '';
+  preview = '0';
 
   constructor(
     private renderer: Renderer2,
     private staticService: StaticService,
     private kiStatusService: KiStatusService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -33,8 +35,14 @@ export class KIPlaygroundComponent implements OnInit {
     this.scriptsAreLoaded = false;
     this.modelIsLoading = false;
 
+    this.route.queryParamMap.subscribe((params: ParamMap)=>{
+      this.preview = params.get('preview');
+     
+    })
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
-    if (this.kitoolsAreOnline) {
+
+
+    if (this.kitoolsAreOnline&& this.preview =='1') {
       this.loadKIPackages();
     }
   }
