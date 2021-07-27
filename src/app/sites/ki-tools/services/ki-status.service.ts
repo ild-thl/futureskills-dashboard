@@ -10,9 +10,10 @@ declare var tf: any;
 export class KiStatusService {
   private scriptLoading$: AsyncSubject<any>;
   private MNISTModel$: AsyncSubject<any>;
+  private SentimentModel$: AsyncSubject<any>;
 
-  private kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
-  //public imageDraw: BehaviorSubject<any> = new BehaviorSubject(null);
+  private kiToolsMnistModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
+  private kiToolsSentimentPath = environment.modelURL + this.staticService.getKIConfig().sentimentPath;
 
   constructor(private scriptLoader: ScriptLoaderService, private staticService: StaticService) {}
 
@@ -31,11 +32,26 @@ export class KiStatusService {
     if (this.scriptLoading$) {
       return new Observable((observer$) => {
         if (!this.MNISTModel$) {
-         console.log("Load Model");
+         console.log("Load MNIST-Model");
          this.MNISTModel$ = new AsyncSubject();
-         from(tf.loadLayersModel(this.kiToolsModelPath)).subscribe(this.MNISTModel$);
+         from(tf.loadLayersModel(this.kiToolsMnistModelPath)).subscribe(this.MNISTModel$);
         }
         return this.MNISTModel$.subscribe(observer$);
+      });
+    } else {
+      throw throwError('Tensorflow was not loaded');
+    }
+  }
+
+  public loadSentimentModel(){
+    if (this.scriptLoading$) {
+      return new Observable((observer$) => {
+        if (!this.SentimentModel$) {
+         console.log("Load Sentiment-Model");
+         this.SentimentModel$ = new AsyncSubject();
+         from(tf.loadLayersModel(this.kiToolsSentimentPath)).subscribe(this.SentimentModel$);
+        }
+        return this.SentimentModel$.subscribe(observer$);
       });
     } else {
       throw throwError('Tensorflow was not loaded');

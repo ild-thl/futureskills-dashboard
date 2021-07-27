@@ -3,6 +3,13 @@
 ## [UnReleased]
 
 
+## 2021-07-27/ml
+### added
+- new sentiment classes
+- preview flag
+### changed
+- no login necessary
+
 ## 2021-06-09/ml
 ### added
 - MNIST: Touch and MouseEvents are handled in new Directive

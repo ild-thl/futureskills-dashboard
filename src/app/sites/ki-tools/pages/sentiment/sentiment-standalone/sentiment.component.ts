@@ -1,17 +1,17 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { KIToolsHelper } from '../../../services/helper/helper';
 
 @Component({
-  selector: 'app-mnist',
-  templateUrl: './mnist.component.html'
+  selector: 'app-sentiment',
+  templateUrl: './sentiment.component.html',
+  styleUrls: ['./sentiment.component.scss'],
 })
-export class MnistComponent implements OnInit {
+export class SentimentComponent implements OnInit {
   isLoading: boolean;
   isError: boolean;
   kitoolsAreOnline: boolean;
-  
+
   lnkKITools = this.staticService.getPathInfo().lnkKITools;
   scriptIsLoaded = false;
 
@@ -31,19 +31,12 @@ export class MnistComponent implements OnInit {
     }
   }
 
-  // Falls die Scripte nicht geladen sind
+
   loadKIPackages() {
     this.kiStatusService.loadKIScript(this.renderer).subscribe(
-      (scripts) => {
-          if (!KIToolsHelper.checkLoadedScripts(scripts)){
-            // Eines der Scripte wurde nicht geladen
-            console.log("Scriptfehler");
-            this.scriptIsLoaded = false;
-            this.isError = true;
-          } else{
-            this.scriptIsLoaded = true;
-            this.isError = false;
-          }
+      (script) => {
+        this.scriptIsLoaded = true;
+        this.isError = false;
       },
       (error) => {
         console.log('Error: ', error);

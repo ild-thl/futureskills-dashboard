@@ -12,6 +12,7 @@ export const CustomConfig = {
   kiConfig: {
     online: true,
     mnistPath: 'mnistnumber/model.json',
+    sentimentPath: 'sentiment/en/model.json',
   },
   paths: {
     lnkLanding: '/',
@@ -24,7 +25,8 @@ export const CustomConfig = {
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
-    lnkKITools_mnist: '/ki-playground/mnist'
+    lnkKITools_mnist: '/ki-playground/mnist',
+    lnkKITools_sentiment: '/ki-playground/sentiment',
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
