@@ -3,4 +3,8 @@ export namespace KIToolsTypes {
     type: string;
     message: string;
   };
+  export type ScriptLoadingStatus = {
+    isLoaded: boolean, 
+    isError: boolean
+  }
 }

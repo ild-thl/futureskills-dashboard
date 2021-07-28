@@ -15,6 +15,7 @@ import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { Subscription } from 'rxjs';
 import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.component';
+import { KIToolsTypes } from '../../interfaces/types';
 
 declare var tf: any;
 
@@ -26,8 +27,8 @@ declare var tf: any;
 export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public width = 200;
   @Input() public height = 200;
-  @Input() scriptLoaded = false;
   @Input() public modus = 'window';
+  @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
 
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
@@ -65,10 +66,15 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   lnkKITools = this.staticService.getPathInfo().lnkKITools;
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
+  alerts: KIToolsTypes.Alert[] = [];
 
   ngOnChanges() {
-    if (this.scriptLoaded && !this.modelLoaded) {
+    if (this.scriptLoadingStatus.isLoaded && !this.modelLoaded){
       this.loadingModel();
+    }
+
+    if (this.scriptLoadingStatus.isError){
+      this.addAlert('danger', 'Die benötigten Daten konnten leider nicht geladen werden.');
     }
   }
 
@@ -198,6 +204,18 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private randomNumber(min: number, max: number) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+
+   // Alert Functions
+   addAlert(type: string, message: string) {
+    this.alerts.push({ type, message });
+  }
+  closeAlert(alert: KIToolsTypes.Alert) {
+    this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+  closeaAllAlerts() {
+    this.alerts = [];
   }
 
   /**

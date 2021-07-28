@@ -10,7 +10,7 @@ import { NgbdMnistModalComponent } from './pages/mnist/mnist-modal/mnist-modal.c
 import { MnistComponent } from './pages/mnist/mnist-standalone/mnist.component';
 import { MnistLinkFooterComponent } from './components/mnist-example/mnist-link-footer/mnist-link-footer.component';
 import { EventCanvasDirective } from './components/mnist-example/drawable-canvas/event-canvas.directive';
-import { SentimentComponent } from './pages/sentiment/sentiment-standalone/sentiment.component';
+import { SentimentComponent } from './pages/sentiment/sentiment.component';
 import { SentimentModalComponent } from './pages/sentiment/sentiment-modal/sentiment-modal.component';
 import { SentimentExampleComponent } from './components/sentiment-example/sentiment-example.component';
 

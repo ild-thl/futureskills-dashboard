@@ -7,11 +7,17 @@
     </div>
   </div>
 
+  <p class="mt-3 mb-3" *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type" (closed)="closeAlert(alert)">{{
+      alert.message
+    }}</ngb-alert>
+  </p>
+
   <!--wait until loaded-->
-  <div *ngIf="modelLoaded == false || scriptLoaded == false">
+  <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
     <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
   </div>
-  <div [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoaded == false }">
+  <div [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }">
     <!-- Bubble < xs-->
     <div class="row d-block d-sm-none">
       <div class="col col-md-4">

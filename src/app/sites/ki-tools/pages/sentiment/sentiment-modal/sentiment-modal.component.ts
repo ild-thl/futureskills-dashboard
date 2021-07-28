@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sentiment-modal',
-  templateUrl: './sentiment-modal.component.html',
-  styleUrls: ['./sentiment-modal.component.scss']
+  templateUrl: './sentiment-modal.component.html'
 })
 export class SentimentModalComponent implements OnInit {
 

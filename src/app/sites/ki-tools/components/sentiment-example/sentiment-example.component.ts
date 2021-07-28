@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { KIToolsTypes } from '../../interfaces/types';
 
 @Component({
   selector: 'fs-sentiment-example',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SentimentExampleComponent implements OnInit {
 
-  @Input() scriptLoaded = false;
+  @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
   @Input() public modus = 'window';
 
 
