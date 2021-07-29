@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnist-modal/mnist-modal.component';
+import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnist-modal.component';
 import { KIToolsTypes } from 'src/app/sites/ki-tools/interfaces/types';
 import { KIToolsHelper } from '../../services/helper/helper';
 

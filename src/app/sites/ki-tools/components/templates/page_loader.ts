@@ -6,7 +6,9 @@ import { KIToolsTypes } from '../../interfaces/types';
 
 
 /**
- * Vorlage für das Laden der Windows-Versionen von MNIST und Sentimentanalyse
+ * Vorlage für das Laden der Standalone-Versionen von MNIST und Sentimentanalyse
+ * Lädt die Packages nach.
+ * Von der Klasse wird nur abgeleitet.
  */
 
 @Component({

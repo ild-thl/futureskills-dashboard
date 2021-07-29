@@ -30,7 +30,7 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/templates/page_loa
     </section>
   `,
 })
-export class SentimentComponent extends PageLoader implements OnInit {
+export class SentimentStandAloneComponent extends PageLoader implements OnInit {
   ngOnInit() {
     super.ngOnInit();
   }
