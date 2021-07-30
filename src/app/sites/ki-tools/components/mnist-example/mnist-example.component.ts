@@ -16,6 +16,7 @@ import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.servi
 import { Subscription } from 'rxjs';
 import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.component';
 import { KIToolsTypes } from '../../interfaces/types';
+import { AlertList } from '../../services/helper/helper';
 
 declare var tf: any;
 
@@ -57,6 +58,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   textIfUnknown = 'Ich kann die Zahl nicht erkennen.';
   textMayBe = 'Ich kann die Zahl nicht genau erkennen. Vielleicht ist es eine ';
   textPrediction = '';
+  alertList: AlertList = new AlertList();
 
   constructor(
     private kiService: KiStatusService,
@@ -66,7 +68,6 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   lnkKITools = this.staticService.getPathInfo().lnkKITools;
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
-  alerts: KIToolsTypes.Alert[] = [];
 
   ngOnChanges() {
     if (this.scriptLoadingStatus.isLoaded && !this.modelLoaded){
@@ -74,7 +75,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (this.scriptLoadingStatus.isError){
-      this.addAlert('danger', 'Die benötigten Daten konnten leider nicht geladen werden.');
+      this.alertList.addAlert('danger', 'Die benötigten Daten konnten leider nicht geladen werden.');
     }
   }
 
@@ -204,18 +205,6 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private randomNumber(min: number, max: number) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
-  }
-
-
-   // Alert Functions
-   addAlert(type: string, message: string) {
-    this.alerts.push({ type, message });
-  }
-  closeAlert(alert: KIToolsTypes.Alert) {
-    this.alerts.splice(this.alerts.indexOf(alert), 1);
-  }
-  closeaAllAlerts() {
-    this.alerts = [];
   }
 
   /**

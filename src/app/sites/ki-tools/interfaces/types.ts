@@ -8,3 +8,10 @@ export namespace KIToolsTypes {
     isError: boolean
   }
 }
+
+export interface IShowAlerts {
+  alerts: KIToolsTypes.Alert[];
+  addAlert(type: string, message: string): void;
+  closeAlert(alert: KIToolsTypes.Alert): void;
+  closeaAllAlerts(): void;
+}

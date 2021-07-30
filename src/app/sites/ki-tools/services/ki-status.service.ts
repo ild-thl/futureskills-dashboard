@@ -3,6 +3,7 @@ import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 import { AsyncSubject, Observable, BehaviorSubject, from, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 declare var tf: any;
 
@@ -13,9 +14,10 @@ export class KiStatusService {
   private SentimentModel$: AsyncSubject<any>;
 
   private kiToolsMnistModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
-  private kiToolsSentimentPath = environment.modelURL + this.staticService.getKIConfig().sentimentPath;
+  private kiToolsSentimentModelPath = environment.modelURL + this.staticService.getKIConfig().sentimentPath + '/model.json';
+  private kiToolsSentimentIndexPath = environment.modelURL + this.staticService.getKIConfig().sentimentPath + '/imdb_word_index.json';
 
-  constructor(private scriptLoader: ScriptLoaderService, private staticService: StaticService) {}
+  constructor(private scriptLoader: ScriptLoaderService, private staticService: StaticService, private httpClient: HttpClient) {}
 
   public loadKIScript(renderer: Renderer2): Observable<any> {
     return new Observable((observer$) => {
@@ -43,18 +45,22 @@ export class KiStatusService {
     }
   }
 
-  public loadSentimentModel(){
+  public loadSentimentModel(): Observable<any>{
     if (this.scriptLoading$) {
       return new Observable((observer$) => {
         if (!this.SentimentModel$) {
          console.log("Load Sentiment-Model");
          this.SentimentModel$ = new AsyncSubject();
-         from(tf.loadLayersModel(this.kiToolsSentimentPath)).subscribe(this.SentimentModel$);
+         from(tf.loadLayersModel(this.kiToolsSentimentModelPath)).subscribe(this.SentimentModel$);
         }
         return this.SentimentModel$.subscribe(observer$);
       });
     } else {
       throw throwError('Tensorflow was not loaded');
     }
+  }
+
+  public loadWordIndex(): Observable<any>{
+    return this.httpClient.get(this.kiToolsSentimentIndexPath);
   }
 }

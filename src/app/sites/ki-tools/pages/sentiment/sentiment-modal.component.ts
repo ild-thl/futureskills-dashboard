@@ -24,8 +24,8 @@ import { KIToolsTypes } from '../../interfaces/types';
         ></fs-sentiment-example>
       </div>
       <hr />
-      <div class="container mb-2">
-        <p>footer</p>
+      <div class="container mb-2 mt-3">
+        <app-sentiment-link-footer></app-sentiment-link-footer>
       </div>
     </div>`,
 })

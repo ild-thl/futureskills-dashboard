@@ -25,7 +25,7 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/templates/page_loa
       </div>
       <hr />
       <div class="container mb-2">
-        <p>footer</p>
+        <app-sentiment-link-footer></app-sentiment-link-footer>
       </div>
     </section>
   `,

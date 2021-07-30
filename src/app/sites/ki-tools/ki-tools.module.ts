@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { KiToolsRoutingModule } from './ki-tools-routing.module';
 import { KiStatusService } from './services/ki-status.service';
@@ -13,6 +14,7 @@ import { EventCanvasDirective } from './components/mnist-example/drawable-canvas
 import { SentimentStandAloneComponent } from './pages/sentiment/sentiment-standalone.component';
 import { SentimentModalComponent } from './pages/sentiment/sentiment-modal.component';
 import { SentimentExampleComponent } from './components/sentiment-example/sentiment-example.component';
+import { SentimentLinkFooterComponent } from './components/sentiment-example/sentiment-link-footer/sentiment-link-footer.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +27,10 @@ import { SentimentExampleComponent } from './components/sentiment-example/sentim
     EventCanvasDirective,
     SentimentStandAloneComponent,
     SentimentModalComponent,
-    SentimentExampleComponent
+    SentimentExampleComponent,
+    SentimentLinkFooterComponent
   ],
-  imports: [SharedModule, KiToolsRoutingModule],
+  imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [KiStatusService]
 })
 export class KiToolsModule {}

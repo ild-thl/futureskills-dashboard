@@ -7,8 +7,8 @@
     </div>
   </div>
 
-  <p class="mt-3 mb-3" *ngFor="let alert of alerts">
-    <ngb-alert [type]="alert.type" (closed)="closeAlert(alert)">{{
+  <p class="mt-3 mb-3" *ngFor="let alert of alertList.alerts">
+    <ngb-alert [type]="alert.type" (closed)="alertList.closeAlert(alert)">{{
       alert.message
     }}</ngb-alert>
   </p>

@@ -4,8 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnist-modal.component';
-import { KIToolsTypes } from 'src/app/sites/ki-tools/interfaces/types';
-import { KIToolsHelper } from '../../services/helper/helper';
+import { AlertList, KIToolsHelper } from '../../services/helper/helper';
 
 @Component({
   selector: 'app-ki-playground',
@@ -30,7 +29,7 @@ export class KIPlaygroundComponent implements OnInit {
   // Preview Flag
   preview = '0';
   // Alerts
-  alerts: KIToolsTypes.Alert[] = [];
+  alertList: AlertList = new AlertList();
   // Errtexts
   errTextFrameWorkLoading = "Die benötigten Daten konnten nicht geladen werden. Vielleicht bist du offline oder unsere Server sind nicht erreichbar."
 
@@ -66,7 +65,7 @@ export class KIPlaygroundComponent implements OnInit {
       (values) => {
         this.scriptsAreLoaded = KIToolsHelper.checkLoadedScripts(values);
         if (!this.scriptsAreLoaded) {
-          this.addAlert(
+          this.alertList.addAlert(
             'danger',
             this.errTextFrameWorkLoading
           );
@@ -75,7 +74,7 @@ export class KIPlaygroundComponent implements OnInit {
       (error) => {
         // If server is not available
         console.log('Error: ', error);
-        this.addAlert(
+        this.alertList.addAlert(
           'danger',
           this.errTextFrameWorkLoading
         );
@@ -115,7 +114,7 @@ export class KIPlaygroundComponent implements OnInit {
       },
       (error) => {
         console.log('Error: ', error);
-        this.addAlert('danger', 'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).');
+        this.alertList.addAlert('danger', 'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).');
       },
       () => {
         this.mnistModelIsLoading = false;
@@ -149,22 +148,11 @@ export class KIPlaygroundComponent implements OnInit {
       },
       (error) => {
         console.log('Error: ', error);
-        this.addAlert('danger', 'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).');
+        this.alertList.addAlert('danger', 'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).');
       },
       () => {
         this.sentimentModelIsLoading = false;
       }
     );
-  }
-
-  // Alert Functions
-  addAlert(type: string, message: string) {
-    this.alerts.push({ type, message });
-  }
-  closeAlert(alert: KIToolsTypes.Alert) {
-    this.alerts.splice(this.alerts.indexOf(alert), 1);
-  }
-  closeaAllAlerts() {
-    this.alerts = [];
   }
 }
