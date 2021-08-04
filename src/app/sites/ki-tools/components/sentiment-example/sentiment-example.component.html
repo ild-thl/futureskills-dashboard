@@ -4,9 +4,13 @@
 >
   <div class="row">
     <div class="col-10">
-      Schreibe ein paar Zeilen. Vielleicht darüber wie dir diese Seite gefällt oder ob dir ein Film
-      gefallen hat. Deine Eingaben werden nicht gespeichert. Du kannst frei ausprobieren, welche
-      deiner Eingaben unsere Umsetzung richtig erkennt oder nicht.
+      <p>
+        Bei einer Sentimentanalyse oder auch Stimmungsanalyse wird ein Text automatisiert nach
+        geäußerten Gefühlen oder Meinungen ausgewertet und klassifiziert. Dieses Beispiel basiert
+        auf das Filmrezensions-Dataset der Internet Movie Database (IMDB) und bewertet die Äußerung
+        auf einer Skala von 0-1. Das Modell basiert auf englischen Texten.
+      </p>
+      <p>Du kannst folgende Textbeispiele ausprobieren oder eigene (englische) Texte eingeben.</p>
     </div>
   </div>
 
@@ -16,36 +20,62 @@
     }}</ngb-alert>
   </p>
 
-  <div class="row mt-3">
-    <div class="col-6">
-      <div class="form-group">
-        <textarea
-          class="form-control form-control-sm"
-          name="textArea"
-          [(ngModel)]="textAreaText"
-          rows="5"
-        ></textarea>
+  <div class="row mt-3 mb-5">
+    <div class="col-7">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="selectExampleText">Beispieltexte</label>
+            <select class="form-control form-control-sm" id="selectExampleText" (change)="onSelectChange($event.target.value)">
+              <option value="" selected disabled hidden>Choose Example</option>
+              <option>This is one of my three all-time favorite movies.</option>
+              <option>This is a film which should be seen by anybody interested in.</option>
+              <option>I can not form an opinion.</option>
+              <option>I don't want you to waste your time when you could see something else.</option>
+              <option>This movie was absolutely terrible.</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <textarea
+              class="form-control form-control-sm"
+              name="textArea"
+              [(ngModel)]="textAreaText"
+              [ngModelOptions]="{standalone: true}"
+              rows="5"
+              placeholder="min. 5 characters"
+              maxlength="255"
+            ></textarea>
+          </div>
+          <button
+            class="btn btn-outline-primary btn-sm float-left"
+            type="button"
+            [disabled]="textAreaText.length<5"
+            (click)="checkSentiment()"
+          >
+            Auswerten
+          </button>
+          <button class="btn btn-link btn-sm float-right" type="button" (click)="deleteBox()">
+            Text löschen
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-4">
-      <div>Auswertung</div>
+    <div class="col-5">
+      <div class="sentiment-header">Auswertung</div>
+      <div class="sentiment-box">
+        <div class="float-left"> {{ sentimentText }}</div>
+        <div class="float-right emoji" [ngClass]="{
+          'vnegative' : emojiIndex==0, 
+          'negative' : emojiIndex==1, 
+          'neutral' : emojiIndex==2, 
+          'positive' : emojiIndex==3, 
+          'vpositive' : emojiIndex==4
+        }"> {{ sentimentNumber }}</div>
+      </div>
     </div>
   </div>
 
-  <!-- Button -->
-  <div class="row">
-    <div class="col col-md-4">
-      <button
-        class="btn btn-outline-primary btn-sm float-left"
-        type="button"
-        (click)="checkSentiment()"
-      >
-        Und Los!
-      </button>
-    </div>
-  </div>
-
-  <div class="row mt-5">
+  <!-- <div class="row mt-5">
     <div class="col-sm">
       <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="toggle-1">
         <ngb-panel id="toggle-1" title="Die Sentimentanalyse" class="accordion-panel">
@@ -73,5 +103,5 @@
         </ngb-panel>
       </ngb-accordion>
     </div>
-  </div>
+  </div> -->
 </div>

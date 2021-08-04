@@ -17,18 +17,24 @@ export class SentimentExampleComponent implements OnInit {
   @Input() public modus = 'window';
 
   textAreaText: string;
-  wordIds: any[] = [];
-  emojiArray = ['☹️', '🙁', '😐', '🙂', '😀'];
-  sentimentArray = ['Negative', 'Rather negative', 'Neutral', 'Positive', 'Very Positive'];
+  WordToIndex: any[] = [];
+  sentimentText: string;
+  sentimentNumber: string;
+  emojiIndex: number;
+  sentimentArray = ['negativ', 'eher negativ', 'neutral', 'eher positiv', 'positiv'];
   private model: any;
+  private PAD_MAX_LENGTH = 400;
 
   modelLoaded = false;
   alertList: AlertList = new AlertList();
   constructor(private kiService: KiStatusService, private staticService: StaticService) {}
 
   ngOnInit(): void {
-    this.textAreaText = 'the movie was aweful';
-    console.log(String.fromCodePoint(0x1f641));
+    this.textAreaText = '';
+    this.sentimentText = '';
+    this.sentimentNumber = '';
+    this.emojiIndex = undefined;
+    // console.log(String.fromCodePoint(0x1f641));
   }
 
   ngOnChanges() {
@@ -44,32 +50,50 @@ export class SentimentExampleComponent implements OnInit {
     }
   }
 
+  deleteBox() {
+    this.textAreaText = '';
+  }
+
+  onSelectChange(value: string) {
+    this.textAreaText = value;
+  }
+
   checkSentiment() {
-    console.log('FormValue: ', this.textAreaText);
+    if (this.textAreaText.length < 5) return;
     if (this.modelLoaded) {
       const value = this.getSentimentValue(this.textAreaText);
       console.log('Value:', value);
-      const emojiIndex = Math.round(value * 4);
-      const auswertung = "Sentiment: " + this.sentimentArray[emojiIndex] + " (" +  value  .toFixed(4) + ")";
-      console.log(auswertung);
+      this.emojiIndex = Math.round(value * 4);
+      this.sentimentText = this.sentimentArray[this.emojiIndex];
+      this.sentimentNumber = value.toFixed(4);
     }
   }
 
   getSentimentValue(text: string) {
-    text = text.toLowerCase();
-    text = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ');
-    const sentenceIds = this.sentenceToIds(text);
-    let PAD_MAX_LENGTH = 1000;
-    const paddedSentence = this.padLeft(sentenceIds, PAD_MAX_LENGTH);
-    const e = tf.tensor([paddedSentence]);
-    return this.model.predict(e).dataSync()[0];
+    console.log("Text: ", text);
+
+    let edited = text.toLowerCase();
+    // ohne Sonderzeichen
+    edited = edited.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ")
+    edited = edited.trim();
+    console.log("Bearbeitet: ", edited)
+
+
+    const sentenceIds = this.sentenceToIds(edited);
+    console.log("SentenceIds: ", sentenceIds);
+    const paddedSentence = this.padLeft(sentenceIds, this.PAD_MAX_LENGTH);
+    const tensor = tf.tensor([paddedSentence]);
+    return this.model.predict(tensor).dataSync()[0];
   }
 
   sentenceToIds(text: string) {
-    const messageIds = [];
+    let messageIds = [];
     text.split(' ').forEach((word) => {
-      messageIds.push(this.wordIds[word] + 3); // Achtung hier +3 wegen INDEX FROM !!!
+      messageIds.push(this.WordToIndex[word] + 3);
     });
+    messageIds  = messageIds.filter(value => {
+      return (!Number.isNaN(value))
+    })
     return messageIds;
   }
 
@@ -83,9 +107,9 @@ export class SentimentExampleComponent implements OnInit {
     forkJoin({
       model: this.kiService.loadSentimentModel(),
       index: this.kiService.loadWordIndex(),
-    }).subscribe(values=>{
+    }).subscribe((values) => {
       this.model = values.model;
-      this.wordIds = values.index;
+      this.WordToIndex = values.index;
       this.modelLoaded = true;
       //console.log(values);
       //console.log(this.model.summary());

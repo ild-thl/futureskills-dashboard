@@ -11,8 +11,11 @@ export const CustomConfig = {
   },
   kiConfig: {
     online: true,
-    mnistPath: 'mnistnumber/model.json',
-    sentimentPath: 'sentiment/en',
+    mnistPath: 'mnistnumber',
+    sentimentPath: {
+      en: 'sentiment/en',
+      de: 'sentiment/de'
+    },
   },
   paths: {
     lnkLanding: '/',
