@@ -4,8 +4,23 @@ export namespace KIToolsTypes {
     message: string;
   };
   export type ScriptLoadingStatus = {
-    isLoaded: boolean, 
-    isError: boolean
+    isLoaded: boolean;
+    isError: boolean;
+  };
+
+  export type LinkCardData = {
+    title: string;
+    subtitle?: string;
+    text: string;
+    url: string;
+    urlText: string;
+    type: LinkCardType;
+  };
+  
+  export enum LinkCardType {
+    default = 'cardDefault',
+    text = 'cardText',
+    project = 'cardProject',
   }
 }
 
@@ -15,3 +30,5 @@ export interface IShowAlerts {
   closeAlert(alert: KIToolsTypes.Alert): void;
   closeaAllAlerts(): void;
 }
+
+

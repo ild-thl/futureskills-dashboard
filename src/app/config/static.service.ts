@@ -30,6 +30,8 @@ export class StaticService {
     } else{
       return CustomConfig.kiConfig.sentimentPath.en;
     }
-   
+  }
+  getCourseNumbers(): any {
+    return CustomConfig.courseNumbers;
   }
 }

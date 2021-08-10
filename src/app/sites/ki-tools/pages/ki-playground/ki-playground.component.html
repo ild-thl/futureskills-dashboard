@@ -9,11 +9,9 @@
             <div class="col-12 col-md-10 col-lg-7">
               <h3 class="h1">KI-Playground</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-                eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed diam
+                !![Einleitungstext]!!
+                
+  
               </p>
             </div>
           </div>
@@ -24,95 +22,90 @@
               alert.message
             }}</ngb-alert>
           </p>
-          
+
           <div class="row">
+            <div class="col">
             <div class="card-deck">
               <div class="card">
-                <img src="assets/images/mnist_top.png" class="card-img-top" alt="..." />
+                <img src="assets/images/ki-tools/mnist.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title">MNIST Datenbank</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    Beispiel für ein Convolutional Neural Network
-                  </h6>
+                  <h6 class="card-subtitle mb-2 text-muted">Convolutional Neural Network</h6>
                   <p class="card-text">
-                    Das Standard-Beispiel für die Erkennung handgeschriebener Ziffern durch ein
-                    neuronales Netz.
+                    Das Standard-Beispiel für die Erkennung handgeschriebener Ziffern mithilfe eines neuronalen Netzwerks.
                   </p>
+
+                </div>
+                <div class="card-footer">
                   <button
                     *ngIf="scriptsAreLoaded && !mnistModelIsLoading; else mnistBtnNotClickable"
                     type="button"
-                    class="btn btn-outline-dark btn-sm mr-2"
+                    class="btn btn-outline-dark btn-sm"
                     (click)="onLoadMnistExample(true)"
                   >
-                    MNIST-Beispiel laden
+                    Beispiel laden
                   </button>
                   <ng-template #mnistBtnNotClickable>
                     <small class="text-muted">Lade ...</small>
                   </ng-template>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted float-right">Download: ca. 3MB</small>
+                  <small class="text-muted float-right pt-2">Download: ca. 3MB</small>
                 </div>
               </div>
 
               <div class="card">
-                <img src="assets/images/mnist_top.png" class="card-img-top" alt="..." />
+                <img src="assets/images/ki-tools/sentiment2.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title">Sentimentanalyse</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Beispiel für Text-Mining</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">Text-Mining, LSTM Network</h6>
                   <p class="card-text">
-                    Bei einer Sentimentanalyse oder auch Stimmungsanalyse wird ein Text
-                    automatisiert nach geäußerten Gefühlen oder Meinungen ausgewertet. Ein Text wird
-                    anhand seiner Wörter klassifiziert und innerhalb einer Skala als positiv,
-                    negativ oder neutral eingestuft.<br />
-                    <!--Anwendungsbeispiele: In der Literatur, für die Klassifizierung von Kommentaren,
-                    bspw. in Blogs, Social Media Anwendungen oder Produktbewertungen.-->
+                    In diesem Beispiel wird das IMDB-Dataset herangezogen, um Stimmungen in Rezensionen zu erkennen.
                   </p>
-
+                </div>
+                <div class="card-footer">
                   <button
                     *ngIf="
                       scriptsAreLoaded && !sentimentModelIsLoading;
                       else sentimentBtnNotClickable
                     "
                     type="button"
-                    class="btn btn-outline-dark btn-sm mr-2"
-                    (click)="onLoadSentimentExample(false)"
+                    class="btn btn-outline-dark btn-sm"
+                    (click)="onLoadSentimentExample(true)"
                   >
-                    Sentiment-Beispiel laden
+                    Beispiel laden
                   </button>
                   <ng-template #sentimentBtnNotClickable>
                     <small class="text-muted">Lade ...</small>
                   </ng-template>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted float-right">Download: ca. 30MB</small>
+                  <small class="text-muted float-right pt-2">Download: ca. 6MB</small>
                 </div>
               </div>
 
               <div class="card">
-                <img src="assets/images/mnist_top.png" class="card-img-top" alt="..." />
+                <img src="assets/images/ki-tools/links.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title">Liste Demonstratoren</h5>
+                  <h5 class="card-title">Link-Sammlung</h5>
                   <h6 class="card-subtitle mb-2 text-muted">
                     Beispiele für KI-gestützte Anwendungen
                   </h6>
                   <p class="card-text">
-                    Verschiedene Beispiele für KI-gestütze Anwendungen.
+                    Hier gehts zur Sammlung verschiedenster Anwendungen und Projektseiten zum Thema KI.
                   </p>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Erster Link</li>
-                    <li class="list-group-item">Zweiter Link</li>
-                    <li class="list-group-item">Und noch ein dritter Link</li>
-                  </ul>
                 </div>
+
                 <div class="card-footer">
-                  <small class="text-muted float-right">Stand: 27.07.2021</small>
+                  <button
+                    type="button"
+                    class="btn btn-outline-dark btn-sm float-left"
+                    (click)="onLoadLinkExamples(false)"
+                  >
+                    zur Sammlung
+                  </button>
+                  <small class="text-muted float-right pt-2">Stand: 10.08.2021</small>
                 </div>
               </div>
             </div>
           </div>
-
-
+          </div>
         </div>
         <!-- end of .container -->
       </section>
@@ -129,9 +122,10 @@
     </ng-template>
   </ng-template>
 
+  <!-- Offline Text -->
   <ng-template #kiOffline>
-    <fs-info-banner>
-      <p>Die KI-Tools sind aktuell nicht online.</p>
-    </fs-info-banner>
+      <fs-info-banner>
+        <p>Die KI-Playground Seite ist aktuell nicht online.</p>
+      </fs-info-banner>
   </ng-template>
 </div>

@@ -1,0 +1,27 @@
+.card {
+  &.cardDefault {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+  &.cardText {
+    border-color: rgba(45, 24, 122, 0.5);
+  }
+  &.cardProject {
+    border-color: rgba(12, 151, 40, 0.5);
+  }
+}
+
+.card:hover {
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.24);
+  //transform: scale(1.005);
+  //transition: 0.2s ease;
+
+  &.cardDefault {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+  &.cardText {
+    background-color: rgba(45, 24, 122, 0.05);
+  }
+  &.cardProject {
+    background-color: rgba(12, 151, 40, 0.05);
+  }
+}

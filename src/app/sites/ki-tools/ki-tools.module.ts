@@ -9,12 +9,15 @@ import { KIPlaygroundComponent } from './pages/ki-playground/ki-playground.compo
 import { DrawableCanvasComponent } from './components/mnist-example/drawable-canvas/drawable-canvas.component';
 import { NgbdMnistModalComponent } from './pages/mnist/mnist-modal.component';
 import { MnistStandaloneComponent } from './pages/mnist/mnist-standalone.component';
-import { MnistLinkFooterComponent } from './components/mnist-example/mnist-link-footer/mnist-link-footer.component';
 import { EventCanvasDirective } from './components/mnist-example/drawable-canvas/event-canvas.directive';
 import { SentimentStandAloneComponent } from './pages/sentiment/sentiment-standalone.component';
-import { SentimentModalComponent } from './pages/sentiment/sentiment-modal.component';
+import { NgbdSentimentModalComponent } from './pages/sentiment/sentiment-modal.component';
 import { SentimentExampleComponent } from './components/sentiment-example/sentiment-example.component';
-import { SentimentLinkFooterComponent } from './components/sentiment-example/sentiment-link-footer/sentiment-link-footer.component';
+import { DemonstratorsStandaloneComponent } from './pages/demonstrators/demonstrators-standalone.component';
+
+import { ExamplesComponent } from './components/examples/examples.component';
+import { DemonstratorsModalComponent } from './pages/demonstrators/demonstrators-modal.component';
+import { ExampleCardComponent } from './components/examples/example-card/example-card.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +26,14 @@ import { SentimentLinkFooterComponent } from './components/sentiment-example/sen
     MnistStandaloneComponent,
     DrawableCanvasComponent,
     NgbdMnistModalComponent,
-    MnistLinkFooterComponent,
     EventCanvasDirective,
     SentimentStandAloneComponent,
-    SentimentModalComponent,
+    NgbdSentimentModalComponent,
     SentimentExampleComponent,
-    SentimentLinkFooterComponent
+    DemonstratorsStandaloneComponent,
+    DemonstratorsModalComponent,
+    ExamplesComponent,
+    ExampleCardComponent,
   ],
   imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [KiStatusService]

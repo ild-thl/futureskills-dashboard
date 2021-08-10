@@ -34,6 +34,8 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
 
+  lnkCoursePath1 = this.staticService.getPathInfo().lnkOffers + this.staticService.getCourseNumbers().futureskillsKI;
+
   private THRESHOLD = 1.0;
   private MAYBE = 0.95;
 

@@ -23,10 +23,6 @@ import { KIToolsTypes } from '../../interfaces/types';
           [modus]="'modal'"
         ></fs-mnist-example>
       </div>
-      <hr />
-      <div class="container mb-2 mt-3">
-        <app-mnist-link-footer></app-mnist-link-footer>
-      </div>
     </div> `,
 })
 export class NgbdMnistModalComponent implements OnInit {

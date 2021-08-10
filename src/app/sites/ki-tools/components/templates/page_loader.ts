@@ -27,15 +27,17 @@ export class PageLoader implements OnInit {
       public kiStatusService: KiStatusService
     ) {}
   
-    ngOnInit(): void {
+    ngOnInit(loadPackage: boolean = true): void {
       this.loadingStatus = {
         isLoaded: false,
         isError: false,
       };
-  
-      this.kitoolsAreOnline = this.staticService.getKIConfig().online;
-      if (this.kitoolsAreOnline) {
-        this.loadKIPackages();
+      
+      if (loadPackage){
+        this.kitoolsAreOnline = this.staticService.getKIConfig().online;
+        if (this.kitoolsAreOnline) {
+          this.loadKIPackages();
+        }
       }
     }
   

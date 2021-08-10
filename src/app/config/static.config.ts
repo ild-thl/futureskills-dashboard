@@ -30,10 +30,14 @@ export const CustomConfig = {
     lnkKITools: '/ki-playground',
     lnkKITools_mnist: '/ki-playground/mnist',
     lnkKITools_sentiment: '/ki-playground/sentiment',
+    linkKITools_demonstrators: '/ki-playground/examples'
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
     lnkAfterLogout: '/',
     lnkTrailerAboutUs: '/info-lehrende'
   },
+  courseNumbers: {
+    futureskillsKI: '/615'
+  }
 };

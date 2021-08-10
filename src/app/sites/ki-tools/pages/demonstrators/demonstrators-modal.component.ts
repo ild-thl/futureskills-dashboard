@@ -3,9 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { KIToolsTypes } from '../../interfaces/types';
 
 @Component({
-  selector: 'app-sentiment-modal',
-  template: `<div class="modal-header">
-      <h4 class="modal-title">Sentimentanalyse</h4>
+  selector: 'app-demonstrators-modal',
+  template: ` <div class="modal-header">
+      <h4 class="modal-title">Beispiele für KI-Anwendungen</h4>
       <button
         type="button"
         class="close"
@@ -18,22 +18,11 @@ import { KIToolsTypes } from '../../interfaces/types';
 
     <div class="modal-body">
       <div class="container">
-        <fs-sentiment-example
-          [scriptLoadingStatus]="loadingStatus"
-          [modus]="'modal'"
-        ></fs-sentiment-example>
+        <fs-ki-examples [modus]="'modal'"></fs-ki-examples>
       </div>
     </div>`,
 })
-export class NgbdSentimentModalComponent implements OnInit {
-  loadingStatus: KIToolsTypes.ScriptLoadingStatus;
+export class DemonstratorsModalComponent implements OnInit {
+  ngOnInit() {}
   constructor(public activeModal: NgbActiveModal) {}
-
-  ngOnInit(): void {
-    // Im modalen Fenster sollte alles geladen sein.
-    this.loadingStatus = {
-      isLoaded: true,
-      isError: false,
-    };
-  }
 }

@@ -1,4 +1,7 @@
-<div class="mnist-example" [ngClass]="{'modus_window': modus === 'window', 'modus_modal' : modus === 'modal' }">
+<div
+  class="mnist-example"
+  [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }"
+>
   <div class="row">
     <div class="col-10 mb-4">
       Die Erkennung handgeschriebener Ziffern mithilfe des MNIST-Datensatzes ist eines der
@@ -17,12 +20,14 @@
   <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
     <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
   </div>
-  <div [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }">
+  <div
+    [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }"
+  >
     <!-- Bubble < xs-->
     <div class="row d-block d-sm-none">
       <div class="col col-md-4">
         <div *ngIf="prediction_available; else emptyBubble_small" class="bubble user-select-none">
-          {{textPrediction}} {{ predicted }}
+          {{ textPrediction }} {{ predicted }}
         </div>
         <ng-template #emptyBubble_small>
           <div class="bubble user-select-none">Schreibe eine Ziffer (0-9) in das Feld.</div>
@@ -40,11 +45,16 @@
       </div>
       <div class="col vertical-align d-none d-sm-block">
         <div class="row">
-          <div *ngIf="prediction_available; else emptyBubble" class="bubble thought user-select-none">
-            {{textPrediction}} {{ predicted }}
+          <div
+            *ngIf="prediction_available; else emptyBubble"
+            class="bubble thought user-select-none"
+          >
+            {{ textPrediction }} {{ predicted }}
           </div>
           <ng-template #emptyBubble>
-            <div class="bubble thought user-select-none">Schreibe eine Ziffer (0-9) in das Feld.</div>
+            <div class="bubble thought user-select-none">
+              Schreibe eine Ziffer (0-9) in das Feld.
+            </div>
           </ng-template>
         </div>
         <div class="row">
@@ -62,12 +72,13 @@
       </div>
     </div>
 
-    <!--Accordion>-->
-    <div class="row mt-5">
+    <!-- Nav -->
+    <div class="row mt-5 mb-2">
       <div class="col-sm">
-        <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="toggle-1">
-          <ngb-panel id="toggle-1" title="Auswertung" class="accordion-panel">
-            <ng-template ngbPanelContent>
+        <nav ngbNav #nav="ngbNav" class="nav-tabs">
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Auswertung</a>
+            <ng-template ngbNavContent>
               <div class="table-responsive-sm">
                 <table class="table table-sm">
                   <tr>
@@ -81,38 +92,82 @@
                 </table>
               </div>
             </ng-template>
-          </ngb-panel>
-          <ngb-panel id="toggle-2" title="Die MNIST Datenbank" class="accordion-panel">
-            <ng-template ngbPanelContent>
+          </ng-container>
+
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Modell</a>
+            <ng-template ngbNavContent>
+              <p>
+                CNN steht für <em>Convolutional Neural Network</em> und bezeichnet ein Konzept im Machine
+                Learning. Vorbild für neuronale Netze sind die biologischen Neuronen in Lebewesen.
+                Vereinfacht kann man sagen, dass Neuronen Informationen empfangen, sammeln und ab
+                einem bestimmten Schwellenwert übertragen. Diesem Prinzip folgen künstliche
+                Neuronen. Sie besitzen eine Eingabeschicht, eine Ausgabeschicht und dazwischen eine
+                Reihe von Schichten, die in kleinen Schritten das Problem lösen sollen. 
+              </p>
+              <p>
+                Wenn du dir einen Einblick in die Arbeitsweise neuronaler Netzwerke verschaffen
+                möchtest, schau mal hier vorbei:
+                <a
+                  style="text-decoration: underline"
+                  class="text-reset primary"
+                  target="_blank"
+                  href="https://playground.tensorflow.org"
+                  >TensorFlow Playground</a
+                > (externer Link).
+              </p>
+            </ng-template>
+          </ng-container>
+
+
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Daten</a>
+            <ng-template ngbNavContent>
+              <p>
+                MNIST steht für
+                <em>Modified National Institute of Standards and Technology database</em>. <br> Die
+                Datenbank enthält 60000 Trainingsbilder von handgeschriebenen Ziffern, sowie weitere
+                10000 Bilder zum Testen des Modells. <br />
+                Die Originaldatenbank befindet sich auf den Seiten von
+                <a
+                  style="text-decoration: underline"
+                  href="http://yann.lecun.com/exdb/mnist/"
+                  class="text-reset primary"
+                  target="_blank"
+                  >Yann Lecun</a
+                >
+                (externer Link).
+              </p>
+              <p>
+                Eine MNIST Ziffer ist 28x28 Pixel groß und hat 8Bit (Graustufen).<br />
+                So sehen die ersten zwölf Zahlen im Datensatz aus: <br />
+                <img src="assets/images/ki-tools/mnist-numbers.png" alt="Beispiel MNIST-Zahlen" />
+              </p>
+            </ng-template>
+          </ng-container>
+
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Kurse</a>
+            <ng-template ngbNavContent>
+              <p>Folgende Kurse können wir dir zum Thema künstliche Intelligenz und neuronale Netze empfehlen:</p>
               <div>
-                <ul>
-                  <li>
-                    MNIST steht für Modified National Institute of Standards and Technology database
-                  </li>
-                  <li>
-                    Die Datenbak enthält 60000 Trainingbilder von handgeschriebenen Ziffern, sowie
-                    weitere 10000 Bilder zum Testen des Modells
-                  </li>
-                  <li>Eine MNIST Ziffer ist 28x28 Pixel groß und hat 8Bit (Graustufen)</li>
-                  <li>Die ersten zwölf Zahlen:<br>  <img src="assets/images/mnist-numbers.png" alt="Beispiel MNIST-Zahlen"></li>
-                </ul>
-                <p>...</p>
+              <img class="kurs" src="assets/images/info-teaching-2.png" alt="Kurse" />
+              <a
+              style="text-decoration: underline"
+              [routerLink]="lnkCoursePath1"
+              class="text-reset primary"
+              target="_blank"
+              > FutureSkills KI</a
+            >
+            - Das Modul setzt sich aus verschiedenen Online-Kursen zusammen.
+               
               </div>
             </ng-template>
-          </ngb-panel>
-          <ngb-panel id="toggle-3" title="Weitere Infos" class="accordion-panel">
-            <ng-template ngbPanelContent>
-              <div>
-                Mögliche Inhalte
-                <ul>
-                  <li>Infos zum Modell</li>
-                  <li>Kurse, die sich mit neuronalen Netzen beschäftigen</li>
-                </ul>
-              </div>
-            </ng-template>
-          </ngb-panel>
-        </ngb-accordion>
+          </ng-container>
+        </nav>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
       </div>
     </div>
+    <hr>
   </div>
 </div>

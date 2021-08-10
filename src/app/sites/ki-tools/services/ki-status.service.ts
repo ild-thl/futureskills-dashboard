@@ -30,7 +30,7 @@ export class KiStatusService {
     if (this.scriptLoading$) {
       return new Observable((observer$) => {
         if (!this.MNISTModel$) {
-         console.log("Load MNIST-Model");
+         console.log("Load MNIST-Model:", kiToolsMnistModelPath);
          this.MNISTModel$ = new AsyncSubject();
          from(tf.loadLayersModel(kiToolsMnistModelPath)).subscribe(this.MNISTModel$);
         }

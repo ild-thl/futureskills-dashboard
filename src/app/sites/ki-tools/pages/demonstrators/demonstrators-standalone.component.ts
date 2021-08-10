@@ -4,7 +4,7 @@ import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.servi
 import { PageLoader } from '../../components/templates/page_loader';
 
 @Component({
-  selector: 'app-mnist',
+  selector: 'app-demonstrators',
   template: ` <section class="mt-3">
     <div class="container">
       <div class="row">
@@ -12,19 +12,23 @@ import { PageLoader } from '../../components/templates/page_loader';
           <a [routerLink]="lnkKITools" [queryParams]="{ preview: '1' }"> zur Übersicht </a>
         </div>
       </div>
-      <div class="row mt-3 mb-1">
+      <div class="row mt-3 mb-3">
         <div class="col-12">
-          <h3 class="h3">Handschrifterkennung mit dem MNIST-Datensatz</h3>
+          <h3 class="h3">Beispiele für KI-Anwendungen</h3>
         </div>
       </div>
-      <fs-mnist-example [scriptLoadingStatus]="loadingStatus" [modus]="'window'"></fs-mnist-example>
+      <div class="row mt-3 mb-3">
+        <div class="col-12">
+          <fs-ki-examples [modus]="'window'"></fs-ki-examples>
+        </div>
+      </div>
     </div>
   </section>`,
 })
-export class MnistStandaloneComponent extends PageLoader implements OnInit {
+export class DemonstratorsStandaloneComponent extends PageLoader implements OnInit {
   ngOnInit() {
-    // Packages nachladen
-    super.ngOnInit(true);
+    // Hier muss man keine Packages nachladen
+    super.ngOnInit(false);
   }
 
   constructor(

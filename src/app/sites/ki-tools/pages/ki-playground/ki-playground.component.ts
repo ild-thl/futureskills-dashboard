@@ -4,7 +4,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnist-modal.component';
+import { NgbdSentimentModalComponent } from 'src/app/sites/ki-tools/pages/sentiment/sentiment-modal.component';
 import { AlertList, KIToolsHelper } from '../../services/helper/helper';
+
 
 @Component({
   selector: 'app-ki-playground',
@@ -24,6 +26,7 @@ export class KIPlaygroundComponent implements OnInit {
   // Paths
   lnkKITools_mnist = this.staticService.getPathInfo().lnkKITools_mnist;
   lnkKITools_sentiment = this.staticService.getPathInfo().lnkKITools_sentiment;
+  linkKITools_demonstrators = this.staticService.getPathInfo().linkKITools_demonstrators;
   // Text while loading
   additionalText = '';
   // Preview Flag
@@ -31,8 +34,8 @@ export class KIPlaygroundComponent implements OnInit {
   // Alerts
   alertList: AlertList = new AlertList();
   // Errtexts
-  errTextFrameWorkLoading = "Die benötigten Daten konnten nicht geladen werden. Vielleicht bist du offline oder unsere Server sind nicht erreichbar."
-
+  errTextFrameWorkLoading =
+    'Die benötigten Daten konnten nicht geladen werden. Vielleicht bist du offline oder unsere Server sind nicht erreichbar.';
 
   constructor(
     private renderer: Renderer2,
@@ -65,19 +68,13 @@ export class KIPlaygroundComponent implements OnInit {
       (values) => {
         this.scriptsAreLoaded = KIToolsHelper.checkLoadedScripts(values);
         if (!this.scriptsAreLoaded) {
-          this.alertList.addAlert(
-            'danger',
-            this.errTextFrameWorkLoading
-          );
-        } 
+          this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
+        }
       },
       (error) => {
         // If server is not available
         console.log('Error: ', error);
-        this.alertList.addAlert(
-          'danger',
-          this.errTextFrameWorkLoading
-        );
+        this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
         this.errorWhileScriptLoading = true;
         this.scriptsAreLoaded = false;
       },
@@ -88,7 +85,7 @@ export class KIPlaygroundComponent implements OnInit {
     );
   }
 
-  onLoadMnistExample(modal: boolean) {
+  onLoadMnistExample(modal: boolean = true) {
     this.mnistModelIsLoading = true;
 
     this.kiStatusService.loadMNISTModel().subscribe(
@@ -114,7 +111,10 @@ export class KIPlaygroundComponent implements OnInit {
       },
       (error) => {
         console.log('Error: ', error);
-        this.alertList.addAlert('danger', 'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).');
+        this.alertList.addAlert(
+          'danger',
+          'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).'
+        );
       },
       () => {
         this.mnistModelIsLoading = false;
@@ -122,37 +122,47 @@ export class KIPlaygroundComponent implements OnInit {
     );
   }
 
-  onLoadSentimentExample(modal: boolean) {
+  onLoadSentimentExample(modal: boolean = true) {
     this.sentimentModelIsLoading = true;
 
     this.kiStatusService.loadSentimentModel().subscribe(
       (model) => {
         if (modal) {
-          // const modalRef = this.modalService.open(NgbdMnistModalComponent, {
-          //   scrollable: true,
-          //   backdrop: false,
-          //   keyboard: true, // ESC
-          //   windowClass: 'ki-tools-modal-class',
-          //   size: 'xl',
-          //});
-          // modalRef.result.then(
-          //   (result) => {},
-          //   (reason) => {
-          //     // Cancel by button or ModalDismissReasons
-          //     //console.log('Cancel ', reason);
-          //   }
-          // );
+          const modalRef = this.modalService.open(NgbdSentimentModalComponent, {
+            scrollable: true,
+            backdrop: false,
+            keyboard: true, // ESC
+            windowClass: 'ki-tools-modal-class',
+            size: 'xl',
+          });
+          modalRef.result.then(
+            (result) => {},
+            (reason) => {
+              // Cancel by button or ModalDismissReasons
+              //console.log('Cancel ', reason);
+            }
+          );
         } else {
           this.router.navigate([this.lnkKITools_sentiment]);
         }
       },
       (error) => {
         console.log('Error: ', error);
-        this.alertList.addAlert('danger', 'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).');
+        this.alertList.addAlert(
+          'danger',
+          'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).'
+        );
       },
       () => {
         this.sentimentModelIsLoading = false;
       }
     );
+  }
+
+  onLoadLinkExamples(modal: boolean = true) {
+    if (modal) {
+    } else {
+      this.router.navigate([this.linkKITools_demonstrators]);
+    }
   }
 }

@@ -23,16 +23,12 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/templates/page_loa
           [modus]="'window'"
         ></fs-sentiment-example>
       </div>
-      <hr />
-      <div class="container mb-2">
-        <app-sentiment-link-footer></app-sentiment-link-footer>
-      </div>
     </section>
   `,
 })
 export class SentimentStandAloneComponent extends PageLoader implements OnInit {
   ngOnInit() {
-    super.ngOnInit();
+    super.ngOnInit(true);
   }
 
   constructor(

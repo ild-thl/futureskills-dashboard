@@ -5,6 +5,11 @@
   $bubbleBorderRadius: 5px;
   $bubbleSmallPosition: 140px;
 
+  img.kurs{
+    width: 70px;
+    height: 70px;
+  }
+
   .blur-on-load {
     filter: blur(3px);
     cursor: wait;
@@ -26,6 +31,9 @@
   }
 
   &.modus_modal {
+
+    margin-top: 20px;
+
     // modales Fenster
     .bubble {
     

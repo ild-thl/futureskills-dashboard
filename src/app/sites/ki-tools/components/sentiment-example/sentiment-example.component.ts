@@ -21,6 +21,8 @@ export class SentimentExampleComponent implements OnInit {
   sentimentText: string;
   sentimentNumber: string;
   emojiIndex: number;
+  isPredicting: boolean;
+  nrSelect: any;
   sentimentArray = ['negativ', 'eher negativ', 'neutral', 'eher positiv', 'positiv'];
   private model: any;
   private PAD_MAX_LENGTH = 400;
@@ -31,9 +33,9 @@ export class SentimentExampleComponent implements OnInit {
 
   ngOnInit(): void {
     this.textAreaText = '';
-    this.sentimentText = '';
-    this.sentimentNumber = '';
     this.emojiIndex = undefined;
+    this.isPredicting = false;
+    this.refreshText();
     // console.log(String.fromCodePoint(0x1f641));
   }
 
@@ -52,6 +54,12 @@ export class SentimentExampleComponent implements OnInit {
 
   deleteBox() {
     this.textAreaText = '';
+    this.refreshText();
+  }
+  refreshText(){
+    this.sentimentText = 'Noch kein Text zur Auswertung.';
+    this.sentimentNumber = '';
+    this.nrSelect='';
   }
 
   onSelectChange(value: string) {
@@ -61,11 +69,13 @@ export class SentimentExampleComponent implements OnInit {
   checkSentiment() {
     if (this.textAreaText.length < 5) return;
     if (this.modelLoaded) {
+      this.isPredicting = true;
       const value = this.getSentimentValue(this.textAreaText);
       console.log('Value:', value);
       this.emojiIndex = Math.round(value * 4);
-      this.sentimentText = this.sentimentArray[this.emojiIndex];
-      this.sentimentNumber = value.toFixed(4);
+      this.sentimentText = 'Der Text wird als ' + this.sentimentArray[this.emojiIndex] + " eingestuft.";
+      this.sentimentNumber = 'Wert: ' + value.toFixed(4);
+      this.isPredicting = false;
     }
   }
 
