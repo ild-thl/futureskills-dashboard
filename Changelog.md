@@ -2,6 +2,9 @@
 
 ## [UnReleased]
 
+## 2021-08-11/ml
+### changed
+- UserData contains user_role now
 
 ## 2021-07-27/ml
 ### added
@@ -28,7 +31,7 @@
 - different texts
 
 ## 2021-06-10/ml
-# added
+### added
 - new static vars for KI
 - new environment var for model path
 - Default Model-Files in assets

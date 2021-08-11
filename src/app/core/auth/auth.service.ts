@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { tap, concatMap, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { User } from 'src/app/core/models/user';
+import { PossibleUserRoles, User } from 'src/app/core/models/user';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthResponseData, AuthTokenStructure } from 'src/app/core/auth/auth.interfaces';
 import { ApiService } from 'src/app/core/http/api/api.service';
@@ -50,11 +50,14 @@ export class AuthService {
         // console.table(serverResponse);
         const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
         const decoded = this.getDecodedToken(serverResponse.access_token);
-        //console.log('Decoded Token: ', decoded);
+        // console.log('Decoded Token: ', decoded);
+        const user_role =
+          decoded.user_role == undefined ? PossibleUserRoles.DEFAULT : decoded.user_role;
         const user = new User(
           decoded.user_id,
           email,
           decoded.user_name,
+          user_role,
           serverResponse.access_token,
           expirationDate
         );
@@ -90,6 +93,7 @@ export class AuthService {
       id: number;
       email: string;
       name: string;
+      role: PossibleUserRoles;
       _token: string;
       _tokenExpirationDate: string;
     } = JSON.parse(this.cookieDataService.getLocalStorageItem('userData'));
@@ -98,6 +102,9 @@ export class AuthService {
       this.user$.next(null);
       return;
     }
+ 
+    // Übergangsweise checken ob die Rolle im localStorage ist, Standard ist default
+    const user_role = userData.role == undefined ? PossibleUserRoles.DEFAULT : userData.role ;
 
     //console.log('UserData: ', userData);
     //console.log('LocalStorage' + JSON.stringify(localStorage.getItem('userData')));
@@ -106,10 +113,12 @@ export class AuthService {
       userData.id,
       userData.email,
       userData.name,
+      user_role,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
 
+    console.log('User (localStorage): ', user);
     this.user$.next(user);
   }
 
@@ -120,37 +129,4 @@ export class AuthService {
       return null;
     }
   }
-
-  // TO_DELETE
-  // login_alt(email: string, password: string): Observable<any> {
-  //   return this.apiService.loginUser(email, password).pipe(
-  //     concatMap((serverResponse: AuthResponseData) => {
-  //       console.table(serverResponse);
-  //       const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
-  //       const user = new User(0, email, undefined, serverResponse.access_token, expirationDate);
-
-  //       // Sonst kann das Token über den Interceptor nicht mitgesendet werden
-  //        this.userForInterceptor$.next(user); // Todo: Delete
-
-  //       // Todo: Die UserID und Namen im Token mitsenden,
-  //       // dann muss man hier keine weiteren Abfragen machen
-  //       return this.apiService.getUserByEmail(email).pipe(
-  //         tap((userDataArr) => {
-  //           //console.log('UserData from Server: ', userDataArr);
-  //           let userData = userDataArr[0];
-  //           if (userData) {
-  //             user.id = userData.id;
-  //             user.name = userData.name;
-  //             this.user$.next(user);
-  //              this.userForInterceptor$.next(user); //Delete
-  //             this.cookieDataService.setLocalStorageItem('userData', JSON.stringify(user));
-  //             const expirationDuration =
-  //               new Date(user.tokenExpirationDate).getTime() - new Date().getTime();
-  //             this.autoLogout(expirationDuration);
-  //           }
-  //         })
-  //       );
-  //     })
-  //   );
-  // }
 }
