@@ -1,4 +1,4 @@
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { KIToolsTypes } from '../../interfaces/types';
 import { StaticService } from 'src/app/config/static.service';
@@ -21,11 +21,22 @@ export class SentimentExampleComponent implements OnInit {
   sentimentText: string;
   sentimentNumber: string;
   emojiIndex: number;
-  isPredicting: boolean;
+  isCalculating: boolean;
   nrSelect: any;
-  sentimentArray = ['negativ', 'eher negativ', 'neutral', 'eher positiv', 'positiv'];
+  sentimentArray = [
+    'negativ',
+    'eher negativ',
+    'neutral',
+    'eher positiv',
+    'positiv',
+    'nicht bewertbar',
+  ];
+
+  // Modellvariablen
   private model: any;
-  private PAD_MAX_LENGTH = 400;
+  private MAX_REVIEW_LENGTH = 400;
+  private NUM_WORDS = 10000;
+  private UNKNOWN_CHAR = 2;
 
   modelLoaded = false;
   alertList: AlertList = new AlertList();
@@ -34,7 +45,7 @@ export class SentimentExampleComponent implements OnInit {
   ngOnInit(): void {
     this.textAreaText = '';
     this.emojiIndex = undefined;
-    this.isPredicting = false;
+    this.isCalculating = false;
     this.refreshText();
     // console.log(String.fromCodePoint(0x1f641));
   }
@@ -56,61 +67,102 @@ export class SentimentExampleComponent implements OnInit {
     this.textAreaText = '';
     this.refreshText();
   }
-  refreshText(){
+  refreshText() {
     this.sentimentText = 'Noch kein Text zur Auswertung.';
     this.sentimentNumber = '';
-    this.nrSelect='';
+    this.nrSelect = '';
   }
 
   onSelectChange(value: string) {
     this.textAreaText = value;
   }
 
-  checkSentiment() {
+  startPrediction() {
     if (this.textAreaText.length < 5) return;
     if (this.modelLoaded) {
-      this.isPredicting = true;
-      const value = this.getSentimentValue(this.textAreaText);
-      console.log('Value:', value);
-      this.emojiIndex = Math.round(value * 4);
-      this.sentimentText = 'Der Text wird als ' + this.sentimentArray[this.emojiIndex] + " eingestuft.";
-      this.sentimentNumber = 'Wert: ' + value.toFixed(4);
-      this.isPredicting = false;
+      this.showResults(this.checkSentiment());
     }
   }
 
-  getSentimentValue(text: string) {
-    console.log("Text: ", text);
+  checkSentiment(): number {
+    const editedText = this.editText(this.textAreaText);
+    console.log('Text bearbeitet: ', editedText);
+    const wordToIndex = this.wordsToIndex(editedText);
+    return this.getSentimentValue(wordToIndex);
+  }
 
+  showResults(value: number) {
+    // Anzeigen der Ergebnisse
+    this.emojiIndex = this.getEmojiIndex(value);
+    this.sentimentText =
+      'Der Text wird als ' + this.sentimentArray[this.emojiIndex] + ' eingestuft.';
+    this.sentimentNumber = 'Wert: ' + value.toFixed(4);
+    console.log('Value:', value);
+  }
+
+  editText(text: string): string {
+    // Der Text wird in die Trainingszahlen umgewandelt
+    // Kleinbuchstaben
     let edited = text.toLowerCase();
-    // ohne Sonderzeichen
-    edited = edited.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ")
+    // Leerzeichen
     edited = edited.trim();
-    console.log("Bearbeitet: ", edited)
+    // ohne Sonderzeichen
+    edited = edited.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+    return edited;
+  }
 
+  wordsToIndex(edited: string): number[] {
+    // In IDs umwandeln (ohne die Unbekannten)
+    let wordIds = [];
+    const words = edited.split(' ');
+    for (var word of words) {
+      let foundWordIndex = this.WordToIndex[word] + 3;
 
-    const sentenceIds = this.sentenceToIds(edited);
-    console.log("SentenceIds: ", sentenceIds);
-    const paddedSentence = this.padLeft(sentenceIds, this.PAD_MAX_LENGTH);
+      if (foundWordIndex > this.NUM_WORDS || Number.isNaN(foundWordIndex)) {
+        foundWordIndex = this.UNKNOWN_CHAR;
+      }
+      wordIds.push(foundWordIndex);
+    }
+    console.log('WordIndex: ', wordIds);
+    const paddedSentence = this.padLeft(wordIds, this.MAX_REVIEW_LENGTH);
+    return paddedSentence;
+  }
+
+  padLeft(sentenceIds: number[], sentenceLength: number) {
+    const paddedSentence = [];
+    const maxLength = sentenceLength - sentenceIds.length;
+    return paddedSentence.concat(new Array(maxLength).fill(0), sentenceIds);
+  }
+
+  getSentimentValue(paddedSentence: number[]) {
     const tensor = tf.tensor([paddedSentence]);
     return this.model.predict(tensor).dataSync()[0];
   }
 
-  sentenceToIds(text: string) {
-    let messageIds = [];
-    text.split(' ').forEach((word) => {
-      messageIds.push(this.WordToIndex[word] + 3);
-    });
-    messageIds  = messageIds.filter(value => {
-      return (!Number.isNaN(value))
-    })
-    return messageIds;
-  }
-
-  padLeft(sentenceIds, sentenceLength) {
-    const paddedSentence = [];
-    const maxLength = sentenceLength - sentenceIds.length;
-    return paddedSentence.concat(new Array(maxLength).fill(0), sentenceIds);
+  getEmojiIndex(value: number): number {
+    //return Math.round(value * 4);
+    let index = 5;
+    switch (true) {
+      case value >= 0 && value < 0.2:
+        index = 0;
+        break;
+      case value >= 0.2 && value <= 0.4:
+        index = 1;
+        break;
+      case value > 0.4 && value < 0.6:
+        index = 2;
+        break;
+      case value >= 0.6 && value < 0.8:
+        index = 3;
+        break;
+      case value >= 0.8 && value <= 1:
+        index = 4;
+        break;
+      default:
+        index = 5;
+        break;
+    }
+    return index;
   }
 
   private loadingModel() {
@@ -121,8 +173,20 @@ export class SentimentExampleComponent implements OnInit {
       this.model = values.model;
       this.WordToIndex = values.index;
       this.modelLoaded = true;
-      //console.log(values);
-      //console.log(this.model.summary());
     });
   }
+
+
+
+    // editIndex(): Observable<any> {
+  //   return new Observable((subscriber) => {
+  //     const editedText = this.editText(this.textAreaText);
+  //     console.log('Text bearbeitet: ', editedText);
+  //     const wordToIndex = this.wordsToIndex(editedText);
+  //     //console.log('WordsToIndex: ', wordToIndex);
+  //     const value = this.getSentimentValue(wordToIndex);
+  //     subscriber.next(value);
+  //     subscriber.complete();
+  //   });
+  // }
 }

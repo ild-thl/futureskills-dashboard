@@ -5,18 +5,13 @@
   <div class="row">
     <div class="col-10">
       <p>
-
-        Bei einer Sentimentanalyse oder auch Stimmungsanalyse wird ein Text
-        automatisiert nach geäußerten Gefühlen oder Meinungen ausgewertet. Der Text wird
-        anhand seiner Wörter klassifiziert und innerhalb einer Skala als positiv,
-        negativ oder neutral eingestuft. Dieses Beispiel wurde mit engischen Filmrezensionen trainiert und basiert auf dem Dataset der Internet Movie Database (IMDB).
-        Die Äußerungen werden auf einer Skala von 0-1 bewertet.
+        Bei einer Sentimentanalyse oder auch Stimmungsanalyse wird ein Text automatisiert nach
+        geäußerten Gefühlen oder Meinungen klassifiziert und ausgewertet. Dieses
+        Beispiel basiert auf dem Dataset der Internet Movie Database (IMDB), die englischsprachige Rezensionen enthält. Die Äußerungen werden auf einer Skala von 0-1 bewertet.
         <!--Anwendungsbeispiele: In der Literatur, für die Klassifizierung von Kommentaren,
         bspw. in Blogs, Social Media Anwendungen oder Produktbewertungen.-->
-        </p>
-      <p>
-
-        Du kannst folgende Textbeispiele ausprobieren oder eigene (englische) Texte eingeben.</p>
+      </p>
+      <p>Du kannst folgende Textbeispiele ausprobieren oder eigene (englische) Texte eingeben.</p>
     </div>
   </div>
 
@@ -32,14 +27,21 @@
         <div class="col">
           <div class="form-group">
             <label for="selectExampleText">Beispieltexte</label>
-            <select [(ngModel)]='nrSelect' class="form-control form-control-sm" id="selectExampleText" (change)="onSelectChange($event.target.value)">
+            <select
+              [(ngModel)]="nrSelect"
+              class="form-control form-control-sm"
+              id="selectExampleText"
+              (change)="onSelectChange($event.target.value)"
+            >
               <option value="" selected disabled>choose an example</option>
               <option>Aristocats is so great because I love cats!</option>
               <option>This is a film which should be seen by anybody interested in.</option>
               <option>I can not form an opinion.</option>
-              <option>I don't want you to waste your time when you could see something else.</option>
+              <option>
+                I don't want you to waste your time when you could see something else.
+              </option>
               <option>This is one of my three all-time favorite movies.</option>
-              <option>This movie was absolutely terrible.</option>
+              <option>This film is profoundly disturbing.</option>
             </select>
           </div>
           <div class="form-group">
@@ -47,29 +49,31 @@
               class="form-control form-control-sm"
               name="textArea"
               [(ngModel)]="textAreaText"
-              [ngModelOptions]="{standalone: true}"
+              [ngModelOptions]="{ standalone: true }"
               rows="5"
               placeholder="min. 5 characters"
               maxlength="255"
             ></textarea>
           </div>
           <button
+            *ngIf="!isCalculating; else btnIsNotClickable"
             class="btn btn-outline-primary btn-sm float-left"
             type="button"
-            [disabled]="textAreaText.length<5 || isPredicting"
-            (click)="checkSentiment()"
+            [disabled]="textAreaText.length < 5"
+            (click)="startPrediction()"
           >
             Auswerten
           </button>
-           <button class="btn btn-link btn-sm float-right" type="button" (click)="deleteBox()">
+          <ng-template #btnIsNotClickable>
+            <small class="text-muted float-left">Moment ...</small>
+          </ng-template>
+          <button class="btn btn-link btn-sm float-right" type="button" (click)="deleteBox()">
             Text löschen
-          </button> 
+          </button>
         </div>
       </div>
     </div>
-    <div class="col-5">
-      &nbsp;
-    </div>
+    <div class="col-5">&nbsp;</div>
   </div>
 
   <!-- Nav -->
@@ -80,14 +84,19 @@
           <a ngbNavLink>Auswertung</a>
           <ng-template ngbNavContent>
             <div class="sentiment-box">
-              <div class="float-left"> {{ sentimentText }}</div>
-              <div class="float-right emoji" [ngClass]="{
-                'vnegative' : emojiIndex==0, 
-                'negative' : emojiIndex==1, 
-                'neutral' : emojiIndex==2, 
-                'positive' : emojiIndex==3, 
-                'vpositive' : emojiIndex==4
-              }"> {{ sentimentNumber }}</div>
+              <div class="float-left">{{ sentimentText }}</div>
+              <div
+                class="float-right emoji"
+                [ngClass]="{
+                  vnegative: emojiIndex == 0,
+                  negative: emojiIndex == 1,
+                  neutral: emojiIndex == 2,
+                  positive: emojiIndex == 3,
+                  vpositive: emojiIndex == 4
+                }"
+              >
+                {{ sentimentNumber }}
+              </div>
             </div>
           </ng-template>
         </ng-container>
@@ -95,34 +104,35 @@
         <ng-container ngbNavItem>
           <a ngbNavLink>Modell</a>
           <ng-template ngbNavContent>
-            <p>
-            </p>
+            <p></p>
           </ng-template>
         </ng-container>
 
         <ng-container ngbNavItem>
           <a ngbNavLink>Daten</a>
           <ng-template ngbNavContent>
-            <p>
-            </p>
+            <p></p>
           </ng-template>
         </ng-container>
 
         <ng-container ngbNavItem>
           <a ngbNavLink>Kurse</a>
           <ng-template ngbNavContent>
-            <p>Folgende Kurse können wir dir zum Thema künstliche Intelligenz und neuronale Netze empfehlen:</p>
+            <p>
+              Folgende Kurse können wir dir zum Thema künstliche Intelligenz und neuronale Netze
+              empfehlen:
+            </p>
             <div>
-            <img class="kurs" src="assets/images/info-teaching-2.png" alt="Kurse" />
-            <a
-            style="text-decoration: underline"
-            [routerLink]="lnkCoursePath1"
-            class="text-reset primary"
-            target="_blank"
-            > FutureSkills KI</a
-          >
-          - Das Modul setzt sich aus verschiedenen Online-Kursen zusammen.
-             
+              <img class="kurs" src="assets/images/info-teaching-2.png" alt="Kurse" />
+              <a
+                style="text-decoration: underline"
+                [routerLink]="lnkCoursePath1"
+                class="text-reset primary"
+                target="_blank"
+              >
+                FutureSkills KI</a
+              >
+              - Das Modul setzt sich aus verschiedenen Online-Kursen zusammen.
             </div>
           </ng-template>
         </ng-container>
@@ -131,7 +141,7 @@
           <a ngbNavLink>Quellen</a>
           <ng-template ngbNavContent>
             <p>
-                <!-- author    = {Maas, Andrew L.  and  Daly, Raymond E.  and  Pham, Peter T.  and  Huang, Dan  and  Ng, Andrew Y.  and  Potts, Christopher},
+              <!-- author    = {Maas, Andrew L.  and  Daly, Raymond E.  and  Pham, Peter T.  and  Huang, Dan  and  Ng, Andrew Y.  and  Potts, Christopher},
                 title     = {Learning Word Vectors for Sentiment Analysis},
                 booktitle = {Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies},
                 month     = {June},
@@ -142,12 +152,11 @@
                 url       = {http://www.aclweb.org/anthology/P11-1015}
               } -->
             </p>
-            
           </ng-template>
         </ng-container>
       </nav>
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </div>
   </div>
-  <hr>
+  <hr />
 </div>
