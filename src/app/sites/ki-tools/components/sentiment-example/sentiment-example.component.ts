@@ -192,6 +192,9 @@ export class SentimentExampleComponent implements OnInit {
       this.model = values.model;
       this.WordToIndex = values.index;
       this.modelLoaded = true;
+    }, error=>{
+      console.log("Modell kann nicht geladen werden.");
+      this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
     });
   }
 }

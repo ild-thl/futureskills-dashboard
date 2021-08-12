@@ -53,3 +53,4 @@ src/environments/environment.staging.ts
 
 # Temporär nicht eingecheckt
 src/assets/kimodels/sentiment
+src/assets/kimodels/mnistnumber
