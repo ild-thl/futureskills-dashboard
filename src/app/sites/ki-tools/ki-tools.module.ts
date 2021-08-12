@@ -14,10 +14,9 @@ import { SentimentStandAloneComponent } from './pages/sentiment/sentiment-standa
 import { NgbdSentimentModalComponent } from './pages/sentiment/sentiment-modal.component';
 import { SentimentExampleComponent } from './components/sentiment-example/sentiment-example.component';
 import { DemonstratorsStandaloneComponent } from './pages/demonstrators/demonstrators-standalone.component';
-
-import { ExamplesComponent } from './components/examples/examples.component';
-import { DemonstratorsModalComponent } from './pages/demonstrators/demonstrators-modal.component';
-import { ExampleCardComponent } from './components/examples/example-card/example-card.component';
+import { NgbdDemonstratorsModalComponent } from './pages/demonstrators/demonstrators-modal.component';
+import { ExampleCardComponent } from './components/demonstrator-example/example-card/example-card.component';
+import { DemonstratorExampleComponent } from './components/demonstrator-example/demonstrator-example.component';
 
 @NgModule({
   declarations: [
@@ -31,9 +30,9 @@ import { ExampleCardComponent } from './components/examples/example-card/example
     NgbdSentimentModalComponent,
     SentimentExampleComponent,
     DemonstratorsStandaloneComponent,
-    DemonstratorsModalComponent,
-    ExamplesComponent,
+    NgbdDemonstratorsModalComponent,
     ExampleCardComponent,
+    DemonstratorExampleComponent,
   ],
   imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [KiStatusService]

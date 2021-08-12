@@ -1,0 +1,6 @@
+<div class="ki-example-list" [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }">
+    <div class="card-columns">
+     <app-example-card *ngFor="let cardText of textArr" [cardTextData]="cardText">
+     </app-example-card>
+   </div>
+</div> 

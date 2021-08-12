@@ -5,7 +5,9 @@ import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnist-modal.component';
 import { NgbdSentimentModalComponent } from 'src/app/sites/ki-tools/pages/sentiment/sentiment-modal.component';
-import { AlertList, KIToolsHelper } from '../../services/helper/helper';
+import { NgbdDemonstratorsModalComponent } from 'src/app/sites/ki-tools/pages/demonstrators/demonstrators-modal.component';
+import { AlertList, KIToolsHelper } from 'src/app/sites/ki-tools/services/helper/helper';
+
 
 
 @Component({
@@ -101,7 +103,6 @@ export class KIPlaygroundComponent implements OnInit {
           modalRef.result.then(
             (result) => {},
             (reason) => {
-              // Cancel by button or ModalDismissReasons
               //console.log('Cancel ', reason);
             }
           );
@@ -138,7 +139,6 @@ export class KIPlaygroundComponent implements OnInit {
           modalRef.result.then(
             (result) => {},
             (reason) => {
-              // Cancel by button or ModalDismissReasons
               //console.log('Cancel ', reason);
             }
           );
@@ -161,6 +161,19 @@ export class KIPlaygroundComponent implements OnInit {
 
   onLoadLinkExamples(modal: boolean = true) {
     if (modal) {
+      const modalRef = this.modalService.open(NgbdDemonstratorsModalComponent, {
+        scrollable: true,
+        backdrop: false,
+        keyboard: true, // ESC
+        windowClass: 'ki-tools-modal-class',
+        size: 'xl',
+      });
+      modalRef.result.then(
+        (result) => {},
+        (reason) => {
+          //console.log('Cancel ', reason);
+        }
+      );
     } else {
       this.router.navigate([this.linkKITools_demonstrators]);
     }

@@ -19,7 +19,7 @@ import { PageLoader } from '../../components/templates/page_loader';
       </div>
       <div class="row mt-3 mb-3">
         <div class="col-12">
-          <fs-ki-examples [modus]="'window'"></fs-ki-examples>
+          <fs-demonstrator-example [modus]="'window'"></fs-demonstrator-example>
         </div>
       </div>
     </div>

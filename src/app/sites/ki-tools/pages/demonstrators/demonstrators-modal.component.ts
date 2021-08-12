@@ -18,11 +18,11 @@ import { KIToolsTypes } from '../../interfaces/types';
 
     <div class="modal-body">
       <div class="container">
-        <fs-ki-examples [modus]="'modal'"></fs-ki-examples>
+        <fs-demonstrator-example [modus]="'modal'"></fs-demonstrator-example>
       </div>
     </div>`,
 })
-export class DemonstratorsModalComponent implements OnInit {
+export class NgbdDemonstratorsModalComponent implements OnInit {
   ngOnInit() {}
   constructor(public activeModal: NgbActiveModal) {}
 }
