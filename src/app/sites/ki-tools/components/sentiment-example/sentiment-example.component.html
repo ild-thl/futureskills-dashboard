@@ -1,15 +1,16 @@
 <div
-  class="sentiment-example"
+  class="sentiment-example ki-playground"
   [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }"
 >
   <div class="row">
     <div class="col-10">
       <p>
         Bei einer Sentimentanalyse oder auch Stimmungsanalyse wird ein Text automatisiert nach
-        geäußerten Gefühlen oder Meinungen klassifiziert und ausgewertet. Dieses
-        Beispiel basiert auf dem Dataset der Internet Movie Database (IMDB), die englischsprachige Rezensionen enthält. Die Äußerungen werden auf einer Skala von 0-1 bewertet.
-        <!--Anwendungsbeispiele: In der Literatur, für die Klassifizierung von Kommentaren,
-        bspw. in Blogs, Social Media Anwendungen oder Produktbewertungen.-->
+        geäußerten Gefühlen oder Meinungen klassifiziert. Das Verfahren wird z.B. bei der
+        Überprüfung von Rezensionen und Kommentaren in Online-Shops, Blogs oder
+        SocialMedia-Anwendungen verwendet. Dieses Beispiel wurde mit englischsprachigen Rezensionen
+        der Internet Movie Database trainiert und bewertet die Angaben auf einer Skala von 0-1
+        (negativ-positiv).
       </p>
       <p>Du kannst folgende Textbeispiele ausprobieren oder eigene (englische) Texte eingeben.</p>
     </div>
@@ -56,17 +57,14 @@
             ></textarea>
           </div>
           <button
-            *ngIf="!isCalculating; else btnIsNotClickable"
             class="btn btn-outline-primary btn-sm float-left"
             type="button"
-            [disabled]="textAreaText.length < 5"
+            [disabled]="textAreaText.length < 5 || isCalculating"
             (click)="startPrediction()"
           >
             Auswerten
           </button>
-          <ng-template #btnIsNotClickable>
-            <small class="text-muted float-left">Moment ...</small>
-          </ng-template>
+
           <button class="btn btn-link btn-sm float-right" type="button" (click)="deleteBox()">
             Text löschen
           </button>
@@ -78,7 +76,7 @@
 
   <!-- Nav -->
   <div class="row mt-5 mb-2">
-    <div class="col-sm">
+    <div class="col-sm fs-nav-explain">
       <nav ngbNav #nav="ngbNav" class="nav-tabs">
         <ng-container ngbNavItem>
           <a ngbNavLink>Auswertung</a>
@@ -102,16 +100,84 @@
         </ng-container>
 
         <ng-container ngbNavItem>
-          <a ngbNavLink>Modell</a>
+          <a ngbNavLink>LSTM</a>
           <ng-template ngbNavContent>
-            <p></p>
+            <p>
+              Was für Menschen recht einfach ist, ist für ein neuronales Netzerk nicht so trivial:
+              Nämlich zu verstehen, dass Wörter in einem Satz miteinander in Beziehung stehen und
+              die Reihenfolge wichtig ist. Deshalb wird hier auf das Konzept eines sogenannten LSTM
+              (kurz für Long Short-Term Memory) zurückgegriffen, weil sie sich (einfach ausgedrückt)
+              Zustände merken können, um Informationen zu verwerfen oder weiterzugeben. <br />
+            </p>
+            <ul>
+              <li>
+                Sepp Hochreiter, Jürgen Schmidhuber (1997): Long short-term memory In: Neural
+                Computation (journal), vol. 9, issue 8, S. 1735–1780, Online:
+                <a
+                  href="https://www.researchgate.net/publication/13853244_Long_Short-term_Memory"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                  Veröffentlichung researchgate.net</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+              <li>
+                LSTMs ausführlich erklärt: Christopher Olah (2015), Understanding LSTM Networks,
+                article, Online:
+                <a
+                  href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                  >colah.github.io</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+            </ul>
           </ng-template>
         </ng-container>
 
         <ng-container ngbNavItem>
           <a ngbNavLink>Daten</a>
           <ng-template ngbNavContent>
-            <p></p>
+            <p>
+              Grundlage dieses Modells sind vorverarbeitete Daten von Maas, A., et al.(2011) aus der
+              Internet Movie Database. Sie besteht aus 25000 Filmrezensionen, die jeweils als
+              positiv oder negativ gekennzeichnet wurden.
+            </p>
+
+            <ul>
+              <li>
+                Tensorflow Dataset-Katalog: IMDB movie database Reviews. Online:
+                <a
+                  href="https://www.tensorflow.org/datasets/catalog/imdb_reviews?hl=en"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                  Tensorflow Documentation</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+              <li>
+                Maas, A., et al.(2011). Learning Word Vectors for Sentiment Analysis, Proceedings of
+                the 49th Annual Meeting of the Association for Computational Linguistics: Human
+                Language Technologies, 142--150, Online:
+                <a
+                  href=" https://aclanthology.org/P11-1015/"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                  >ACL Anthology</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+
+              <li>
+                Internet Movie Database
+                <a
+                  href="https://www.imdb.com"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                  IMDB</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+            </ul>
           </ng-template>
         </ng-container>
 
@@ -119,39 +185,24 @@
           <a ngbNavLink>Kurse</a>
           <ng-template ngbNavContent>
             <p>
-              Folgende Kurse können wir dir zum Thema künstliche Intelligenz und neuronale Netze
-              empfehlen:
+              Folgende Kurse zum Thema künstliche Intelligenz und neuronale Netze sind auf
+              FutureSkills verfügbar:
             </p>
-            <div>
-              <img class="kurs" src="assets/images/info-teaching-2.png" alt="Kurse" />
-              <a
-                style="text-decoration: underline"
-                [routerLink]="lnkCoursePath1"
-                class="text-reset primary"
-                target="_blank"
-              >
-                FutureSkills KI</a
-              >
-              - Das Modul setzt sich aus verschiedenen Online-Kursen zusammen.
-            </div>
-          </ng-template>
-        </ng-container>
 
-        <ng-container ngbNavItem>
-          <a ngbNavLink>Quellen</a>
-          <ng-template ngbNavContent>
-            <p>
-              <!-- author    = {Maas, Andrew L.  and  Daly, Raymond E.  and  Pham, Peter T.  and  Huang, Dan  and  Ng, Andrew Y.  and  Potts, Christopher},
-                title     = {Learning Word Vectors for Sentiment Analysis},
-                booktitle = {Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies},
-                month     = {June},
-                year      = {2011},
-                address   = {Portland, Oregon, USA},
-                publisher = {Association for Computational Linguistics},
-                pages     = {142--150},
-                url       = {http://www.aclweb.org/anthology/P11-1015}
-              } -->
-            </p>
+            <ul class="list-unstyled">
+              <li class="media">
+                <a [routerLink]="lnkCoursePath1">
+                  <img src="assets/images/info-teaching-2.png" class="mr-3 fs-kurs" alt="KI Kurs" />
+                </a>
+
+                <div class="media-body">
+                  <h5 class="mt-0 mb-1">FutureSkills KI</h5>
+                  Das Modul setzt sich aus 14 Online-Kursen zusammen.<br />
+                  z.B.: Künstliche Intelligenz einfach erklärt, Neuronale Netze - Konzeption und
+                  Nutzung, KI - Der Weg zur Anwendung, KI in der Bildverarbeitung
+                </div>
+              </li>
+            </ul>
           </ng-template>
         </ng-container>
       </nav>

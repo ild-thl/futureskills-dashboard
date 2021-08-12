@@ -31,6 +31,7 @@ export class SentimentExampleComponent implements OnInit {
     'positiv',
     'nicht bewertbar',
   ];
+  lnkCoursePath1 = this.staticService.getPathInfo().lnkOffers + this.staticService.getCourseNumbers().futureskillsKI;
 
   // Modellvariablen
   private model: any;
@@ -79,16 +80,35 @@ export class SentimentExampleComponent implements OnInit {
 
   startPrediction() {
     if (this.textAreaText.length < 5) return;
+
     if (this.modelLoaded) {
-      this.showResults(this.checkSentiment());
+      this.isCalculating = true;
+
+      this.calculatePrediction().subscribe(
+        (value) => {
+          console.log('value: ' + value);
+          this.showResults(value);
+        },
+        (error) => {
+          console.log('Error:' + error);
+        },
+        () => {
+          this.isCalculating = false;
+        }
+      );
     }
   }
 
-  checkSentiment(): number {
-    const editedText = this.editText(this.textAreaText);
-    console.log('Text bearbeitet: ', editedText);
-    const wordToIndex = this.wordsToIndex(editedText);
-    return this.getSentimentValue(wordToIndex);
+  calculatePrediction(): Observable<any> {
+    return new Observable((subscriber) => {
+      const editedText = this.editText(this.textAreaText);
+      console.log('Text bearbeitet: ', editedText);
+      const wordToIndex = this.wordsToIndex(editedText);
+      const value = this.getSentimentValue(wordToIndex);
+
+      subscriber.next(value);
+      subscriber.complete();
+    });
   }
 
   showResults(value: number) {
@@ -97,7 +117,6 @@ export class SentimentExampleComponent implements OnInit {
     this.sentimentText =
       'Der Text wird als ' + this.sentimentArray[this.emojiIndex] + ' eingestuft.';
     this.sentimentNumber = 'Wert: ' + value.toFixed(4);
-    console.log('Value:', value);
   }
 
   editText(text: string): string {
@@ -175,18 +194,4 @@ export class SentimentExampleComponent implements OnInit {
       this.modelLoaded = true;
     });
   }
-
-
-
-    // editIndex(): Observable<any> {
-  //   return new Observable((subscriber) => {
-  //     const editedText = this.editText(this.textAreaText);
-  //     console.log('Text bearbeitet: ', editedText);
-  //     const wordToIndex = this.wordsToIndex(editedText);
-  //     //console.log('WordsToIndex: ', wordToIndex);
-  //     const value = this.getSentimentValue(wordToIndex);
-  //     subscriber.next(value);
-  //     subscriber.complete();
-  //   });
-  // }
 }

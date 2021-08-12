@@ -1,14 +1,11 @@
 @import 'breakpoints';
+@import '../../styles/shared.scss';
+
 .mnist-example {
   $bubbleBorderColor: var(--color-primary-blue);
   $bubbleBorder: 2px;
   $bubbleBorderRadius: 5px;
   $bubbleSmallPosition: 140px;
-
-  img.kurs{
-    width: 70px;
-    height: 70px;
-  }
 
   .blur-on-load {
     filter: blur(3px);
