@@ -38,6 +38,7 @@ export const CustomConfig = {
     lnkTrailerAboutUs: '/info-lehrende'
   },
   courseNumbers: {
-    futureskillsKI: '/615'
+    FS_SuperKI: '/615',
+    FS_NeuronaleNetze: '/602'
   }
 };

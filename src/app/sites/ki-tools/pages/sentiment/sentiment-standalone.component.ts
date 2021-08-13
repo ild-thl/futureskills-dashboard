@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { PageLoader } from 'src/app/sites/ki-tools/components/templates/page_loader';
+import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/page_loader';
 
 @Component({
   selector: 'app-sentiment',

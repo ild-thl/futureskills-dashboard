@@ -17,6 +17,7 @@ import { DemonstratorsStandaloneComponent } from './pages/demonstrators/demonstr
 import { NgbdDemonstratorsModalComponent } from './pages/demonstrators/demonstrators-modal.component';
 import { ExampleCardComponent } from './components/demonstrator-example/example-card/example-card.component';
 import { DemonstratorExampleComponent } from './components/demonstrator-example/demonstrator-example.component';
+import { CourseListComponent } from './components/shared/course-list/course-list.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { DemonstratorExampleComponent } from './components/demonstrator-example/
     NgbdDemonstratorsModalComponent,
     ExampleCardComponent,
     DemonstratorExampleComponent,
+    CourseListComponent,
   ],
   imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [KiStatusService]

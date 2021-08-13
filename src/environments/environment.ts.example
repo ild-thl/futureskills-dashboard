@@ -3,7 +3,7 @@ export const environment = {
 
   logFiles: true, // no effect (at the moment) when production is false
   staticURL: 'https://devstatic.futureskills-sh.de/', // could also be a local adress
-  modelURL: 'assets/kimodels/', // path to ki-models and data
+  modelURL: 'https://devstatic.futureskills-sh.de/data/kimodels/', // path to ki-models and data (alternativ: 'assets/kimodels/')
 
   apiURL: 'http://localhost:8000',
 

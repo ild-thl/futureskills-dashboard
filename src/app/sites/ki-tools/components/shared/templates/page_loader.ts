@@ -1,8 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { KIToolsHelper } from '../../services/helper/helper';
-import { KIToolsTypes } from '../../interfaces/types';
+import { KIToolsHelper } from '../../../services/helper/helper';
+import { KIToolsTypes } from '../../../interfaces/types';
 
 
 /**

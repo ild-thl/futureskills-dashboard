@@ -176,29 +176,7 @@
           <ng-container ngbNavItem>
             <a ngbNavLink>Kurse</a>
             <ng-template ngbNavContent>
-              <p>
-                Folgende Kurse zum Thema künstliche Intelligenz und neuronale Netze sind auf
-                FutureSkills verfügbar:
-              </p>
-
-              <ul class="list-unstyled">
-                <li class="media">
-                  <a [routerLink]="lnkCoursePath1">
-                    <img
-                      src="assets/images/info-teaching-2.png"
-                      class="mr-3 fs-kurs"
-                      alt="KI Kurs"
-                    />
-                  </a>
-
-                  <div class="media-body">
-                    <h5 class="mt-0 mb-1">FutureSkills KI</h5>
-                    Das Modul setzt sich aus 14 Online-Kursen zusammen.<br />
-                    z.B.: Künstliche Intelligenz einfach erklärt, Neuronale Netze - Konzeption und
-                    Nutzung, KI - Der Weg zur Anwendung, KI in der Bildverarbeitung
-                  </div>
-                </li>
-              </ul>
+              <fs-ki-course-list></fs-ki-course-list>
             </ng-template>
           </ng-container>
         </nav>
