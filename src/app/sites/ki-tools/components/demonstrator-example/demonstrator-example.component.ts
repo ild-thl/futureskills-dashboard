@@ -6,25 +6,23 @@ import { DemonstratorExamples } from './data/example-data';
 @Component({
   selector: 'fs-demonstrator-example',
   templateUrl: './demonstrator-example.component.html',
-  styleUrls: ['./demonstrator-example.component.scss']
+  styleUrls: ['./demonstrator-example.component.scss'],
 })
 export class DemonstratorExampleComponent implements OnInit {
   @Input() public modus = 'window';
 
-  constructor() { }
+  constructor() {}
   demoList: KIToolsTypes.LinkCardData[] = [];
   projectList: KIToolsTypes.LinkCardData[] = [];
 
   ngOnInit(): void {
     this.initText();
-  //  KIToolsHelper.shuffleArray(this.demoList);
-  //  KIToolsHelper.shuffleArray(this.projectList);
+    KIToolsHelper.shuffleArray(this.demoList);
+    KIToolsHelper.shuffleArray(this.projectList);
   }
 
   initText() {
     this.demoList = DemonstratorExamples.exampleText;
     this.projectList = DemonstratorExamples.projectText;
   }
-
-
 }

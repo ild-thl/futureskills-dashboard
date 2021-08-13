@@ -8,10 +8,9 @@
 
 ## 2021-07-27/ml
 ### added
-- new sentiment classes
-- preview flag
-### changed
-- no login necessary
+- new sentiment-example site
+- new example-list site
+- preview flag (no login necessary)
 
 ## 2021-06-09/ml
 ### added
