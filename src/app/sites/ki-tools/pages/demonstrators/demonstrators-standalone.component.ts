@@ -14,7 +14,7 @@ import { PageLoader } from '../../components/shared/templates/page_loader';
       </div>
       <div class="row mt-3 mb-3">
         <div class="col-12">
-          <h3 class="h3">Beispiele für KI-Anwendungen</h3>
+          <h3 class="h3">Link-Sammlung</h3>
         </div>
       </div>
       <div class="row mt-3 mb-3">

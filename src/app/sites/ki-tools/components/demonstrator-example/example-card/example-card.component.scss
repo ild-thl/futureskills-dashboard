@@ -8,6 +8,9 @@
   &.cardProject {
     border-color: rgba(0, 0, 0, 0.5);
   }
+  &.cardImages{
+    border-color: rgba(122, 60, 24, 0.5);
+  }
 }
 
 .card:hover {
@@ -23,5 +26,8 @@
   }
   &.cardProject {
     background-color: rgba(0, 0, 0, 0.03);
+  }
+  &.cardImages{
+    background-color: rgba(122, 60, 24, 0.05);
   }
 }

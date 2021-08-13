@@ -17,7 +17,7 @@ export class ExampleCardComponent implements OnInit {
   }
 
   getType(){
-    return this.cardTextData.type;
+    return this.cardTextData.style;
   }
 
 }

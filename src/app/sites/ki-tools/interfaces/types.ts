@@ -3,10 +3,24 @@ export namespace KIToolsTypes {
     type: string;
     message: string;
   };
+
   export type ScriptLoadingStatus = {
     isLoaded: boolean;
     isError: boolean;
   };
+
+  // Für die Farbgebung
+  export enum LinkCardStyle {
+    default = 'cardDefault',
+    text = 'cardText',
+    project = 'cardProject',
+    images = 'cardImages'
+  }
+
+  export enum LinkCardType  {
+    commercial = 'com',
+    free_demo = 'free_demo',
+  }
 
   export type LinkCardData = {
     title: string;
@@ -14,14 +28,9 @@ export namespace KIToolsTypes {
     text: string;
     url: string;
     urlText: string;
-    type: LinkCardType;
+    style: LinkCardStyle;
+    type?: LinkCardType;
   };
-  
-  export enum LinkCardType {
-    default = 'cardDefault',
-    text = 'cardText',
-    project = 'cardProject',
-  }
 }
 
 export interface IShowAlerts {

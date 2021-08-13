@@ -5,7 +5,7 @@ import { KIToolsTypes } from '../../interfaces/types';
 @Component({
   selector: 'app-demonstrators-modal',
   template: ` <div class="modal-header">
-      <h4 class="modal-title">Beispiele für KI-Anwendungen</h4>
+      <h4 class="modal-title">Link-Sammlung</h4>
       <button
         type="button"
         class="close"
