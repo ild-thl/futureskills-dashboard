@@ -1,4 +1,6 @@
 @import 'breakpoints';
+@import '../../styles/shared.scss';
+
 .mnist-example {
   $bubbleBorderColor: var(--color-primary-blue);
   $bubbleBorder: 2px;
@@ -26,6 +28,9 @@
   }
 
   &.modus_modal {
+
+    margin-top: 20px;
+
     // modales Fenster
     .bubble {
     

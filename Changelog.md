@@ -2,10 +2,15 @@
 
 ## [UnReleased]
 
-
 ## 2021-08-11/ml
 ### changed
 - UserData contains user_role now
+
+## 2021-07-27/ml
+### added
+- new sentiment-example site
+- new example-list site
+- preview flag (no login necessary)
 
 ## 2021-06-09/ml
 ### added

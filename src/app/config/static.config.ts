@@ -11,7 +11,11 @@ export const CustomConfig = {
   },
   kiConfig: {
     online: true,
-    mnistPath: 'mnistnumber/model.json',
+    mnistPath: 'mnistnumber',
+    sentimentPath: {
+      en: 'sentiment/en',
+      de: 'sentiment/de'
+    },
   },
   paths: {
     lnkLanding: '/',
@@ -24,11 +28,17 @@ export const CustomConfig = {
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
-    lnkKITools_mnist: '/ki-playground/mnist'
+    lnkKITools_mnist: '/ki-playground/mnist',
+    lnkKITools_sentiment: '/ki-playground/sentiment',
+    linkKITools_demonstrators: '/ki-playground/examples'
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
     lnkAfterLogout: '/',
     lnkTrailerAboutUs: '/info-lehrende'
   },
+  courseNumbers: {
+    FS_SuperKI: '/615',
+    FS_NeuronaleNetze: '/602'
+  }
 };

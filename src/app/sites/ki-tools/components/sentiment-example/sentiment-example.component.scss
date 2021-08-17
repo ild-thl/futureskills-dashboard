@@ -1,0 +1,41 @@
+@import '../../styles/shared.scss';
+
+.sentiment-example {
+  .blur-on-load {
+    filter: blur(3px);
+    cursor: wait;
+  }
+
+  .sentiment-header {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .sentiment-box {
+    //border: 0.5px solid #ced4da;
+    //border-radius: 0.2rem;
+    padding: 1px;
+    margin-left: 3px;
+    min-height: 50px;
+  }
+  .emoji {
+    &.vnegative {
+      color: darkred;
+    }
+    &.negative {
+      color: red;
+    }
+    &.neutral {
+      color: grey;
+    }
+    &.positive {
+      color: green;
+    }
+    &.vpositive {
+      color: darkgreen;
+    }
+  }
+
+  &.modus_modal {
+    margin-top: 20px;
+  }
+}

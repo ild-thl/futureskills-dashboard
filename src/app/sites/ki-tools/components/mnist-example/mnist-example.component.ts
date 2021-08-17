@@ -15,6 +15,8 @@ import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { Subscription } from 'rxjs';
 import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.component';
+import { KIToolsTypes } from '../../interfaces/types';
+import { AlertList } from '../../services/helper/helper';
 
 declare var tf: any;
 
@@ -26,8 +28,8 @@ declare var tf: any;
 export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public width = 200;
   @Input() public height = 200;
-  @Input() scriptLoaded = false;
   @Input() public modus = 'window';
+  @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
 
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
@@ -56,6 +58,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   textIfUnknown = 'Ich kann die Zahl nicht erkennen.';
   textMayBe = 'Ich kann die Zahl nicht genau erkennen. Vielleicht ist es eine ';
   textPrediction = '';
+  alertList: AlertList = new AlertList();
 
   constructor(
     private kiService: KiStatusService,
@@ -67,8 +70,12 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   kiToolsModelPath = environment.modelURL + this.staticService.getKIConfig().mnistPath;
 
   ngOnChanges() {
-    if (this.scriptLoaded && !this.modelLoaded) {
+    if (this.scriptLoadingStatus.isLoaded && !this.modelLoaded){
       this.loadingModel();
+    }
+
+    if (this.scriptLoadingStatus.isError){
+      this.alertList.addAlert('danger', 'Die benötigten Daten konnten leider nicht geladen werden.');
     }
   }
 
@@ -132,6 +139,10 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
       this.model = model;
       this.modelLoaded = true;
       //console.log(this.model.summary());
+    },
+    error=>{
+      console.log("Modell kann nicht geladen werden.");
+      this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
     });
   }
 
