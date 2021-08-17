@@ -4,7 +4,8 @@
 
 ## 2021-08-17/ml
 ### changed
-- KI-Block moved to landingpage 
+- KI-Block moved to landingpage
+- Imprint (images) and 2020->2021 
 
 ## 2021-08-11/ml
 ### changed
