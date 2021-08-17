@@ -1,0 +1,48 @@
+@import 'breakpoints';
+
+$ki-block-border-color: #0a274b;
+$ki-block-font-size: 16px;
+
+.fs-easy-btn {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 50px;
+  background-color: #ffffff;
+  border: 3px solid $ki-block-border-color;
+  color: #0a274b;
+  display: inline-block;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  font-size: $ki-block-font-size;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-3px);
+  }
+  &:active {
+    transform: translateY(-1px);
+  }
+  .chevron-right {
+    padding-left: 10px;
+  }
+
+  @media (max-width: $md) {
+    padding: 10px 30px;
+    border: 3px solid $ki-block-border-color;
+    font-size: $ki-block-font-size;
+  }
+
+  @media (max-width: $sm) {
+    padding: 8px 17px;
+    border: 3px solid $ki-block-border-color;
+    font-size: $ki-block-font-size - 2px;
+  }
+
+  @media (max-width: $xs) {
+    padding: 8px 9px;
+    border: 2px solid  $ki-block-border-color;
+    font-size: $ki-block-font-size - 6px;
+  }
+}

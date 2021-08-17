@@ -2,6 +2,10 @@
 
 ## [UnReleased]
 
+## 2021-08-17/ml
+### changed
+- KI-Block moved to landingpage 
+
 ## 2021-08-11/ml
 ### changed
 - UserData contains user_role now
