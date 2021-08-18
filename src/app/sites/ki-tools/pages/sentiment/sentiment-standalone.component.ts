@@ -28,7 +28,8 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/p
 })
 export class SentimentStandAloneComponent extends PageLoader implements OnInit {
   ngOnInit() {
-    super.ngOnInit(true);
+    // Keine Packages nachladen
+    super.ngOnInit(false);
   }
 
   constructor(

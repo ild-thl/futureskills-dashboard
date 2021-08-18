@@ -5,7 +5,7 @@ import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { AlertList } from '../../services/helper/helper';
 
-declare var tf: any;
+import * as tf from '@tensorflow/tfjs';
 
 @Component({
   selector: 'fs-sentiment-example',

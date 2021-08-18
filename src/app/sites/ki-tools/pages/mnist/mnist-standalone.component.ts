@@ -23,8 +23,8 @@ import { PageLoader } from '../../components/shared/templates/page_loader';
 })
 export class MnistStandaloneComponent extends PageLoader implements OnInit {
   ngOnInit() {
-    // Packages nachladen
-    super.ngOnInit(true);
+    // Keine Packages nachladen
+    super.ngOnInit(false);
   }
 
   constructor(
