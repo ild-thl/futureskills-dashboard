@@ -9,7 +9,7 @@ import { PageLoader } from '../../components/shared/templates/page_loader';
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <a [routerLink]="lnkKITools" [queryParams]="{ preview: '1' }"> zur Übersicht </a>
+          <a [routerLink]="lnkKITools"> zur Übersicht </a>
         </div>
       </div>
       <div class="row mt-3 mb-1">

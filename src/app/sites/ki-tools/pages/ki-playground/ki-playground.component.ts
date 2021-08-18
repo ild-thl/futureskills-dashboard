@@ -32,7 +32,7 @@ export class KIPlaygroundComponent implements OnInit {
   // Text while loading
   additionalText = '';
   // Preview Flag
-  preview = '0';
+  preview = '1';
   // Alerts
   alertList: AlertList = new AlertList();
   // Errtexts
@@ -55,12 +55,12 @@ export class KIPlaygroundComponent implements OnInit {
     this.sentimentModelIsLoading = false;
     this.errorWhileScriptLoading = false;
 
-    this.route.queryParamMap.subscribe((params: ParamMap) => {
-      this.preview = params.get('preview');
-    });
+    // this.route.queryParamMap.subscribe((params: ParamMap) => {
+    //   this.preview = params.get('preview');
+    // });
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
 
-    if (this.kitoolsAreOnline && this.preview == '1') {
+    if (this.kitoolsAreOnline) {
       this.loadKIPackages();
     }
   }
