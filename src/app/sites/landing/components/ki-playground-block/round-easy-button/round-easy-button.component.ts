@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'fs-round-easy-button',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoundEasyButtonComponent implements OnInit {
 
+  @Input() public disabled: boolean;
   constructor() { }
 
   ngOnInit(): void {

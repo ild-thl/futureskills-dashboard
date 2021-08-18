@@ -21,9 +21,13 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-right mt-4">
-        <fs-round-easy-button [routerLink]="lnkKITools"
+        <fs-round-easy-button *ngIf="!isNavigating; else btnWaiting"  (click)="goToKIPage()"
           >Zum Playground</fs-round-easy-button
         >
+        <ng-template #btnWaiting>
+          <fs-round-easy-button [disabled]="true">Lade Playground...</fs-round-easy-button
+        >
+        </ng-template>
       </div>
     </div>
     <!-- end of .row -->

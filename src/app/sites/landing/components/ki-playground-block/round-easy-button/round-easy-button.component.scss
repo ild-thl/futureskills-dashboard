@@ -17,6 +17,14 @@ $ki-block-font-size: 16px;
   font-size: $ki-block-font-size;
   font-weight: 600;
 
+  &.isDisabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.8;
+    text-decoration: none;
+  }
+
+
   &:hover {
     text-decoration: none;
     transform: translateY(-3px);
