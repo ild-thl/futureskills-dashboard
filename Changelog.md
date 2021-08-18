@@ -2,6 +2,10 @@
 
 ## [UnReleased]
 
+## 2021-08-18/avz
+### changed
+- Imprint (images) -> added more sources 
+
 ## 2021-08-17/ml
 ### changed
 - KI-Block moved to landingpage
