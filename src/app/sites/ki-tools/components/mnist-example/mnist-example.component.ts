@@ -18,7 +18,7 @@ import { DrawableCanvasComponent } from './drawable-canvas/drawable-canvas.compo
 import { KIToolsTypes } from '../../interfaces/types';
 import { AlertList } from '../../services/helper/helper';
 
-declare var tf: any;
+import * as tf from '@tensorflow/tfjs';
 
 @Component({
   selector: 'fs-mnist-example',
