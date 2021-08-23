@@ -5,7 +5,7 @@
 
 <ul class="list-unstyled">
   <li class="media">
-    <a [routerLink]="lnkCoursePath1">
+    <a class="clickable" (click)="goToUrl(lnkCoursePath1)">
       <img
         src="assets/images/ki-tools/fs_ki_neuronalenetze_kachelbild.jpg"
         class="align-self-center mr-3 fs-kurs"
@@ -22,7 +22,7 @@
     </div>
   </li>
   <li class="media my-4">
-    <a [routerLink]="lnkCoursePath2">
+    <a class="clickable" (click)="goToUrl(lnkCoursePath2)">
       <img
         src="assets/images/ki-tools/fs_ki_modul_ki_kachelbild.jpg"
         class="align-self-center mr-3 fs-kurs"

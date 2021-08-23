@@ -47,6 +47,10 @@ export class PageLoader implements OnInit {
         };
       }
     }
+
+    onModalClose() {
+     // Kein modales Fenster
+    }
   
     // Falls die Scripte nicht geladen sind
     loadKIPackages() {

@@ -108,7 +108,7 @@ export class KIPlaygroundComponent implements OnInit {
           modalRef.result.then(
             (result) => {},
             (reason) => {
-              //console.log('Cancel ', reason);
+              console.log('Cancel ', reason);
             }
           );
         } else {

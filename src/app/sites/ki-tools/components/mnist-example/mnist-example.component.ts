@@ -9,6 +9,8 @@ import {
   ViewChildren,
   QueryList,
   Renderer2,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StaticService } from 'src/app/config/static.service';
@@ -30,6 +32,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public height = 200;
   @Input() public modus = 'window';
   @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
+  @Output() modalClose = new EventEmitter<any>();
 
   @ViewChild(DrawableCanvasComponent) drawablecanvas: DrawableCanvasComponent;
   @ViewChildren('tableCanvas') public tablerow: QueryList<ElementRef>;
@@ -118,6 +121,10 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.viewIsInitialized) {
       this.clearContexts();
     }
+  }
+
+  onCloseModalWindow(){
+    this.modalClose.emit();
   }
 
   public async predict(imageData: ImageData) {

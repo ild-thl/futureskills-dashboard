@@ -17,7 +17,7 @@ import { PageLoader } from '../../components/shared/templates/page_loader';
           <h3 class="h3">Handschrifterkennung mit dem MNIST-Datensatz</h3>
         </div>
       </div>
-      <fs-mnist-example [scriptLoadingStatus]="loadingStatus" [modus]="'window'"></fs-mnist-example>
+      <fs-mnist-example [scriptLoadingStatus]="loadingStatus" [modus]="'window'" (modalClose)="onModalClose()"></fs-mnist-example>
     </div>
   </section>`,
 })
