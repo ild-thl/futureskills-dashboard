@@ -2,6 +2,10 @@
 
 ## [UnReleased]
 
+## 2021-08-23/dk
+### changed
+- Replaced hardcoded link on teacher info page
+
 ## 2021-08-18/avz
 ### changed
 - Tensorflow is npm-Bib now
