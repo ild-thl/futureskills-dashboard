@@ -9,6 +9,8 @@ import { HerocontainerComponent } from 'src/app/sites/landing/components/herocon
 import { PartnershipComponent } from 'src/app/sites/landing/components/partnership/partnership.component';
 import { TrailerComponent } from 'src/app/sites/landing/components/trailer/trailer.component';
 import { CoursecarouselModule } from 'src/app/sites/landing/components/coursecarousel/coursecarousel.module';
+import { KiPlaygroundBlockComponent } from './components/ki-playground-block/ki-playground-block.component';
+import { RoundEasyButtonComponent } from './components/ki-playground-block/round-easy-button/round-easy-button.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CoursecarouselModule } from 'src/app/sites/landing/components/coursecar
     PreviewInfoBannerComponent,
     HerocontainerComponent,
     PartnershipComponent,
-    TrailerComponent
+    TrailerComponent,
+    KiPlaygroundBlockComponent,
+    RoundEasyButtonComponent
   ],
   imports: [RouterModule, SharedModule, CoursecarouselModule],
   exports: [],

@@ -27,7 +27,8 @@ export class PageLoader implements OnInit {
       public kiStatusService: KiStatusService
     ) {}
   
-    ngOnInit(loadPackage: boolean = true): void {
+    ngOnInit(loadPackage: boolean = false): void {
+      loadPackage = false; // Die werden nicht mehr geladen
       this.loadingStatus = {
         isLoaded: false,
         isError: false,
@@ -36,9 +37,19 @@ export class PageLoader implements OnInit {
       if (loadPackage){
         this.kitoolsAreOnline = this.staticService.getKIConfig().online;
         if (this.kitoolsAreOnline) {
+          console.log('Laden der KI Packages');
           this.loadKIPackages();
         }
+      } else {
+        this.loadingStatus = {
+          isLoaded: true,
+          isError: false,
+        };
       }
+    }
+
+    onModalClose() {
+     // Kein modales Fenster
     }
   
     // Falls die Scripte nicht geladen sind

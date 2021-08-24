@@ -203,7 +203,7 @@
         <ng-container ngbNavItem>
           <a ngbNavLink>Kurse</a>
           <ng-template ngbNavContent>
-            <fs-ki-course-list></fs-ki-course-list>
+            <fs-ki-course-list (linkWasClicked)="onCloseModalWindow()"></fs-ki-course-list>
           </ng-template>
         </ng-container>
       </nav>

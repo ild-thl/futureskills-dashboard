@@ -1,11 +1,11 @@
 import { forkJoin, Observable } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { KIToolsTypes } from '../../interfaces/types';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { AlertList } from '../../services/helper/helper';
 
-declare var tf: any;
+import * as tf from '@tensorflow/tfjs';
 
 @Component({
   selector: 'fs-sentiment-example',
@@ -15,6 +15,7 @@ declare var tf: any;
 export class SentimentExampleComponent implements OnInit {
   @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
   @Input() public modus = 'window';
+  @Output() modalClose = new EventEmitter<any>();
 
   textAreaText: string;
   WordToIndex: any[] = [];
@@ -62,6 +63,10 @@ export class SentimentExampleComponent implements OnInit {
         'Die benötigten Daten konnten leider nicht geladen werden.'
       );
     }
+  }
+
+  onCloseModalWindow(){
+    this.modalClose.emit();
   }
 
   deleteBox() {

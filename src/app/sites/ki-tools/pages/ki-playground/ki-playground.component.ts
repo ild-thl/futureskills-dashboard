@@ -8,8 +8,6 @@ import { NgbdSentimentModalComponent } from 'src/app/sites/ki-tools/pages/sentim
 import { NgbdDemonstratorsModalComponent } from 'src/app/sites/ki-tools/pages/demonstrators/demonstrators-modal.component';
 import { AlertList, KIToolsHelper } from 'src/app/sites/ki-tools/services/helper/helper';
 
-
-
 @Component({
   selector: 'app-ki-playground',
   templateUrl: './ki-playground.component.html',
@@ -32,7 +30,7 @@ export class KIPlaygroundComponent implements OnInit {
   // Text while loading
   additionalText = '';
   // Preview Flag
-  preview = '0';
+  preview = '1';
   // Alerts
   alertList: AlertList = new AlertList();
   // Errtexts
@@ -55,36 +53,43 @@ export class KIPlaygroundComponent implements OnInit {
     this.sentimentModelIsLoading = false;
     this.errorWhileScriptLoading = false;
 
-    this.route.queryParamMap.subscribe((params: ParamMap) => {
-      this.preview = params.get('preview');
-    });
+    // this.route.queryParamMap.subscribe((params: ParamMap) => {
+    //   this.preview = params.get('preview');
+    // });
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
 
-    if (this.kitoolsAreOnline && this.preview == '1') {
+    if (this.kitoolsAreOnline) {
       this.loadKIPackages();
     }
   }
 
-  loadKIPackages() {
-    this.kiStatusService.loadKIScript(this.renderer).subscribe(
-      (values) => {
-        this.scriptsAreLoaded = KIToolsHelper.checkLoadedScripts(values);
-        if (!this.scriptsAreLoaded) {
+  loadKIPackages(packageLoad: boolean = false) {
+    packageLoad = false; // Kein Tensorflow mehr extern laden
+    if (packageLoad) {
+      this.kiStatusService.loadKIScript(this.renderer).subscribe(
+        (values) => {
+          this.scriptsAreLoaded = KIToolsHelper.checkLoadedScripts(values);
+          if (!this.scriptsAreLoaded) {
+            this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
+          }
+        },
+        (error) => {
+          // If server is not available
+          console.log('Error: ', error);
           this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
+          this.errorWhileScriptLoading = true;
+          this.scriptsAreLoaded = false;
+        },
+        () => {
+          this.additionalText = '';
+          this.isLoadingScripts = false;
         }
-      },
-      (error) => {
-        // If server is not available
-        console.log('Error: ', error);
-        this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
-        this.errorWhileScriptLoading = true;
-        this.scriptsAreLoaded = false;
-      },
-      () => {
-        this.additionalText = '';
-        this.isLoadingScripts = false;
-      }
-    );
+      );
+    } else {
+      this.additionalText = '';
+      this.isLoadingScripts = false;
+      this.scriptsAreLoaded = true;
+    }
   }
 
   onLoadMnistExample(modal: boolean = true) {
@@ -103,7 +108,7 @@ export class KIPlaygroundComponent implements OnInit {
           modalRef.result.then(
             (result) => {},
             (reason) => {
-              //console.log('Cancel ', reason);
+              console.log('Cancel ', reason);
             }
           );
         } else {

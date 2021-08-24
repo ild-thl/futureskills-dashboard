@@ -21,6 +21,7 @@ import { KIToolsTypes } from '../../interfaces/types';
         <fs-sentiment-example
           [scriptLoadingStatus]="loadingStatus"
           [modus]="'modal'"
+          (modalClose)="onModalClose()"
         ></fs-sentiment-example>
       </div>
     </div>`,
@@ -35,5 +36,9 @@ export class NgbdSentimentModalComponent implements OnInit {
       isLoaded: true,
       isError: false,
     };
+  }
+
+  onModalClose() {
+    this.activeModal.dismiss('lnkClick');
   }
 }

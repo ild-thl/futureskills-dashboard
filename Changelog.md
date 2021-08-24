@@ -4,7 +4,20 @@
 
 ## 2021-08-23/dk
 ### changed
-- Replaced ardcoded link on teacher info page
+- Replaced hardcoded link on teacher info page
+
+## 2021-08-18/avz
+### changed
+- Tensorflow is npm-Bib now
+
+## 2021-08-18/avz
+### changed
+- Imprint (images) -> added more sources 
+
+## 2021-08-17/ml
+### changed
+- KI-Block moved to landingpage
+- Imprint (images) and 2020->2021 
 
 ## 2021-08-11/ml
 ### changed
