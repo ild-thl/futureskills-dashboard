@@ -2,6 +2,10 @@
 
 ## [UnReleased]
 
+## 2021-08-23/dk
+### changed
+- Replaced ardcoded link on teacher info page
+
 ## 2021-08-11/ml
 ### changed
 - UserData contains user_role now
