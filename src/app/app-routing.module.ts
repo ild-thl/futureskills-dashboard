@@ -62,7 +62,6 @@ const routes: Routes = [
   },
   {
     path: 'ki-playground',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
   },

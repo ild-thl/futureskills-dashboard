@@ -1,0 +1,214 @@
+<div
+  class="sentiment-example ki-playground"
+  [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }"
+>
+  <div class="row">
+    <div class="col-10">
+      <p>
+        Bei einer Sentimentanalyse oder auch Stimmungsanalyse wird ein Text automatisiert nach
+        geäußerten Gefühlen oder Meinungen klassifiziert. Das Verfahren wird z.B. bei der
+        Überprüfung von Rezensionen und Kommentaren in Online-Shops, Blogs oder
+        SocialMedia-Anwendungen verwendet. Dieses Beispiel wurde mit englischsprachigen Rezensionen
+        der Internet Movie Database trainiert und bewertet die Angaben auf einer Skala von 0-1
+        (negativ-positiv).
+      </p>
+      <p>Du kannst folgende Textbeispiele ausprobieren oder eigene (englische) Texte eingeben.</p>
+    </div>
+  </div>
+
+  <!--alert list -->
+  <p class="mt-3 mb-3" *ngFor="let alert of alertList.alerts">
+    <ngb-alert [type]="alert.type" (closed)="alertList.closeAlert(alert)">{{
+      alert.message
+    }}</ngb-alert>
+  </p>
+
+  <!--wait until loaded-->
+  <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
+    <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
+  </div>
+  <div
+    [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }"
+  >
+
+  <div class="row mb-5">
+    <div class="col-7">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="selectExampleText">Beispieltexte</label>
+            <select
+              [(ngModel)]="nrSelect"
+              class="form-control form-control-sm"
+              id="selectExampleText"
+              (change)="onSelectChange($event.target.value)"
+            >
+              <option value="" selected disabled>choose an example</option>
+              <option>Aristocats is so great because I love cats!</option>
+              <option>This is a film which should be seen by anybody interested in.</option>
+              <option>I can not form an opinion.</option>
+              <option>
+                I don't want you to waste your time when you could see something else.
+              </option>
+              <option>This is one of my three all-time favorite movies.</option>
+              <option>This film is profoundly disturbing.</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <textarea
+              class="form-control form-control-sm"
+              name="textArea"
+              [(ngModel)]="textAreaText"
+              [ngModelOptions]="{ standalone: true }"
+              rows="5"
+              placeholder="min. 5 characters"
+              maxlength="255"
+            ></textarea>
+          </div>
+          <button
+            class="btn btn-outline-primary btn-sm float-left"
+            type="button"
+            [disabled]="textAreaText.length < 5 || isCalculating"
+            (click)="startPrediction()"
+          >
+            Auswerten
+          </button>
+
+          <button class="btn btn-link btn-sm float-right" type="button" (click)="deleteBox()">
+            Text löschen
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-5">&nbsp;</div>
+  </div>
+
+  <!-- Nav -->
+  <div class="row mt-5 mb-2">
+    <div class="col-sm fs-nav-explain">
+      <nav ngbNav #nav="ngbNav" class="nav-tabs">
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Auswertung</a>
+          <ng-template ngbNavContent>
+            <div class="sentiment-box">
+              <div class="float-left">{{ sentimentText }}</div>
+              <div
+                class="float-right emoji"
+                [ngClass]="{
+                  vnegative: emojiIndex == 0,
+                  negative: emojiIndex == 1,
+                  neutral: emojiIndex == 2,
+                  positive: emojiIndex == 3,
+                  vpositive: emojiIndex == 4
+                }"
+              >
+                {{ sentimentNumber }}
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+
+        <ng-container ngbNavItem>
+          <a ngbNavLink>LSTM</a>
+          <ng-template ngbNavContent>
+            <p>
+              Was für Menschen recht einfach ist, ist für ein neuronales Netzerk nicht so trivial:
+              Nämlich zu verstehen, dass Wörter in einem Satz miteinander in Beziehung stehen und
+              die Reihenfolge wichtig ist. Deshalb wird hier auf das Konzept eines sogenannten LSTM
+              (kurz für Long Short-Term Memory) zurückgegriffen, weil sie sich (einfach ausgedrückt)
+              Zustände merken können, um Informationen zu verwerfen oder weiterzugeben. <br />
+            </p>
+            <ul>
+              <li>
+                Sepp Hochreiter, Jürgen Schmidhuber (1997): Long short-term memory In: Neural
+                Computation (journal), vol. 9, issue 8, S. 1735–1780, Online:
+                <a
+                  href="https://www.researchgate.net/publication/13853244_Long_Short-term_Memory"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                  Veröffentlichung researchgate.net</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+              <li>
+                LSTMs ausführlich erklärt: Christopher Olah (2015), Understanding LSTM Networks,
+                article, Online:
+                <a
+                  href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                  >colah.github.io</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+            </ul>
+          </ng-template>
+        </ng-container>
+
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Daten</a>
+          <ng-template ngbNavContent>
+            <p>
+              Grundlage dieses Modells sind vorverarbeitete Daten von Maas, A., et al.(2011) aus der
+              Internet Movie Database. Sie besteht aus 25000 Filmrezensionen, die jeweils als
+              positiv oder negativ gekennzeichnet wurden.
+            </p>
+
+            <ul>
+              <li>
+                Tensorflow Dataset-Katalog: IMDB movie database Reviews. Online:
+                <a
+                  href="https://www.tensorflow.org/datasets/catalog/imdb_reviews?hl=en"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                  Tensorflow Documentation</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+              <li>
+                Maas, A., et al.(2011). Learning Word Vectors for Sentiment Analysis, Proceedings of
+                the 49th Annual Meeting of the Association for Computational Linguistics: Human
+                Language Technologies, 142--150, Online:
+                <a
+                  href=" https://aclanthology.org/P11-1015/"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                  >ACL Anthology</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+
+              <li>
+                Internet Movie Database
+                <a
+                  href="https://www.imdb.com"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                  IMDB</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+              <li>
+                KI-Modell und Anwendung entstand mithilfe von 
+                <a
+                  href="https://www.tensorflow.org/overview?hl=en"
+                  class="text-reset primary fs-extern-link"
+                  target="_blank"
+                >
+                Tensorflow/Keras und Tensorflow.js.</a
+                >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </li>
+            </ul>
+          </ng-template>
+        </ng-container>
+
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Kurse</a>
+          <ng-template ngbNavContent>
+            <fs-ki-course-list (linkWasClicked)="onCloseModalWindow()"></fs-ki-course-list>
+          </ng-template>
+        </ng-container>
+      </nav>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+  <hr />
+</div>

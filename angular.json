@@ -18,7 +18,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "hammerjs"
+              "hammerjs",
+              "seedrandom"
             ],
             "outputPath": "dist/futureskills-client",
             "resourcesOutputPath": "ressources",

@@ -1,5 +1,59 @@
 # Changelog
 
+## [Released v0.5]
+
+## 2021-08-23/dk
+### changed
+- Replaced hardcoded link on teacher info page
+
+## 2021-08-18/avz
+### changed
+- Tensorflow is npm-Bib now
+
+## 2021-08-18/avz
+### changed
+- Imprint (images) -> added more sources 
+
+## 2021-08-17/ml
+### changed
+- KI-Block moved to landingpage
+- Imprint (images) and 2020->2021 
+
+## 2021-08-11/ml
+### changed
+- UserData contains user_role now
+
+## 2021-07-27/ml
+### added
+- new sentiment-example site
+- new example-list site
+- preview flag (no login necessary)
+
+## 2021-06-09/ml
+### added
+- MNIST: Touch and MouseEvents are handled in new Directive
+
+## 2021-06-08/ml
+### Changed
+- MNIST Text is not selectable anymore
+- CANVAS Default Size is 250px (works always), Cursor is crosshair now
+
+## 2021-06-07/ml
+- MNIST-window has 98% size of parent
+- components are responsive now
+
+## 2021-06-06/ml
+- MNIST: probabilities are shown and recognized
+- different texts
+
+## 2021-06-10/ml
+### added
+- new static vars for KI
+- new environment var for model path
+- Default Model-Files in assets
+- new Drawable Canvas Component
+- Prediction for number
+
 ## [Released] v0.4
 
 ## 2021-06-28/ml

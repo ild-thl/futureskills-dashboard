@@ -1,0 +1,16 @@
+<div class="card" [ngClass]='getType()'>
+  <a
+    class="card-block stretched-link text-decoration-none"
+    [href]="cardTextData.url"
+    target="_blank"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{ cardTextData.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ cardTextData?.subtitle }}</h6>
+      <p class="card-text">{{ cardTextData.text }}</p>
+      <footer class="blockquote-footer text-right">
+        <small class="text-muted">{{ cardTextData.urlText }}</small>
+      </footer>
+    </div>
+  </a>
+</div>

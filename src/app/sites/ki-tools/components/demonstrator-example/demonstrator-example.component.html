@@ -1,0 +1,20 @@
+
+<div class="ki-example-list" [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }">
+  <h6>Demos und Apps</h6>
+    <div class="card-columns">
+     <app-example-card *ngFor="let demoText of demoList" [cardTextData]="demoText">
+     </app-example-card>
+   </div>
+   <div class="mt-3"></div>
+
+   <h6>Projekt- und Community-Seiten</h6>
+   <div class="card-columns">
+    <app-example-card *ngFor="let projectText of projectList" [cardTextData]="projectText">
+    </app-example-card>
+  </div>
+  <hr>
+  <div class="text-muted text-right" style="font-size: smaller;">
+    Diese Sammlung ist eine zufällige Auswahl und hat nicht den Anspruch vollständig zu sein. 
+    Täglich kommen neue Seiten und Projekte hinzu, andere fallen weg. Manche Inhalte könnten kostenpflichtig sein oder werden. Wir übernehmmen keine Verantwortung für die Inhalte der externen Seiten, prüfen aber regelmäßig ob sie noch aktuell sind. 
+  </div>
+</div> 

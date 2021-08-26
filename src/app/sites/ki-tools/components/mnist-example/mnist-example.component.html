@@ -1,0 +1,198 @@
+<div
+  class="mnist-example ki-playground"
+  [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }"
+>
+  <div class="row">
+    <div class="col-10 mb-4">
+      Die Erkennung handgeschriebener Ziffern mithilfe des MNIST-Datensatzes ist eines der
+      bekanntesten und häufigsten Beispiele um zu zeigen wie ein neuronales Netz trainiert werden
+      kann.
+    </div>
+  </div>
+
+  <!--alert list -->
+  <p class="mt-3 mb-3" *ngFor="let alert of alertList.alerts">
+    <ngb-alert [type]="alert.type" (closed)="alertList.closeAlert(alert)">{{
+      alert.message
+    }}</ngb-alert>
+  </p>
+
+  <!--wait until loaded-->
+  <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
+    <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
+  </div>
+  <div
+    [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }"
+  >
+    <!-- Bubble < xs-->
+    <div class="row d-block d-sm-none">
+      <div class="col col-md-4">
+        <div *ngIf="prediction_available; else emptyBubble_small" class="bubble user-select-none">
+          {{ textPrediction }} {{ predicted }}
+        </div>
+        <ng-template #emptyBubble_small>
+          <div class="bubble user-select-none">Schreibe eine Ziffer (0-9) in das Feld.</div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Canvas and Bubble > xs-->
+    <div class="row">
+      <div class="col">
+        <fs-drawable-canvas
+          (newImage)="predict($event)"
+          (canvasResized)="onCanvasResized($event)"
+        ></fs-drawable-canvas>
+      </div>
+      <div class="col vertical-align d-none d-sm-block">
+        <div class="row">
+          <div
+            *ngIf="prediction_available; else emptyBubble"
+            class="bubble thought user-select-none"
+          >
+            {{ textPrediction }} {{ predicted }}
+          </div>
+          <ng-template #emptyBubble>
+            <div class="bubble thought user-select-none">
+              Schreibe eine Ziffer (0-9) in das Feld.
+            </div>
+          </ng-template>
+        </div>
+        <div class="row">
+          <img class="align-baseline user-select-none" src="assets/images/nadia-persona-lg.png" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="row">
+      <div class="col col-md-4">
+        <button class="btn btn-outline-primary btn-sm float-left" (click)="onClearButtonClicked()">
+          Löschen
+        </button>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="row mt-5 mb-2">
+      <div class="col-sm fs-nav-explain">
+        <nav ngbNav #nav="ngbNav" class="nav-tabs">
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Auswertung</a>
+            <ng-template ngbNavContent>
+              <div class="table-responsive-sm">
+                <table class="table table-sm">
+                  <tr>
+                    <th>Ziffer</th>
+                    <th *ngFor="let item of predictionIndex; let i = index">{{ item }}</th>
+                  </tr>
+                  <tr>
+                    <td><div class="scaled-mini-canvas" #tableCanvas>&nbsp;</div></td>
+                    <td *ngFor="let item of predictions; let i = index">{{ predictions[i] }}</td>
+                  </tr>
+                </table>
+              </div>
+            </ng-template>
+          </ng-container>
+
+          <ng-container ngbNavItem>
+            <a ngbNavLink>CNN</a>
+            <ng-template ngbNavContent>
+              <p>
+                CNN steht für <em>Convolutional Neural Network</em> und bezeichnet ein Konzept im
+                Machine Learning. Vorbild für neuronale Netze sind die biologischen Neuronen in
+                Lebewesen. Vereinfacht kann man sagen, dass Neuronen Informationen empfangen,
+                sammeln und ab einem bestimmten Schwellenwert übertragen. Diesem Prinzip folgen
+                künstliche Neuronen. Sie bestehen aus verschiedenen Schichten, die in kleinen
+                Schritten das Problem lösen sollen.
+              </p>
+              <ul>
+                <li>
+                  Ein Einblick in die Arbeitsweise neuronaler Netzwerke:
+                  <a
+                    class="text-reset primary fs-extern-link"
+                    target="_blank"
+                    href="https://playground.tensorflow.org"
+                    >TensorFlow Playground</a
+                  >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+                </li>
+                <li>
+                  CNNs ausführlich erklärt: Christopher Olah (2014), Conv Nets: A Modular
+                  Perspective
+                  <a
+                    class="text-reset primary fs-extern-link"
+                    target="_blank"
+                    href="http://colah.github.io/posts/2014-07-Conv-Nets-Modular/"
+                    >colah.github.io</a
+                  >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+                </li>
+              </ul>
+            </ng-template>
+          </ng-container>
+
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Daten</a>
+            <ng-template ngbNavContent>
+              <div class="media">
+                <img
+                  class="mr-3"
+                  style="width: 150px"
+                  src="assets/images/ki-tools/mnist-numbers.png"
+                  alt="MNIST Zahlen"
+                />
+                <div class="media-body">
+                  Die handgeschriebenen Ziffern für dieses Beispiel stammen aus der MNIST-Datenbank
+                  (Modified National Institute of Standards and Technology database). Sie enthält
+                  60000 Trainingsbilder, sowie weitere 10000 Bilder zum Testen des Modells. Eine
+                  MNIST Ziffer ist 28x28 Pixel groß und hat 8Bit (Graustufen).
+
+                  <ul>
+                    <li>
+                      Tensorflow Dataset-Katalog:
+                      <a
+                        href="https://www.tensorflow.org/datasets/catalog/mnist"
+                        class="text-reset primary fs-extern-link"
+                        target="_blank"
+                      >
+                        Tensorflow Documentation</a
+                      >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+                    </li>
+                    <li>
+                      MNIST-Datensatz von
+                      <a
+                        href="http://yann.lecun.com/exdb/mnist/"
+                        class="text-reset primary fs-extern-link"
+                        target="_blank"
+                      >
+                        Yann Lecun:</a
+                      >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+                    </li>
+                    <li>
+                      KI-Modell und Anwendung entstand mithilfe von 
+                      <a
+                        href="https://www.tensorflow.org/overview?hl=en"
+                        class="text-reset primary fs-extern-link"
+                        target="_blank"
+                      >
+                      Tensorflow/Keras und Tensorflow.js.</a
+                      >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+
+          <ng-container ngbNavItem>
+            <a ngbNavLink>Kurse</a>
+            <ng-template ngbNavContent>
+              <fs-ki-course-list (linkWasClicked)="onCloseModalWindow()"></fs-ki-course-list>
+            </ng-template>
+          </ng-container>
+        </nav>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>

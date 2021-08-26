@@ -1,0 +1,142 @@
+@import 'breakpoints';
+@import '../../styles/shared.scss';
+
+.mnist-example {
+  $bubbleBorderColor: var(--color-primary-blue);
+  $bubbleBorder: 2px;
+  $bubbleBorderRadius: 5px;
+  $bubbleSmallPosition: 140px;
+
+  .blur-on-load {
+    filter: blur(3px);
+    cursor: wait;
+  }
+
+  .bubble {
+    position: relative;
+    text-align: center;
+    line-height: 1.2em;
+    margin: 5px auto;
+    background-color: #fff;
+    border: $bubbleBorder solid $bubbleBorderColor;
+    border-radius: 30px;
+    font-family: sans-serif;
+    padding: 30px;
+    font-size: large;
+    width: 300px;
+    border-radius: $bubbleBorderRadius;
+  }
+
+  &.modus_modal {
+
+    margin-top: 20px;
+
+    // modales Fenster
+    .bubble {
+    
+      @media (max-width: $sm) {
+        margin: 0px;
+        margin-bottom: 5px;
+        max-width: 200px;
+        padding: 20px;
+      }
+      @media (max-width: $xs) {
+        width: 250px;
+        max-width: 250px;
+        padding: 10px;
+      }
+    }
+  }
+  &.modus_window {
+    // normales Fenster
+    .bubble {
+   
+      @media (max-width: $sm) {
+        margin: 0px;
+        margin-bottom: 5px;
+        max-width: 250px;
+        padding: 20px;
+      }
+      @media (max-width: $xs) {
+        width: 250px;
+        max-width: 250px;
+        padding: 10px;
+      }
+    }
+  }
+
+  .thought:before,
+  .thought:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: $bubbleSmallPosition;
+    bottom: -30px;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: $bubbleBorder solid $bubbleBorderColor;
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+    border-radius: 28px;
+    @media (max-width: $sm) {
+      left: $bubbleSmallPosition - 10px;
+    }
+  }
+
+  .thought:after {
+    width: 20px;
+    height: 20px;
+    left: $bubbleSmallPosition - 5px;
+    bottom: -40px;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
+    @media (max-width: $sm) {
+      left: $bubbleSmallPosition - 15px;
+    }
+  }
+
+  .scaled-mini-canvas {
+    canvas {
+      width: 28px;
+      height: 28px;
+      border: 1px solid $bubbleBorderColor;
+    }
+  }
+
+  .vertical-align {
+    min-height: 50px;
+    position: relative;
+  }
+
+  .vertical-align img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 5px;
+  }
+
+  img {
+    @media (min-width: $lg) {
+      max-width: 300px;
+      max-height: 300px;
+    }
+    @media (max-width: $lg) {
+      max-width: 300px;
+      max-height: 300px;
+    }
+    @media (max-width: $md) {
+      max-width: 250px;
+      max-height: 250px;
+    }
+    @media (max-width: $sm) {
+      max-width: 200px;
+      max-height: 200px;
+    }
+  }
+}

@@ -9,6 +9,14 @@ export const CustomConfig = {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     },
   },
+  kiConfig: {
+    online: true,
+    mnistPath: 'mnistnumber',
+    sentimentPath: {
+      en: 'sentiment/en',
+      de: 'sentiment/de'
+    },
+  },
   paths: {
     lnkLanding: '/',
     lnkOffers: '/kurse',
@@ -20,10 +28,17 @@ export const CustomConfig = {
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
+    lnkKITools_mnist: '/ki-playground/mnist',
+    lnkKITools_sentiment: '/ki-playground/sentiment',
+    linkKITools_demonstrators: '/ki-playground/examples'
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
     lnkAfterLogout: '/',
     lnkTrailerAboutUs: '/info-lehrende'
   },
+  courseNumbers: {
+    FS_SuperKI: '/615',
+    FS_NeuronaleNetze: '/602'
+  }
 };

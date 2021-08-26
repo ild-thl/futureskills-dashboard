@@ -18,4 +18,20 @@ export class StaticService {
   getRoutingInfo(): any {
     return CustomConfig.routingInfo;
   }
+  getKIConfig(): any {
+    return CustomConfig.kiConfig;
+  }
+  getKIModelPathMNIST(): any {
+    return CustomConfig.kiConfig.mnistPath;
+  }
+  getKIModelPathSentiment(lang: string = 'en'): any {
+    if (lang=='de') {
+      return CustomConfig.kiConfig.sentimentPath.de;
+    } else{
+      return CustomConfig.kiConfig.sentimentPath.en;
+    }
+  }
+  getCourseNumbers(): any {
+    return CustomConfig.courseNumbers;
+  }
 }

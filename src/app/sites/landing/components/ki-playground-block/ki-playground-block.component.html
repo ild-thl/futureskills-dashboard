@@ -1,0 +1,36 @@
+<section class="ki-block py-md-5 pt-4 pb-5">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-12 col-md-6 order-md-1 order-2 gc-bg-image"></div>
+      <div class="col-12 col-md-6 order-1 order-md-2 order-1 text-bg">
+        <h3>FutureSkills und KI</h3>
+        <p>
+          Künstliche Intelligenz wird unsere zukünftige Welt beeinflussen und in jeden Bereich der
+          Arbeitswelt Einzug halten. Dabei ist der Begriff Künstliche Intelligenz irreführend und
+          geht einher mit Mythen von intelligenten Maschinen, die uns ersetzen oder gar die Überhand
+          gewinnen. Deshalb ist es wichtig zu verstehen, was Künstliche Intelligenz ist, in welchen
+          Bereichen sie bereits eingesetzt wird und wie sie uns zukünftig unterstützen kann. Die
+          FutureSkills-Plattform schenkt dem Thema besondere Beachtung und bietet spezielle Kurse
+          an, um Zusammenhänge zu erklären und dir Begriffe wie DataScience, Machine Learning und
+          DeepLearning näher zu bringen. Einen kleinen Vorgeschmack gibt es hier auf der KI-Spielwiese.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-right mt-4">
+        <fs-round-easy-button *ngIf="!isNavigating; else btnWaiting"  (click)="goToKIPage()"
+          >Zum Playground</fs-round-easy-button
+        >
+        <ng-template #btnWaiting>
+          <fs-round-easy-button [disabled]="true">Lade Playground...</fs-round-easy-button
+        >
+        </ng-template>
+      </div>
+    </div>
+    <!-- end of .row -->
+  </div>
+  <!-- end of .container -->
+</section>

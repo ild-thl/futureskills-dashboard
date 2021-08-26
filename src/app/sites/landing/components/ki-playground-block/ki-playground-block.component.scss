@@ -1,0 +1,44 @@
+@import 'breakpoints';
+.ki-block {
+  background-color: black;
+  position: relative;
+  color: #ffffff;
+
+  .gc-bg-image {
+    background-image: url(~src/styles/ressources/backgrounds/robot_web_1920x1080.jpg);
+  }
+
+  .text-bg {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .gc-bg-image {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+
+  @media (min-width: $sm) {
+    .text-bg {
+      padding: 15px;
+      background-color: transparent;
+    }
+
+    .gc-bg-image {
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 50%;
+      left: 0;
+    }
+  }
+}
