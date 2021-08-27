@@ -1,11 +1,13 @@
 
 <div class="ki-example-list" [ngClass]="{ modus_window: modus === 'window', modus_modal: modus === 'modal' }">
-  <h6>Demos und Apps</h6>
-    <div class="card-columns">
+  <div *ngIf="demoList.length>0">
+  <h6>Demos und Apps ({{demoList.length}})</h6>
+    <div class="card-columns" >
      <app-example-card *ngFor="let demoText of demoList" [cardTextData]="demoText">
      </app-example-card>
    </div>
    <div class="mt-3"></div>
+  </div>
 
    <h6>Projekt- und Community-Seiten</h6>
    <div class="card-columns">

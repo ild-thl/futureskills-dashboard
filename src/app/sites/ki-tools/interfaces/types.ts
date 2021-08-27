@@ -28,9 +28,14 @@ export namespace KIToolsTypes {
     text: string;
     url: string;
     urlText: string;
-    style: LinkCardStyle;
-    type?: LinkCardType;
+    style: LinkCardStyle | string;
+    type?: LinkCardType | string;
   };
+
+  export type LinkListJSONData= {
+    demoCards: any,
+    projectCards: any
+  }
 }
 
 export interface IShowAlerts {

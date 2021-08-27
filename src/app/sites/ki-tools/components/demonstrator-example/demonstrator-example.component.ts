@@ -11,6 +11,8 @@ import { DemonstratorExamples } from './data/example-data';
 })
 export class DemonstratorExampleComponent implements OnInit {
   @Input() public modus = 'window';
+  errorOccurred = false;
+  errorText = '';
 
   constructor(private kiStatusService: KiStatusService) {}
   demoList: KIToolsTypes.LinkCardData[] = [];
@@ -21,10 +23,23 @@ export class DemonstratorExampleComponent implements OnInit {
   }
 
   initText() {
-    const list = this.kiStatusService.loadLinkList();
-    this.demoList = list.demoList;
-    this.projectList = list.projectList;
-    KIToolsHelper.shuffleArray(this.demoList);
-    KIToolsHelper.shuffleArray(this.projectList);
+    console.log("INIT");
+    this.kiStatusService.loadLinkList().subscribe((list) => {
+      this.demoList = list.demoCards;
+      this.projectList = list.projectCards;
+
+      console.log("DemoList: ", this.demoList);
+      console.log("ProjectList: ", this.projectList);
+
+      KIToolsHelper.shuffleArray(this.demoList);
+      KIToolsHelper.shuffleArray(this.projectList);
+      this.errorOccurred = false;
+ 
+    }, error=>{
+      this.errorOccurred = true;
+      console.log("DemoError: ", error);
+    }, ()=>{
+      console.log("Completed: ");
+    });
   }
 }
