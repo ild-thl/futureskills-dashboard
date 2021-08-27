@@ -2,7 +2,6 @@ import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.servi
 import { KIToolsHelper } from './../../services/helper/helper';
 import { Component, Input, OnInit } from '@angular/core';
 import { KIToolsTypes } from '../../interfaces/types';
-import { DemonstratorExamples } from './data/example-data';
 
 @Component({
   selector: 'fs-demonstrator-example',
@@ -23,23 +22,21 @@ export class DemonstratorExampleComponent implements OnInit {
   }
 
   initText() {
-    console.log("INIT");
+ 
     this.kiStatusService.loadLinkList().subscribe((list) => {
+      console.log("Lists: ", list);
       this.demoList = list.demoCards;
       this.projectList = list.projectCards;
 
-      console.log("DemoList: ", this.demoList);
-      console.log("ProjectList: ", this.projectList);
-
-      KIToolsHelper.shuffleArray(this.demoList);
-      KIToolsHelper.shuffleArray(this.projectList);
+      //KIToolsHelper.shuffleArray(this.demoList);
+      //KIToolsHelper.shuffleArray(this.projectList);
       this.errorOccurred = false;
  
     }, error=>{
       this.errorOccurred = true;
       console.log("DemoError: ", error);
     }, ()=>{
-      console.log("Completed: ");
+      // console.log("Completed: ");
     });
   }
 }

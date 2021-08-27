@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { KIToolsTypes } from '../interfaces/types';
 
 import * as tf from '@tensorflow/tfjs';
-import { DemonstratorExamples } from '../components/demonstrator-example/data/example-data';
 import { map } from 'rxjs/operators';
+import { DemonstratorExamples } from '../components/demonstrator-example/data/example-data';
 
 @Injectable()
 export class KiStatusService {
@@ -59,23 +59,47 @@ export class KiStatusService {
     return this.httpClient.get(kiToolsSentimentIndexPath_en);
   }
 
-  public loadLinkList(): Observable<{demoCards: KIToolsTypes.LinkCardData[], projectCards: KIToolsTypes.LinkCardData[]}>
-  {
+  public loadLinkList(server:boolean = true): Observable<{
+    demoCards: KIToolsTypes.LinkCardData[];
+    projectCards: KIToolsTypes.LinkCardData[];
+  }> {
+
+    if (server){
+      return this.loadJSONLinkList();
+    } else {
+     return this.loadLinkListFromFile();
+    }
+  }
+
+  public loadJSONLinkList(): Observable<{
+    demoCards: KIToolsTypes.LinkCardData[];
+    projectCards: KIToolsTypes.LinkCardData[];
+  }> {
     return new Observable((observer$) => {
       if (!this.LinkList$) {
         console.log('Load Link List');
         this.LinkList$ = new AsyncSubject();
         const list = this.getLinkListJSONFile().pipe(
-          map(items=>{
+          map((items) => {
             const demoCards = this.mapJSONLinkListCardToLinkList(items.demoCards);
             const projectCards = this.mapJSONLinkListCardToLinkList(items.projectCards);
-            return {demoCards, projectCards};
+            return { demoCards, projectCards };
           })
-        )
+        );
         list.subscribe(this.LinkList$);
       }
       return this.LinkList$.subscribe(observer$);
     });
+  }
+
+  private loadLinkListFromFile(): Observable<{
+    demoCards: KIToolsTypes.LinkCardData[];
+    projectCards: KIToolsTypes.LinkCardData[];
+  }> {
+     const demoCards = DemonstratorExamples.exampleText;
+     const projectCards = DemonstratorExamples.projectText;
+     const retValue = {demoCards, projectCards};
+     return of (retValue);
   }
 
   private getLinkListJSONFile(): Observable<KIToolsTypes.LinkListJSONData> {
@@ -83,9 +107,9 @@ export class KiStatusService {
       environment.dataURL + this.staticService.getKIDemoLinkPath() + '/linklist.json';
     return this.httpClient.get<KIToolsTypes.LinkListJSONData>(kiToolsDemoPath);
   }
-  
+
   private mapJSONLinkListCardToLinkList(linkList: any[]): KIToolsTypes.LinkCardData[] {
-    const list =  linkList.map ((item) => {
+    const list = linkList.map((item) => {
       return {
         title: item.title,
         subtitle: item.subtitle,
@@ -94,9 +118,8 @@ export class KiStatusService {
         urlText: item.urlText,
         style: this.getLinkCardStyle(item.style),
         type: this.getLinkCardtype(item.type),
-      }
-    })
-    console.log("LIST ", list);
+      };
+    });
     return list;
   }
 
