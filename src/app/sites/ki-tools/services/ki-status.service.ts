@@ -2,11 +2,13 @@ import { Injectable, Renderer2 } from '@angular/core';
 import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
-import { AsyncSubject, Observable, from, throwError } from 'rxjs';
+import { AsyncSubject, Observable, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { KIToolsTypes } from '../interfaces/types';
 
 //declare var tf: any;
 import * as tf from '@tensorflow/tfjs';
+import { DemonstratorExamples } from '../components/demonstrator-example/data/example-data';
 
 @Injectable()
 export class KiStatusService {
@@ -18,22 +20,6 @@ export class KiStatusService {
     private staticService: StaticService,
     private httpClient: HttpClient
   ) {}
-
-  /**
-   * @deprecated Tensorflow wird per npm geladen
-   * @param renderer
-   * @returns 
-   */
-  public loadKIScript(renderer: Renderer2): Observable<any> {
-    return new Observable((observer$) => {
-      if (!this.scriptLoading$) {
-        console.log('Dont Load Tensorflow');
-        this.scriptLoading$ = new AsyncSubject();
-        //  this.scriptLoader.load(renderer, ['tensorflow']).subscribe(this.scriptLoading$);
-      }
-      return this.scriptLoading$.subscribe(observer$);
-    });
-  }
 
   public loadMNISTModel() {
     const kiToolsMnistModelPath =
@@ -69,6 +55,31 @@ export class KiStatusService {
       this.staticService.getKIModelPathSentiment(lang) +
       '/imdb_word_index.json';
     return this.httpClient.get(kiToolsSentimentIndexPath_en);
+  }
+
+  public loadLinkList(){
+    const demoList: KIToolsTypes.LinkCardData[] = DemonstratorExamples.exampleText;
+    const projectList: KIToolsTypes.LinkCardData[] = DemonstratorExamples.projectText;
+    return {
+      demoList,
+      projectList,
+    };
+  }
+
+  /**
+   * @deprecated Tensorflow wird per npm geladen
+   * @param renderer
+   * @returns
+   */
+  public loadKIScript(renderer: Renderer2): Observable<any> {
+    return new Observable((observer$) => {
+      if (!this.scriptLoading$) {
+        console.log('Dont Load Tensorflow');
+        this.scriptLoading$ = new AsyncSubject();
+        //  this.scriptLoader.load(renderer, ['tensorflow']).subscribe(this.scriptLoading$);
+      }
+      return this.scriptLoading$.subscribe(observer$);
+    });
   }
 
   // public alt_loadMNISTModel() {
