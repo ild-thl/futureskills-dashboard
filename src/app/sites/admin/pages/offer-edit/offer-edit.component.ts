@@ -259,12 +259,19 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   private setPropertyOutput(propertyMap: Map<string, OfferPropertyList>) {
     this.propCompetences = propertyMap.get('competences').list.map((item) => {
       // Spezialfall Kompetenzen: Den identifier statt der description nehmen und groß schreiben
-      item.description = this.capitalizeFirstLetter(item.identifier);
-      return item;
+      const newItem = this.cloneItem(item);
+      newItem.description = this.capitalizeFirstLetter(newItem.identifier);
+      return newItem;
     });
-    this.propInstitutions = propertyMap.get('institutions').list;
-    this.propFormats = propertyMap.get('formats').list;
-    this.propLanguages = propertyMap.get('languages').list;
+    this.propInstitutions = propertyMap.get('institutions').list.map((item) => {
+      return this.cloneItem(item);
+    });
+    this.propFormats = propertyMap.get('formats').list.map((item) => {
+      return this.cloneItem(item);
+    });
+    this.propLanguages = propertyMap.get('languages').list.map((item) => {
+      return this.cloneItem(item);
+    });
 
     //console.log('Institutions: ', this.propInstitutions);
     //console.log('Competences: ', this.propCompetences);
@@ -274,6 +281,14 @@ export class OfferEditComponent implements OnInit, OnDestroy {
 
   private capitalizeFirstLetter(text: string) {
     return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  private cloneItem(item: PropertyItem) {
+    return {
+      id: item.id,
+      identifier: item.identifier,
+      description: item.description,
+    };
   }
 
   // Alert Functions
