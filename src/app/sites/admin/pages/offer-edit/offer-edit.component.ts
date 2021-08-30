@@ -240,7 +240,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   }
 
   private loadPropertyMetaData() {
-    this.metaDataService.getFilterTags().subscribe(
+    this.metaDataService.getOfferProperties().subscribe(
       (filterMap: Map<string, OfferPropertyList>) => {
         this.setPropertyOutput(filterMap);
         this.propertiesLoaded = true;
