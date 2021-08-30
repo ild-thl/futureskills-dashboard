@@ -6,7 +6,9 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer, OfferMeta } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
-import { AngularEditorModule, AngularEditorConfig } from '@kolkov/angular-editor';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
+import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 
 interface Alert {
   type: string;
@@ -25,6 +27,14 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   public offer: Offer = new Offer(null);
   private onOfferChange: Subscription;
 
+  // PropertyMetaData
+  propertiesLoaded = false;
+  // PropertyItem (id, identifier, description)
+  propInstitutions: PropertyItem[];
+  propLanguages: PropertyItem[];
+  propCompetences: PropertyItem[];
+  propFormats: PropertyItem[];
+
   public isLoading = true;
   public createNewOffer = false;
   public isCollapsed = true;
@@ -39,6 +49,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private offerDataService: OfferDataService,
+    private metaDataService: MetaDataService,
     private route: ActivatedRoute,
     private staticConfig: StaticService
   ) {}
@@ -67,6 +78,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const offerId = +this.route.snapshot.params.id;
+
+    this.loadPropertyMetaData();
 
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
@@ -224,6 +237,43 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     tmpMetas.sponsor = formData.sponsor;
     tmpMetas.time_requirement = formData.time_requirement;
     return tmpMetas;
+  }
+
+  private loadPropertyMetaData() {
+    this.metaDataService.getFilterTags().subscribe(
+      (filterMap: Map<string, OfferPropertyList>) => {
+        this.setPropertyOutput(filterMap);
+        this.propertiesLoaded = true;
+      },
+      (error) => {
+        this.propCompetences = [];
+        this.propInstitutions = [];
+        this.propFormats = [];
+        this.propLanguages = [];
+        this.propertiesLoaded = false;
+        console.log('Error-Filterdaten: ', error);
+      }
+    );
+  }
+
+  private setPropertyOutput(propertyMap: Map<string, OfferPropertyList>) {
+    this.propCompetences = propertyMap.get('competences').list.map((item) => {
+      // Spezialfall Kompetenzen: Den identifier statt der description nehmen und groß schreiben
+      item.description = this.capitalizeFirstLetter(item.identifier);
+      return item;
+    });
+    this.propInstitutions = propertyMap.get('institutions').list;
+    this.propFormats = propertyMap.get('formats').list;
+    this.propLanguages = propertyMap.get('languages').list;
+
+    //console.log('Institutions: ', this.propInstitutions);
+    //console.log('Competences: ', this.propCompetences);
+    //console.log('Formats: ', this.propFormats);
+    //console.log('Languages: ', this.propLanguages);
+  }
+
+  private capitalizeFirstLetter(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
   // Alert Functions
