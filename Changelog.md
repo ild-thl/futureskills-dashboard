@@ -7,6 +7,10 @@
 - IMDB-Word-Index is cached now
 - Standalone Sentiment Bug fixed
 
+## 2021-08-30/ml
+### added
+- In EditComponent PropertyLists added
+
 ## [Released v0.5]
 
 ## 2021-08-23/dk
