@@ -10,8 +10,8 @@ import { KIToolsTypes } from '../../interfaces/types';
 })
 export class DemonstratorExampleComponent implements OnInit {
   @Input() public modus = 'window';
+  isLoading = true;
   errorOccurred = false;
-  errorText = '';
 
   constructor(private kiStatusService: KiStatusService) {}
   demoList: KIToolsTypes.LinkCardData[] = [];
@@ -22,21 +22,21 @@ export class DemonstratorExampleComponent implements OnInit {
   }
 
   initText() {
- 
+    this.isLoading = true;
     this.kiStatusService.loadLinkList().subscribe((list) => {
       console.log("Lists: ", list);
       this.demoList = list.demoCards;
       this.projectList = list.projectCards;
 
-      //KIToolsHelper.shuffleArray(this.demoList);
-      //KIToolsHelper.shuffleArray(this.projectList);
+      KIToolsHelper.shuffleArray(this.demoList);
+      KIToolsHelper.shuffleArray(this.projectList);
       this.errorOccurred = false;
  
     }, error=>{
       this.errorOccurred = true;
       console.log("DemoError: ", error);
     }, ()=>{
-      // console.log("Completed: ");
+      this.isLoading = false;
     });
   }
 }

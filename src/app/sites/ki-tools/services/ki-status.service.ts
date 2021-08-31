@@ -19,7 +19,6 @@ export class KiStatusService {
   private WordIndex$: AsyncSubject<any>;
 
   constructor(
-    private scriptLoader: ScriptLoaderService,
     private staticService: StaticService,
     private httpClient: HttpClient
   ) {}
