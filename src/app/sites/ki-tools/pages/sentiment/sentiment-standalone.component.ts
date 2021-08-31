@@ -20,7 +20,7 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/p
         </div>
         <fs-sentiment-example
           [scriptLoadingStatus]="loadingStatus"
-          [modus]="'window'",
+          [modus]="'window'"
           (modalClose)="onModalClose()"
         ></fs-sentiment-example>
       </div>
