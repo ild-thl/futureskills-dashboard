@@ -13,6 +13,8 @@ export class KiStatusService {
   private scriptLoading$: AsyncSubject<any>;
   private MNISTModel$: AsyncSubject<any>;
   private SentimentModel$: AsyncSubject<any>;
+  private WordIndex$: AsyncSubject<any>;
+
   constructor(
     private scriptLoader: ScriptLoaderService,
     private staticService: StaticService,
@@ -68,7 +70,15 @@ export class KiStatusService {
       environment.modelURL +
       this.staticService.getKIModelPathSentiment(lang) +
       '/imdb_word_index.json';
-    return this.httpClient.get(kiToolsSentimentIndexPath_en);
+
+    return new Observable((observers$) => {
+      if (!this.WordIndex$) {
+        console.log('Load Word-Index');
+        this.WordIndex$ = new AsyncSubject();
+        this.httpClient.get(kiToolsSentimentIndexPath_en).subscribe(this.WordIndex$);
+      }
+      return this.WordIndex$.subscribe(observers$);
+    });
   }
 
   // public alt_loadMNISTModel() {

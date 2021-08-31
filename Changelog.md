@@ -2,6 +2,11 @@
 
 ## [UnReleased v0.6]
 
+## 2021-08-31/ml
+### changed
+- IMDB-Word-Index is cached now
+- Standalone Sentiment Bug fixed
+
 ## 2021-08-30/ml
 ### added
 - In EditComponent PropertyLists added
