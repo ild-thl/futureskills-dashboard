@@ -1,5 +1,12 @@
 # Changelog
 
+## [UnReleased v0.6]
+
+## 2021-08-31/ml
+### changed
+- IMDB-Word-Index is cached now
+- Standalone Sentiment Bug fixed
+
 ## [Released v0.5]
 
 ## 2021-08-23/dk
