@@ -13,8 +13,6 @@ import { NotfoundComponent } from 'src/app/sites/not-found/pages/notfound/notfou
 import { InfoStudentsComponent } from 'src/app/sites/info-students/pages/info-students/info-students.component';
 import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-teaching/info-teaching.component';
 import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
-import { OfferEditComponent } from 'src/app//sites/admin/pages/offer-edit/offer-edit.component';
-
 
 
 // Routing
@@ -33,16 +31,6 @@ const routes: Routes = [
     path: 'kurse/:id',
     component: OfferDetailComponent,
   },
-  {
-    path: 'admin/kurs/edit/:id',
-    component: OfferEditComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'admin/kurs/neu',
-    component: OfferEditComponent,
-    canActivate: [AuthGuard],
-  },
   { path: 'login', component: AuthComponent },
   {
     path: 'impressum',
@@ -59,6 +47,12 @@ const routes: Routes = [
   {
     path: 'info-studierende',
     component: InfoStudentsComponent,
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+    import('./sites/admin/admin.module').then((module)=> module.AdminModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'ki-playground',
