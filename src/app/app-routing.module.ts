@@ -33,16 +33,6 @@ const routes: Routes = [
     path: 'kurse/:id',
     component: OfferDetailComponent,
   },
-  {
-    path: 'admin/kurs/edit/:id',
-    component: OfferEditComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'admin/kurs/neu',
-    component: OfferEditComponent,
-    canActivate: [AuthGuard],
-  },
   { path: 'login', component: AuthComponent },
   {
     path: 'impressum',
@@ -59,6 +49,12 @@ const routes: Routes = [
   {
     path: 'info-studierende',
     component: InfoStudentsComponent,
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+    import('./sites/admin/admin.module').then((module)=> module.AdminModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'ki-playground',
