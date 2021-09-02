@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 // Interne Module
 import { LandingPageModule } from 'src/app/sites/landing/landing.module';
+
 // Shared
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -29,10 +30,8 @@ import { FilterComboGroupComponent } from 'src/app/sites/offers/components/filte
 import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
 import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
 
-// Admin
-import { OfferEditComponent } from 'src/app/sites/admin/pages/offer-edit/offer-edit.component';
-import { OfferRelationsSelectionComponent } from 'src/app/sites/admin/components/offer-relations-selection/offer-relations-selection.component';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+// Admin -> Lazy-Loaded-Modul
+// KI-Playground -> Lazy-Loaded-Modul
 
 // Sonst
 import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
@@ -62,9 +61,7 @@ import { HeaderComponent } from 'src/app/sites/app-root/components/header/header
     PrivacyComponent,
     NotfoundComponent,
     InfoStudentsComponent,
-    InfoTeachingComponent,
-    OfferEditComponent,
-    OfferRelationsSelectionComponent,
+    InfoTeachingComponent
   ],
   imports: [
     BrowserModule,
@@ -74,8 +71,7 @@ import { HeaderComponent } from 'src/app/sites/app-root/components/header/header
     FormsModule,
     ReactiveFormsModule,
     LandingPageModule,
-    SharedModule,
-    AngularEditorModule
+    SharedModule
   ],
   providers: [
     CookieService,
