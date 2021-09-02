@@ -1,3 +1,4 @@
+import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Injectable, Renderer2 } from '@angular/core';
 import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
 import { StaticService } from 'src/app/config/static.service';
@@ -18,13 +19,14 @@ export class KiStatusService {
   constructor(
     private scriptLoader: ScriptLoaderService,
     private staticService: StaticService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private offerDataService: OfferDataService
   ) {}
 
   /**
    * @deprecated Tensorflow wird per npm geladen
    * @param renderer
-   * @returns 
+   * @returns
    */
   public loadKIScript(renderer: Renderer2): Observable<any> {
     return new Observable((observer$) => {
@@ -79,6 +81,11 @@ export class KiStatusService {
       }
       return this.WordIndex$.subscribe(observers$);
     });
+  }
+
+  public getKIModules(): Observable<any>{
+    const keyword = this.staticService.getKeyWords().FS_SuperKI;
+    return this.offerDataService.getOffersForPlaygroundKIList(keyword);
   }
 
   // public alt_loadMNISTModel() {

@@ -34,4 +34,7 @@ export class StaticService {
   getCourseNumbers(): any {
     return CustomConfig.courseNumbers;
   }
+  getKeyWords(): any {
+    return CustomConfig.courseKeyWords;
+  }
 }

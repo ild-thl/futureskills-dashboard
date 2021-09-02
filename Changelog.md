@@ -2,6 +2,10 @@
 
 ## [UnReleased v0.6]
 
+## 2021-09-02/ml
+- New function for offer-data.service (Filter for Keywords)
+- Adminsites are lazy-loaded
+
 ## 2021-08-31/ml
 ### changed
 - IMDB-Word-Index is cached now

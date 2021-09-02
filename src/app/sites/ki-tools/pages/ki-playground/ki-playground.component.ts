@@ -1,4 +1,5 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
@@ -13,7 +14,7 @@ import { AlertList, KIToolsHelper } from 'src/app/sites/ki-tools/services/helper
   templateUrl: './ki-playground.component.html',
   styleUrls: ['./ki-playground.component.scss'],
 })
-export class KIPlaygroundComponent implements OnInit {
+export class KIPlaygroundComponent implements OnInit, OnDestroy {
   isLoadingScripts: boolean;
   // Framwork and Libs
   scriptsAreLoaded: boolean;
@@ -36,6 +37,8 @@ export class KIPlaygroundComponent implements OnInit {
   // Errtexts
   errTextFrameWorkLoading =
     'Die benötigten Daten konnten nicht geladen werden. Vielleicht bist du offline oder unsere Server sind nicht erreichbar.';
+
+  kiModuleSub: Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -60,7 +63,12 @@ export class KIPlaygroundComponent implements OnInit {
 
     if (this.kitoolsAreOnline) {
       this.loadKIPackages();
+      this.getKIModules();
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
   }
 
   loadKIPackages(packageLoad: boolean = false) {
@@ -182,5 +190,11 @@ export class KIPlaygroundComponent implements OnInit {
     } else {
       this.router.navigate([this.linkKITools_demonstrators]);
     }
+  }
+
+  getKIModules(){
+    this.kiModuleSub = this.kiStatusService.getKIModules().subscribe(offers=>{
+      console.log('Module mit KI_Keyword: ', offers);
+    });
   }
 }
