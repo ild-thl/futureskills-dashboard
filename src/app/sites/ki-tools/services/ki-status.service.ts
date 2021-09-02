@@ -1,5 +1,5 @@
+import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Injectable, Renderer2 } from '@angular/core';
-import { ScriptLoaderService } from 'src/app/core/services/script-loader/script-loader.service';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 import { AsyncSubject, Observable, from, of } from 'rxjs';
@@ -20,7 +20,8 @@ export class KiStatusService {
 
   constructor(
     private staticService: StaticService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private offerDataService: OfferDataService
   ) {}
 
   public loadMNISTModel() {
@@ -67,15 +68,16 @@ export class KiStatusService {
     });
   }
 
-  public loadLinkList(server:boolean = true): Observable<{
+  public loadLinkList(
+    server: boolean = true
+  ): Observable<{
     demoCards: KIToolsTypes.LinkCardData[];
     projectCards: KIToolsTypes.LinkCardData[];
   }> {
-
-    if (server){
+    if (server) {
       return this.loadJSONLinkList();
     } else {
-     return this.loadLinkListFromFile();
+      return this.loadLinkListFromFile();
     }
   }
 
@@ -104,10 +106,10 @@ export class KiStatusService {
     demoCards: KIToolsTypes.LinkCardData[];
     projectCards: KIToolsTypes.LinkCardData[];
   }> {
-     const demoCards = DemonstratorExamples.exampleText;
-     const projectCards = DemonstratorExamples.projectText;
-     const retValue = {demoCards, projectCards};
-     return of (retValue);
+    const demoCards = DemonstratorExamples.exampleText;
+    const projectCards = DemonstratorExamples.projectText;
+    const retValue = { demoCards, projectCards };
+    return of(retValue);
   }
 
   private getLinkListJSONFile(): Observable<KIToolsTypes.LinkListJSONData> {
@@ -177,6 +179,11 @@ export class KiStatusService {
       }
       return this.scriptLoading$.subscribe(observer$);
     });
+  }
+
+  public getKIModules(): Observable<any> {
+    const keyword = this.staticService.getKeyWords().FS_SuperKI;
+    return this.offerDataService.getOffersForPlaygroundKIList(keyword);
   }
 
   // public alt_loadMNISTModel() {

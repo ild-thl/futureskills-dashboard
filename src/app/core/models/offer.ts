@@ -27,6 +27,7 @@ export class Offer {
   public target_group: string;
   public url: string;
   public sort_flag: number;
+  public keywords: string;
   public competence_tech: boolean | number;
   public competence_digital: boolean | number;
   public competence_classic: boolean | number;
