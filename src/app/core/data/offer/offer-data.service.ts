@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { concatMap, filter, map } from 'rxjs/operators';
 
 import { UserDataErrorResponse, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
@@ -44,6 +44,11 @@ export class OfferDataService {
   public getOffersForCourseCarousel(): Observable<Offer[]> {
     // Aktuell alle
     return this.getAllOfferDataWithoutLoginCheck();
+  }
+
+  // Playground-KI-List
+  public getOffersForPlaygroundKIList(keyword: string | string[]): Observable<Offer[]> {
+    return this.getFilteredOffersWithKeyword(keyword);
   }
 
   // EditForm (für die Kurszuordnungen)
@@ -118,6 +123,33 @@ export class OfferDataService {
   // ///////////////////////////
   // Loading OfferList
   // ///////////////////////////
+
+  /**
+   * Laden der Kursliste gefiltered nach Keyword
+   * @param keyword
+   */
+  private getFilteredOffersWithKeyword(keyword: string | string[]): Observable<Offer[]> {
+    if (keyword == null || keyword.length == 0) return of([]);
+
+    return this.getAllOfferDataWithoutLoginCheck().pipe(
+      map((offerList) => {
+        return offerList.filter((item) => {
+          if (!item.keywords) {
+            return false;
+          } else {
+            const list = item.keywords.split(',').map((item) => {
+              return item.trim().toLowerCase();
+            });
+            if (Array.isArray(keyword)) {
+              return keyword.every((keyword) => list.includes(keyword));
+            } else {
+              return list.includes(keyword);
+            }
+          }
+        });
+      })
+    );
+  }
 
   /**
    * Laden der Kursliste (aus dem offer.store)
