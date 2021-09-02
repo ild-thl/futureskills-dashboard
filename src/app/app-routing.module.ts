@@ -13,8 +13,6 @@ import { NotfoundComponent } from 'src/app/sites/not-found/pages/notfound/notfou
 import { InfoStudentsComponent } from 'src/app/sites/info-students/pages/info-students/info-students.component';
 import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-teaching/info-teaching.component';
 import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
-import { OfferEditComponent } from 'src/app//sites/admin/pages/offer-edit/offer-edit.component';
-
 
 
 // Routing
