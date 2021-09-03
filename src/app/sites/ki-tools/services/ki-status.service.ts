@@ -84,8 +84,7 @@ export class KiStatusService {
   }
 
   public getKIModules(): Observable<any>{
-    const keyword = this.staticService.getKeyWords().FS_SuperKI;
-    return this.offerDataService.getOffersForPlaygroundKIList(keyword);
+    return this.offerDataService.getOffersForPlaygroundKIList("fs_superkikurs");
   }
 
   // public alt_loadMNISTModel() {

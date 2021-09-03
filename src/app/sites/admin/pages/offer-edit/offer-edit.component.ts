@@ -37,7 +37,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
 
   public isLoading = true;
   public createNewOffer = false;
-  public isCollapsed = true;
+  public isCollapsed = false;
   public isError = false;
   alerts: Alert[] = [];
 
@@ -174,8 +174,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.offerEditForm.get('competence_digital').setValue(this.offer.competence_digital);
         this.relatedOfferFormArray.reset(this.offer.relatedOffers);
 
-        //console.log('FormOfferData: ', this.offerEditForm.value);
-        //console.log('OfferData: ', this.offer);
+        console.log('FormOfferData: ', this.offerEditForm.value);
+        console.log('OfferData: ', this.offer);
 
         this.isLoading = false;
         this.isError = false;
@@ -238,6 +238,10 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     tmpMetas.time_requirement = formData.time_requirement;
     return tmpMetas;
   }
+
+  //////////////////////////////////////////////
+  // Properties
+  //////////////////////////////////////////////
 
   private loadPropertyMetaData() {
     this.metaDataService.getOfferProperties().subscribe(
