@@ -28,7 +28,8 @@ export class MultiselectDropdownComponent implements OnInit {
   setKeyWordList() {
     this.keywordsDropdownList=this.staticConfig.getKeyWords().keywords;
     this.selectedKeyWords = [
-      {key : "fs_superkikurs", item: "Super KI-Kurs"}
+      {key : "fs_superkikurs", item: "Super KI-Kurs"},
+      {key : "ki", item: "KI-Kurs"}
     ];
     this.keywordsDropdownSettings = {
       singleSelection: false,
@@ -37,7 +38,7 @@ export class MultiselectDropdownComponent implements OnInit {
       textField: 'item',
       searchPlaceholderText: 'Suche',
       itemsShowLimit: 3,
-      allowSearchFilter: true,
+      allowSearchFilter: false,
       noDataAvailablePlaceholderText: 'Keine Keywords zur Auswahl'
     };
   }
