@@ -34,6 +34,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   propLanguages: PropertyItem[];
   propCompetences: PropertyItem[];
   propFormats: PropertyItem[];
+  // KeyWords
+  keyWordStringList: string;
 
   public isLoading = true;
   public createNewOffer = false;
@@ -174,6 +176,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.offerEditForm.get('competence_digital').setValue(this.offer.competence_digital);
         this.relatedOfferFormArray.reset(this.offer.relatedOffers);
 
+        this.keyWordStringList = this.offer.keywords;
+
         console.log('FormOfferData: ', this.offerEditForm.value);
         console.log('OfferData: ', this.offer);
 
@@ -293,6 +297,10 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       identifier: item.identifier,
       description: item.description,
     };
+  }
+
+  onNewKeyWordList(keywords: string){
+    console.log("New Keywords: ", keywords);
   }
 
   // Alert Functions
