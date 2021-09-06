@@ -17,6 +17,7 @@ export const CustomConfig = {
       en: 'sentiment/en',
       de: 'sentiment/de'
     },
+    linkListPath: 'kiplayground/lnklist'
   },
   paths: {
     lnkLanding: '/',
