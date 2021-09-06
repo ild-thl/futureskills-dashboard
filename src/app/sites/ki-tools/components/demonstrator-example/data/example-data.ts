@@ -1,6 +1,9 @@
 import { KIToolsTypes } from '../../../interfaces/types';
 
 // Daten für die Ki-Anwendungsliste
+/**
+ * @deprecated
+ */
 export class DemonstratorExamples {
   public static exampleText: KIToolsTypes.LinkCardData[] = [
     {
