@@ -2,7 +2,12 @@
 
 ## [UnReleased v0.6]
 
+## 2021-09-06/ml
+### changed
+- Linklist is json-File now (asset Folder)
+
 ## 2021-09-02/ml
+### added
 - New function for offer-data.service (Filter for Keywords)
 - Adminsites are lazy-loaded
 
