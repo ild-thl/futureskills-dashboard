@@ -28,6 +28,7 @@ export class OfferStore {
     } else {
       this.offers = this._reduce(this.offers, action);
     }
+    console.log("Action STORE: ", action, this.offers);
     this.items$.next(this.offers);
   }
 

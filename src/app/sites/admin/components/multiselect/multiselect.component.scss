@@ -1,0 +1,21 @@
+$base-color: var(--color-primary-blue-dark);
+
+.fs-multiselect {
+  .chip {
+    border: 1px solid $base-color;
+    margin-right: 4px;
+    background: $base-color;
+    padding: 0px 5px;
+    color: #fff;
+    border-radius: 4px;
+    float: left;
+    display: flex;
+    max-width: fit-content;
+    margin-bottom: 1px;
+    margin-top:1px;
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

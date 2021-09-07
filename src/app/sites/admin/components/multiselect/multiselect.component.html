@@ -1,0 +1,41 @@
+<div class="fs-multiselect">
+  <div class="form-control">
+    <div class="chipArea text-left">
+      <div class="chip" *ngFor="let selected of selectedKeyWordList">
+        <span>{{ selected.item }}</span>
+      </div>
+    </div>
+
+    <div class="toggleArea text-right">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="collapse.toggle()"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseExample"
+      >
+        <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <div class="custom-control custom-switch" *ngFor="let keyword of availableKeyWordList">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="check-{{ keyword.key }}"
+            value="{{ keyword.key }}"
+            (change)="onCheckBoxChanged(keyword)"
+            [checked]="checkBoxIsSelected(keyword)"
+          />
+          <label class="custom-control-label" for="check-{{ keyword.key }}">{{
+            keyword.item
+          }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,11 +35,14 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   propCompetences: PropertyItem[];
   propFormats: PropertyItem[];
   // KeyWords
-  keyWordStringList: string;
+  availableKeyWordList: {
+    key: string;
+    item: string;
+  };
 
   public isLoading = true;
   public createNewOffer = false;
-  public isCollapsed = false;
+  public isCollapsed = true;
   public isError = false;
   alerts: Alert[] = [];
 
@@ -110,6 +113,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       competence_tech: new FormControl(null),
       competence_classic: new FormControl(null),
       competence_digital: new FormControl(null),
+      keywords: new FormControl(null),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
 
@@ -144,6 +148,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
    * @param offerId
    */
   private loadOfferData(offerId: number) {
+    this.getKeyWordList();
+
     this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe(
       (offer) => {
         this.offer = offer;
@@ -174,12 +180,11 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.offerEditForm.get('competence_tech').setValue(this.offer.competence_tech);
         this.offerEditForm.get('competence_classic').setValue(this.offer.competence_classic);
         this.offerEditForm.get('competence_digital').setValue(this.offer.competence_digital);
+        this.offerEditForm.get('keywords').setValue(this.offer.keywords);
         this.relatedOfferFormArray.reset(this.offer.relatedOffers);
 
-        this.keyWordStringList = this.offer.keywords;
-
-        console.log('FormOfferData: ', this.offerEditForm.value);
-        console.log('OfferData: ', this.offer);
+        //console.log('FormOfferData: ', this.offerEditForm.value);
+        //console.log('OfferData: ', this.offer);
 
         this.isLoading = false;
         this.isError = false;
@@ -299,8 +304,16 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     };
   }
 
-  onNewKeyWordList(keywords: string){
-    console.log("New Keywords: ", keywords);
+  //////////////////////////////////////////////
+  // KeyWords
+  //////////////////////////////////////////////
+
+  getKeyWordList() {
+    this.availableKeyWordList = this.staticConfig.getKeyWords().keywords;
+  }
+
+  onNewKeyWordList(keywords: string) {
+    console.log('New Keywords: ', keywords);
   }
 
   // Alert Functions

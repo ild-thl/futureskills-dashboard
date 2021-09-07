@@ -72,9 +72,13 @@
                  name="subtitle" />
         </div>
 
+        <!-- Keywords -->
         <div class="form-group">
           <label for="keywords">Keywords</label>
-          <fs-multiselect-dropdown [(selectedKeyWordList)]="keyWordStringList" ></fs-multiselect-dropdown>
+          <fs-multiselect
+            formControlName="keywords"
+            [availableKeyWordList]="availableKeyWordList"
+          ></fs-multiselect>
         </div>
       </div>
 
