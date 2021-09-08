@@ -1,6 +1,46 @@
 $base-color: var(--color-primary-blue-dark);
 
 .fs-multiselect {
+  position: relative;
+  width: 100%;
+  font-size: inherit;
+  font-family: inherit;
+
+  .dropdown-field {
+    display: inline-block;
+    border: 1px solid #ced4da;
+    border-radius: 0;
+    width: 100%;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-weight: normal;
+    line-height: 1.52857143;
+    text-align: left;
+    vertical-align: middle;
+    cursor: default;
+    background-image: none;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    .chipArea {
+
+    }
+
+    .toggleArea{
+      min-width: 20px;
+      vertical-align: middle;
+
+      .caret{
+        display: block;
+        float:right !important;
+        cursor: pointer;
+        min-width: 20px;
+      }
+    }
+
+
+  }
+
   .chip {
     border: 1px solid $base-color;
     margin-right: 4px;

@@ -1,8 +1,13 @@
+
+/**
+ * JSON-Dateien als Modul-Importe
+ */
+import * as keywords from './modul-data/keywordlist.json';
+
 /**
  * Allgemeine Konfigurationen, die nicht fest-codiert werden und unabhängig vom Environment sind.
  * Kann über den static.service per Dependency Injection eingebunden werden.
  */
-import * as keywords from './data/keywordlist.json';
 export const CustomConfig = {
   cookies: {
     preferenceCookieName: 'FS_USER_COOKIEPREFS',

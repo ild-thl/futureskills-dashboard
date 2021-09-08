@@ -1,22 +1,29 @@
 <div class="fs-multiselect">
-  <div class="form-control">
-    <div class="chipArea text-left">
-      <div class="chip" *ngFor="let selected of selectedKeyWordList">
-        <span>{{ selected.item }}</span>
+  <div>
+    <span class="dropdown-field">
+      <div class="chipArea text-left">
+        <div class="chip" *ngFor="let selected of selectedKeyWordList">
+          <span>{{ selected.item }}</span>
+        </div>
       </div>
-    </div>
 
-    <div class="toggleArea text-right">
-      <button
-        type="button"
-        class="btn btn-primary btn-sm"
-        (click)="collapse.toggle()"
-        [attr.aria-expanded]="!isCollapsed"
-        aria-controls="collapseExample"
-      >
-        <fa-icon [icon]="['fas', 'cog']"></fa-icon>
-      </button>
-    </div>
+      <span class="toggleArea">
+        <span class="caret" (click)="collapse.toggle()">
+          <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+        </span>
+        <!-- <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample"
+        >
+          <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+        </button> -->
+
+
+      </span>
+    </span>
   </div>
 
   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">

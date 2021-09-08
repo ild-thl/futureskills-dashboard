@@ -31,7 +31,7 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
   constructor() {}
 
   initialized: boolean = false;
-  isCollapsed = true;
+  isCollapsed = false;
   isDisabled: boolean = false;
   touched: boolean = false;
 
