@@ -31,3 +31,10 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="deletedError">
+  <div class="alert alert-danger" role="alert">
+    Es wurden Einträge gefunden, die in dieser Keyword-Liste nicht mehr vorhanden sind. Diese werden
+    beim Speichern gelöscht, wenn Keywords verändert werden.
+  </div>
+</div>

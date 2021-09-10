@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export type KeyWordItem = {
@@ -19,14 +13,12 @@ export type KeyWordItem = {
   providers: [{ provide: NG_VALUE_ACCESSOR, multi: true, useExisting: MultiselectComponent }],
 })
 export class MultiselectComponent implements OnInit, OnChanges, ControlValueAccessor {
-  @Input() availableKeyWordList: {
-    key: string;
-    item: string;
-  }[];
+  @Input() availableKeyWordList: KeyWordItem[];
 
   // Selected KeyWords
   selectedKommaKeyWords: string | null;
   selectedKeyWordList: KeyWordItem[] = [];
+  deletedError: boolean = false;
 
   constructor() {}
 
@@ -38,7 +30,7 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log('AvailableList: ', this.availableKeyWordList);
+    console.log('AvailableWordList: ', this.availableKeyWordList);
     this.initializeLists();
   }
 
@@ -51,7 +43,6 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
   // ControlValueAccessor Interface
   writeValue(obj: string): void {
     this.selectedKommaKeyWords = obj;
-    // console.log('Value: ', this.selectedKommaKeyWords);
     this.initializeLists();
   }
   registerOnChange(fn: any): void {
@@ -80,17 +71,19 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
     } else {
       this.add(keywordItem);
     }
-    this.selectedKommaKeyWords = this.getKeyWordList(this.selectedKeyWordList);
-    this.onChange(this.selectedKommaKeyWords);
-
+    this.changeValues();
     //console.log("New ArrayList: ", this.selectedKeyWordList);
     //console.log("New StringList: ", this.selectedKommaKeyWords);
-
   }
 
   checkBoxIsSelected(item: KeyWordItem): boolean {
     if (!this.initialized) return false;
     return this.selectedKeyWordList.includes(item);
+  }
+
+  private changeValues() {
+    this.selectedKommaKeyWords = this.getKeyWordList(this.selectedKeyWordList);
+    this.onChange(this.selectedKommaKeyWords);
   }
 
   private add(item: KeyWordItem) {
@@ -114,18 +107,37 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
 
     if (this.availableKeyWordList && this.selectedKommaKeyWords) {
       const list = this.getKeyWordListArray(this.selectedKommaKeyWords);
-     // console.log('ValueArray: ', list);
+      const availableKeys = this.getKeysInList();
+
+      const deletedArrayKeys = list
+        .filter((item) => {
+          return !availableKeys.includes(item);
+        })
+        .map((delKey) => {
+          return { key: delKey, item: delKey };
+        });
+      this.deletedError = deletedArrayKeys.length > 0;
 
       this.availableKeyWordList.forEach((item) => {
         if (list.includes(item.key)) {
           this.selectedKeyWordList.push(item);
         }
       });
+
       this.initialized = true;
-     // console.log('SelectedKeywords: ', this.selectedKeyWordList);
+
+      // console.log('Komma-Liste aus der DB: ', this.selectedKommaKeyWords);
+      // console.log('KeyList aus der DB: ', list);
+      // console.log('Available-KeyList: ', this.availableKeyWordList);
+      // console.log('Deleted Items: ', this.deletedKommaList);
+      // console.log('SelectedKeywordsinField: ', this.selectedKeyWordList);
     }
   }
 
+  /**
+   * Aus der Stringliste, die Key-Array Liste bilden
+   * @param str
+   */
   private getKeyWordListArray(str: string | null): string[] {
     if (str) {
       return str.split(',').map((item) => {
@@ -137,10 +149,25 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
     }
   }
 
+  /**
+   *
+   * @param items Aus dem Key-Array wieder eine Stringliste machen
+   */
   private getKeyWordList(items: KeyWordItem[]): string {
-    if (items.length==0) return null;
-    return items.map(item=>{
-      return (item.key);
-    }).join(',');
+    if (items.length == 0) return null;
+    return items
+      .map((item) => {
+        return item.key;
+      })
+      .join(',');
+  }
+
+  /**
+   * Gibt nur die Keys in der ArrayListe zurück
+   */
+  private getKeysInList(): string[] {
+    return this.availableKeyWordList.map((items: KeyWordItem) => {
+      return items.key;
+    });
   }
 }

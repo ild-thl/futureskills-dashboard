@@ -9,6 +9,7 @@ import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
+import { KeyWordItem } from '../../components/multiselect/multiselect.component';
 
 interface Alert {
   type: string;
@@ -34,11 +35,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   propLanguages: PropertyItem[];
   propCompetences: PropertyItem[];
   propFormats: PropertyItem[];
-  // KeyWords
-  availableKeyWordList: {
-    key: string;
-    item: string;
-  };
+  // KeyWords {key, item}
+  availableKeyWordList: KeyWordItem[];
 
   public isLoading = true;
   public createNewOffer = false;
@@ -85,6 +83,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     const offerId = +this.route.snapshot.params.id;
 
     this.loadPropertyMetaData();
+    this.getKeyWordList();
 
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
@@ -148,7 +147,6 @@ export class OfferEditComponent implements OnInit, OnDestroy {
    * @param offerId
    */
   private loadOfferData(offerId: number) {
-    this.getKeyWordList();
 
     this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe(
       (offer) => {
@@ -312,9 +310,6 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     this.availableKeyWordList = this.staticConfig.getKeyWords().keywords;
   }
 
-  onNewKeyWordList(keywords: string) {
-    console.log('New Keywords: ', keywords);
-  }
 
   // Alert Functions
 
