@@ -1,47 +1,32 @@
 <div class="fs-multiselect">
-  <div>
-    <span class="dropdown-field">
-      <div class="chipArea text-left">
-        <div class="chip" *ngFor="let selected of selectedKeyWordList">
-          <span>{{ selected.item }}</span>
-        </div>
+  <span class="dropdown-field" (click)="collapse.toggle()">
+    <div class="chipArea">
+      <div class="chip" *ngFor="let selected of selectedKeyWordList">
+        <span>{{ selected.item }}</span>
       </div>
+    </div>
 
-      <span class="toggleArea">
-        <span class="caret" (click)="collapse.toggle()">
-          <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
-        </span>
-        <!-- <button
-          type="button"
-          class="btn btn-primary btn-sm"
-          (click)="collapse.toggle()"
-          [attr.aria-expanded]="!isCollapsed"
-          aria-controls="collapseExample"
-        >
-          <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
-        </button> -->
-
-
+    <span class="toggleArea">
+      <span class="caret">
+        <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
       </span>
     </span>
-  </div>
+  </span>
+</div>
 
-  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-    <div class="card">
-      <div class="card-body">
-        <div class="custom-control custom-switch" *ngFor="let keyword of availableKeyWordList">
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            id="check-{{ keyword.key }}"
-            value="{{ keyword.key }}"
-            (change)="onCheckBoxChanged(keyword)"
-            [checked]="checkBoxIsSelected(keyword)"
-          />
-          <label class="custom-control-label" for="check-{{ keyword.key }}">{{
-            keyword.item
-          }}</label>
-        </div>
+<div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+  <div class="card">
+    <div class="card-body">
+      <div class="custom-control custom-checkbox" *ngFor="let keyword of availableKeyWordList">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="check-{{ keyword.key }}"
+          value="{{ keyword.key }}"
+          (change)="onCheckBoxChanged(keyword)"
+          [checked]="checkBoxIsSelected(keyword)"
+        />
+        <label class="custom-control-label" for="check-{{ keyword.key }}">{{ keyword.item }}</label>
       </div>
     </div>
   </div>

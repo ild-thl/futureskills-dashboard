@@ -1,9 +1,12 @@
 <div class="container pl-0 pr-0">
-
   <!-- nav -->
   <div class="row mb-4">
     <div class="col-12" *ngIf="!createNewOffer; else new_Offer">
-      <button type="button" class="btn btn-outline-primary mb-3" [routerLink]="[lnkOffers, offer?.id]">
+      <button
+        type="button"
+        class="btn btn-outline-primary mb-3"
+        [routerLink]="[lnkOffers, offer?.id]"
+      >
         Zur Detailseite
       </button>
     </div>
@@ -20,23 +23,41 @@
 
   <!-- form -->
   <form [formGroup]="offerEditForm">
-
     <div class="row">
       <div class="col-12 col-md-6">
+
         <div class="form-group">
           <label for="title">Titel</label>*
-          <input class="form-control" formControlName="title" type="text" id="title" name="title" required />
+          <input
+            class="form-control"
+            formControlName="title"
+            type="text"
+            id="title"
+            name="title"
+            required
+          />
         </div>
 
         <div class="form-group">
           <label for="hashtag">Hashtag</label>
-          <input formControlName="hashtag" class="form-control" type="text" id="hashtag" name="hashtag" />
+          <input
+            formControlName="hashtag"
+            class="form-control"
+            type="text"
+            id="hashtag"
+            name="hashtag"
+          />
         </div>
 
         <div class="form-group">
           <label for="institution_id">Institution</label>*
-          <select formControlName="institution_id" class="form-control" id="institution_id" name="institution_id"
-            deactivated>
+          <select
+            formControlName="institution_id"
+            class="form-control"
+            id="institution_id"
+            name="institution_id"
+            deactivated
+          >
             <option value="1">FutureSkills</option>
             <option value="2">Microsoft Learn</option>
             <option value="3">OPEN vhb</option>
@@ -65,15 +86,17 @@
 
         <div class="form-group">
           <label for="subtitle">Kurzbeschreibung</label>
-          <input formControlName="subtitle"
-                 class="form-control"
-                 type="text"
-                 id="subtitle"
-                 name="subtitle" />
+          <input
+            formControlName="subtitle"
+            class="form-control"
+            type="text"
+            id="subtitle"
+            name="subtitle"
+          />
         </div>
 
         <!-- Keywords -->
-        <div>
+        <div class="mb-3">
           <label for="keywords">Keywords</label>
           <fs-multiselect
             formControlName="keywords"
@@ -87,31 +110,58 @@
       <div class="col-12 col-md-6">
         <div class="form-group">
           <label for="sort_flag">Sortierung (je höher, desto weiter oben)</label>
-          <input formControlName="sort_flag" class="form-control" type="number" id="sort_flag" name="sort_flag"
-            value="0" />
+          <input
+            formControlName="sort_flag"
+            class="form-control"
+            type="number"
+            id="sort_flag"
+            name="sort_flag"
+            value="0"
+          />
         </div>
 
         <div class="form-group">
           <label for="image_path">Bild URL</label>
-          <input formControlName="image_path" class="form-control" type="text" id="image_path" name="image_path" />
+          <input
+            formControlName="image_path"
+            class="form-control"
+            type="text"
+            id="image_path"
+            name="image_path"
+          />
         </div>
 
         <div class="form-group">
           <label>Programm</label>
           <div class="row">
             <div class="col-4 pr-0">
-              <input formControlName="competence_classic" class="form-control d-inline-block" type="checkbox"
-                id="competence_classic" name="competence_classic" />
+              <input
+                formControlName="competence_classic"
+                class="form-control d-inline-block"
+                type="checkbox"
+                id="competence_classic"
+                name="competence_classic"
+              />
               <label class="align-text-bottom pl-1" for="competence_classic">Classic</label>
             </div>
             <div class="col-4 pl-1 pr-0">
-              <input formControlName="competence_digital" class="form-control d-inline-block" type="checkbox"
-                id="competence_digital" name="competence_digital" />
+              <input
+                formControlName="competence_digital"
+                class="form-control d-inline-block"
+                type="checkbox"
+                id="competence_digital"
+                name="competence_digital"
+              />
               <label class="align-text-bottom pl-1" for="competence_digital">Digital</label>
             </div>
             <div class="col-4 pl-0">
-              <input formControlName="competence_tech" class="form-control d-inline-block" type="checkbox"
-                id="competence_tech" name="competence_tech" />
+              <input
+                formControlName="competence_tech"
+                class="form-control d-inline-block"
+                type="checkbox"
+                id="competence_tech"
+                name="competence_tech"
+              />
               <label class="align-text-bottom pl-md-2 pl-1" for="competence_tech">Tech</label>
             </div>
           </div>
@@ -119,7 +169,13 @@
 
         <div class="form-group">
           <label for="language">Sprache</label>*
-          <select formControlName="language" class="form-control" id="language" name="language" value="de">
+          <select
+            formControlName="language"
+            class="form-control"
+            id="language"
+            name="language"
+            value="de"
+          >
             <option value="de" selected="selected">Deutsch</option>
             <option value="en">English</option>
           </select>
@@ -127,30 +183,48 @@
 
         <div class="form-group">
           <label for="author">Autor/innen</label>
-          <input formControlName="author" class="form-control" type="author" id="author" name="author" />
+          <input
+            formControlName="author"
+            class="form-control"
+            type="author"
+            id="author"
+            name="author"
+          />
         </div>
 
         <div class="form-group">
           <label for="target_group">Zielgruppe</label>
-          <input formControlName="target_group" class="form-control" type="target_group" id="target_group"
-            name="target_group" />
+          <input
+            formControlName="target_group"
+            class="form-control"
+            type="target_group"
+            id="target_group"
+            name="target_group"
+          />
         </div>
       </div>
-
 
       <div class="col-12 mb-3">
         <div class="form-group">
           <label for="description">Beschreibung</label>
-          <angular-editor formControlName="description" name="description" id="description" class="w-100"
-            [config]="editorConfig"></angular-editor>
+          <angular-editor
+            formControlName="description"
+            name="description"
+            id="description"
+            class="w-100"
+            [config]="editorConfig"
+          ></angular-editor>
         </div>
-        <button type="button" class="btn btn-outline-primary mb-3" (click)="collapse.toggle()"
-          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        <button
+          type="button"
+          class="btn btn-outline-primary mb-3"
+          (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample"
+        >
           Weitere Felder
         </button>
       </div>
-
-
     </div>
 
     <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="row">
@@ -164,13 +238,24 @@
 
         <div class="form-group">
           <label for="time_requirement">Arbeitsaufwand</label>
-          <input formControlName="time_requirement" class="form-control" type="time_requirement" id="time_requirement"
-            name="time_requirement" />
+          <input
+            formControlName="time_requirement"
+            class="form-control"
+            type="time_requirement"
+            id="time_requirement"
+            name="time_requirement"
+          />
         </div>
 
         <div class="form-group">
           <label for="sponsor">Sponsor</label>
-          <input formControlName="sponsor" class="form-control" type="sponsor" id="sponsor" name="sponsor" />
+          <input
+            formControlName="sponsor"
+            class="form-control"
+            type="sponsor"
+            id="sponsor"
+            name="sponsor"
+          />
         </div>
 
         <div class="form-group">
@@ -180,60 +265,102 @@
 
         <div class="form-group">
           <label for="requirements">Voraussetzungen</label>
-          <input formControlName="requirements" class="form-control" type="requirements" id="requirements"
-            name="requirements" />
+          <input
+            formControlName="requirements"
+            class="form-control"
+            type="requirements"
+            id="requirements"
+            name="requirements"
+          />
         </div>
 
         <div class="form-group">
           <label for="niveau">Niveau</label>
-          <input formControlName="niveau" class="form-control" type="niveau" id="niveau" name="niveau" />
+          <input
+            formControlName="niveau"
+            class="form-control"
+            type="niveau"
+            id="niveau"
+            name="niveau"
+          />
         </div>
       </div>
       <div class="col-12 col-md-6">
         <div class="form-group">
           <label for="executed_from">Ausführung ab</label>
-          <input formControlName="executed_from" class="form-control" type="executed_from" id="executed_from"
-            name="executed_from" />
+          <input
+            formControlName="executed_from"
+            class="form-control"
+            type="executed_from"
+            id="executed_from"
+            name="executed_from"
+          />
         </div>
 
         <div class="form-group">
           <label for="executed_until">Ausführung bis</label>
-          <input formControlName="executed_until" class="form-control" type="executed_until" id="executed_until"
-            name="executed_until" />
+          <input
+            formControlName="executed_until"
+            class="form-control"
+            type="executed_until"
+            id="executed_until"
+            name="executed_until"
+          />
         </div>
 
         <div class="form-group">
           <label for="listed_from">Listung ab</label>
-          <input formControlName="listed_from" class="form-control" type="listed_from" id="listed_from"
-            name="listed_from" />
+          <input
+            formControlName="listed_from"
+            class="form-control"
+            type="listed_from"
+            id="listed_from"
+            name="listed_from"
+          />
         </div>
 
         <div class="form-group">
           <label for="listed_until">Listung bis</label>
-          <input formControlName="listed_until" class="form-control" type="listed_until" id="listed_until"
-            name="executed_until" />
+          <input
+            formControlName="listed_until"
+            class="form-control"
+            type="listed_until"
+            id="listed_until"
+            name="executed_until"
+          />
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <app-offer-relations-selection formControlArray="relatedOfferFormArray"
-        (relatedOffersOutput)="updateRelatedOffers($event)" [offer]="offer" *ngIf="!isLoading"
-        class="col-12 no-gutters">
+      <app-offer-relations-selection
+        formControlArray="relatedOfferFormArray"
+        (relatedOffersOutput)="updateRelatedOffers($event)"
+        [offer]="offer"
+        *ngIf="!isLoading"
+        class="col-12 no-gutters"
+      >
       </app-offer-relations-selection>
     </div>
 
     <div class="form-group col-12 p-0">
-      <button (click)="onSaveData(offerEditForm.value)" class="btn btn-primary mb-3" type="button"
-        *ngIf="!createNewOffer">
+      <button
+        (click)="onSaveData(offerEditForm.value)"
+        class="btn btn-primary mb-3"
+        type="button"
+        *ngIf="!createNewOffer"
+      >
         Speichern
       </button>
-      <button (click)="onSaveData(offerEditForm.value)" class="btn btn-primary mb-3" type="button"
-        *ngIf="createNewOffer">
+      <button
+        (click)="onSaveData(offerEditForm.value)"
+        class="btn btn-primary mb-3"
+        type="button"
+        *ngIf="createNewOffer"
+      >
         Anlegen
       </button>
     </div>
-
   </form>
 
   <p *ngFor="let alert of alerts">

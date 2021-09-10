@@ -7,32 +7,39 @@ $base-color: var(--color-primary-blue-dark);
   font-family: inherit;
 
   .dropdown-field {
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
     border: 1px solid #ced4da;
     border-radius: 0;
     width: 100%;
-    padding: 6px 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    padding-right: 6px;
     margin-bottom: 0;
     font-weight: normal;
     line-height: 1.52857143;
     text-align: left;
     vertical-align: middle;
-    cursor: default;
+    cursor: pointer;
     background-image: none;
+    background-color: #fff;
     color: #495057;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
     .chipArea {
-
+      width: 100%;
+      background-color: #fff;
     }
 
     .toggleArea{
-      min-width: 20px;
-      vertical-align: middle;
+      background-color: #fff;
+      text-align: right;
 
       .caret{
-        display: block;
-        float:right !important;
+        line-height: 16px;
         cursor: pointer;
         min-width: 20px;
       }
@@ -49,7 +56,7 @@ $base-color: var(--color-primary-blue-dark);
     color: #fff;
     border-radius: 4px;
     float: left;
-    display: flex;
+   // display: flex;
     max-width: fit-content;
     margin-bottom: 1px;
     margin-top:1px;
