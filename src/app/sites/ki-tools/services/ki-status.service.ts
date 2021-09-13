@@ -182,40 +182,6 @@ export class KiStatusService {
   }
 
   public getKIModules(): Observable<any> {
-    return this.offerDataService.getOffersForPlaygroundKIList("fs_superkikurs");
+    return this.offerDataService.getOffersForPlaygroundKIList(this.staticService.getKeyForSuperKICourse());
   }
-
-  // public alt_loadMNISTModel() {
-  //   const kiToolsMnistModelPath =
-  //     environment.modelURL + this.staticService.getKIModelPathMNIST() + '/model.json';
-  //   if (this.scriptLoading$) {
-  //     return new Observable((observer$) => {
-  //       if (!this.MNISTModel$) {
-  //         console.log('Load MNIST-Model:', kiToolsMnistModelPath);
-  //         this.MNISTModel$ = new AsyncSubject();
-  //         from(tf.loadLayersModel(kiToolsMnistModelPath)).subscribe(this.MNISTModel$);
-  //       }
-  //       return this.MNISTModel$.subscribe(observer$);
-  //     });
-  //   } else {
-  //     throw throwError('Tensorflow was not loaded');
-  //   }
-  // }
-
-  // public alt_loadSentimentModel(lang: string = 'en'): Observable<any> {
-  //   const kiToolsSentimentModelPath_en =
-  //     environment.modelURL + this.staticService.getKIModelPathSentiment(lang) + '/model/model.json';
-  //   if (this.scriptLoading$) {
-  //     return new Observable((observer$) => {
-  //       if (!this.SentimentModel$) {
-  //         console.log('Load Sentiment-Model');
-  //         this.SentimentModel$ = new AsyncSubject();
-  //         from(tf.loadLayersModel(kiToolsSentimentModelPath_en)).subscribe(this.SentimentModel$);
-  //       }
-  //       return this.SentimentModel$.subscribe(observer$);
-  //     });
-  //   } else {
-  //     throw throwError('Tensorflow was not loaded');
-  //   }
-  // }
 }

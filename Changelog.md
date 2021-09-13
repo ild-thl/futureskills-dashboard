@@ -2,6 +2,10 @@
 
 ## [UnReleased v0.6]
 
+## 2021-09-13/ml
+### added
+- EditComponent + KeywordList
+
 ## 2021-09-06/ml
 ### changed
 - Linklist is json-File now (asset Folder)

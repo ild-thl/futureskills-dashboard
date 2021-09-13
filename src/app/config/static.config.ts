@@ -48,5 +48,8 @@ export const CustomConfig = {
     FS_SuperKI: '/615',
     FS_NeuronaleNetze: '/602'
   },
-  courseKeyWords: (keywords as any).default
+  courseKeyWords: (keywords as any).default,
+  courseKeyWordKeys: {
+    keyForSuperKIKurs: 'fssuperkikurs',
+  }
 };
