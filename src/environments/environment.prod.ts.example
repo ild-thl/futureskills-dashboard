@@ -4,6 +4,7 @@ export const environment = {
   logFiles: false, // don't change this in production Environment
   staticURL: 'https://static.futureskills-sh.de/',
   modelURL: 'assets/kimodels/', // path to ki-models and data
+  dataURL: 'assets/data/', // path to additional data
 
   apiURL: 'http://localhost:8000',
 
