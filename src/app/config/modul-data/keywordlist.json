@@ -1,12 +1,16 @@
 {
   "keywords": [
     {
-      "key": "fs_superkikurs",
-      "item": "Super KI-Kurs"
+      "key": "fssuperkikurs",
+      "item": "FS Super KI-Kurs"
     },
     {
       "key": "ki",
       "item": "KI-Kurs"
+    },
+    {
+      "key": "test",
+      "item": "Test"
     }
   ]
 }

@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { StaticService } from 'src/app/config/static.service';
 
 export type KeyWordItem = {
   key: string;
@@ -12,26 +13,96 @@ export type KeyWordItem = {
   styleUrls: ['./multiselect.component.scss'],
   providers: [{ provide: NG_VALUE_ACCESSOR, multi: true, useExisting: MultiselectComponent }],
 })
-export class MultiselectComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class MultiselectComponent implements OnInit, ControlValueAccessor {
   @Input() availableKeyWordList: KeyWordItem[];
 
-  // Selected KeyWords
+  // Selected KeyWords aus Form (DB)
   selectedKommaKeyWords: string | null;
+  // Selected KeyWords als Array
+  selectedKommaKeyWordsArr: string[];
+
+  // Angezeigte Liste im Feld
   selectedKeyWordList: KeyWordItem[] = [];
+
+  // Available KeyWords
+  availableKeyWordStringKeys: string[];
+
   deletedError: boolean = false;
 
-  constructor() {}
+  constructor(private staticConfig: StaticService) {}
+
+  listIsAvailable: boolean = false;
+  savedListIsAvailable: boolean = false;
 
   initialized: boolean = false;
   isCollapsed = true;
   isDisabled: boolean = false;
   touched: boolean = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAvailableKeyWordList();
+    this.checkLists();
+  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('AvailableWordList: ', this.availableKeyWordList);
-    this.initializeLists();
+  // ControlValueAccessor Interface
+  writeValue(obj: string): void {
+    // Komma-getrennte Liste
+    this.selectedKommaKeyWords = obj;
+    // Liste als Array
+    this.selectedKommaKeyWordsArr = this.getKeyWordListArray(this.selectedKommaKeyWords);
+    this.savedListIsAvailable = true;
+    //console.log('Komma-Liste aus der DB: ', this.selectedKommaKeyWords);
+    //console.log('KeyList aus der DB: ', this.selectedKommaKeyWordsArr);
+    this.checkLists();
+  }
+
+  private checkLists() {
+    if (this.listIsAvailable) {
+      if (this.selectedKommaKeyWords != null) {
+        this.checkDeleted();
+        this.setChipTagsInComponent();
+        console.log('Komma-Liste aus der DB: ', this.selectedKommaKeyWords);
+      }
+    }
+  }
+
+  checkDeleted() {
+    const deletedArrayKeys = this.selectedKommaKeyWordsArr
+      .filter((item) => {
+        return !this.availableKeyWordStringKeys.includes(item);
+      })
+      .map((delKey) => {
+        return { key: delKey, item: delKey };
+      });
+    this.deletedError = deletedArrayKeys.length > 0;
+    //console.log('Deleted Items: ', deletedArrayKeys);
+  }
+
+  setChipTagsInComponent() {
+    this.availableKeyWordList.forEach((item) => {
+      if (this.selectedKommaKeyWordsArr.includes(item.key)) {
+        this.selectedKeyWordList.push(item);
+      }
+    });
+    //console.log('SelectedKeywordsinField: ', this.selectedKeyWordList);
+  }
+
+  onCheckBoxChanged(keywordItem: KeyWordItem) {
+    const status = this.checkBoxIsSelected(keywordItem);
+    // console.log('Status:', status);
+
+    if (status) {
+      this.remove(keywordItem);
+    } else {
+      this.add(keywordItem);
+    }
+    this.changeValues();
+    //console.log("New ArrayList: ", this.selectedKeyWordList);
+    //console.log("New StringList: ", this.selectedKommaKeyWords);
+  }
+
+  checkBoxIsSelected(item: KeyWordItem): boolean {
+    return this.selectedKeyWordList.includes(item);
   }
 
   // onChange Function
@@ -40,11 +111,6 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
   // onTouch Function
   onTouched = () => {};
 
-  // ControlValueAccessor Interface
-  writeValue(obj: string): void {
-    this.selectedKommaKeyWords = obj;
-    this.initializeLists();
-  }
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -63,26 +129,9 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
     }
   }
 
-  onCheckBoxChanged(keywordItem: KeyWordItem) {
-    const status = this.checkBoxIsSelected(keywordItem);
-
-    if (status) {
-      this.remove(keywordItem);
-    } else {
-      this.add(keywordItem);
-    }
-    this.changeValues();
-    //console.log("New ArrayList: ", this.selectedKeyWordList);
-    //console.log("New StringList: ", this.selectedKommaKeyWords);
-  }
-
-  checkBoxIsSelected(item: KeyWordItem): boolean {
-    if (!this.initialized) return false;
-    return this.selectedKeyWordList.includes(item);
-  }
-
   private changeValues() {
     this.selectedKommaKeyWords = this.getKeyWordList(this.selectedKeyWordList);
+    this.deletedError=false;
     this.onChange(this.selectedKommaKeyWords);
   }
 
@@ -102,36 +151,12 @@ export class MultiselectComponent implements OnInit, OnChanges, ControlValueAcce
     }
   }
 
-  private initializeLists() {
-    if (this.initialized) return;
-
-    if (this.availableKeyWordList && this.selectedKommaKeyWords) {
-      const list = this.getKeyWordListArray(this.selectedKommaKeyWords);
-      const availableKeys = this.getKeysInList();
-
-      const deletedArrayKeys = list
-        .filter((item) => {
-          return !availableKeys.includes(item);
-        })
-        .map((delKey) => {
-          return { key: delKey, item: delKey };
-        });
-      this.deletedError = deletedArrayKeys.length > 0;
-
-      this.availableKeyWordList.forEach((item) => {
-        if (list.includes(item.key)) {
-          this.selectedKeyWordList.push(item);
-        }
-      });
-
-      this.initialized = true;
-
-      // console.log('Komma-Liste aus der DB: ', this.selectedKommaKeyWords);
-      // console.log('KeyList aus der DB: ', list);
-      // console.log('Available-KeyList: ', this.availableKeyWordList);
-      // console.log('Deleted Items: ', this.deletedKommaList);
-      // console.log('SelectedKeywordsinField: ', this.selectedKeyWordList);
-    }
+  private getAvailableKeyWordList() {
+    const tempList = this.staticConfig.getKeyWords().keywords;
+    this.availableKeyWordList = tempList === undefined ? [] : tempList;
+    this.availableKeyWordStringKeys = this.getKeysInList();
+    //console.log('AvailableKeyWords: ', this.availableKeyWordList);
+    this.listIsAvailable = true;
   }
 
   /**

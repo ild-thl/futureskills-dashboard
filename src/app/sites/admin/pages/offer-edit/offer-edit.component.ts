@@ -83,7 +83,6 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     const offerId = +this.route.snapshot.params.id;
 
     this.loadPropertyMetaData();
-    this.getKeyWordList();
 
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
@@ -112,7 +111,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       competence_tech: new FormControl(null),
       competence_classic: new FormControl(null),
       competence_digital: new FormControl(null),
-      keywords: new FormControl(null),
+      keywords: new FormControl(undefined),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
 
@@ -301,15 +300,6 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       description: item.description,
     };
   }
-
-  //////////////////////////////////////////////
-  // KeyWords
-  //////////////////////////////////////////////
-
-  getKeyWordList() {
-    this.availableKeyWordList = this.staticConfig.getKeyWords().keywords;
-  }
-
 
   // Alert Functions
 

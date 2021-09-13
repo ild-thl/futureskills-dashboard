@@ -1,7 +1,5 @@
 <div class="offeredit-form">
   <div class="container">
-
-
     <!-- nav -->
     <div class="row mb-4">
       <div class="col-12" *ngIf="!createNewOffer; else new_Offer">
@@ -26,8 +24,6 @@
 
     <!-- form -->
     <form [formGroup]="offerEditForm">
-
-
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
@@ -102,10 +98,7 @@
           <!-- Keywords -->
           <div class="mb-3">
             <label for="keywords">Keywords</label>
-            <fs-multiselect
-              formControlName="keywords"
-              [availableKeyWordList]="availableKeyWordList"
-            ></fs-multiselect>
+            <fs-multiselect formControlName="keywords"></fs-multiselect>
           </div>
         </div>
 
@@ -225,7 +218,6 @@
             </button>
           </div>
         </div>
-
       </div>
 
       <!-- weitere Felder -->
