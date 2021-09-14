@@ -1,0 +1,68 @@
+$base-color: var(--color-primary-blue-dark);
+
+.fs-multiselect {
+  position: relative;
+  width: 100%;
+  font-size: inherit;
+  font-family: inherit;
+
+  .dropdown-field {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 0;
+    width: 100%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    padding-right: 6px;
+    margin-bottom: 0;
+    font-weight: normal;
+    line-height: 1.52857143;
+    text-align: left;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    background-color: #fff;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    .chipArea {
+      width: 100%;
+      background-color: #fff;
+    }
+
+    .toggleArea{
+      background-color: #fff;
+      text-align: right;
+
+      .caret{
+        line-height: 16px;
+        cursor: pointer;
+        min-width: 20px;
+      }
+    }
+
+
+  }
+
+  .chip {
+    border: 1px solid $base-color;
+    margin-right: 4px;
+    background: $base-color;
+    padding: 0px 5px;
+    color: #fff;
+    border-radius: 4px;
+    float: left;
+   // display: flex;
+    max-width: fit-content;
+    margin-bottom: 1px;
+    margin-top:1px;
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

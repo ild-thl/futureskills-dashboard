@@ -40,4 +40,7 @@ export class StaticService {
   getKeyWords(): any {
     return CustomConfig.courseKeyWords;
   }
+  getKeyForSuperKICourse(): string {
+    return CustomConfig.courseKeyWordKeys.keyForSuperKIKurs;
+  }
 }

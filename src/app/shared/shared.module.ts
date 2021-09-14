@@ -27,6 +27,7 @@ import {
   faTrash,
   faTrashAlt,
   faCog,
+  faAngleDown,
   faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -75,6 +76,7 @@ export class SharedModule {
       faTrashAlt,
       faTrash,
       faCog,
+      faAngleDown,
       faExternalLinkAlt
     );
   }

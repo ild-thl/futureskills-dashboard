@@ -9,6 +9,7 @@ import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
+import { KeyWordItem } from '../../components/multiselect/multiselect.component';
 
 interface Alert {
   type: string;
@@ -34,6 +35,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   propLanguages: PropertyItem[];
   propCompetences: PropertyItem[];
   propFormats: PropertyItem[];
+  // KeyWords {key, item}
+  availableKeyWordList: KeyWordItem[];
 
   public isLoading = true;
   public createNewOffer = false;
@@ -108,6 +111,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       competence_tech: new FormControl(null),
       competence_classic: new FormControl(null),
       competence_digital: new FormControl(null),
+      keywords: new FormControl(undefined),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
 
@@ -142,6 +146,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
    * @param offerId
    */
   private loadOfferData(offerId: number) {
+
     this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe(
       (offer) => {
         this.offer = offer;
@@ -172,6 +177,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.offerEditForm.get('competence_tech').setValue(this.offer.competence_tech);
         this.offerEditForm.get('competence_classic').setValue(this.offer.competence_classic);
         this.offerEditForm.get('competence_digital').setValue(this.offer.competence_digital);
+        this.offerEditForm.get('keywords').setValue(this.offer.keywords);
         this.relatedOfferFormArray.reset(this.offer.relatedOffers);
 
         //console.log('FormOfferData: ', this.offerEditForm.value);
@@ -238,6 +244,10 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     tmpMetas.time_requirement = formData.time_requirement;
     return tmpMetas;
   }
+
+  //////////////////////////////////////////////
+  // Properties
+  //////////////////////////////////////////////
 
   private loadPropertyMetaData() {
     this.metaDataService.getOfferProperties().subscribe(
