@@ -103,7 +103,7 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
-  getSubListOfferWithKeyword(keyword: string | string[]): Observable<Offer[]> {
+  getSubListOfferWithKeyword(keyword: string): Observable<Offer[]> {
     return this.apiService.getOfferSubListWithKeyWords(keyword);
   }
 

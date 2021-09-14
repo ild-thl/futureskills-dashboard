@@ -55,9 +55,9 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  public getOfferSubListWithKeyWords(keyword: string | string[]): Observable<Offer[]> {
+  public getOfferSubListWithKeyWords(keyword: string): Observable<Offer[]> {
     return this.http
-      .get<Offer[]>(environment.apiURL + '/search/offer/sublist/' + keyword)
+      .get<Offer[]>(environment.apiURL + '/api/search/offer/sublist/' + keyword)
       .pipe(catchError(this.handleError));
   }
 

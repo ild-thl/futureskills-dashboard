@@ -128,7 +128,7 @@ export class OfferDataService {
    * Laden der Kursliste gefiltered nach Keyword
    * @param keyword
    */
-  private getFilteredOffersWithKeyword(keyword: string | string[]): Observable<Offer[]> {
+  private getFilteredOffersWithKeyword_l(keyword: string | string[]): Observable<Offer[]> {
     if (keyword == null || keyword.length == 0) return of([]);
 
     return this.getAllOfferDataWithoutLoginCheck().pipe(
@@ -151,9 +151,15 @@ export class OfferDataService {
     );
   }
 
-  private getFilteredOffersWithKeyword_server(keyword: string | string[]): Observable<Offer[]> {
+  private getFilteredOffersWithKeyword(keyword: string | string[]): Observable<Offer[]> {
     if (keyword == null || keyword.length == 0) return of([]);
-    return this.getSubListOfferKeywordWithoutLoginCheck(keyword);
+    if (Array.isArray(keyword)) {
+      // TODO: Aktuell keine KeyListen, nehmen wir nur den ersten
+      return this.getSubListOfferKeywordWithoutLoginCheck(keyword[0]);
+    } else {
+      return this.getSubListOfferKeywordWithoutLoginCheck(keyword);
+    }
+
   }
 
   /**
@@ -212,7 +218,7 @@ export class OfferDataService {
    * @param keyword
    * @returns  Observable<Offer[]>
    */
-  private getSubListOfferKeywordWithoutLoginCheck(keyword: string | string[]): Observable<Offer[]> {
+  private getSubListOfferKeywordWithoutLoginCheck(keyword: string): Observable<Offer[]> {
     return this.offerService.getSubListOfferWithKeyword(keyword);
   }
 
