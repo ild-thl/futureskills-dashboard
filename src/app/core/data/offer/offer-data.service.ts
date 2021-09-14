@@ -333,6 +333,7 @@ export class OfferDataService {
       title: offerdata.title,
       type: offerdata.type,
       url: offerdata.url,
+      keywords: offerdata.keywords,
       relatedOffers: relatedCourses,
     };
     return tempOffer;
