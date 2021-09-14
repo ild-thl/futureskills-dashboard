@@ -151,6 +151,11 @@ export class OfferDataService {
     );
   }
 
+  private getFilteredOffersWithKeyword_server(keyword: string | string[]): Observable<Offer[]> {
+    if (keyword == null || keyword.length == 0) return of([]);
+    return this.getSubListOfferKeywordWithoutLoginCheck(keyword);
+  }
+
   /**
    * Laden der Kursliste (aus dem offer.store)
    * Prüfung ob man eingeloggt ist (mehr nicht)
@@ -199,6 +204,18 @@ export class OfferDataService {
       })
     );
   } */
+
+
+  /**
+   * Laden einer Kursliste nach Keywords (direkt)
+   * ohne check ob man eingeloggt ist
+   * @param keyword
+   * @returns  Observable<Offer[]>
+   */
+  private getSubListOfferKeywordWithoutLoginCheck(keyword: string | string[]): Observable<Offer[]> {
+    return this.offerService.getSubListOfferWithKeyword(keyword);
+  }
+
 
   /**
    * Laden eines Kurses

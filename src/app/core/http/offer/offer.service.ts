@@ -103,6 +103,10 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
+  getSubListOfferWithKeyword(keyword: string | string[]): Observable<Offer[]> {
+    return this.apiService.getOfferSubListWithKeyWords(keyword);
+  }
+
   storeOffer(data: OfferToAPI) {
     return this.apiService.postOffer(data).pipe(
       tap((savedOffer) => {

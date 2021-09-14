@@ -10,7 +10,7 @@ import { Institution } from 'src/app/core/models/institution';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
 import { SubscriptionData, OfferToAPI, OfferPropertyTagResponse } from './api.interfaces';
-import { AuthResponseData} from 'src/app/core/auth/auth.interfaces';
+import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
 /**
  * api.service.ts
@@ -28,10 +28,7 @@ export class ApiService {
   ////////////////////////////////////////////////
   // Authenticate
   ////////////////////////////////////////////////
-  public loginUser(
-    email: string,
-    password: string
-  ): Observable<AuthResponseData> {
+  public loginUser(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>(environment.apiURL + '/oauth/token', {
         grant_type: environment.clientLoginData.grantType,
@@ -55,6 +52,12 @@ export class ApiService {
   public getAllOfferShortList(): Observable<Offer[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/list/offer/short')
+      .pipe(catchError(this.handleError));
+  }
+
+  public getOfferSubListWithKeyWords(keyword: string | string[]): Observable<Offer[]> {
+    return this.http
+      .get<Offer[]>(environment.apiURL + '/search/offer/sublist/' + keyword)
       .pipe(catchError(this.handleError));
   }
 
@@ -86,7 +89,7 @@ export class ApiService {
   // Angedacht für die Sortierungsliste.
   public updatePartialOfferList(offerList: PartialOffer[]) {
     const sentList = offerList.filter((offer) => offer.id !== null);
-    return throwError("storePartialList not implemented");
+    return throwError('storePartialList not implemented');
   }
 
   ////////////////////////////////////////////////
@@ -106,35 +109,22 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  public getSubscriptionByIds(
-    user_id: number,
-    offer_id: number
-  ): Observable<SubscriptionData[]> {
+  public getSubscriptionByIds(user_id: number, offer_id: number): Observable<SubscriptionData[]> {
     return this.http
-      .get<SubscriptionData[]>(
-        environment.apiURL + '/api/subscription/' + user_id + '/' + offer_id
-      )
+      .get<SubscriptionData[]>(environment.apiURL + '/api/subscription/' + user_id + '/' + offer_id)
       .pipe(catchError(this.handleError));
   }
 
   public getUserSubscriptions(user_id: number) {
     return this.http
-      .get<SubscriptionData[]>(
-        environment.apiURL + '/api/subscription/user/' + user_id
-      )
+      .get<SubscriptionData[]>(environment.apiURL + '/api/subscription/user/' + user_id)
       .pipe(catchError(this.handleError));
   }
 
-  public putSubscription(
-    id: number,
-    data: Object
-  ): Observable<SubscriptionData> {
+  public putSubscription(id: number, data: Object): Observable<SubscriptionData> {
     console.log(data);
     return this.http
-      .put<SubscriptionData>(
-        environment.apiURL + '/api/subscription/' + id,
-        data
-      )
+      .put<SubscriptionData>(environment.apiURL + '/api/subscription/' + id, data)
       .pipe(catchError(this.handleError));
   }
 
@@ -237,15 +227,14 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-
   ////////////////////////////////////////////////
   // META DATA
   ///////////////////////////////////////////////
 
   public getFilterTags(): Observable<OfferPropertyTagResponse> {
     return this.http
-    .get<OfferPropertyTagResponse>(environment.apiURL + '/api/filter/tags')
-    .pipe(catchError(this.handleError));
+      .get<OfferPropertyTagResponse>(environment.apiURL + '/api/filter/tags')
+      .pipe(catchError(this.handleError));
   }
 
   // Die Filter sind im Moment identisch mit den Properties
@@ -268,11 +257,19 @@ export class ApiService {
     // Mehrere Möglichkeiten
     // Abfrage auf Status
     // 401 - Unauthorized
-    switch (errorRes.status){
-      case 401: errorMessage = e401; return throwError(errorMessage);
-      case 404: errorMessage = e404; return throwError(errorMessage);
-      case 422: errorMessage = e422; return throwError(errorMessage);
-      case 500: errorMessage = e500; return throwError(errorMessage);
+    switch (errorRes.status) {
+      case 401:
+        errorMessage = e401;
+        return throwError(errorMessage);
+      case 404:
+        errorMessage = e404;
+        return throwError(errorMessage);
+      case 422:
+        errorMessage = e422;
+        return throwError(errorMessage);
+      case 500:
+        errorMessage = e500;
+        return throwError(errorMessage);
     }
 
     // oder Abfrage der Message
