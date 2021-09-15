@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferPropertyCache } from 'src/app/core/http/api/offer-property-cache.service';
 
-import { OfferToAPI } from 'src/app/core/http/api/api.interfaces';
-import { Offer, PartialOffer } from 'src/app/core/models/offer';
+import { APIToOfferShortList, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
+import { Offer, OfferShortListForTiles, PartialOffer } from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 
@@ -37,7 +37,7 @@ export class OfferService {
    * only call once in data-handler
    * @returns
    */
-  preloadAllOfferShortList(): any {
+  preloadAllOfferShortList(): Observable<Offer[]> {
     const property$ = this.offerPropertyCache.loadOfferProperties();
     const shortOffer$ = this.offerPropertyCache.loadShortOfferList();
 
@@ -47,11 +47,13 @@ export class OfferService {
         tap((results) => {
           let offers = this.mapDataInOfferStructure(results[0]);
           this.offerStore.dispatch({ type: LOAD, data: offers });
+          console.log('Short-Offers: ', offers);
+          console.log('Properties: ', results[1])
         })
       )
       .subscribe(
         (offers) => {
-          console.log('Offers(short) geladen', offers);
+          //console.log('Offers(short) geladen', offers);
         },
         (error) => {
           console.log('getAllOfferShortList_error:', error);
@@ -59,7 +61,7 @@ export class OfferService {
           this.offers$.error(message);
         },
         () => {
-          console.log('getAllOfferShortList completed');
+          //console.log('getAllOfferShortList completed');
         }
       );
 
@@ -72,7 +74,7 @@ export class OfferService {
    * @deprecated Use getAllOfferShortList
    * @returns
    */
-   preloadAllOffers(): Observable<Offer[]> {
+  preloadAllOffers(): Observable<Offer[]> {
     const property$ = this.offerPropertyCache.loadOfferProperties();
     const longOffer$ = this.offerPropertyCache.loadLongOfferList();
 
@@ -103,8 +105,16 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
-  getSubListOfferWithKeyword(keyword: string): Observable<Offer[]> {
-    return this.apiService.getOfferSubListWithKeyWords(keyword);
+  getSubListOfferWithKeyword(keyword: string): Observable<OfferShortListForTiles[]> {
+    const property$ = this.offerPropertyCache.loadOfferProperties();
+    const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
+
+    // Parallel laden, aber erst auswerten wenn beide completed sind
+    return forkJoin([filteredOffers$, property$]).pipe(
+      map((results) => {
+        return this.mapDataInOfferStructure(results[0]);
+      })
+    );
   }
 
   storeOffer(data: OfferToAPI) {
@@ -156,19 +166,17 @@ export class OfferService {
     this.offerStore.dispatch({ type: LOAD, data: null });
   }
 
-
-  public getOfferProperties(): Observable<Map<string, OfferPropertyList>>{
+  public getOfferProperties(): Observable<Map<string, OfferPropertyList>> {
     return this.offerPropertyCache.loadOfferProperties();
   }
 
-  public createCompetenceString(competences: number[]) : string {
+  public createCompetenceString(competences: number[]): string {
     let competenceArr = [];
     let competenceStr = '';
 
     if (competences.length == 0) {
       competenceStr = 'keine Angabe';
     } else {
-
       for (const competence of competences) {
         const competenceText = this.offerPropertyCache.competencesMap.get(competence);
         competenceArr.push(this.compworkaroundForText(competenceText));
@@ -186,27 +194,42 @@ export class OfferService {
    * @returns
    */
   private compworkaroundForText(text: string): string {
-    switch(text){
-      case 'tech': return 'Tech';
-      case 'digital': return 'Digital Basic';
-      case 'classic': return 'Classic';
-      default: return 'NA';
+    switch (text) {
+      case 'tech':
+        return 'Tech';
+      case 'digital':
+        return 'Digital Basic';
+      case 'classic':
+        return 'Classic';
+      default:
+        return 'NA';
     }
   }
 
-  mapDataInOfferStructure(offers: Partial<Offer>[]): Partial<Offer>[] {
+  mapDataInOfferStructure(offers: APIToOfferShortList[]): OfferShortListForTiles[] {
+    //console.log('API OFFER:', offers);
+    let newOffer: OfferShortListForTiles[] = [];
     for (const offerItem of offers) {
-      offerItem.institution = {
-        id: offerItem.institution_id,
-        title: this.offerPropertyCache.institutionMap.get(offerItem.institution_id),
-        url: undefined,
-      };
-      offerItem.language = this.offerPropertyCache.languageMap.get(offerItem.language_id);
-      offerItem.type = this.offerPropertyCache.formatMap.get(offerItem.offertype_id);
-      offerItem.competence_text = this.createCompetenceString(offerItem.competences);
+      newOffer.push({
+        id: offerItem.id,
+        title: offerItem.title,
+        image_path: offerItem.image_path,
+        institution_id: offerItem.institution_id,
+        institution: {
+          id: offerItem.institution_id,
+          title: this.offerPropertyCache.institutionMap.get(offerItem.institution_id),
+          url: undefined,
+        },
+        offertype_id: offerItem.offertype_id,
+        type: this.offerPropertyCache.formatMap.get(offerItem.offertype_id),
+        language_id: offerItem.language_id,
+        language: this.offerPropertyCache.languageMap.get(offerItem.language_id),
+        competences: offerItem.competences,
+        competence_text: this.createCompetenceString(offerItem.competences),
+        keywords: offerItem.keywords,
+      });
     }
-    return offers;
+    //console.log('Short OFFER:', newOffer);
+    return newOffer;
   }
-
-
 }

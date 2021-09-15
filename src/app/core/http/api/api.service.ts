@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { Institution } from 'src/app/core/models/institution';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
-import { SubscriptionData, OfferToAPI, OfferPropertyTagResponse } from './api.interfaces';
+import { SubscriptionData, OfferToAPI, OfferPropertyTagResponse, APIToOfferShortList } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
 /**
@@ -55,7 +55,7 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  public getOfferSubListWithKeyWords(keyword: string): Observable<Offer[]> {
+  public getOfferSubListWithKeyWords(keyword: string): Observable<APIToOfferShortList[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/search/offer/sublist/' + keyword)
       .pipe(catchError(this.handleError));
