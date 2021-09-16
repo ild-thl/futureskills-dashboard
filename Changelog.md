@@ -6,6 +6,11 @@
 ### added
 - SmallOfferTile
 
+## 2021-09-15/ml
+### changed
+- KI-Playground loads KeyWord-Offers from API
+- Offer Type-Definitions 
+
 ## 2021-09-13/ml
 ### added
 - EditComponent + KeywordList

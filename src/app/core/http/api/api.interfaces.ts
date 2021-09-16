@@ -26,6 +26,19 @@ export interface OfferPropertyItemResponse {
   }[];
 }
 
+// From API to a short Offer
+export type APIToOfferShortList = {
+  id: number;
+  title: string;
+  image_path: string;
+  institution_id: number;
+  offertype_id: number;
+  language_id: number;
+  competences: number[];
+  keywords: string;
+}
+
+// Data to API
 export type OfferToAPI = {
   id: number | null;
   title: string;
