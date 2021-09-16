@@ -1,5 +1,219 @@
 @import "breakpoints";
 
+//new development
+
+// card
+.course-card {
+  background-image: url(~src/styles/ressources/backgrounds/background-ellipse.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .container {
+    .row {
+      .card {
+        border: none;
+        box-shadow:
+          0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+          0 12.5px 10px rgba(0, 0, 0, 0.035),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+          0 100px 80px rgba(0, 0, 0, 0.07);
+          background-color: rgba(255,255,255,0.7);
+          margin: 40px 0;
+        .card-img {
+          width: 60%;
+          height: auto;
+          object-fit: cover;
+          padding: 20px 20px 0 20px;
+        }
+        .card-header {
+          margin: 0;
+          padding: 20px;
+          background-color: var(--color-primary-blue);
+          border: none;
+          h1 {
+            margin: 0;
+            padding: 0;
+            color: var(--white);
+            font-size: 20px;
+            .hashtag {
+              display: block;
+              font-size: 13px;
+            }
+          }
+        }
+        .card-body {
+          padding: 20px 20px 60px 20px;
+          .card-text {
+            margin-bottom: 10px;
+            .chip {
+              padding: 3px 10px;
+              background-color: var(--white);
+              border-radius: 50px;
+              text-transform: uppercase;
+              font-weight: bold;
+              font-size: 15px;
+              display: inline-block;
+              &.tech {
+                border: 1px solid var(--color-tech);
+                color: var(--color-tech);
+              }
+              &.digital {
+                border: 1px solid var(--color-digital);
+                color: var(--color-digital);
+              }
+              &.classic {
+                border: 1px solid var(--color-classic);
+                color: var(--color-classic);
+              }
+              &:nth-child(n+2) {
+                margin-left: 5px;
+              }
+            }
+            &.meta-text {
+              border-bottom: 1px solid #DDDDDD;
+              padding-bottom: 5px;
+            }
+          }
+          .card-button {
+            bottom: 20px;
+            position: absolute;
+            right: 20px;
+            .secondary-button {
+              padding: 5px 40px;
+              border-radius: 50px;
+              font-size: 15px;
+              text-transform: uppercase;
+              &.dark {
+                border: 1px solid var(--color-primary-blue);
+                background-color: var(--color-primary-blue);
+                color: var(--white);
+              }
+              &.light {
+                border: 1px solid var(--color-primary-blue);
+                background-color: var(--white);
+                color: var(--color-primary-blue);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media(min-width: $xs) {
+    .container {
+      .row {
+        .card {
+            background-color: rgba(255,255,255,1);
+            margin: 40px 0;
+          .card-img {
+            width: 100%;
+            padding: 20px;
+          }
+          .card-body {
+            padding: 20px 20px 60px 0;
+            .card-text {
+              margin-bottom: 10px;
+              .chip {
+                font-size: 14px;
+              }
+            }
+            .card-button {
+              bottom: 20px;
+              position: absolute;
+              right: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media(min-width: $sm) {
+    .container {
+      .row {
+        .card {
+          .card-header {
+            h1 {
+              font-size: 28px;
+              .hashtag {
+                font-size: 15px;
+              }
+            }
+          }
+          .card-body {
+            .card-text {
+              .chip {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media(min-width: $md) {
+    .container {
+      .row {
+        &.alignment {
+          min-height: 530px;
+        }
+        .card {
+          .card-body {
+            .card-text {
+              .chip {
+                padding: 3px 10px;
+
+                &:nth-child(n+2) {
+                  margin-left: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media(min-width: $lg) {
+  }
+}
+
+.recommended {
+  background-color: #b55c9c;
+
+  .container-fluid {
+    .row {
+      .card {
+        width: 300px;
+        border: none;
+        box-shadow:
+          0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+          0 12.5px 10px rgba(0, 0, 0, 0.035),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+          0 100px 80px rgba(0, 0, 0, 0.07);
+          background-color: var(--white);
+
+        img {
+          padding: 20px 20px 0 20px;
+        }
+        .card-body {
+          padding: 20px;
+
+          h5 {
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+//end new development
+
+
 .offer-detail {
     th {
         border-top: 0;
