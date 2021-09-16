@@ -1,0 +1,30 @@
+$tileWidth: 150px;
+
+.small-offer-tile {
+  border: 1px solid #102d5d21;
+  overflow: hidden;
+  width: $tileWidth;
+  &:hover {
+    cursor: pointer;
+  }
+
+  .offer-tile-header {
+    .offer-tile-header-image {
+      min-height: $tileWidth;
+      min-width: $tileWidth;
+      width: $tileWidth;
+      background-size: cover;
+      position: relative;
+      text-align: right;
+
+      .title-text{
+          color: #fff;
+          font-size: 0.7em;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin-right: 5px;
+      }
+    }
+  }
+}

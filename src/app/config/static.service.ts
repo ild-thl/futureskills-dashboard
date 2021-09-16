@@ -24,6 +24,9 @@ export class StaticService {
   getKIModelPathMNIST(): any {
     return CustomConfig.kiConfig.mnistPath;
   }
+  getKIDemoLinkPath(): any {
+    return CustomConfig.kiConfig.linkListPath;
+  }
   getKIModelPathSentiment(lang: string = 'en'): any {
     if (lang=='de') {
       return CustomConfig.kiConfig.sentimentPath.de;
@@ -36,5 +39,8 @@ export class StaticService {
   }
   getKeyWords(): any {
     return CustomConfig.courseKeyWords;
+  }
+  getKeyForSuperKICourse(): string {
+    return CustomConfig.courseKeyWordKeys.keyForSuperKIKurs;
   }
 }

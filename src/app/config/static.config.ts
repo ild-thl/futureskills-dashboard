@@ -1,3 +1,9 @@
+
+/**
+ * JSON-Dateien als Modul-Importe
+ */
+import * as keywords from './modul-data/keywordlist.json';
+
 /**
  * Allgemeine Konfigurationen, die nicht fest-codiert werden und unabhängig vom Environment sind.
  * Kann über den static.service per Dependency Injection eingebunden werden.
@@ -16,6 +22,7 @@ export const CustomConfig = {
       en: 'sentiment/en',
       de: 'sentiment/de'
     },
+    linkListPath: 'kiplayground/lnklist'
   },
   paths: {
     lnkLanding: '/',
@@ -41,7 +48,8 @@ export const CustomConfig = {
     FS_SuperKI: '/615',
     FS_NeuronaleNetze: '/602'
   },
-  courseKeyWords: {
-    FS_SuperKI: 'fs_superki'
+  courseKeyWords: (keywords as any).default,
+  courseKeyWordKeys: {
+    keyForSuperKIKurs: 'fssuperkikurs',
   }
 };
