@@ -1,3 +1,4 @@
+import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'kurse',
     component: OfferListComponent,
+  },
+  {
+    path: 'kurse2',
+    component: OfferListPaginatedComponent,
   },
   {
     path: 'kurse/:id',

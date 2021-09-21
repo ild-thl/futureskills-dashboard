@@ -9,7 +9,13 @@ import { catchError } from 'rxjs/operators';
 import { Institution } from 'src/app/core/models/institution';
 import { Offer, PartialOffer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
-import { SubscriptionData, OfferToAPI, OfferPropertyTagResponse, APIToOfferShortList } from './api.interfaces';
+import {
+  SubscriptionData,
+  OfferToAPI,
+  OfferPropertyTagResponse,
+  APIToOfferShortList,
+  PaginatedOfferDataFromAPI,
+} from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
 /**
@@ -38,6 +44,24 @@ export class ApiService {
         client_secret: environment.clientLoginData.clientSecret,
       })
       .pipe(catchError(this.handleLoginError));
+  }
+
+  ////////////////////////////////////////////////
+  // Offers Paginated
+  ////////////////////////////////////////////////
+  public getPaginatedOfferShortList(
+    page: number = 1,
+    count?: number
+  ): Observable<PaginatedOfferDataFromAPI> {
+    if (!count || count < 1) {
+      count = this.staticServive.getOfferDefaultCount();
+    }
+
+    return this.http
+      .get<PaginatedOfferDataFromAPI>(
+        environment.apiURL + '/api/list/offer/short/paginated/' + count + '?page=' + page
+      )
+      .pipe(catchError(this.handleError));
   }
 
   ////////////////////////////////////////////////

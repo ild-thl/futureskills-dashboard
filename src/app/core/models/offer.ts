@@ -1,3 +1,4 @@
+import { PaginatedMetaData } from '../http/api/api.interfaces';
 import { Institution } from './institution';
 /**
  * Typen und Klassen, die das Kurs(Offer) Objekt beschreiben
@@ -55,6 +56,11 @@ export type SmallOfferDetailData = {
   image: string;
   title: string;
 };
+
+// From API to Short Offer Pagination
+export type PaginatedOfferData = {
+  data: OfferShortListForTiles[]
+} & PaginatedMetaData;
 
 // From API to a short Offer
 export type OfferShortListForTiles = {

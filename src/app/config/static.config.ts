@@ -15,6 +15,7 @@ export const CustomConfig = {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     },
   },
+  offerDefaultCount: 4,
   kiConfig: {
     online: true,
     mnistPath: 'mnistnumber',

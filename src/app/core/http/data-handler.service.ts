@@ -41,7 +41,7 @@ export class DataHandlerService {
     this.authService.autoLogin();
 
     // Load Offerdata from start
-    this.preLoadOfferData();
+    //this.preLoadOfferData();
   }
 
   /**

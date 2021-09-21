@@ -1,0 +1,49 @@
+<div class="container page-offers">
+  <h3>Kursübersicht</h3>
+  <p>Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b></p>
+  <div *ngIf="!isError && isLoading">
+   <!-- <app-skeleton-offers></app-skeleton-offers>-->
+  </div>
+  <div *ngIf="!isLoading">
+    <div *ngIf="isError">
+      <p>{{ message }}</p>
+    </div>
+
+    <div *ngIf="!isError && loadedOffers.length === 0">
+      <p>Es wurden keine Angebote gefunden.</p>
+    </div>
+
+    <!-- pagination -->
+    <ngb-pagination
+      [collectionSize]="pageCollectionSize"
+      [(page)]="page"
+      [maxSize]="pageMaxSize"
+      [boundaryLinks]="pageBoundaryLinks"
+      [pageSize]="pageSize"
+      (pageChange)="pageChange()"
+    ></ngb-pagination>
+
+    <div class="mb-5 offers-grid" *ngIf="!isError">
+      <fs-offer-tile
+        class="pr-0 page-offers"
+        *ngFor="let offer of loadedOffers"
+        [offerForTile]="offer"
+        [isSubscribed]="false"
+        displayMode="full"
+      ></fs-offer-tile>
+    </div>
+
+    <div class="row pr-3 pl-3">
+      <div *ngIf="isAuthenticated">
+        <button
+          type="button"
+          class="btn btn-outline-primary mb-3"
+          [routerLink]="[lnkAdminOfferNew]"
+          routerLinkActive="router-link-active"
+        >
+          <span>Neues Angebot erstellen</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

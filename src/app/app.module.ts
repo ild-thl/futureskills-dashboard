@@ -43,6 +43,7 @@ import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-te
 
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
 import { HeaderComponent } from 'src/app/sites/app-root/components/header/header.component';
+import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { HeaderComponent } from 'src/app/sites/app-root/components/header/header
     PrivacyComponent,
     NotfoundComponent,
     InfoStudentsComponent,
-    InfoTeachingComponent
+    InfoTeachingComponent,
+    OfferListPaginatedComponent
   ],
   imports: [
     BrowserModule,

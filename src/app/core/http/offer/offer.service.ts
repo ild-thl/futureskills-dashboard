@@ -5,8 +5,8 @@ import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferPropertyCache } from 'src/app/core/http/api/offer-property-cache.service';
 
-import { APIToOfferShortList, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
-import { Offer, OfferShortListForTiles, PartialOffer } from 'src/app/core/models/offer';
+import { APIToOfferShortList, OfferToAPI, PaginatedMetaData, PaginatedOfferDataFromAPI } from 'src/app/core/http/api/api.interfaces';
+import { Offer, OfferShortListForTiles, PaginatedOfferData, PartialOffer } from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 
@@ -30,6 +30,22 @@ export class OfferService {
     private offerPropertyCache: OfferPropertyCache
   ) {
     this.offers$ = offerStore.items$;
+  }
+
+  getPaginatedOfferData(page?: number, count?: number) : Observable<PaginatedOfferData>{
+    const paginatedOffers$ = this.apiService.getPaginatedOfferShortList(page, count);
+    const property$ = this.offerPropertyCache.loadOfferProperties();
+    // Parallel laden, aber erst auswerten wenn beide completed sind
+    return forkJoin([paginatedOffers$, property$])
+      .pipe(
+        map((results) => {
+          const paginated: PaginatedOfferDataFromAPI = results[0];
+          let offers = this.mapMetaPaginationStructure(paginated);
+          console.log('PaginatedOffers: ', offers);
+          console.log('Properties: ', results[1])
+          return offers;
+        })
+      )
   }
 
   /**
@@ -206,6 +222,25 @@ export class OfferService {
     }
   }
 
+
+  mapMetaPaginationStructure(paginatedData: PaginatedOfferDataFromAPI): PaginatedOfferData {
+    return {
+      data: this.mapDataInOfferStructure(paginatedData.data),
+      current_page: paginatedData.current_page,
+      first_page_url: paginatedData.first_page_url,
+      from: paginatedData.from,
+      last_page: paginatedData.last_page,
+      last_page_url: paginatedData.last_page_url,
+      next_page_url: paginatedData.next_page_url,
+      path: paginatedData.path,
+      per_page: paginatedData.per_page,
+      prev_page_url: paginatedData.prev_page_url,
+      to: paginatedData.to,
+      total: paginatedData.total
+    }
+  }
+
+
   mapDataInOfferStructure(offers: APIToOfferShortList[]): OfferShortListForTiles[] {
     //console.log('API OFFER:', offers);
     let newOffer: OfferShortListForTiles[] = [];
@@ -232,4 +267,6 @@ export class OfferService {
     //console.log('Short OFFER:', newOffer);
     return newOffer;
   }
+
+
 }
