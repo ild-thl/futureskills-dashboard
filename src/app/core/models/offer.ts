@@ -36,10 +36,9 @@ export class Offer {
   public competence_digital: boolean | number;
   public competence_classic: boolean | number;
   public relatedOffers: number[];
+  public relatedOfferData: SmallOfferDetailData[];
 
-  constructor(
-    id: number,
-  ) {
+  constructor(id: number) {
     this.id = id;
   }
 }
@@ -49,7 +48,13 @@ export type SmallOfferListForEditForm = {
   id: number;
   image: string;
   title: string;
-}
+};
+// For related offers in DetailPage
+export type SmallOfferDetailData = {
+  id: number;
+  image: string;
+  title: string;
+};
 
 // From API to a short Offer
 export type OfferShortListForTiles = {
@@ -65,10 +70,10 @@ export type OfferShortListForTiles = {
   competences: number[];
   competence_text: string;
   keywords: string;
-}
+};
 
 // Parts of an Offer (besser die beiden oben verwenden)
-export type PartialOffer = Partial <Offer>;
+export type PartialOffer = Partial<Offer>;
 
 // Meta Data for Offer
 export class OfferMeta {
@@ -87,7 +92,7 @@ export class OfferTimeStamp {
   public listed_from: Date;
   public listed_until: Date;
 
-  public getConvertedTimeStamp(): void{
+  public getConvertedTimeStamp(): void {
     // TODO
   }
 }
