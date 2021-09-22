@@ -9,6 +9,7 @@ import { KIToolsTypes } from '../interfaces/types';
 import * as tf from '@tensorflow/tfjs';
 import { map } from 'rxjs/operators';
 import { DemonstratorExamples } from '../components/demonstrator-example/data/example-data';
+import { OfferShortListForTiles } from 'src/app/core/models/offer';
 
 @Injectable()
 export class KiStatusService {
@@ -181,7 +182,7 @@ export class KiStatusService {
     });
   }
 
-  public getKIModules(): Observable<any> {
+  public getKIModules(): Observable<OfferShortListForTiles[]> {
     return this.offerDataService.getOffersForPlaygroundKIList(this.staticService.getKeyForSuperKICourse());
   }
 }

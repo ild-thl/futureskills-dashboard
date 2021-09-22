@@ -2,9 +2,18 @@
 
 ## [UnReleased v0.6]
 
+## 2021-09-21/ml
+### added
+- Datatypes for SmallOfferTile
+
 ## 2021-09-16/ml
 ### added
 - SmallOfferTile
+
+## 2021-09-15/ml
+### changed
+- KI-Playground loads KeyWord-Offers from API
+- Offer Type-Definitions 
 
 ## 2021-09-13/ml
 ### added
