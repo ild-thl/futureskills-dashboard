@@ -43,9 +43,9 @@
               <div class="col-12 col-sm-7 col-md-8">
                   <div class="card-body">
                       <div class="card-text">
-                        <span class="chip tech" *ngIf="offer?.competence_tech==true">Tech</span>
-                        <span class="chip digital" *ngIf="offer?.competence_digital==true">Digital Basic</span>
-                        <span class="chip classic" *ngIf="offer?.competence_classic==true">Classic</span>
+                        <span class="chip tech popinfo" ngbPopover="Hier steht was TECH ist. Vielleicht gibt es in der Datenbank einen Eintrag was wir nutzen können?" popoverTitle="Was ist TECH?" *ngIf="offer?.competence_tech==true">Tech</span>
+                        <span class="chip digital" ngbPopover="Hier steht was DIGITAL BASIC ist. Vielleicht gibt es in der Datenbank einen Eintrag was wir nutzen können?" popoverTitle="Was ist DIGITAL BASIC?" *ngIf="offer?.competence_digital==true">Digital Basic</span>
+                        <span class="chip classic" ngbPopover="Hier steht was CLASSIC ist. Vielleicht gibt es in der Datenbank einen Eintrag was wir nutzen können?" popoverTitle="Was ist CLASSIC?" *ngIf="offer?.competence_classic==true">Classic</span>
                         <span class="chip none" *ngIf="offer?.competence_tech!=true && offer?.competence_digital!=true && offer?.competence_classic!=true">keine Angabe</span>
                       </div>
                       <div class="card-text meta-text"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Institution: {{ offer?.institution?.title }}</div>
@@ -55,8 +55,36 @@
                         {webinar} presence-event {Präsenzveranstaltung}
                         presence-series {Präsenzveranstaltungsreihe} self-study-course
                         {Selbstlernkurs} course-package {Kurspaket} blended-learning {Blended Learning}}</div>
-                      <div class="card-button">
-                        <button class="secondary-button dark" (click)="showModalWindowToLMS()">Zum Kurs</button>
+                      <div class="buttons">
+                        <div class="edit-button" ngbDropdown *ngIf="isAuthenticated">
+                          <!-- todo: Nur Admins! -->
+                          <button
+                            class="btn btn-light cog"
+                            id="dropdownBasic1"
+                            ngbDropdownToggle
+                          >
+                            <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+                          </button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button
+                              class="btn btn-primary"
+                              [routerLink]="[lnkAdminOfferEdit, offer?.id]"
+                              ngbDropdownItem
+                            >
+                              <fa-icon [icon]="['fas', 'pen']"></fa-icon> Editieren
+                            </button>
+                            <button
+                              class="btn btn-primary"
+                              ngbDropdownItem
+                              (click)="showModalWindowDeleteOffer()"
+                            >
+                              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon> Löschen
+                            </button>
+                          </div>
+                        </div>
+                        <div class="card-button">
+                          <button class="secondary-button dark" (click)="showModalWindowToLMS()">Zum Kurs</button>
+                        </div>
                       </div>
 
                   </div>
@@ -74,45 +102,66 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-12 col-xs-8 col-md-7">
+        <div class="col-12 col-md-7">
           <h3>Was erwartet dich im Kurs?</h3>
           <div [innerHTML]="offer?.description"></div>
         </div>
-        <div class="col-12 col-xs-4 col-md-5">
-          <div class="mb-4">
-            <div class="mb-4" *ngIf="offer?.author">
-              <h4>Autor/innen</h4>
-              {{ offer?.author }}
+        <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
+          <div class="course-metadata">
+            <h5 class="mb-3">Eckdaten</h5>
+            <div class="course-metadata-detail" *ngIf="offer?.author">
+              <div class="metadata-icon">
+                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
+              </div>
+              <div class="metadata-content">
+                <h6>Autor/innen</h6>
+                <p>{{ offer?.author }}</p>
+              </div>
             </div>
-          </div>
-          <div class="mb-4">
-            <div class="mb-4" *ngIf="offer?.meta.time_requirement">
-              <h4>Arbeitsaufwand</h4>
-              {{ offer?.meta.time_requirement }}
+            <div class="course-metadata-detail" *ngIf="offer?.meta.time_requirement">
+              <div class="metadata-icon">
+                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
+              </div>
+              <div class="metadata-content">
+                <h6>Arbeitsaufwand</h6>
+                {{ offer?.meta.time_requirement }}
+              </div>
             </div>
-          </div>
-          <div class="mb-4">
-            <div class="mb-4" *ngIf="offer?.meta.requirements">
-              <h4>Voraussetzungen</h4>
-              {{ offer?.meta.requirements }}
+            <div class="course-metadata-detail" *ngIf="offer?.meta.requirements">
+              <div class="metadata-icon">
+                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
+              </div>
+              <div class="metadata-content">
+                <h6>Voraussetzungen</h6>
+                {{ offer?.meta.requirements }}
+              </div>
             </div>
-          </div>
-          <div class="mb-4">
-            <div class="mb-4" *ngIf="offer?.meta.niveau">
-              <h4>Niveau</h4>
-              {{ offer?.meta.niveau }}
+            <div class="course-metadata-detail" *ngIf="offer?.meta.niveau">
+              <div class="metadata-icon">
+                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
+              </div>
+              <div class="metadata-content">
+                <h6>Niveau</h6>
+                {{ offer?.meta.niveau }}
+              </div>
             </div>
-          </div>
-          <div class="mb-4">
-            <div class="mb-4" *ngIf="offer?.meta.exam">
-              <h4>Prüfung</h4>
-              {{ offer?.meta.exam }}
+            <div class="course-metadata-detail" *ngIf="offer?.meta.exam">
+              <div class="metadata-icon">
+                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
+              </div>
+              <div class="metadata-content">
+                <h6>Prüfung</h6>
+                {{ offer?.meta.exam }}
+              </div>
             </div>
-          </div>
-          <div class="mb-4">
-            <div class="mb-4" *ngIf="offer?.meta.sponsor">
-              <h4>Sponsor</h4>
-              {{ offer?.meta.sponsor }}
+            <div class="course-metadata-detail" *ngIf="offer?.meta.sponsor">
+              <div class="metadata-icon">
+                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
+              </div>
+              <div class="metadata-content">
+                <h6>Sponsor</h6>
+                {{ offer?.meta.sponsor }}
+              </div>
             </div>
           </div>
         </div>
@@ -121,79 +170,40 @@
 
   </section>
 
-  <section class="detail-page recommended py-5">
+  <section class="detail-page recommended py-5" *ngIf="offer.relatedOfferData.length > 0">
 
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <div class="col-lg-10 pb-3">
-          <h3 class="h2 text-center">Weil du dich "{{ offer?.title }}" angeguckt hast.</h3>
+        <div class="col-lg-10 pb-5">
+          <h3 class="h2 text-center header">Weil du dich "{{ offer?.title }}" angeguckt hast.</h3>
         </div>
       </div>
       <div class="row justify-content-center">
 
-          <div class="col-auto">
-            <div class="card h-100">
-              <a href="" (click)="showModalWindowToLMS()"><img class="card-img-top" src="{{ offer?.image_path }}" alt="Card image cap"></a>
-              <div class="card-body">
-                <a href="" (click)="showModalWindowToLMS()">
-                  <h5 class="">{{ offer?.title }}</h5>
-                </a>
-                <div style="background-color: blueviolet;">
-                  <button class="card-info-button" (click)="acc.toggle('toggle-card-info')">
-                    <fa-icon [icon]="['fas', 'chevron-down']"></fa-icon>
-                  </button>
+          <div class="col-auto mb-3" *ngFor="let item of offer.relatedOfferData; let i = index;">
+            <div class="small-offer-tile h-100" [routerLink]="[lnkOffers, item.id]">
+              <div class="offer-tile-header">
+                <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + item.image + ')'}">
                 </div>
               </div>
-              <div class="additional-card-info">
-                <ngb-accordion #acc="ngbAccordion">
-                  <ngb-panel id="toggle-card-info">
-                    <ng-template ngbPanelContent>
-                      <div class="card-text">
-                        <span class="chip tech" *ngIf="offer?.competence_tech==true">Tech</span>
-                        <span class="chip digital" *ngIf="offer?.competence_digital==true">Digital Basic</span>
-                        <span class="chip classic" *ngIf="offer?.competence_classic==true">Classic</span>
-                        <span class="chip none" *ngIf="offer?.competence_tech!=true && offer?.competence_digital!=true && offer?.competence_classic!=true">keine Angabe</span>
-                      </div>
-                      <div class="card-text meta-text"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Institution: {{ offer?.institution?.title }}</div>
-                      <div class="card-text meta-text"><fa-icon [icon]="['fas', 'globe-europe']"></fa-icon> Sprache: {offer?.language, select, de {Deutsch} en {Englisch}}</div>
-                      <div class="card-text meta-text"><fa-icon [icon]="['fas', 'chalkboard-teacher']"></fa-icon> Format:
-                        {offer?.type, select, online-course {Online Kurs} webinar
-                        {webinar} presence-event {Präsenzveranstaltung}
-                        presence-series {Präsenzveranstaltungsreihe} self-study-course
-                        {Selbstlernkurs} course-package {Kurspaket} blended-learning {Blended Learning}}</div>
-                        <div class="card-button">
-                          <button class="secondary-button dark" (click)="showModalWindowToLMS()">Zum Kurs</button>
-                        </div>
-                    </ng-template>
-                  </ngb-panel>
-                </ngb-accordion>
+              <div class="offer-tile-body">
+                <div class="title-text">{{item.title}}</div>
               </div>
             </div>
           </div>
-
-          <div class="col-auto">
-            <a href="" (click)="showModalWindowToLMS()">
-              <div class="card h-100">
-                <img class="card-img-top" src="{{ offer?.image_path }}" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="">{{ offer?.title }} {{ offer?.title }} {{ offer?.title }} {{ offer?.title }}</h5>
+<!--
+          <div class="col-auto mb-3">
+            <div class="small-offer-tile h-100" [routerLink]="[lnkOffers, offerForTile?.id]">
+              <div class="offer-tile-header">
+                <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + offerForTile?.image + ')'}">
                 </div>
               </div>
-            </a>
-          </div>
-
-          <div class="col-auto">
-            <a href="" (click)="showModalWindowToLMS()">
-              <div class="card h-100">
-                <img class="card-img-top" src="{{ offer?.image_path }}" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="">{{ offer?.title }} {{ offer?.title }}</h5>
-                </div>
+              <div class="offer-tile-body">
+                <div class="title-text">{{offerForTile?.title}}</div>
               </div>
-            </a>
+            </div>
           </div>
-
-
+-->
       </div>
     </div>
 
