@@ -6,7 +6,12 @@ import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferPropertyCache } from 'src/app/core/http/api/offer-property-cache.service';
 
 import { APIToOfferShortList, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
-import { Offer, OfferShortListForTiles, PartialOffer } from 'src/app/core/models/offer';
+import {
+  Offer,
+  OfferShortListForTiles,
+  PartialOffer,
+  SmallOfferDetailData,
+} from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 
@@ -48,7 +53,7 @@ export class OfferService {
           let offers = this.mapDataInOfferStructure(results[0]);
           this.offerStore.dispatch({ type: LOAD, data: offers });
           console.log('Short-Offers: ', offers);
-          console.log('Properties: ', results[1])
+          console.log('Properties: ', results[1]);
         })
       )
       .subscribe(
@@ -105,6 +110,12 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
+
+  /**
+   * Offers nach Keywords
+   * @param keyword
+   * @returns OfferShortListForTiles[]
+   */
   getSubListOfferWithKeyword(keyword: string): Observable<OfferShortListForTiles[]> {
     const property$ = this.offerPropertyCache.loadOfferProperties();
     const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
@@ -113,6 +124,20 @@ export class OfferService {
     return forkJoin([filteredOffers$, property$]).pipe(
       map((results) => {
         return this.mapDataInOfferStructure(results[0]);
+      })
+    );
+  }
+
+  /**
+   * Offers nach Keywords
+   * @param keyword
+   * @returns SmallOfferDetailData[]
+   */
+  getShortSubListOfferWithKeywords(keyword: string): Observable<SmallOfferDetailData[]> {
+    const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
+    return filteredOffers$.pipe(
+      map((results) => {
+        return this.mapDataInSmallOfferDetailData(results);
       })
     );
   }
@@ -204,6 +229,20 @@ export class OfferService {
       default:
         return 'NA';
     }
+  }
+
+  /**
+   * Returns only id/title/image
+   * @param offers
+   */
+  mapDataInSmallOfferDetailData(offers: APIToOfferShortList[]): SmallOfferDetailData[] {
+    return offers.map((data) => {
+      return {
+        id: data.id,
+        image: data.image_path,
+        title: data.title,
+      };
+    });
   }
 
   mapDataInOfferStructure(offers: APIToOfferShortList[]): OfferShortListForTiles[] {

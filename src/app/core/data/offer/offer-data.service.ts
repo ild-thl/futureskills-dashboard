@@ -9,7 +9,13 @@ import { UserData, UserOfferData } from 'src/app/core/data/user/user-data.interf
 import { DataHandlerService } from 'src/app/core/http/data-handler.service';
 
 import { User } from 'src/app/core/models/user';
-import { Offer, SmallOfferListForEditForm, PartialOffer, OfferShortListForTiles } from 'src/app/core/models/offer';
+import {
+  Offer,
+  SmallOfferListForEditForm,
+  PartialOffer,
+  OfferShortListForTiles,
+  SmallOfferDetailData,
+} from 'src/app/core/models/offer';
 
 @Injectable({
   providedIn: 'root',
@@ -47,8 +53,10 @@ export class OfferDataService {
   }
 
   // Playground-KI-List
-  public getOffersForPlaygroundKIList(keyword: string | string[]): Observable<OfferShortListForTiles[]> {
-    return this.getFilteredOffersWithKeyword(keyword);
+  public getOffersForPlaygroundKIList(
+    keyword: string | string[]
+  ): Observable<SmallOfferDetailData[]> {
+    return this.getFilteredOffersWithKeyword(keyword, true) as Observable<SmallOfferDetailData[]>;
   }
 
   // EditForm (für die Kurszuordnungen)
@@ -124,19 +132,22 @@ export class OfferDataService {
   // Loading OfferList
   // ///////////////////////////
 
-
   /**
    * Laden der Kursliste gefiltered nach Keyword
    * @param keyword
-   * @returns Observable<Offer[]>
+   * @returns Observable<OfferShortListForTiles[]> | Observable<SmallOfferDetailData[]>
    */
-  private getFilteredOffersWithKeyword(keyword: string | string[]): Observable<OfferShortListForTiles[]> {
+  private getFilteredOffersWithKeyword(
+    keyword: string | string[],
+    short: boolean = false
+  ): Observable<OfferShortListForTiles[]> | Observable<SmallOfferDetailData[]> {
     if (keyword == null || keyword.length == 0) return of([]);
+
     if (Array.isArray(keyword)) {
       // TODO: Aktuell keine KeyListen, nehmen wir nur den ersten
-      return this.getSubListOfferKeywordWithoutLoginCheck(keyword[0]);
+      return this.getSubListOfferKeywordWithoutLoginCheck(keyword[0], short);
     } else {
-      return this.getSubListOfferKeywordWithoutLoginCheck(keyword);
+      return this.getSubListOfferKeywordWithoutLoginCheck(keyword, short);
     }
   }
 
@@ -189,17 +200,22 @@ export class OfferDataService {
     );
   } */
 
-
   /**
    * Laden einer Kursliste nach Keywords (direkt)
    * ohne check ob man eingeloggt ist
    * @param keyword
    * @returns  Observable<Offer[]>
    */
-  private getSubListOfferKeywordWithoutLoginCheck(keyword: string): Observable<OfferShortListForTiles[]> {
-    return this.offerService.getSubListOfferWithKeyword(keyword);
+  private getSubListOfferKeywordWithoutLoginCheck(
+    keyword: string,
+    short: boolean = false
+  ): Observable<OfferShortListForTiles[]> | Observable<SmallOfferDetailData[]> {
+    if (short) {
+      return this.offerService.getShortSubListOfferWithKeywords(keyword);
+    } else {
+      return this.offerService.getSubListOfferWithKeyword(keyword);
+    }
   }
-
 
   /**
    * Laden eines Kurses
@@ -345,26 +361,26 @@ export class OfferDataService {
    * @deprecated (List comes from API now)
    * @param keyword
    */
-     private getFilteredOffersWithKeyword_local(keyword: string | string[]): Observable<Offer[]> {
-      if (keyword == null || keyword.length == 0) return of([]);
+  private getFilteredOffersWithKeyword_local(keyword: string | string[]): Observable<Offer[]> {
+    if (keyword == null || keyword.length == 0) return of([]);
 
-      return this.getAllOfferDataWithoutLoginCheck().pipe(
-        map((offerList) => {
-          return offerList.filter((item) => {
-            if (!item.keywords) {
-              return false;
+    return this.getAllOfferDataWithoutLoginCheck().pipe(
+      map((offerList) => {
+        return offerList.filter((item) => {
+          if (!item.keywords) {
+            return false;
+          } else {
+            const list = item.keywords.split(',').map((item) => {
+              return item.trim().toLowerCase();
+            });
+            if (Array.isArray(keyword)) {
+              return keyword.every((keyword) => list.includes(keyword));
             } else {
-              const list = item.keywords.split(',').map((item) => {
-                return item.trim().toLowerCase();
-              });
-              if (Array.isArray(keyword)) {
-                return keyword.every((keyword) => list.includes(keyword));
-              } else {
-                return list.includes(keyword);
-              }
+              return list.includes(keyword);
             }
-          });
-        })
-      );
-    }
+          }
+        });
+      })
+    );
+  }
 }

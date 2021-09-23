@@ -1,0 +1,56 @@
+<div class="card-course-carousel">
+  <div class="courses">
+    <ng-container *ngIf="kiOffers">
+      <ngx-glide
+        #ngxGlide
+        [showArrows]="sliderOptions.showArrows"
+        [showBullets]="sliderOptions.showBullets"
+        [arrowLeftLabel]="sliderOptions.arrowLeftLabel"
+        [arrowRightLabel]="sliderOptions.arrowRightLabel"
+        [type]="sliderOptions.type"
+        [startAt]="sliderOptions.startAt"
+        [perView]="sliderOptions.perView"
+        [focusAt]="sliderOptions.isCenter ? 'center' : sliderOptions.focusAt"
+        [gap]="sliderOptions.gap"
+        [peek]="sliderOptions.peek"
+        [autoplay]="isAutoplay ? sliderOptions.autoplay : false"
+        [hoverpause]="sliderOptions.hoverpause"
+        [keyboard]="sliderOptions.keyboard"
+        [bound]="sliderOptions.bound"
+        [swipeThreshold]="isSwipeThreshold ? sliderOptions.swipeThreshold : false"
+        [dragThreshold]="isDragThreshold ? sliderOptions.dragThreshold : false"
+        [perTouch]="isPerTouch ? sliderOptions.perTouch : false"
+        [touchRatio]="sliderOptions.touchRatio"
+        [touchAngle]="sliderOptions.touchAngle"
+        [animationDuration]="sliderOptions.animationDuration"
+        [rewind]="sliderOptions.rewind"
+        [rewindDuration]="sliderOptions.rewindDuration"
+        [animationTimingFunc]="sliderOptions.animationTimingFunc"
+        [direction]="sliderOptions.direction"
+        [listenToEvents]="true"
+        [breakpoints]="sliderOptions.breakpoints"
+        [arrowLeftTemplate]="(sliderOptions.showCustomArrows && arrowLeftTemplate) || null"
+        [arrowRightTemplate]="(sliderOptions.showCustomArrows && arrowRightTemplate) || null"
+      >
+        <div class="course" *ngFor="let offer of kiOffers">
+          <fs-small-kioffer-tile [offerForTile]="offer"></fs-small-kioffer-tile>
+        </div>
+      </ngx-glide>
+    </ng-container>
+
+    <ng-template #arrowLeftTemplate>
+      <div class="carousel-arrow carousel-arrow-left">
+        <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
+      </div>
+    </ng-template>
+    <ng-template #arrowRightTemplate>
+      <div class="carousel-arrow carousel-arrow-right">
+        <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="isLoading">
+      <mat-spinner class="spinner"></mat-spinner>
+    </ng-container>
+  </div>
+</div>

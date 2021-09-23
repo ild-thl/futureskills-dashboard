@@ -1,0 +1,56 @@
+$tileWidth: 200px;
+$tileHeight: 200px; //350
+$base-color: var(--color-primary-blue-dark);
+
+.card-course-carousel {
+  .courses {
+    position: relative;
+    height: $tileHeight;
+    width: 100%;
+    ///background-color: aqua;
+
+    .course {
+      height: $tileHeight;
+      width: 100%;
+      //background-color: blueviolet;
+    }
+
+    .spinner {
+      margin: auto auto;
+    }
+  }
+
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: 31px;
+    background-position: 50%;
+    border-radius: 100px;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    z-index: 10;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgb(0 0 0 / 15%);
+
+    &.carousel-arrow-left {
+      fa-icon {
+        position: absolute;
+        top: 8px;
+        left: 14px;
+      }
+      left: 2%;
+    }
+
+    &.carousel-arrow-right {
+      fa-icon {
+        position: absolute;
+        top: 8px;
+        left: 15px;
+      }
+      right: 2%;
+    }
+  }
+}
