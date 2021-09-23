@@ -43,9 +43,9 @@
               <div class="col-12 col-sm-7 col-md-8">
                   <div class="card-body">
                       <div class="card-text">
-                        <span class="chip tech popinfo" ngbPopover="Hier steht was TECH ist. Vielleicht gibt es in der Datenbank einen Eintrag was wir nutzen können?" popoverTitle="Was ist TECH?" *ngIf="offer?.competence_tech==true">Tech</span>
-                        <span class="chip digital" ngbPopover="Hier steht was DIGITAL BASIC ist. Vielleicht gibt es in der Datenbank einen Eintrag was wir nutzen können?" popoverTitle="Was ist DIGITAL BASIC?" *ngIf="offer?.competence_digital==true">Digital Basic</span>
-                        <span class="chip classic" ngbPopover="Hier steht was CLASSIC ist. Vielleicht gibt es in der Datenbank einen Eintrag was wir nutzen können?" popoverTitle="Was ist CLASSIC?" *ngIf="offer?.competence_classic==true">Classic</span>
+                        <span class="chip tech popinfo" ngbPopover="Technologische Fähigkeiten umfassen jene Fähigkeiten, die für die Gestaltung von transformativen Technologien notwendig sind, zum Beispiel Webentwicklung aber auch Blockchain Entwicklung." popoverTitle="Was ist TECH?" *ngIf="offer?.competence_tech==true">Tech</span>
+                        <span class="chip digital" ngbPopover="Digitale Grundfähigkeiten beschreiben Fähigkeiten, durch die Menschen in der Lage sind, sich in einer digitalisierten Umwelt zurechtzufinden und aktiv an ihr teilzunehmen, zum Beispiel Digitale Interaktion und Agiles Arbeiten." popoverTitle="Was ist DIGITAL BASIC?" *ngIf="offer?.competence_digital==true">Digital Basic</span>
+                        <span class="chip classic" ngbPopover="Die Bedeutung den Klassische Kompetenzen wird aus Sicht der Unternehmen in den kommenden Jahren im Arbeitsleben zunehmen, zum Beispiel Adaptionsfähigkeit, Kreativität und Durchhaltevermögen" popoverTitle="Was ist CLASSIC?" *ngIf="offer?.competence_classic==true">Classic</span>
                         <span class="chip none" *ngIf="offer?.competence_tech!=true && offer?.competence_digital!=true && offer?.competence_classic!=true">keine Angabe</span>
                       </div>
                       <div class="card-text meta-text"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Institution: {{ offer?.institution?.title }}</div>
@@ -170,7 +170,7 @@
 
   </section>
 
-  <section class="detail-page recommended py-5" *ngIf="offer.relatedOfferData.length > 0">
+  <section class="detail-page recommended py-5" ><!--*ngIf="offer.relatedOfferData.length > 0"-->
 
     <div class="container-fluid">
       <div class="row justify-content-center">
@@ -179,7 +179,10 @@
         </div>
       </div>
       <div class="row justify-content-center">
-
+       <p *ngFor="let item of offerData.relatedOfferData; let i=index;" >
+          AUSGABE: {{ item | json }}
+        </p>
+<!--
           <div class="col-auto mb-3" *ngFor="let item of offer.relatedOfferData; let i = index;">
             <div class="small-offer-tile h-100" [routerLink]="[lnkOffers, item.id]">
               <div class="offer-tile-header">
@@ -191,7 +194,7 @@
               </div>
             </div>
           </div>
-<!--
+
           <div class="col-auto mb-3">
             <div class="small-offer-tile h-100" [routerLink]="[lnkOffers, offerForTile?.id]">
               <div class="offer-tile-header">

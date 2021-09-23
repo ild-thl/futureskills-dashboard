@@ -49,24 +49,41 @@
             margin-bottom: 10px;
             .chip {
               padding: 3px 10px;
-              background-color: var(--white);
+              background-color: var(--color-function-white);
               border-radius: 50px;
               text-transform: uppercase;
               font-weight: bold;
               font-size: 15px;
               display: inline-block;
               cursor: pointer;
+              transition: all 0.2s ease-in;
+
               &.tech {
                 border: 1px solid var(--color-tech);
                 color: var(--color-tech);
+
+                &:hover {
+                  background-color: var(--color-tech);
+                  color: var(--color-function-white);
+                }
               }
               &.digital {
                 border: 1px solid var(--color-digital);
                 color: var(--color-digital);
+
+                &:hover {
+                  background-color: var(--color-digital);
+                  color: var(--color-function-white);
+                }
               }
               &.classic {
                 border: 1px solid var(--color-classic);
                 color: var(--color-classic);
+
+                &:hover {
+                  background-color: var(--color-classic);
+                  color: var(--color-function-white);
+                }
               }
               &:nth-child(n+2) {
                 margin-left: 5px;
@@ -124,18 +141,42 @@
                 border-radius: 50px;
                 font-size: 15px;
                 text-transform: uppercase;
+                transition: all 0.1s ease-in;
 
                 &.dark {
                   border: 1px solid var(--color-primary-blue);
                   background-color: var(--color-primary-blue);
                   color: var(--white);
+                  position: relative;
+                  overflow: hidden;
+
+                  &::after {
+                    content:"";
+                    width: 50px;
+                    height: 70px;
+                    background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 100%);;
+                    position: absolute;
+                    top: -20px;
+                    left: -70px;
+                    opacity: 0.8;
+                    transform: rotate(35deg);
+                    transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+                  }
                   &:hover {
-                    background-color: #003064;
+                    background-color: var(--color-primary-blue);
+                    border: 1px solid var(--color-primary-blue);
+
+                    &::after {
+                      left: 150%;
+                    }
+                  }
+                  &:active {
+                    margin-top: 4px;
                   }
                 }
                 &.light {
                   border: 1px solid var(--color-primary-blue);
-                  background-color: var(--white);
+                  background-color: var(--color-function-white);
                   color: var(--color-primary-blue);
                 }
               }
@@ -243,7 +284,7 @@ $tileWidth: 225px;
     0 22.3px 17.9px rgba(0, 0, 0, 0.042),
     0 41.8px 33.4px rgba(0, 0, 0, 0.05),
     0 100px 80px rgba(0, 0, 0, 0.07);
-  background-color: var(--white);
+  background-color: var(--color-function-white);
   overflow: hidden;
   transition: box-shadow 0.2s ease-out;
   width: $tileWidth;
@@ -271,7 +312,7 @@ $tileWidth: 225px;
     }
   }
   .offer-tile-body {
-    background-color:  var(--white);
+    background-color:  var(--color-function-white);
     width: 100%;
     height: auto;
     padding: 15px;
@@ -341,7 +382,7 @@ $tileWidth: 225px;
   .container-fluid {
     .row {
       .header {
-        color: #fff
+        color: var(--color-function-white);
       }
     }
   }
