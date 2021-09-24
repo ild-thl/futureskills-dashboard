@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { CourseSliderEvents, CourseSliderOptions } from './course-slider-options';
+import { CourseSliderOptions } from './course-slider-options';
 import { NgxGlideComponent } from 'ngx-glide';
 
 @Component({
@@ -25,7 +25,6 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
   isSwipeThreshold!: boolean;
   isDragThreshold!: boolean;
   isPerTouch!: boolean;
-
 
   constructor() {
     this.isAutoplay = false;
