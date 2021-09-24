@@ -1,56 +1,29 @@
-<div class="card-course-carousel">
-  <div class="courses">
-    <ng-container *ngIf="kiOffers">
-      <ngx-glide
-        #ngxGlide
-        [showArrows]="sliderOptions.showArrows"
-        [showBullets]="sliderOptions.showBullets"
-        [arrowLeftLabel]="sliderOptions.arrowLeftLabel"
-        [arrowRightLabel]="sliderOptions.arrowRightLabel"
-        [type]="sliderOptions.type"
-        [startAt]="sliderOptions.startAt"
-        [perView]="sliderOptions.perView"
-        [focusAt]="sliderOptions.isCenter ? 'center' : sliderOptions.focusAt"
-        [gap]="sliderOptions.gap"
-        [peek]="sliderOptions.peek"
-        [autoplay]="isAutoplay ? sliderOptions.autoplay : false"
-        [hoverpause]="sliderOptions.hoverpause"
-        [keyboard]="sliderOptions.keyboard"
-        [bound]="sliderOptions.bound"
-        [swipeThreshold]="isSwipeThreshold ? sliderOptions.swipeThreshold : false"
-        [dragThreshold]="isDragThreshold ? sliderOptions.dragThreshold : false"
-        [perTouch]="isPerTouch ? sliderOptions.perTouch : false"
-        [touchRatio]="sliderOptions.touchRatio"
-        [touchAngle]="sliderOptions.touchAngle"
-        [animationDuration]="sliderOptions.animationDuration"
-        [rewind]="sliderOptions.rewind"
-        [rewindDuration]="sliderOptions.rewindDuration"
-        [animationTimingFunc]="sliderOptions.animationTimingFunc"
-        [direction]="sliderOptions.direction"
-        [listenToEvents]="true"
-        [breakpoints]="sliderOptions.breakpoints"
-        [arrowLeftTemplate]="(sliderOptions.showCustomArrows && arrowLeftTemplate) || null"
-        [arrowRightTemplate]="(sliderOptions.showCustomArrows && arrowRightTemplate) || null"
-      >
-        <div class="course" *ngFor="let offer of kiOffers">
-          <fs-small-kioffer-tile [offerForTile]="offer"></fs-small-kioffer-tile>
+<div class="course-carousel" *ngIf="sliderIsVisible && sliderData">
+  <div class="container">
+    <div class="row">
+      <div class="col-10 offset-1">
+        <div class="courses">
+          <owl-carousel-o [options]="customOptions" #owlCarousel (initialized)="getData($event)">
+            <ng-container *ngFor="let slide of sliderData">
+              <ng-template carouselSlide [id]="slide.sliderid" [width]="150">
+                <img class="course" [src]="slide.image" [alt]="slide.title" [title]="slide.title" />
+                <!--<fs-small-kioffer-tile [offerForTile]="slide"></fs-small-kioffer-tile>-->
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
         </div>
-      </ngx-glide>
-    </ng-container>
-
-    <ng-template #arrowLeftTemplate>
-      <div class="carousel-arrow carousel-arrow-left">
-        <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
       </div>
-    </ng-template>
-    <ng-template #arrowRightTemplate>
-      <div class="carousel-arrow carousel-arrow-right">
-        <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
-      </div>
-    </ng-template>
-
-    <ng-container *ngIf="isLoading">
-      <mat-spinner class="spinner"></mat-spinner>
-    </ng-container>
+    </div>
   </div>
+
+  <!-- <div class="container-fluid">
+  <div class="d-flex justify-content-center mt-3 mb-5">
+    <div class="carousel-arrow carousel-arrow-left mr-2" (click)="prev()">
+      <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
+    </div>
+    <div class="carousel-arrow carousel-arrow-right ml-2" (click)="next()">
+      <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+    </div>
+  </div>
+</div> -->
 </div>

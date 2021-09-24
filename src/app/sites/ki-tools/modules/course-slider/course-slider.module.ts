@@ -5,6 +5,7 @@ import { CourseSliderComponent } from './course-slider.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxGlideModule } from 'ngx-glide';
 import { RouterModule } from '@angular/router';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     SharedModule,
     NgxGlideModule,
+    CarouselModule,
   ],
   exports:[
     CourseSliderComponent
