@@ -120,6 +120,11 @@
                   border-bottom-color: var(--color-secondary-pink);
                 }
               }
+              &.bs-popover-bottom > .popover-header {
+                &::before {
+                  border-bottom-color: var(--color-secondary-pink);
+                }
+              }
             }
             &.meta-text {
               border-bottom: 1px solid #DDDDDD;
@@ -130,6 +135,7 @@
             position: absolute;
             bottom: 20px;
             width: 100%;
+            min-height: 35px;
 
             .card-button {
               display: inline-block;
@@ -141,33 +147,33 @@
                 border-radius: 50px;
                 font-size: 15px;
                 text-transform: uppercase;
-                transition: all 0.1s ease-in;
+                transition: all 0.2s ease-in;
+                border: 0;
 
                 &.dark {
-                  border: 1px solid var(--color-primary-blue);
                   background-color: var(--color-primary-blue);
                   color: var(--white);
                   position: relative;
                   overflow: hidden;
+                  z-index: 1;
 
                   &::after {
                     content:"";
-                    width: 50px;
-                    height: 70px;
-                    background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 100%);;
                     position: absolute;
-                    top: -20px;
-                    left: -70px;
-                    opacity: 0.8;
-                    transform: rotate(35deg);
-                    transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background-color: var(--color-primary-blue-hover);
+                    z-index: -1;
+                    transition: all 0.2s ease-in-out;
+                    border-radius: 50px;
                   }
                   &:hover {
-                    background-color: var(--color-primary-blue);
-                    border: 1px solid var(--color-primary-blue);
+                    color: var(--white);
 
                     &::after {
-                      left: 150%;
+                      left: 0%;
                     }
                   }
                   &:active {
@@ -268,69 +274,6 @@
         }
       }
     }
-  }
-  @media(min-width: $lg) {
-  }
-}
-
-$tileWidth: 225px;
-
-.small-offer-tile {
-  border: none;
-  box-shadow:
-    0 2.8px 2.2px rgba(0, 0, 0, 0.02),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.028),
-    0 12.5px 10px rgba(0, 0, 0, 0.035),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.042),
-    0 41.8px 33.4px rgba(0, 0, 0, 0.05),
-    0 100px 80px rgba(0, 0, 0, 0.07);
-  background-color: var(--color-function-white);
-  overflow: hidden;
-  transition: box-shadow 0.2s ease-out;
-  width: $tileWidth;
-  &:hover {
-    border: none;
-    cursor: pointer;
-    box-shadow:
-    0px 2.9px 2.2px rgba(0, 0, 0, 0.061),
-    0px 6.9px 5.3px rgba(0, 0, 0, 0.089),
-    0px 13px 10px rgba(0, 0, 0, 0.111),
-    0px 23.2px 17.9px rgba(0, 0, 0, 0.132),
-    0px 43.4px 33.4px rgba(0, 0, 0, 0.156),
-    0px 104px 80px rgba(0, 0, 0, 0.2);
-  }
-
-  .offer-tile-header {
-    .offer-tile-header-image {
-      min-height: $tileWidth;
-      min-width: $tileWidth;
-      width: $tileWidth;
-      background-size: cover;
-      background-position: center center;
-      position: relative;
-      text-align: right;
-    }
-  }
-  .offer-tile-body {
-    background-color:  var(--color-function-white);
-    width: 100%;
-    height: auto;
-    padding: 15px;
-
-    .title-text {
-      color: #000;
-      /*font-size: 0.7em;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      margin-right: 5px;*/
-    }
-  }
-  @media(min-width: $xs) {
-  }
-  @media(min-width: $sm) {
-  }
-  @media(min-width: $md) {
   }
   @media(min-width: $lg) {
   }

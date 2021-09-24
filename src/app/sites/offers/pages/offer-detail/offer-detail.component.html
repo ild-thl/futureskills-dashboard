@@ -20,8 +20,8 @@
           <a [routerLink]="lnkOffers"><fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> zur Übersicht </a>
         </div>
 
-      </div> <!-- end of .row -->
-    </div> <!-- end of .container -->
+      </div>
+    </div>
 
   </section>
 
@@ -170,7 +170,7 @@
 
   </section>
 
-  <section class="detail-page recommended py-5" ><!--*ngIf="offer.relatedOfferData.length > 0"-->
+  <section class="detail-page recommended py-5" *ngIf="offer?.relatedOfferData?.length > 0">
 
     <div class="container-fluid">
       <div class="row justify-content-center">
@@ -179,34 +179,9 @@
         </div>
       </div>
       <div class="row justify-content-center">
-       <p *ngFor="let item of offerData.relatedOfferData; let i=index;" >
-          AUSGABE: {{ item | json }}
-        </p>
-<!--
-          <div class="col-auto mb-3" *ngFor="let item of offer.relatedOfferData; let i = index;">
-            <div class="small-offer-tile h-100" [routerLink]="[lnkOffers, item.id]">
-              <div class="offer-tile-header">
-                <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + item.image + ')'}">
-                </div>
-              </div>
-              <div class="offer-tile-body">
-                <div class="title-text">{{item.title}}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-auto mb-3">
-            <div class="small-offer-tile h-100" [routerLink]="[lnkOffers, offerForTile?.id]">
-              <div class="offer-tile-header">
-                <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + offerForTile?.image + ')'}">
-                </div>
-              </div>
-              <div class="offer-tile-body">
-                <div class="title-text">{{offerForTile?.title}}</div>
-              </div>
-            </div>
-          </div>
--->
+        <div class="col-auto mb-3" *ngFor="let relatedOffer of offer?.relatedOfferData; let i=index;">
+          <fs-small-offer-tile [offerForTile]="relatedOffer"></fs-small-offer-tile>
+        </div>
       </div>
     </div>
 
