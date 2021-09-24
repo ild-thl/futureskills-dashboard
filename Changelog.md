@@ -2,6 +2,12 @@
 
 ## [UnReleased v0.6]
 
+## 2021-09-24/avz
+### changed
+- changed the detail page overal style
+- added a card optic
+- added recommended courses
+
 ## 2021-09-21/ml
 ### added
 - Datatypes for SmallOfferTile
