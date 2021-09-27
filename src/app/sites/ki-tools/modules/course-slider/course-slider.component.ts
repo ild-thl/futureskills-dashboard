@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { StaticService } from 'src/app/config/static.service';
 
 type SliderData = {
   id: number;
@@ -24,51 +25,55 @@ type SliderData = {
 })
 export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() kiOffers: SmallOfferDetailData[] = [];
-  @ViewChild('owlCarousel') owlCarousel: ElementRef;
+  @ViewChild('owlCarousel') owlCar: ElementRef;
+
+  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
 
   sliderIsVisible: boolean = false;
   sliderData: SliderData[] = [];
+  tileWidth = 200;
+  isDragging: boolean;
 
   customOptions: OwlOptions = {
-    loop: false,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    loop: true,
+    // mouseDrag: false,
+    // touchDrag: false,
+    // pullDrag: false,
     dots: false,
     navSpeed: 700,
-    navText: [
-      "<div class='nav-btn prev-slide'>Links</div>",
-      "<div class='nav-btn next-slide'>Rechts</div>",
-    ],
-    center: false,
+    slideBy: 3,
+    center: true,
     items: 5,
-    margin: 10,
+    margin: 8,
     autoWidth: true,
     responsive: {
       0: {
         items: 1,
       },
       440: {
-        items: 3,
+        items: 2,
       },
       576: {
-        items: 4,
+        items: 3,
       },
       992: {
-        items: 5,
+        items: 4,
       },
       1200: {
         items: 5,
       },
     },
-    nav: true,
+    nav: false,
   };
 
-  constructor() {}
+  constructor(private staticConfig: StaticService) {}
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    //console.log(this.owlCar);
+    //this.owlCar.nativeElement
+  }
 
   getData(data: SlidesOutputData) {
     console.log('Slides:', data);
@@ -89,14 +94,5 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
       this.sliderIsVisible = true;
       console.log('Module mit KI: ', this.sliderData);
     }
-
-  }
-
-  next() {
-    console.log('Owl', this.owlCarousel);
-  }
-
-  prev() {
-    console.log('Owl', this.owlCarousel);
   }
 }

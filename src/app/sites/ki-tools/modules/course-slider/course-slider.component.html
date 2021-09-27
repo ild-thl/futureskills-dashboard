@@ -1,29 +1,33 @@
 <div class="course-carousel" *ngIf="sliderIsVisible && sliderData">
-  <div class="container">
-    <div class="row">
-      <div class="col-10 offset-1">
-        <div class="courses">
-          <owl-carousel-o [options]="customOptions" #owlCarousel (initialized)="getData($event)">
-            <ng-container *ngFor="let slide of sliderData">
-              <ng-template carouselSlide [id]="slide.sliderid" [width]="150">
-                <img class="course" [src]="slide.image" [alt]="slide.title" [title]="slide.title" />
-                <!--<fs-small-kioffer-tile [offerForTile]="slide"></fs-small-kioffer-tile>-->
-              </ng-template>
-            </ng-container>
-          </owl-carousel-o>
-        </div>
-      </div>
+  <div class="d-flex justify-content-between align-items-star mb-3">
+    <div class="carousel-arrow carousel-arrow-left">
+      <fa-icon [icon]="['fas', 'chevron-left']" (click)="owlCarousel.prev()"></fa-icon>
     </div>
-  </div>
 
-  <!-- <div class="container-fluid">
-  <div class="d-flex justify-content-center mt-3 mb-5">
-    <div class="carousel-arrow carousel-arrow-left mr-2" (click)="prev()">
-      <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
-    </div>
-    <div class="carousel-arrow carousel-arrow-right ml-2" (click)="next()">
+    <div class="carousel-arrow carousel-arrow-right" (click)="owlCarousel.next()">
       <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
     </div>
   </div>
-</div> -->
+  <ng-template #popContent>Hello</ng-template>
+  <ng-template #popTitle>Fancy <b>content!!</b></ng-template>
+  <div class="d-flex justify-content-center align-items-end">
+    <div class="courses">
+      <owl-carousel-o
+        [options]="customOptions"
+        #owlCarousel
+        (initialized)="getData($event)"
+        (dragging)="isDragging = $event.dragging"
+      >
+        <ng-container *ngFor="let slide of sliderData">
+          <ng-template carouselSlide [id]="slide.sliderid" [width]="tileWidth">
+            <div class="course">
+              <a [owlRouterLink]="[lnkOffers, slide.id]" [stopLink]="isDragging">
+                <img [src]="slide.image" [title]="slide.title" [alt]="slide.title" />
+              </a>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
 </div>

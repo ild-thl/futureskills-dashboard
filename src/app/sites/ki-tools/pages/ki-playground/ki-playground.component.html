@@ -112,21 +112,29 @@
             </div>
           </div>
 
-          <hr />
-
           <!-- KI Kurse -->
-          <!-- <div class="row">
-            <div class="col-12 col-md-10 col-lg-7">
-              <div class="d-flex justify-content-center mt-3 mb-5">
-                <h3>KI-Kurse in FutureSkills</h3>
+          <ng-container *ngIf="kiOffers && kiOffers.length > 5">
+            <hr />
+
+            <div class="row">
+              <div class="col-12 col-md-10 col-lg-7">
+                <h3 class="h1">KI-Kurse in FutureSkills</h3>
+                <p>
+                  Future Skills bietet dir einen betreutes Modul an, das Klarheit in die Begriffe
+                  bringen will und praktische Anwendungsfelder für KI zeigt. Die einzelnen Module
+                  des Kurses können auch einzeln belegt werden.
+                </p>
               </div>
-
             </div>
-          </div> -->
 
-          <div class="ki-offers-container">
-            <fs-course-slider [kiOffers]="kiOffers"> </fs-course-slider>
-          </div>
+            <div class="row">
+              <div class="col">
+                <div class="ki-offers-container">
+                  <fs-course-slider [kiOffers]="kiOffers"> </fs-course-slider>
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
         <!-- end of .container -->
       </section>

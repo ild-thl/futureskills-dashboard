@@ -1,17 +1,28 @@
-$tileWidth: 150px;
-$tileHeight: 150px; //350
-$base-color: var(--color-primary-blue-dark);
+$tileWidth: 200px;
+$tileHeight: 200px; //350
+$base-color: var(--color-primary-blue);
 
 .course-carousel {
   .courses {
     height: $tileHeight;
     width: 100%;
-    background-color: aqua;
 
     .course {
-     height: $tileHeight;
-     width: $tileHeight;
-    // background-color: blueviolet;
+      height: $tileHeight;
+      width: $tileHeight;
+
+      a {
+        text-decoration: none;
+      }
+
+      img:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        height: $tileHeight;
+        width: $tileHeight;
+        background-image: url(~src/styles/ressources/backgrounds/backup.jpg);
+      }
     }
   }
 
@@ -49,7 +60,6 @@ $base-color: var(--color-primary-blue-dark);
   }
 }
 
-
 .custom-carousel-nav {
   width: 40px;
   height: 40px;
@@ -59,14 +69,12 @@ $base-color: var(--color-primary-blue-dark);
   background-position: 50%;
   border-radius: 100px;
 
-
   &.left {
-   // background: url(~src/styles/ressources/backgrounds/chevron_left_black_36dp.svg) no-repeat scroll 0 0;
+    // background: url(~src/styles/ressources/backgrounds/chevron_left_black_36dp.svg) no-repeat scroll 0 0;
     z-index: 10;
     cursor: pointer;
     box-shadow: 0 0 5px rgb(0 0 0 / 15%);
   }
-
 
   &.right {
     //background: url(~src/styles/ressources/backgrounds/chevron_right_black_36dp.svg) no-repeat scroll 0 0;
@@ -74,8 +82,4 @@ $base-color: var(--color-primary-blue-dark);
     cursor: pointer;
     box-shadow: 0 0 5px rgb(0 0 0 / 15%);
   }
-
 }
-
-
-
