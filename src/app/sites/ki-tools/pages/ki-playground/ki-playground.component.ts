@@ -63,12 +63,12 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
     if (this.kitoolsAreOnline) {
       this.loadKIPackages();
-      this.getKIModules();
+     // this.getKIModules();
     }
   }
 
   ngOnDestroy(): void {
-    if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
+   // if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
   }
 
   loadKIPackages(packageLoad: boolean = false) {
