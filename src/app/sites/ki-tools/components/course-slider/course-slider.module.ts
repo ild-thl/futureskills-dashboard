@@ -15,7 +15,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     CarouselModule,
   ],
   exports:[
-    CourseSliderComponent
+    CourseSliderComponent,
   ],
 
 })

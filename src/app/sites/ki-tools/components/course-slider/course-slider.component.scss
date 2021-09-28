@@ -1,9 +1,13 @@
 $tileWidth: 200px;
 $tileHeight: 200px;
 $textHeight: 70px;
+$arrowTop: 77px;
 $base-color: var(--color-primary-blue);
+$muted: #6c757d;
 
 .course-carousel {
+  position: relative;
+
   .courses {
     height: $tileHeight + $textHeight;
     width: 100%;
@@ -26,11 +30,11 @@ $base-color: var(--color-primary-blue);
       }
     }
 
-    .course-text{
+    .course-text {
       height: $textHeight;
       width: $tileHeight;
       .text {
-        color: $base-color;
+        color: $muted;
         width: $tileWidth;
         font-size: 0.7em;
         padding: 5px;
@@ -39,35 +43,37 @@ $base-color: var(--color-primary-blue);
   }
 
   .carousel-arrow {
+    position: absolute;
+    top: $arrowTop;
+
     width: 40px;
     height: 40px;
-    background-color: $base-color;
+    background-color: rgba(#fff, 0.5);
     background-repeat: no-repeat;
     background-size: 31px;
     background-position: 50%;
     border-radius: 100px;
     z-index: 10;
     cursor: pointer;
-    box-shadow: 0 0 5px rgb(0 0 0 / 15%);
 
     &.carousel-arrow-left {
+      left: 1px;
       fa-icon {
         position: relative;
         top: 8px;
         left: 14px;
         color: #fff;
       }
-      //left: 2%;
     }
 
     &.carousel-arrow-right {
+      right: 1px;
       fa-icon {
         position: relative;
         top: 8px;
         left: 15px;
         color: #fff;
       }
-      //right: 2%;
     }
   }
 }

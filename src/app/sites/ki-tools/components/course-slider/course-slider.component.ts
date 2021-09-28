@@ -38,10 +38,10 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
     loop: true,
     // mouseDrag: false,
     // touchDrag: false,
-    // pullDrag: false,
+    pullDrag: false,
     dots: false,
     navSpeed: 700,
-    slideBy: 3,
+    slideBy: 1,
     center: true,
     items: 5,
     margin: 8,
@@ -71,8 +71,6 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    //console.log(this.owlCar);
-    //this.owlCar.nativeElement
   }
 
   getData(data: SlidesOutputData) {

@@ -1,13 +1,12 @@
 <div class="course-carousel" *ngIf="sliderIsVisible && sliderData">
-  <div class="d-flex justify-content-between align-items-star mb-3">
-    <div class="carousel-arrow carousel-arrow-left">
-      <fa-icon [icon]="['fas', 'chevron-left']" (click)="owlCarousel.prev()"></fa-icon>
-    </div>
 
-    <div class="carousel-arrow carousel-arrow-right" (click)="owlCarousel.next()">
-      <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
-    </div>
-  </div>
+  <a class="carousel-arrow carousel-arrow-left" (click)="owlCar.prev()">
+    <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
+  </a>
+
+  <a class="carousel-arrow carousel-arrow-right" (click)="owlCar.next()">
+    <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+  </a>
 
   <div class="d-flex justify-content-center align-items-end">
     <div class="courses">

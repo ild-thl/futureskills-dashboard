@@ -197,6 +197,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
   getKIModules(){
     this.kiModuleSub = this.kiStatusService.getKIModules().subscribe((offers: SmallOfferDetailData[])=>{
       this.kiOffers = offers;
+      console.log("KISuperKurs", offers);
     });
   }
 }
