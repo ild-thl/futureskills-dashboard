@@ -1,7 +1,9 @@
-<div class="small-offer-tile" [routerLink]="[lnkOffers, offerForTile.id]">
-      <div class="offer-tile-header">
-        <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + offerForTile?.image + ')'}">
-          <div class="title-text">{{offerForTile?.title}}</div>
-        </div>
-      </div>
+<div class="small-offer-tile h-100" [routerLink]="[lnkOffers, offerForTile.id]">
+  <div class="offer-tile-header">
+    <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + offerForTile.image + ')'}">
+    </div>
+  </div>
+  <div class="offer-tile-body">
+    <div class="title-text">{{offerForTile.title}}</div>
+  </div>
 </div>
