@@ -2,6 +2,10 @@
 
 ## [UnReleased v0.6]
 
+## 2021-09-28/dk
+### added
+- opencampus is part of CSP
+
 ## 2021-09-24/avz
 ### changed
 - changed the detail page overal style
