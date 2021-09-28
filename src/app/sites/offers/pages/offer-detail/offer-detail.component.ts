@@ -12,7 +12,7 @@ import { StaticService } from 'src/app/config/static.service';
 @Component({
   selector: 'app-offer-detail',
   templateUrl: './offer-detail.component.html',
-  styleUrls: ['./offer-detail.component.scss']
+  styleUrls: ['./offer-detail.component.scss'],
 })
 export class OfferDetailComponent implements OnInit, OnDestroy {
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
@@ -39,8 +39,8 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.paramsSub = this.route.paramMap.subscribe((params) => {
-    const offerId = +params.get('id');
-    console.log('Aktuelle Id:', offerId);
+      const offerId = +params.get('id');
+      console.log('Aktuelle Id:', offerId);
       this.isLoading = true;
       this.errMessage = '';
       this.isError = false;
@@ -67,8 +67,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
         }
       );
     });
-
-    }
+  }
 
   deleteOffer() {
     console.log('delete:' + this.offer.id);
@@ -90,8 +89,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
    * @deprecated
    * Aktuell kann nicht subscribed werden
    */
-  subscribeToOffer() {
-  }
+  subscribeToOffer() {}
 
   forwardToLMS() {
     if (this.offer.url == null || this.offer.url == undefined) {
