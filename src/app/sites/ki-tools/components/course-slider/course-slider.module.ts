@@ -1,4 +1,3 @@
-import { SmallKIOfferTileComponent } from './component/small-kioffer-tile/small-kioffer-tile.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourseSliderComponent } from './course-slider.component';
@@ -8,7 +7,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
-  declarations: [CourseSliderComponent, SmallKIOfferTileComponent],
+  declarations: [CourseSliderComponent],
   imports: [
     CommonModule,
     RouterModule,

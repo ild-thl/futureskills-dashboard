@@ -8,8 +8,7 @@
       <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
     </div>
   </div>
-  <ng-template #popContent>Hello</ng-template>
-  <ng-template #popTitle>Fancy <b>content!!</b></ng-template>
+
   <div class="d-flex justify-content-center align-items-end">
     <div class="courses">
       <owl-carousel-o
@@ -24,6 +23,11 @@
               <a [owlRouterLink]="[lnkOffers, slide.id]" [stopLink]="isDragging">
                 <img [src]="slide.image" [title]="slide.title" [alt]="slide.title" />
               </a>
+            </div>
+            <div class="course-text">
+              <div class="text crop">
+                {{slide.crop}}
+            </div>
             </div>
           </ng-template>
         </ng-container>

@@ -87,6 +87,7 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
         return {
           id: item.id,
           title: item.title,
+          crop: this.cropTextLength(item.title, 80),
           image: item.image,
           sliderid: item.id.toString(),
         };
@@ -95,4 +96,11 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
       console.log('Module mit KI: ', this.sliderData);
     }
   }
+
+  cropTextLength(str: string, length: number): string {
+    return str.length <= length ? str : str.substr(0, length) + '\u2026';
+  }
+
+
+
 }

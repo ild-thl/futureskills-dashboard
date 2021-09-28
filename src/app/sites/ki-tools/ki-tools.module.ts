@@ -3,7 +3,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { KiToolsRoutingModule } from './ki-tools-routing.module';
-import { CourseSliderModule } from './modules/course-slider/course-slider.module';
+import { CourseSliderModule } from './components/course-slider/course-slider.module';
 
 import { KiStatusService } from './services/ki-status.service';
 import { MNISTExampleComponent } from './components/mnist-example/mnist-example.component';

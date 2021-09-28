@@ -1,10 +1,11 @@
 $tileWidth: 200px;
-$tileHeight: 200px; //350
+$tileHeight: 200px;
+$textHeight: 70px;
 $base-color: var(--color-primary-blue);
 
 .course-carousel {
   .courses {
-    height: $tileHeight;
+    height: $tileHeight + $textHeight;
     width: 100%;
 
     .course {
@@ -22,6 +23,17 @@ $base-color: var(--color-primary-blue);
         height: $tileHeight;
         width: $tileHeight;
         background-image: url(~src/styles/ressources/backgrounds/backup.jpg);
+      }
+    }
+
+    .course-text{
+      height: $textHeight;
+      width: $tileHeight;
+      .text {
+        color: $base-color;
+        width: $tileWidth;
+        font-size: 0.7em;
+        padding: 5px;
       }
     }
   }
@@ -57,29 +69,5 @@ $base-color: var(--color-primary-blue);
       }
       //right: 2%;
     }
-  }
-}
-
-.custom-carousel-nav {
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-size: 31px;
-  background-position: 50%;
-  border-radius: 100px;
-
-  &.left {
-    // background: url(~src/styles/ressources/backgrounds/chevron_left_black_36dp.svg) no-repeat scroll 0 0;
-    z-index: 10;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgb(0 0 0 / 15%);
-  }
-
-  &.right {
-    //background: url(~src/styles/ressources/backgrounds/chevron_right_black_36dp.svg) no-repeat scroll 0 0;
-    z-index: 10;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgb(0 0 0 / 15%);
   }
 }
