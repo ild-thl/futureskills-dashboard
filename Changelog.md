@@ -5,6 +5,8 @@
 ## 2021-09-28/dk
 ### added
 - opencampus is part of CSP
+### removed
+- stars removed from offer-tile
 
 ## 2021-09-24/avz
 ### changed
