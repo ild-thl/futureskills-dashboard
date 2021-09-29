@@ -1,5 +1,6 @@
+import { StaticService } from 'src/app/config/static.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/core/http/api/api.service';
@@ -14,6 +15,8 @@ import {
 } from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
+import { DataMappingService } from '../cache/data-map.service';
+import { DataCacheService } from '../cache/data-cache.service';
 
 /**
  * offer.service.ts
@@ -27,12 +30,16 @@ import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 })
 export class OfferService {
   offers$: BehaviorSubject<Offer[]>;
-  //offerChanged$ = new BehaviorSubject({});
+  // Cache SuperKICourse
+  courseSuperKI$: AsyncSubject<any>;
 
   constructor(
     private apiService: ApiService,
     private offerStore: OfferStore,
-    private offerPropertyCache: OfferPropertyCache
+    private offerPropertyCache: OfferPropertyCache,
+    private dataCacheService: DataCacheService,
+    private dataMappingService: DataMappingService,
+    private staticService: StaticService
   ) {
     this.offers$ = offerStore.items$;
   }
@@ -110,22 +117,19 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
+  ////////////////////////////////////////////////
+  // Special Filtered Offers
+  ////////////////////////////////////////////////
 
-  /**
-   * Offers nach Keywords
-   * @param keyword
-   * @returns OfferShortListForTiles[]
-   */
-  getSubListOfferWithKeyword(keyword: string): Observable<OfferShortListForTiles[]> {
-    const property$ = this.offerPropertyCache.loadOfferProperties();
-    const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
-
-    // Parallel laden, aber erst auswerten wenn beide completed sind
-    return forkJoin([filteredOffers$, property$]).pipe(
-      map((results) => {
-        return this.mapDataInOfferStructure(results[0]);
-      })
-    );
+  // KISuperCourse (cached) Mini-List
+  // for Detail and Carousel
+  ////////////////////////////////////////////////
+  public getKISuperCoursesDetailList(cached: boolean = true): Observable<SmallOfferDetailData[]> {
+    if (!cached) {
+      return this.getMiniOfferWithKeywordFilter(this.staticService.getKeyForSuperKICourse());
+    } else {
+      return this.dataCacheService.loadKISuperCoursesDetailList();
+    }
   }
 
   /**
@@ -133,11 +137,28 @@ export class OfferService {
    * @param keyword
    * @returns SmallOfferDetailData[]
    */
-  getShortSubListOfferWithKeywords(keyword: string): Observable<SmallOfferDetailData[]> {
+  public getMiniOfferWithKeywordFilter(keyword: string): Observable<SmallOfferDetailData[]> {
     const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
     return filteredOffers$.pipe(
       map((results) => {
         return this.mapDataInSmallOfferDetailData(results);
+      })
+    );
+  }
+
+  /**
+   * Offers nach Keywords
+   * @param keyword
+   * @returns OfferShortListForTiles[]
+   */
+  public getShortOfferWithKeywordFilter(keyword: string): Observable<OfferShortListForTiles[]> {
+    const property$ = this.offerPropertyCache.loadOfferProperties();
+    const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
+
+    // Parallel laden, aber erst auswerten wenn beide completed sind
+    return forkJoin([filteredOffers$, property$]).pipe(
+      map((results) => {
+        return this.mapDataInOfferStructure(results[0]);
       })
     );
   }
@@ -195,80 +216,18 @@ export class OfferService {
     return this.offerPropertyCache.loadOfferProperties();
   }
 
-  public createCompetenceString(competences: number[]): string {
-    let competenceArr = [];
-    let competenceStr = '';
+  ////////////////////////////////////////////////
+  // MAPPING AND WORKAROUNDS -> dataMappingService
 
-    if (competences.length == 0) {
-      competenceStr = 'keine Angabe';
-    } else {
-      for (const competence of competences) {
-        const competenceText = this.offerPropertyCache.competencesMap.get(competence);
-        competenceArr.push(this.compworkaroundForText(competenceText));
-      }
-      competenceStr = competenceArr.join(', ');
-    }
-    return competenceStr;
+  private mapDataInSmallOfferDetailData(offers: APIToOfferShortList[]): SmallOfferDetailData[] {
+    return this.dataMappingService.mapDataInSmallOfferDetailData(offers);
   }
 
-  /**
-   * Die Funktion sorgt dafür dass die Kompetenztexte so angezeigt werden wie vorher
-   * Todo: Besser die einheitliche Description benutzen (siehe offer-property-cache.service)
-   * Die ist im Moment recht lang (siehe Texte in den Filtern)
-   * @param text
-   * @returns
-   */
-  private compworkaroundForText(text: string): string {
-    switch (text) {
-      case 'tech':
-        return 'Tech';
-      case 'digital':
-        return 'Digital Basic';
-      case 'classic':
-        return 'Classic';
-      default:
-        return 'NA';
-    }
+  private createCompetenceString(competences: number[]): string {
+    return this.dataMappingService.createCompetenceString(competences);
   }
 
-  /**
-   * Returns only id/title/image
-   * @param offers
-   */
-  mapDataInSmallOfferDetailData(offers: APIToOfferShortList[]): SmallOfferDetailData[] {
-    return offers.map((data) => {
-      return {
-        id: data.id,
-        image: data.image_path,
-        title: data.title,
-      };
-    });
-  }
-
-  mapDataInOfferStructure(offers: APIToOfferShortList[]): OfferShortListForTiles[] {
-    //console.log('API OFFER:', offers);
-    let newOffer: OfferShortListForTiles[] = [];
-    for (const offerItem of offers) {
-      newOffer.push({
-        id: offerItem.id,
-        title: offerItem.title,
-        image_path: offerItem.image_path,
-        institution_id: offerItem.institution_id,
-        institution: {
-          id: offerItem.institution_id,
-          title: this.offerPropertyCache.institutionMap.get(offerItem.institution_id),
-          url: undefined,
-        },
-        offertype_id: offerItem.offertype_id,
-        type: this.offerPropertyCache.formatMap.get(offerItem.offertype_id),
-        language_id: offerItem.language_id,
-        language: this.offerPropertyCache.languageMap.get(offerItem.language_id),
-        competences: offerItem.competences,
-        competence_text: this.createCompetenceString(offerItem.competences),
-        keywords: offerItem.keywords,
-      });
-    }
-    //console.log('Short OFFER:', newOffer);
-    return newOffer;
+  private mapDataInOfferStructure(offers: APIToOfferShortList[]): OfferShortListForTiles[] {
+    return this.dataMappingService.mapDataInOfferStructure(offers);
   }
 }

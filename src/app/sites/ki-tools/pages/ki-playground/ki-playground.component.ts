@@ -41,6 +41,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
   kiModuleSub: Subscription;
   kiOffers: SmallOfferDetailData[];
+  minKIOffers: number = 6;
 
   constructor(
     private renderer: Renderer2,
@@ -65,12 +66,12 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
     if (this.kitoolsAreOnline) {
       this.loadKIPackages();
-     // this.getKIModules();
+      this.getKIModules();
     }
   }
 
   ngOnDestroy(): void {
-   // if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
+    if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
   }
 
   loadKIPackages(packageLoad: boolean = false) {

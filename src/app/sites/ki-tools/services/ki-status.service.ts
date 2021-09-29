@@ -18,7 +18,6 @@ export class KiStatusService {
   private SentimentModel$: AsyncSubject<any>;
   private LinkList$: AsyncSubject<any>;
   private WordIndex$: AsyncSubject<any>;
-  private courseList$: AsyncSubject<any>;
 
   constructor(
     private staticService: StaticService,
@@ -184,13 +183,6 @@ export class KiStatusService {
   }
 
   public getKIModules(): Observable<SmallOfferDetailData[]> {
-    return new Observable((observers$) => {
-      if (!this.courseList$) {
-        console.log('Load Course-KI-List');
-        this.courseList$ = new AsyncSubject();
-        this.offerDataService.getOffersForPlaygroundKIList(this.staticService.getKeyForSuperKICourse()).subscribe(this.courseList$);
-      }
-      return this.courseList$.subscribe(observers$);
-    });
+    return this.offerDataService.getOffersForPlaygroundKIList();
   }
 }

@@ -1,12 +1,13 @@
 <div class="course-carousel" *ngIf="sliderIsVisible && sliderData">
+  <div *ngIf="navVisible">
+    <a class="carousel-arrow carousel-arrow-left" (click)="owlCar.prev()">
+      <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
+    </a>
 
-  <a class="carousel-arrow carousel-arrow-left" (click)="owlCar.prev()">
-    <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
-  </a>
-
-  <a class="carousel-arrow carousel-arrow-right" (click)="owlCar.next()">
-    <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
-  </a>
+    <a class="carousel-arrow carousel-arrow-right" (click)="owlCar.next()">
+      <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+    </a>
+  </div>
 
   <div class="d-flex justify-content-center align-items-end">
     <div class="courses">
@@ -25,8 +26,8 @@
             </div>
             <div class="course-text">
               <div class="text crop">
-                {{slide.crop}}
-            </div>
+                {{ slide.crop }}
+              </div>
             </div>
           </ng-template>
         </ng-container>

@@ -113,15 +113,14 @@
           </div>
 
           <!-- KI Kurse -->
-          <ng-container *ngIf="kiOffers && kiOffers.length > 4">
+          <ng-container *ngIf="kiOffers && kiOffers.length >= minKIOffers">
             <hr />
             <div class="row mt-5">
               <div class="col-12 col-md-10 col-lg-7">
                 <h3 class="h1">KI-Kurse in FutureSkills</h3>
                 <p>
-                  Future Skills bietet dir einen betreutes Modul an, das Klarheit in die Begriffe
-                  bringen will und praktische Anwendungsfelder für KI zeigt. Die einzelnen Module
-                  des Kurses können auch einzeln belegt werden.
+                  Future Skills bietet dir eine Reihe von Kursen an, die Klarheit in die Begriffe
+                  bringen möchte und praktische Anwendungsfelder für KI zeigt.
                 </p>
               </div>
             </div>
