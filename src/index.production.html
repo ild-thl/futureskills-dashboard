@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy"
 		content="default-src 'none';
-		font-src https://futureskills-sh.de;
+		font-src
+      https://futureskills-sh.de
+      https://netdna.bootstrapcdn.com;
 		style-src 'unsafe-inline' https://futureskills-sh.de/;
 		script-src https://futureskills-sh.de/;
 		img-src
@@ -14,7 +16,8 @@
 			https://open.vhb.org
 			https://docs.microsoft.com
 			https://ki-campus.org
-			https://edu.opencampus.sh;
+			https://edu.opencampus.sh
+      'self' data:;
 		connect-src
 			https://api.futureskills-sh.de
 			https://futureskills-sh.de;
