@@ -29,6 +29,8 @@ import {
   faTrash,
   faTrashAlt,
   faCog,
+  faArrowLeft,
+  faChevronDown,
   faAngleDown,
   faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
@@ -82,6 +84,8 @@ export class SharedModule {
       faTrashAlt,
       faTrash,
       faCog,
+      faArrowLeft,
+      faChevronDown,
       faAngleDown,
       faExternalLinkAlt
     );

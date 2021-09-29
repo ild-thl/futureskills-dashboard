@@ -12,12 +12,13 @@ import { StaticService } from 'src/app/config/static.service';
 @Component({
   selector: 'app-offer-detail',
   templateUrl: './offer-detail.component.html',
-  styleUrls: ['./offer-detail.component.scss']
+  styleUrls: ['./offer-detail.component.scss'],
 })
 export class OfferDetailComponent implements OnInit, OnDestroy {
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
   lnkAdminOfferEdit = this.staticConfig.getPathInfo().lnkAdminOfferEdit;
   private userSub: Subscription;
+  private paramsSub: Subscription;
 
   public offer: Offer;
   public user: User;
@@ -37,14 +38,14 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const offerId = +this.route.snapshot.params.id;
-    this.isLoading = true;
-    this.errMessage = '';
-    this.isError = false;
+    this.paramsSub = this.route.paramMap.subscribe((params) => {
+      const offerId = +params.get('id');
+      console.log('Aktuelle Id:', offerId);
+      this.isLoading = true;
+      this.errMessage = '';
+      this.isError = false;
 
-    this.userSub = this.offerDataService
-      .getOfferDataForDetail(offerId)
-      .subscribe(
+      this.userSub = this.offerDataService.getOfferDataForDetail(offerId).subscribe(
         (data) => {
           console.log('Detaildata:', data);
           this.user = data.user;
@@ -65,6 +66,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
           this.errMessage = 'Der Kurs wurde nicht gefunden.';
         }
       );
+    });
   }
 
   deleteOffer() {
@@ -87,8 +89,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
    * @deprecated
    * Aktuell kann nicht subscribed werden
    */
-  subscribeToOffer() {
-  }
+  subscribeToOffer() {}
 
   forwardToLMS() {
     if (this.offer.url == null || this.offer.url == undefined) {
@@ -151,5 +152,6 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.userSub) this.userSub.unsubscribe();
+    if (this.paramsSub) this.paramsSub.unsubscribe();
   }
 }
