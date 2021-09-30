@@ -6,7 +6,10 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer, OfferMeta } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
-import { AngularEditorModule, AngularEditorConfig } from '@kolkov/angular-editor';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
+import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
+import { KeyWordItem } from '../../components/multiselect/multiselect.component';
 
 interface Alert {
   type: string;
@@ -25,6 +28,16 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   public offer: Offer = new Offer(null);
   private onOfferChange: Subscription;
 
+  // PropertyMetaData
+  propertiesLoaded = false;
+  // PropertyItem (id, identifier, description)
+  propInstitutions: PropertyItem[];
+  propLanguages: PropertyItem[];
+  propCompetences: PropertyItem[];
+  propFormats: PropertyItem[];
+  // KeyWords {key, item}
+  availableKeyWordList: KeyWordItem[];
+
   public isLoading = true;
   public createNewOffer = false;
   public isCollapsed = true;
@@ -39,6 +52,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private offerDataService: OfferDataService,
+    private metaDataService: MetaDataService,
     private route: ActivatedRoute,
     private staticConfig: StaticService
   ) {}
@@ -68,6 +82,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const offerId = +this.route.snapshot.params.id;
 
+    this.loadPropertyMetaData();
+
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
       title: new FormControl(null, Validators.required),
@@ -95,6 +111,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
       competence_tech: new FormControl(null),
       competence_classic: new FormControl(null),
       competence_digital: new FormControl(null),
+      keywords: new FormControl(undefined),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
 
@@ -129,6 +146,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
    * @param offerId
    */
   private loadOfferData(offerId: number) {
+
     this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe(
       (offer) => {
         this.offer = offer;
@@ -159,6 +177,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.offerEditForm.get('competence_tech').setValue(this.offer.competence_tech);
         this.offerEditForm.get('competence_classic').setValue(this.offer.competence_classic);
         this.offerEditForm.get('competence_digital').setValue(this.offer.competence_digital);
+        this.offerEditForm.get('keywords').setValue(this.offer.keywords);
         this.relatedOfferFormArray.reset(this.offer.relatedOffers);
 
         //console.log('FormOfferData: ', this.offerEditForm.value);
@@ -224,6 +243,62 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     tmpMetas.sponsor = formData.sponsor;
     tmpMetas.time_requirement = formData.time_requirement;
     return tmpMetas;
+  }
+
+  //////////////////////////////////////////////
+  // Properties
+  //////////////////////////////////////////////
+
+  private loadPropertyMetaData() {
+    this.metaDataService.getOfferProperties().subscribe(
+      (filterMap: Map<string, OfferPropertyList>) => {
+        this.setPropertyOutput(filterMap);
+        this.propertiesLoaded = true;
+      },
+      (error) => {
+        this.propCompetences = [];
+        this.propInstitutions = [];
+        this.propFormats = [];
+        this.propLanguages = [];
+        this.propertiesLoaded = false;
+        console.log('Error-Filterdaten: ', error);
+      }
+    );
+  }
+
+  private setPropertyOutput(propertyMap: Map<string, OfferPropertyList>) {
+    this.propCompetences = propertyMap.get('competences').list.map((item) => {
+      // Spezialfall Kompetenzen: Den identifier statt der description nehmen und groß schreiben
+      const newItem = this.cloneItem(item);
+      newItem.description = this.capitalizeFirstLetter(newItem.identifier);
+      return newItem;
+    });
+    this.propInstitutions = propertyMap.get('institutions').list.map((item) => {
+      return this.cloneItem(item);
+    });
+    this.propFormats = propertyMap.get('formats').list.map((item) => {
+      return this.cloneItem(item);
+    });
+    this.propLanguages = propertyMap.get('languages').list.map((item) => {
+      return this.cloneItem(item);
+    });
+
+    //console.log('Institutions: ', this.propInstitutions);
+    //console.log('Competences: ', this.propCompetences);
+    //console.log('Formats: ', this.propFormats);
+    //console.log('Languages: ', this.propLanguages);
+  }
+
+  private capitalizeFirstLetter(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  private cloneItem(item: PropertyItem) {
+    return {
+      id: item.id,
+      identifier: item.identifier,
+      description: item.description,
+    };
   }
 
   // Alert Functions

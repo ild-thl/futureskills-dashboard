@@ -4,7 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 import { PartialOffer } from 'src/app/core/models/offer';
-import { OfferPropertyItemResponse, OfferPropertyTagResponse } from './api.interfaces';
+import { APIToOfferShortList, OfferPropertyItemResponse, OfferPropertyTagResponse } from './api.interfaces';
 
 /**
  * OfferPropertyCache
@@ -36,7 +36,7 @@ export class OfferPropertyCache {
   ////////////////////////////////////////////////
   // Offers
   ////////////////////////////////////////////////
-  public loadShortOfferList(): Observable<PartialOffer[]> {
+  public loadShortOfferList(): Observable<APIToOfferShortList[]> {
     return new Observable((observer$) => {
       if (!this.offerShortList$) {
         this.offerShortList$ = new AsyncSubject();

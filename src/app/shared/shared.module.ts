@@ -8,6 +8,7 @@ import { ErrorBackTextComponent} from 'src/app/shared/components/error-back-text
 import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
 import { InfoBannerComponent } from 'src/app/shared/components/info-banner/info-banner.component';
 import { ConsentVideoComponent } from 'src/app/shared/components/consent-video/consent-video.component';
+import { SmallOfferTileComponent } from 'src/app/shared/components/small-offer-tile/small-offer-tile.component';
 
 import {
   FaIconLibrary,
@@ -27,8 +28,12 @@ import {
   faTrash,
   faTrashAlt,
   faCog,
+  faArrowLeft,
+  faChevronDown,
+  faAngleDown,
   faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @NgModule({
@@ -38,7 +43,8 @@ declarations: [
   ErrorBackTextComponent,
   LoadingSpinnerComponent,
   InfoBannerComponent,
-  ConsentVideoComponent
+  ConsentVideoComponent,
+  SmallOfferTileComponent
 ],
 imports: [
   CommonModule,
@@ -55,7 +61,8 @@ exports: [
   ErrorBackTextComponent,
   LoadingSpinnerComponent,
   InfoBannerComponent,
-  ConsentVideoComponent
+  ConsentVideoComponent,
+  SmallOfferTileComponent
 ]
 })
 
@@ -75,6 +82,9 @@ export class SharedModule {
       faTrashAlt,
       faTrash,
       faCog,
+      faArrowLeft,
+      faChevronDown,
+      faAngleDown,
       faExternalLinkAlt
     );
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { concatMap, filter, map } from 'rxjs/operators';
 
 import { UserDataErrorResponse, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
@@ -9,7 +9,7 @@ import { UserData, UserOfferData } from 'src/app/core/data/user/user-data.interf
 import { DataHandlerService } from 'src/app/core/http/data-handler.service';
 
 import { User } from 'src/app/core/models/user';
-import { Offer, SmallOfferListForEditForm, PartialOffer } from 'src/app/core/models/offer';
+import { Offer, SmallOfferListForEditForm, PartialOffer, OfferShortListForTiles } from 'src/app/core/models/offer';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +44,11 @@ export class OfferDataService {
   public getOffersForCourseCarousel(): Observable<Offer[]> {
     // Aktuell alle
     return this.getAllOfferDataWithoutLoginCheck();
+  }
+
+  // Playground-KI-List
+  public getOffersForPlaygroundKIList(keyword: string | string[]): Observable<OfferShortListForTiles[]> {
+    return this.getFilteredOffersWithKeyword(keyword);
   }
 
   // EditForm (für die Kurszuordnungen)
@@ -119,6 +124,22 @@ export class OfferDataService {
   // Loading OfferList
   // ///////////////////////////
 
+
+  /**
+   * Laden der Kursliste gefiltered nach Keyword
+   * @param keyword
+   * @returns Observable<Offer[]>
+   */
+  private getFilteredOffersWithKeyword(keyword: string | string[]): Observable<OfferShortListForTiles[]> {
+    if (keyword == null || keyword.length == 0) return of([]);
+    if (Array.isArray(keyword)) {
+      // TODO: Aktuell keine KeyListen, nehmen wir nur den ersten
+      return this.getSubListOfferKeywordWithoutLoginCheck(keyword[0]);
+    } else {
+      return this.getSubListOfferKeywordWithoutLoginCheck(keyword);
+    }
+  }
+
   /**
    * Laden der Kursliste (aus dem offer.store)
    * Prüfung ob man eingeloggt ist (mehr nicht)
@@ -167,6 +188,18 @@ export class OfferDataService {
       })
     );
   } */
+
+
+  /**
+   * Laden einer Kursliste nach Keywords (direkt)
+   * ohne check ob man eingeloggt ist
+   * @param keyword
+   * @returns  Observable<Offer[]>
+   */
+  private getSubListOfferKeywordWithoutLoginCheck(keyword: string): Observable<OfferShortListForTiles[]> {
+    return this.offerService.getSubListOfferWithKeyword(keyword);
+  }
+
 
   /**
    * Laden eines Kurses
@@ -301,8 +334,37 @@ export class OfferDataService {
       title: offerdata.title,
       type: offerdata.type,
       url: offerdata.url,
+      keywords: offerdata.keywords,
       relatedOffers: relatedCourses,
     };
     return tempOffer;
   }
+
+  /**
+   * Laden der Kursliste gefiltered nach Keyword
+   * @deprecated (List comes from API now)
+   * @param keyword
+   */
+     private getFilteredOffersWithKeyword_local(keyword: string | string[]): Observable<Offer[]> {
+      if (keyword == null || keyword.length == 0) return of([]);
+
+      return this.getAllOfferDataWithoutLoginCheck().pipe(
+        map((offerList) => {
+          return offerList.filter((item) => {
+            if (!item.keywords) {
+              return false;
+            } else {
+              const list = item.keywords.split(',').map((item) => {
+                return item.trim().toLowerCase();
+              });
+              if (Array.isArray(keyword)) {
+                return keyword.every((keyword) => list.includes(keyword));
+              } else {
+                return list.includes(keyword);
+              }
+            }
+          });
+        })
+      );
+    }
 }

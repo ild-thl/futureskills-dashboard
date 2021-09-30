@@ -1,0 +1,161 @@
+{
+  "demoCards": [
+    {
+      "title": "DeepL",
+      "subtitle": "Übersetzung",
+      "text": "Übersetzung von Texten in viele Sprachen.",
+      "url": "https://www.deepl.com/de/translator",
+      "urlText": "deepl.com/de/translator",
+      "style": "cardText"
+    },
+    {
+      "title": "Image-to-Image",
+      "subtitle": "Demo Pix2Pix Tensorflow",
+      "text": "Verwandelt Zeichnungen in Bilder.",
+      "url": "https://affinelayer.com/pixsrv/",
+      "urlText": "affinelayer.com/pixsrv",
+      "style": "cardImages"
+    },
+    {
+      "title": "Inferkit",
+      "subtitle": "Demo Textgenerierung (gpt-2)",
+      "text": "Ergänzt vorgegebene Texte.",
+      "url": "https://app.inferkit.com/demo",
+      "urlText": "app.inferkit.com/demo",
+      "style": "cardText"
+    },
+    {
+      "title": "SketchToCode",
+      "subtitle": "Demo Handschrift zu Code",
+      "text": "Handschriftliche Designs werden in HTML-Code umgewandelt",
+      "url": "https://sketch2code.azurewebsites.net",
+      "urlText": "sketch2code.azurewebsites.net",
+      "style": "cardImages"
+    },
+    {
+      "title": "DeepArt",
+      "subtitle": "Bildverfremdung",
+      "text": "Fotos erhalten in den Stil eines Kunstwerks.",
+      "url": "https://deepart.io",
+      "urlText": "deepart.io",
+      "style": "cardImages"
+    },
+    {
+      "title": "ThisWordDoesNotExist",
+      "subtitle": "Textgenerierung gpt-2",
+      "text": "Kreation neuer Wörter.",
+      "url": "https://www.thisworddoesnotexist.com",
+      "urlText": "thisworddoesnotexist.com",
+      "style": "cardText"
+    },
+    {
+      "title": "Quillbot",
+      "subtitle": "Paraphrasierungstool",
+      "text": "Quillbot formuliert Textabsätze neu, prüft die Grammatik und schreibt Zusammenfassungen.",
+      "url": "https://quillbot.com",
+      "urlText": "quillbot.com",
+      "style": "cardText"
+    },
+    {
+      "title": "WhichFaceIsReal",
+      "subtitle": "Demo StyleGAN",
+      "text": "Beispiel wie mithilfe des StyleGan Algorithmus Gesichter generiert werden können.",
+      "url": "https://www.whichfaceisreal.com",
+      "urlText": "whichfaceisreal.com",
+      "style": "cardImages"
+    },
+    {
+      "title": "Replika",
+      "subtitle": "Bot",
+      "text": "Hier kann ein persönlicher Chat-Bot (App) erstellt werden.",
+      "url": "https://replika.ai",
+      "urlText": "replika.ai",
+      "style": "cardImages"
+    },
+    {
+      "title": "Quizlet",
+      "subtitle": "Personalisiertes Lernen",
+      "text": "Quizlet bringt Lerninhalte per Karteikarten näher.",
+      "url": "https://quizlet.com/de",
+      "urlText": "quizlet.com/de",
+      "style": "cardImages"
+    },
+    {
+      "title": "Copy.ai",
+      "subtitle": "Textgenerierung (gpt-3)",
+      "text": "Texte speziell für Landing-Pages, Social Media-Posts, Blogs, Werbung.",
+      "url": "https://copy.ai",
+      "urlText": "copy.ai",
+      "style": "cardText",
+      "type": "com"
+    },
+    {
+      "title": "AI Dungeon",
+      "text": "AI Dungeon erstellt ein text-basiertes RPG.",
+      "url": "https://play.aidungeon.io/",
+      "urlText": "play.aidungeon.io",
+      "style": "cardText"
+    },
+    {
+      "title": "Text Synth",
+      "subtitle": "Demo Textgenerierung (gpt-2)",
+      "text": "Ergänzt vorgegebene Texte.",
+      "url": "https://bellard.org/textsynth/",
+      "urlText": "bellard.org/textsynth",
+      "style": "cardText"
+    },
+    {
+      "title": "AutoDraw",
+      "subtitle": "Zeichen-Tool",
+      "text": "Interpretation handschriftlicher Zeichnungen. Teil der AI Experiments von Google.",
+      "url": "https://www.autodraw.com",
+      "urlText": "autodraw.com",
+      "style": "cardImages"
+    },
+    {
+      "title": "GitHub Pilot",
+      "subtitle": "Softwareprogrammierung",
+      "text": "OpenAI Projekt zur Generierung von Quellcode (Codex)",
+      "url": "https://copilot.github.com/",
+      "urlText": "copilot.github.com",
+      "style": "cardText"
+    }
+  ],
+  "projectCards": [
+    {
+      "title": "DeepAI",
+      "text": "News, Leifäden und Forschungsergebnisse zum Thema KI",
+      "url": "https://deepai.org",
+      "urlText": "deepai.org",
+      "style": "cardProject"
+    },
+    {
+      "title": "OpenAI",
+      "text": "Beschäftigt sich mit der Forschung und Entwicklung von KI. Wichtige Projekte: gpt-2, gpt-3, Codex",
+      "url": "https://www.openai.com",
+      "urlText": "openai.com",
+      "style": "cardProject"
+    },
+    {
+      "title": "AI-Experiments with Google",
+      "text": "Beispiele und Sammlungen des Google Creative Labs",
+      "url": "https://experiments.withgoogle.com/collection/ai",
+      "urlText": "experiments.withgoogle.com",
+      "style": "cardProject"
+    },
+    {
+      "title": "Hugging Face",
+      "text": "AI-Community mit vielen Projekten",
+      "url": "https://huggingface.co",
+      "urlText": "huggingface.co",
+      "style": "cardProject"
+    },
+    {
+      "title": "Kaggle",
+      "text": "Beispiele, Daten und Quellcode",
+      "url": "https://www.kaggle.com/",
+      "urlText": "kaggle.com",
+      "style": "cardProject"
+    }
+  ]
+}
