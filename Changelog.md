@@ -1,6 +1,6 @@
 # Changelog
 
-## [UnReleased v0.6]
+## [Released v0.6]
 
 ## 2021-09-29/dk
 ### changed
