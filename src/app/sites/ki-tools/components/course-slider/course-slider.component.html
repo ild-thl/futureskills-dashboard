@@ -1,11 +1,19 @@
-<div class="course-carousel" *ngIf="sliderIsVisible && sliderData">
-  <div *ngIf="navVisible">
-    <a class="carousel-arrow carousel-arrow-left" (click)="owlCar.prev()">
-      <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
+<div class="course-carousel" #courseCarousel *ngIf="sliderIsVisible && sliderData">
+  <div class="nav-buttons">
+    <a
+      [ngClass]="{ 'arrow-disabled': !navLeftEnabled }"
+      class="carousel-arrow carousel-arrow-left"
+      (click)="owlCar.prev()"
+    >
+      <fa-icon class="arrow-icon" [icon]="['fas', 'chevron-left']"></fa-icon>
     </a>
 
-    <a class="carousel-arrow carousel-arrow-right" (click)="owlCar.next()">
-      <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+    <a
+      [ngClass]="{ 'arrow-disabled': !navRightEnabled }"
+      class="carousel-arrow carousel-arrow-right"
+      (click)="owlCar.next()"
+    >
+      <fa-icon class="arrow-icon" [icon]="['fas', 'chevron-right']"></fa-icon>
     </a>
   </div>
 
@@ -14,7 +22,7 @@
       <owl-carousel-o
         [options]="customOptions"
         #owlCarousel
-        (initialized)="getData($event)"
+        (translated)="onTranslated($event)"
         (dragging)="isDragging = $event.dragging"
       >
         <ng-container *ngFor="let slide of sliderData">

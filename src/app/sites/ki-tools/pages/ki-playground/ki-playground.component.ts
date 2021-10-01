@@ -8,7 +8,7 @@ import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnis
 import { NgbdSentimentModalComponent } from 'src/app/sites/ki-tools/pages/sentiment/sentiment-modal.component';
 import { NgbdDemonstratorsModalComponent } from 'src/app/sites/ki-tools/pages/demonstrators/demonstrators-modal.component';
 import { AlertList, KIToolsHelper } from 'src/app/sites/ki-tools/services/helper/helper';
-import { OfferShortListForTiles, SmallOfferDetailData } from 'src/app/core/models/offer';
+import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 @Component({
   selector: 'app-ki-playground',
@@ -41,7 +41,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
   kiModuleSub: Subscription;
   kiOffers: SmallOfferDetailData[];
-  minKIOffers: number = 6;
+  minKIOffers: number = 1;
 
   constructor(
     private renderer: Renderer2,
@@ -195,10 +195,11 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
     }
   }
 
-  getKIModules(){
-    this.kiModuleSub = this.kiStatusService.getKIModules().subscribe((offers: SmallOfferDetailData[])=>{
-      this.kiOffers = offers;
-      console.log("KISuperKurs", offers);
-    });
+  private getKIModules() {
+    this.kiModuleSub = this.kiStatusService
+      .getKIModules()
+      .subscribe((offers: SmallOfferDetailData[]) => {
+        this.kiOffers = offers;
+      });
   }
 }

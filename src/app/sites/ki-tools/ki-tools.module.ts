@@ -40,6 +40,6 @@ import { CourseListComponent } from './components/shared/course-list/course-list
     CourseListComponent,
   ],
   imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule, CourseSliderModule],
-  providers: [KiStatusService]
+  providers: [KiStatusService, { provide: Window, useValue: window }],
 })
 export class KiToolsModule {}

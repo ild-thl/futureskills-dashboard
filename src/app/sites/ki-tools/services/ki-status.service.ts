@@ -2,7 +2,7 @@ import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Injectable, Renderer2 } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
-import { AsyncSubject, Observable, from, of } from 'rxjs';
+import { AsyncSubject, Observable, from, of, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { KIToolsTypes } from '../interfaces/types';
 
@@ -18,6 +18,13 @@ export class KiStatusService {
   private SentimentModel$: AsyncSubject<any>;
   private LinkList$: AsyncSubject<any>;
   private WordIndex$: AsyncSubject<any>;
+
+  private coursesAreLoaded = false;
+  private carouselISInitialized = false;
+  private _SliderStatusOK$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public get SliderStatusOK$(): BehaviorSubject<boolean> {
+    return this._SliderStatusOK$;
+  }
 
   constructor(
     private staticService: StaticService,
@@ -184,5 +191,26 @@ export class KiStatusService {
 
   public getKIModules(): Observable<SmallOfferDetailData[]> {
     return this.offerDataService.getOffersForPlaygroundKIList();
+  }
+
+  /**
+   * Detect changes
+   * @param value
+   */
+  public KIPlayground_courseDataIsLoaded(value: boolean) {
+    this.coursesAreLoaded = value;
+    const ret = this.coursesAreLoaded && this.carouselISInitialized ? true : false;
+    this.SliderStatusOK$.next(ret);
+  }
+  public KIPlayground_carouselIsLoaded(value: boolean) {
+    this.carouselISInitialized = value;
+    const ret = this.coursesAreLoaded && this.carouselISInitialized ? true : false;
+    this.SliderStatusOK$.next(ret);
+  }
+  public KIPlayground_statusReset() {
+    console.log('KIplayground Status Reset');
+    this.carouselISInitialized = false;
+    this.carouselISInitialized = false;
+    this.SliderStatusOK$.next(false);
   }
 }
