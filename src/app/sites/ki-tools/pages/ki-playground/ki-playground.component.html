@@ -10,9 +10,11 @@
               <h3 class="h1">KI-Playground</h3>
               <p>
                 <!--Einleitung-->
-                Hier dreht sich alles um das Thema Machine Learning. Die Anzahl der Anwendungen, die für die tägliche Arbeit oder für das Studium interessant sein könnten, steigt stetig.
-                Ob Text- oder Bildgenerierung, Hilfen beim Lernen oder der Programmierung - einige interessante Tools wollen wir hier in der Link-Sammlung vorstellen.
-                Außerdem gibt es kleinere Beispiele, die du hier direkt im Browser ausprobieren kannst.
+                Hier dreht sich alles um das Thema Machine Learning. Die Anzahl der Anwendungen, die
+                für die tägliche Arbeit oder für das Studium interessant sein könnten, steigt
+                stetig. Ob Text- oder Bildgenerierung, Hilfen beim Lernen oder der Programmierung -
+                einige interessante Tools wollen wir hier in der Link-Sammlung vorstellen. Außerdem
+                gibt es kleinere Beispiele, die du hier direkt im Browser ausprobieren kannst.
               </p>
             </div>
           </div>
@@ -26,87 +28,111 @@
 
           <div class="row">
             <div class="col">
-            <div class="card-deck">
-              <div class="card">
-                <img src="assets/images/ki-tools/mnist.jpg" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title">MNIST Datenbank</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Convolutional Neural Network</h6>
-                  <p class="card-text">
-                    Das Standard-Beispiel für die Erkennung handgeschriebener Ziffern mithilfe eines neuronalen Netzwerks.
-                  </p>
-
-                </div>
-                <div class="card-footer">
-                  <button
-                    *ngIf="scriptsAreLoaded && !mnistModelIsLoading; else mnistBtnNotClickable"
-                    type="button"
-                    class="btn btn-outline-dark btn-sm"
-                    (click)="onLoadMnistExample(true)"
-                  >
-                    Beispiel laden
-                  </button>
-                  <ng-template #mnistBtnNotClickable>
-                    <small class="text-muted">Lade ...</small>
-                  </ng-template>
-                  <small class="text-muted float-right pt-2">Download: ca. 3MB</small>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src="assets/images/ki-tools/sentiment2.jpg" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title">Sentimentanalyse</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Text-Mining, LSTM Network</h6>
-                  <p class="card-text">
-                    In diesem Beispiel wird das IMDB-Dataset herangezogen, um Stimmungen in Rezensionen zu erkennen.
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <button
-                    *ngIf="
-                      scriptsAreLoaded && !sentimentModelIsLoading;
-                      else sentimentBtnNotClickable
-                    "
-                    type="button"
-                    class="btn btn-outline-dark btn-sm"
-                    (click)="onLoadSentimentExample(true)"
-                  >
-                    Beispiel laden
-                  </button>
-                  <ng-template #sentimentBtnNotClickable>
-                    <small class="text-muted">Lade ...</small>
-                  </ng-template>
-                  <small class="text-muted float-right pt-2">Download: ca. 6MB</small>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src="assets/images/ki-tools/links.jpg" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title">Link-Sammlung</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    Beispiele für KI-gestützte Anwendungen
-                  </h6>
-                  <p class="card-text">
-                    Hier gehts zur Sammlung verschiedenster Anwendungen und Projektseiten zum Thema KI.
-                  </p>
+              <div class="card-deck">
+                <div class="card">
+                  <img src="assets/images/ki-tools/mnist.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title">MNIST Datenbank</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Convolutional Neural Network</h6>
+                    <p class="card-text">
+                      Das Standard-Beispiel für die Erkennung handgeschriebener Ziffern mithilfe
+                      eines neuronalen Netzwerks.
+                    </p>
+                  </div>
+                  <div class="card-footer">
+                    <button
+                      *ngIf="scriptsAreLoaded && !mnistModelIsLoading; else mnistBtnNotClickable"
+                      type="button"
+                      class="btn btn-outline-dark btn-sm"
+                      (click)="onLoadMnistExample(true)"
+                    >
+                      Beispiel laden
+                    </button>
+                    <ng-template #mnistBtnNotClickable>
+                      <small class="text-muted">Lade ...</small>
+                    </ng-template>
+                    <small class="text-muted float-right pt-2">Download: ca. 3MB</small>
+                  </div>
                 </div>
 
-                <div class="card-footer">
-                  <button
-                    type="button"
-                    class="btn btn-outline-dark btn-sm float-left"
-                    (click)="onLoadLinkExamples(true)"
-                  >
-                    zur Sammlung
-                  </button>
-                  <small class="text-muted float-right pt-2">Stand: 14.09.2021</small>
+                <div class="card">
+                  <img src="assets/images/ki-tools/sentiment2.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title">Sentimentanalyse</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Text-Mining, LSTM Network</h6>
+                    <p class="card-text">
+                      In diesem Beispiel wird das IMDB-Dataset herangezogen, um Stimmungen in
+                      Rezensionen zu erkennen.
+                    </p>
+                  </div>
+                  <div class="card-footer">
+                    <button
+                      *ngIf="
+                        scriptsAreLoaded && !sentimentModelIsLoading;
+                        else sentimentBtnNotClickable
+                      "
+                      type="button"
+                      class="btn btn-outline-dark btn-sm"
+                      (click)="onLoadSentimentExample(true)"
+                    >
+                      Beispiel laden
+                    </button>
+                    <ng-template #sentimentBtnNotClickable>
+                      <small class="text-muted">Lade ...</small>
+                    </ng-template>
+                    <small class="text-muted float-right pt-2">Download: ca. 6MB</small>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <img src="assets/images/ki-tools/links.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title">Link-Sammlung</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      Beispiele für KI-gestützte Anwendungen
+                    </h6>
+                    <p class="card-text">
+                      Hier gehts zur Sammlung verschiedenster Anwendungen und Projektseiten zum
+                      Thema KI.
+                    </p>
+                  </div>
+
+                  <div class="card-footer">
+                    <button
+                      type="button"
+                      class="btn btn-outline-dark btn-sm float-left"
+                      (click)="onLoadLinkExamples(true)"
+                    >
+                      zur Sammlung
+                    </button>
+                    <small class="text-muted float-right pt-2">Stand: 14.09.2021</small>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
+
+          <!-- KI Kurse -->
+          <ng-container *ngIf="kiOffers && kiOffers.length >= minKIOffers">
+            <hr />
+            <div class="row mt-5">
+              <div class="col-12 col-md-10 col-lg-7">
+                <h3 class="h1">KI-Kurse in FutureSkills</h3>
+                <p>
+                  Future Skills bietet dir eine Reihe von Kursen an, die Klarheit in die Begriffe
+                  bringen möchte und praktische Anwendungsfelder für KI zeigt.
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="ki-offers-container">
+                  <fs-course-slider [kiOffers]="kiOffers"> </fs-course-slider>
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
         <!-- end of .container -->
       </section>
@@ -125,8 +151,8 @@
 
   <!-- Offline Text -->
   <ng-template #kiOffline>
-      <fs-info-banner>
-        <p>Die KI-Playground Seite ist aktuell nicht online.</p>
-      </fs-info-banner>
+    <fs-info-banner>
+      <p>Die KI-Playground Seite ist aktuell nicht online.</p>
+    </fs-info-banner>
   </ng-template>
 </div>

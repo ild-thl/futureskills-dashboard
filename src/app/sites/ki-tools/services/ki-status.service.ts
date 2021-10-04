@@ -2,14 +2,14 @@ import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Injectable, Renderer2 } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
-import { AsyncSubject, Observable, from, of } from 'rxjs';
+import { AsyncSubject, Observable, from, of, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { KIToolsTypes } from '../interfaces/types';
 
 import * as tf from '@tensorflow/tfjs';
 import { map } from 'rxjs/operators';
 import { DemonstratorExamples } from '../components/demonstrator-example/data/example-data';
-import { OfferShortListForTiles } from 'src/app/core/models/offer';
+import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 @Injectable()
 export class KiStatusService {
@@ -182,7 +182,7 @@ export class KiStatusService {
     });
   }
 
-  public getKIModules(): Observable<OfferShortListForTiles[]> {
-    return this.offerDataService.getOffersForPlaygroundKIList(this.staticService.getKeyForSuperKICourse());
+  public getKIModules(): Observable<SmallOfferDetailData[]> {
+    return this.offerDataService.getOffersForPlaygroundKIList();
   }
 }

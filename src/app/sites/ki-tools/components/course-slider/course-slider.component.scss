@@ -1,0 +1,84 @@
+$tileWidth: 200px;
+$tileHeight: 200px;
+$textHeight: 70px;
+$arrowTop: 70px;
+$base-color: var(--color-primary-blue);
+$muted: #6c757d;
+
+
+
+.ki-coursecarousel {
+  position: relative;
+
+  ::ng-deep .owl-nav {
+    overflow: hidden;
+    height: 0px;
+
+    .owl-carousel-custom-btn {
+      position: absolute;
+      top: $arrowTop;
+
+      width: 40px;
+      height: 40px;
+      background-color: rgba(rgb(255, 255, 255), 0.6);
+      background-repeat: no-repeat;
+      background-size: 31px;
+      background-position: 50%;
+
+      border-radius: 100px;
+
+      z-index: 10;
+      cursor: pointer;
+
+      &.owl-prev-slide {
+        background-image: url(~src/styles/ressources/backgrounds/icons/chevron_left_black_36dp.svg);
+        left: -25px;
+      }
+
+      &.owl-next-slide {
+        background-image: url(~src/styles/ressources/backgrounds/icons/chevron_right_black_36dp.svg);
+        right: -25px;
+      }
+    }
+    .owl-prev.disabled,
+    .owl-next.disabled {
+      //pointer-events: none;
+      opacity: 0.2;
+    }
+  }
+
+
+  .courses {
+    height: $tileHeight + $textHeight;
+    width: 100%;
+
+    .course {
+      height: $tileHeight;
+      width: $tileHeight;
+
+      a {
+        text-decoration: none;
+      }
+
+      img:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        height: $tileHeight;
+        width: $tileHeight;
+        background-image: url(~src/styles/ressources/backgrounds/backup.jpg);
+      }
+    }
+
+    .course-text {
+      height: $textHeight;
+      width: $tileHeight;
+      .text {
+        color: $muted;
+        width: $tileWidth;
+        font-size: 0.7em;
+        padding: 5px;
+      }
+    }
+  }
+}

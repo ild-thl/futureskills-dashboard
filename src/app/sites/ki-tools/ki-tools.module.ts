@@ -3,6 +3,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { KiToolsRoutingModule } from './ki-tools-routing.module';
+import { CourseSliderModule } from './components/course-slider/course-slider.module';
+
 import { KiStatusService } from './services/ki-status.service';
 import { MNISTExampleComponent } from './components/mnist-example/mnist-example.component';
 import { KIPlaygroundComponent } from './pages/ki-playground/ki-playground.component';
@@ -18,6 +20,7 @@ import { NgbdDemonstratorsModalComponent } from './pages/demonstrators/demonstra
 import { ExampleCardComponent } from './components/demonstrator-example/example-card/example-card.component';
 import { DemonstratorExampleComponent } from './components/demonstrator-example/demonstrator-example.component';
 import { CourseListComponent } from './components/shared/course-list/course-list.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +39,7 @@ import { CourseListComponent } from './components/shared/course-list/course-list
     DemonstratorExampleComponent,
     CourseListComponent,
   ],
-  imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule],
-  providers: [KiStatusService]
+  imports: [SharedModule, KiToolsRoutingModule, ReactiveFormsModule, FormsModule, CourseSliderModule],
+  providers: [KiStatusService, { provide: Window, useValue: window }],
 })
 export class KiToolsModule {}

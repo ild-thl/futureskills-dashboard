@@ -1,5 +1,14 @@
 # Changelog
 
+
+## [UnReleased v0.7]
+
+
+## 2021-10-04/ml
+### added
+- New Carousel in Playground is showing KeyWord (KIPlaygroundKurse)
+- New Classes for Caching Data
+
 ## [Released v0.6]
 
 ## 2021-09-29/dk

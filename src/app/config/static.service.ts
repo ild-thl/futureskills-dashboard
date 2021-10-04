@@ -43,4 +43,7 @@ export class StaticService {
   getKeyForSuperKICourse(): string {
     return CustomConfig.courseKeyWordKeys.keyForSuperKIKurs;
   }
+  getKeyForPlaygroundKiCourse(): string {
+    return CustomConfig.courseKeyWordKeys.keyForPlaygroundKIKurs;
+  }
 }
