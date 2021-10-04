@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { CarouselComponent, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { StaticService } from 'src/app/config/static.service';
-import { fromEvent, Subscription } from 'rxjs';
+import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
@@ -61,6 +61,10 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
     nav: false,
   };
 
+  private SliderStatusOK$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private coursesAreLoaded = false;
+  private carouselISInitialized = false;
+
   constructor(
     private staticConfig: StaticService,
     @Inject(DOCUMENT) private document: Document,
@@ -76,7 +80,7 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
     this.minTileWidth = this.tileWidth + 2 * this.customOptions.margin;
     this.listenToWindowsResize();
 
-    this.statusSeviceSubscription = this.statusService.SliderStatusOK$.subscribe((value) => {
+    this.statusSeviceSubscription = this.SliderStatusOK$.subscribe((value) => {
       if (value) {
         console.log('KI-Superkurse gefunden: ', this.sliderData, 'Count:', this.slideCount);
         this.setNavBarButtons();
@@ -85,7 +89,7 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.statusService.KIPlayground_carouselIsLoaded(true);
+    this.carouselIsLoaded(true);
     this.cd.detectChanges();
   }
 
@@ -104,14 +108,14 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
       });
       this.sliderIsVisible = true;
       this.slideCount = this.sliderData.length;
-      this.statusService.KIPlayground_courseDataIsLoaded(true);
+      this.courseDataIsLoaded(true);
     }
   }
 
   ngOnDestroy(): void {
     if (this.resizingEventSubscription) this.resizingEventSubscription.unsubscribe();
     if (this.statusSeviceSubscription) this.statusSeviceSubscription.unsubscribe();
-    this.statusService.KIPlayground_statusReset();
+    this.statusReset();
   }
 
   onTranslated(data: SlidesOutputData) {
@@ -207,4 +211,25 @@ export class CourseSliderComponent implements OnInit, OnChanges, AfterViewInit {
   private cropTextLength(str: string, length: number): string {
     return str.length <= length ? str : str.substr(0, length) + '\u2026';
   }
+
+    /**
+   * Detect changes
+   * @param value
+   */
+     private courseDataIsLoaded(value: boolean) {
+      this.coursesAreLoaded = value;
+      const ret = this.coursesAreLoaded && this.carouselISInitialized ? true : false;
+      this.SliderStatusOK$.next(ret);
+    }
+    private carouselIsLoaded(value: boolean) {
+      this.carouselISInitialized = value;
+      const ret = this.coursesAreLoaded && this.carouselISInitialized ? true : false;
+      this.SliderStatusOK$.next(ret);
+    }
+    private statusReset() {
+      console.log('KIplayground Status Reset');
+      this.carouselISInitialized = false;
+      this.carouselISInitialized = false;
+      this.SliderStatusOK$.next(false);
+    }
 }
