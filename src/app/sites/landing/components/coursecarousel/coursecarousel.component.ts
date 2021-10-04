@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { Offer } from 'src/app/core/models/offer';
+import { OfferShortListForTiles } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
   @ViewChild('coursecarousel') coursecarousel: ElementRef;
 
   private onOffersChange: Subscription;
-  loadedOffers: Offer[] = [];
+  loadedOffers: OfferShortListForTiles[] = [];
 
   resizeObservable$: Observable<Event>
   resizeSubscription: Subscription
@@ -36,7 +36,7 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
   constructor(private offerDataService: OfferDataService, private staticConfig: StaticService) {}
 
   ngOnInit(): void {
-    // Todo: Hier werden aktuell alle Offers angezeigt
+    // Hier werden aktuell alle 20 neuesten Offer angezeigt
     this.onOffersChange = this.offerDataService
       .getOffersForCourseCarousel()
       .subscribe(

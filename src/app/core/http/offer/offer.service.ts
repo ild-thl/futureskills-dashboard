@@ -120,6 +120,22 @@ export class OfferService {
   // Special Filtered Offers
   ////////////////////////////////////////////////
 
+  // Latest Courses
+  // for Landing-Carousel
+  ////////////////////////////////////////////////
+  public getShortOffersNewest(cached: boolean = true): Observable<OfferShortListForTiles[]> {
+    const property$ = this.offerPropertyCache.loadOfferProperties();
+    const newestOffer$ = this.dataCacheService.loadLandingCarouselList();
+    // Parallel laden, aber erst auswerten wenn beide completed sind
+    return forkJoin([newestOffer$, property$]).pipe(
+      map((results) => {
+        const temp = this.mapDataInOfferStructure(results[0]);
+        console.log("Newest Offers:", temp);
+        return temp;
+      })
+    );
+  }
+
   // KISuperCourse (cached) Mini-List
   // for Detail and Carousel
   ////////////////////////////////////////////////

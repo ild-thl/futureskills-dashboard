@@ -14,6 +14,6 @@ export class AppComponent {
 
   ngOnInit(): void {
     // AutoLogin and initialize data-caching
-    this.dataInitService.initialize();
+    this.dataInitService.authInit();
   }
 }
