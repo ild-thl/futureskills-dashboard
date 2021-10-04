@@ -41,7 +41,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
   kiModuleSub: Subscription;
   kiOffers: SmallOfferDetailData[];
-  minKIOffers: number = 1;
+  minKIOffers: number = 3;
 
   constructor(
     private renderer: Renderer2,

@@ -125,7 +125,7 @@ export class OfferService {
   ////////////////////////////////////////////////
   public getKISuperCoursesDetailList(cached: boolean = true): Observable<SmallOfferDetailData[]> {
     if (!cached) {
-      return this.getMiniOfferWithKeywordFilter(this.staticService.getKeyForSuperKICourse());
+      return this.getMiniOfferWithKeywordFilter(this.staticService.getKeyForPlaygroundKiCourse());
     } else {
       return this.dataCacheService.loadKISuperCoursesDetailList();
     }

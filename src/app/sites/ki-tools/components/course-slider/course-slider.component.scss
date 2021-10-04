@@ -1,12 +1,52 @@
 $tileWidth: 200px;
 $tileHeight: 200px;
 $textHeight: 70px;
-$arrowTop: 77px;
+$arrowTop: 70px;
 $base-color: var(--color-primary-blue);
 $muted: #6c757d;
 
-.course-carousel {
+
+
+.ki-coursecarousel {
   position: relative;
+
+  ::ng-deep .owl-nav {
+    overflow: hidden;
+    height: 0px;
+
+    .owl-carousel-custom-btn {
+      position: absolute;
+      top: $arrowTop;
+
+      width: 40px;
+      height: 40px;
+      background-color: rgba(rgb(255, 255, 255), 0.6);
+      background-repeat: no-repeat;
+      background-size: 31px;
+      background-position: 50%;
+
+      border-radius: 100px;
+
+      z-index: 10;
+      cursor: pointer;
+
+      &.owl-prev-slide {
+        background-image: url(~src/styles/ressources/backgrounds/icons/chevron_left_black_36dp.svg);
+        left: -25px;
+      }
+
+      &.owl-next-slide {
+        background-image: url(~src/styles/ressources/backgrounds/icons/chevron_right_black_36dp.svg);
+        right: -25px;
+      }
+    }
+    .owl-prev.disabled,
+    .owl-next.disabled {
+      //pointer-events: none;
+      opacity: 0.2;
+    }
+  }
+
 
   .courses {
     height: $tileHeight + $textHeight;
@@ -38,53 +78,6 @@ $muted: #6c757d;
         width: $tileWidth;
         font-size: 0.7em;
         padding: 5px;
-      }
-    }
-  }
-
-  .nav-buttons {
-    a {
-      position: absolute;
-      top: $arrowTop;
-
-      width: 40px;
-      height: 40px;
-      background-color: rgba(rgb(255, 255, 255), 0.7);
-      background-repeat: no-repeat;
-      background-size: 31px;
-      background-position: 50%;
-      border-radius: 100px;
-      z-index: 10;
-      cursor: pointer;
-
-      &.carousel-arrow{
-        .arrow-icon {
-          position: relative;
-          top: 8px;
-          color: rgb(0, 0, 0);
-        }
-      }
-
-      &.carousel-arrow-left {
-        left: 1px;
-        .arrow-icon {
-          left: 14px;
-        }
-      }
-
-      &.carousel-arrow-right {
-        right: 1px;
-        .arrow-icon {
-          left: 15px;
-        }
-      }
-
-      &.arrow-disabled {
-        display: none;
-        // background-color: rgba(#fff, 0.0);
-        // .arrow-icon{
-        //   color: rgba(0, 0, 0, 0.0);
-        // }
       }
     }
   }

@@ -43,7 +43,7 @@ export class DataCacheService {
       if (!this.courseSuperKI$) {
         this.courseSuperKI$ = new AsyncSubject();
         this.apiService
-          .getOfferSubListWithKeyWords(this.staticService.getKeyForSuperKICourse())
+          .getOfferSubListWithKeyWords(this.staticService.getKeyForPlaygroundKiCourse())
           .pipe(
             map((results) => {
               return DataMapping.mapDataInSmallOfferDetailData(results);
