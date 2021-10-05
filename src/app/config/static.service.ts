@@ -46,4 +46,7 @@ export class StaticService {
   getOfferDefaultCount(): number {
     return CustomConfig.offerDefaultCount;
   }
+  getKeyForPlaygroundKiCourse(): string {
+    return CustomConfig.courseKeyWordKeys.keyForPlaygroundKIKurs;
+  }
 }

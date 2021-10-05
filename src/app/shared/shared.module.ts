@@ -18,6 +18,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import {
   faStar as fasStar,
   faChevronRight,
+  faChevronLeft,
   faCheck,
   faDoorOpen,
   faChalkboardTeacher,
@@ -73,6 +74,7 @@ export class SharedModule {
       farStar,
       faCheck,
       faChevronRight,
+      faChevronLeft,
       faDoorOpen,
       faCommentAlt,
       faChalkboardTeacher,

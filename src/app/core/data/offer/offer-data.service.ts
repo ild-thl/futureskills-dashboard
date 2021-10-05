@@ -15,6 +15,7 @@ import {
   PartialOffer,
   OfferShortListForTiles,
   PaginatedOfferData,
+  SmallOfferDetailData,
 } from 'src/app/core/models/offer';
 
 @Injectable({
@@ -58,10 +59,8 @@ export class OfferDataService {
   }
 
   // Playground-KI-List
-  public getOffersForPlaygroundKIList(
-    keyword: string | string[]
-  ): Observable<OfferShortListForTiles[]> {
-    return this.getFilteredOffersWithKeyword(keyword);
+  public getOffersForPlaygroundKIList(): Observable<SmallOfferDetailData[]> {
+    return this.offerService.getKISuperCoursesDetailList();
   }
 
   // EditForm (für die Kurszuordnungen)
@@ -138,19 +137,23 @@ export class OfferDataService {
   // ///////////////////////////
 
   /**
-   * Laden der Kursliste gefiltered nach Keyword
+   * Laden der Kursliste gefiltered nach Keyword (unused)
    * @param keyword
-   * @returns Observable<Offer[]>
+   * @returns Observable<OfferShortListForTiles[]> | Observable<SmallOfferDetailData[]>
    */
-  private getFilteredOffersWithKeyword(
-    keyword: string | string[]
-  ): Observable<OfferShortListForTiles[]> {
+  private getFilteredKeywordOffers(
+    keyword: string | string[],
+    detailMiniList: boolean = false
+  ): Observable<OfferShortListForTiles[]> | Observable<SmallOfferDetailData[]> {
     if (keyword == null || keyword.length == 0) return of([]);
-    if (Array.isArray(keyword)) {
-      // TODO: Aktuell keine KeyListen, nehmen wir nur den ersten
-      return this.getSubListOfferKeywordWithoutLoginCheck(keyword[0]);
+
+    // TODO: Aktuell keine KeyListen, nehmen wir nur den ersten
+    const keywords = (Array.isArray(keyword)) ? keyword[0] : keyword;
+
+    if (detailMiniList){
+      return this.offerService.getMiniOfferWithKeywordFilter(keywords);
     } else {
-      return this.getSubListOfferKeywordWithoutLoginCheck(keyword);
+      return this.offerService.getShortOfferWithKeywordFilter(keywords);
     }
   }
 
@@ -210,18 +213,6 @@ export class OfferDataService {
       })
     );
   } */
-
-  /**
-   * Laden einer Kursliste nach Keywords (direkt)
-   * ohne check ob man eingeloggt ist
-   * @param keyword
-   * @returns  Observable<Offer[]>
-   */
-  private getSubListOfferKeywordWithoutLoginCheck(
-    keyword: string
-  ): Observable<OfferShortListForTiles[]> {
-    return this.offerService.getSubListOfferWithKeyword(keyword);
-  }
 
   /**
    * Laden eines Kurses
