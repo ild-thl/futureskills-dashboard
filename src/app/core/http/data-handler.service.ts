@@ -1,10 +1,8 @@
-import { concatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferService } from 'src/app/core/http/offer/offer.service';
-import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { UserDataErrorResponse } from 'src/app/core/http/api/api.interfaces';
 
 @Injectable({
@@ -12,6 +10,7 @@ import { UserDataErrorResponse } from 'src/app/core/http/api/api.interfaces';
 })
 export class DataHandlerService {
   private dataIsInitialized: boolean = false;
+  private authInitialized: boolean = false;
 
   // Status if offers are already loaded
   private _offersAreLoaded$ = new BehaviorSubject<UserDataErrorResponse>({
@@ -23,32 +22,34 @@ export class DataHandlerService {
     return this._offersAreLoaded$;
   }
 
-  constructor(
-    private authService: AuthService,
-    private offerService: OfferService
-  ) {}
+  constructor(private authService: AuthService, private offerService: OfferService) {}
 
   /**
+   * Authenticate
+   * @returns void
+   */
+  public authInit() {
+    if (this.authInitialized) return;
+    this.authInitialized = true;
+    this.authService.autoLogin();
+  }
+
+  /**
+   * @deprecated will be deleted
    * Loaded once when app starts
    * Initialize is called in app.component
    */
-
   public initialize() {
     if (this.dataIsInitialized) return;
     this.dataIsInitialized = true;
-
-    // Versuchen einzuloggen
-    this.authService.autoLogin();
-
-    // Load Offerdata from start
-    //this.preLoadOfferData();
+    this.preLoadOfferData();
   }
 
   /**
    * loads All Offers and saves reply/error
    */
   private preLoadOfferData() {
-    console.log('loadOfferData');
+    console.log('preLoadOfferData');
     this.offerService.preloadAllOfferShortList().subscribe(
       (value) => {
         //console.log("OfferData: ", value);

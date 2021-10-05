@@ -9,6 +9,7 @@ import { StaticService } from 'src/app/config/static.service';
 
 import { Offer } from 'src/app/core/models/offer';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
+import { DataHandlerService } from 'src/app/core/http/data-handler.service';
 
 @Component({
   selector: 'app-offer-list',
@@ -37,7 +38,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
     private offerDataService: OfferDataService,
     private authService: AuthService,
     private metaDataService: MetaDataService,
-    private staticConfig: StaticService
+    private staticConfig: StaticService,
+    private dataInitService: DataHandlerService
   ) {}
 
   ngOnInit() {
@@ -45,6 +47,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
     this.isError = false;
     this.isLoading = true;
 
+    //TODO: PreLoad Data is necessary at the moment.
+    this.dataInitService.initialize();
     this.loadFilterMetaData();
 
     this.onDataChange = this.offerDataService.getAllOffersForList().subscribe(

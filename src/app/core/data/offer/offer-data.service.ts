@@ -53,9 +53,8 @@ export class OfferDataService {
   }
 
   // CourseCarousel
-  public getOffersForCourseCarousel(): Observable<Offer[]> {
-    // Aktuell alle
-    return this.getAllOfferDataWithoutLoginCheck();
+  public getOffersForCourseCarousel(): Observable<OfferShortListForTiles[]> {
+    return this.offerService.getShortOffersNewest();
   }
 
   // Playground-KI-List

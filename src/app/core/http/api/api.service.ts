@@ -67,11 +67,6 @@ export class ApiService {
   ////////////////////////////////////////////////
   // Offers
   ////////////////////////////////////////////////
-  public getAllOffers(): Observable<Offer[]> {
-    return this.http
-      .get<Offer[]>(environment.apiURL + '/api/offer')
-      .pipe(catchError(this.handleError));
-  }
 
   public getAllOfferShortList(): Observable<Offer[]> {
     return this.http
@@ -79,9 +74,25 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  /**
+   * @deprecated keine lange Liste nötig, besser getAllOfferShortList
+   * @returns Observable<Offer[]>
+   */
+  public getAllOffers(): Observable<Offer[]> {
+    return this.http
+      .get<Offer[]>(environment.apiURL + '/api/offer')
+      .pipe(catchError(this.handleError));
+  }
+
   public getOfferSubListWithKeyWords(keyword: string): Observable<APIToOfferShortList[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/search/offer/sublist/' + keyword)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getOfferNewest(): Observable<APIToOfferShortList[]> {
+    return this.http
+      .get<Offer[]>(environment.apiURL + '/api/search/offer/latest')
       .pipe(catchError(this.handleError));
   }
 

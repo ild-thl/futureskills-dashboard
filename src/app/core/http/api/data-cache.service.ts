@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/core/http/api/api.service';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 import { DataMapping } from './data-mapping';
+import { APIToOfferShortList } from './api.interfaces';
 
 ////////////////////////////////////////////////
 // Neuer Cache nach der Umstellung
@@ -17,7 +18,9 @@ export class DataCacheService {
   /**
    * KISuperCourseLIst Cache
    */
-  private courseSuperKI$: AsyncSubject<any>;
+  private coursePlaygroundKI$: AsyncSubject<any>;
+  private courseLandingList$: AsyncSubject<any>;
+
   constructor(private apiService: ApiService, private staticService: StaticService) {}
 
   ////////////////////////////////////////////////
@@ -33,15 +36,15 @@ export class DataCacheService {
   // TODO
 
   ////////////////////////////////////////////////
-  // Offer - SpecialFilterList
+  // Offer - SpecialFilterLists
   ////////////////////////////////////////////////
 
-  // KISuperCourse
+  // Playground - Carousel
   ////////////////////////////////////////////////
   public loadKISuperCoursesDetailList(): Observable<SmallOfferDetailData[]> {
     return new Observable((observer$) => {
-      if (!this.courseSuperKI$) {
-        this.courseSuperKI$ = new AsyncSubject();
+      if (!this.coursePlaygroundKI$) {
+        this.coursePlaygroundKI$ = new AsyncSubject();
         this.apiService
           .getOfferSubListWithKeyWords(this.staticService.getKeyForPlaygroundKiCourse())
           .pipe(
@@ -49,9 +52,23 @@ export class DataCacheService {
               return DataMapping.mapDataInSmallOfferDetailData(results);
             })
           )
-          .subscribe(this.courseSuperKI$);
+          .subscribe(this.coursePlaygroundKI$);
       }
-      return this.courseSuperKI$.subscribe(observer$);
+      return this.coursePlaygroundKI$.subscribe(observer$);
+    });
+  }
+
+  // Landing-Page Carousel
+  ////////////////////////////////////////////////
+  public loadLandingCarouselList(): Observable<APIToOfferShortList[]> {
+    return new Observable((observer$) => {
+      if (!this.courseLandingList$) {
+        this.courseLandingList$ = new AsyncSubject();
+        this.apiService
+          .getOfferNewest()
+          .subscribe(this.courseLandingList$);
+      }
+      return this.courseLandingList$.subscribe(observer$);
     });
   }
 }
