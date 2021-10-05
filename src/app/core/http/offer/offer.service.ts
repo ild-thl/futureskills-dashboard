@@ -257,30 +257,4 @@ export class OfferService {
     return DataMapping.mapDataInSmallOfferDetailEditData(offers);
   }
 
-  // preloadAllOffers(): Observable<Offer[]> {
-  //   const property$ = this.offerPropertyCache.loadOfferProperties();
-  //   const longOffer$ = this.offerPropertyCache.loadLongOfferList();
-
-  //   forkJoin([longOffer$, property$])
-  //     .pipe(
-  //       tap((results) => {
-  //         let offers = results[0];
-  //         for (const offerItem of offers) {
-  //           offerItem.competence_text = this.createCompetenceString(offerItem.competences);
-  //         }
-  //         this.offerStore.dispatch({ type: LOAD, data: offers });
-  //       })
-  //     )
-  //     .subscribe(
-  //       (offers) => {
-  //         console.log('Offers(long) geladen', offers);
-  //       },
-  //       (error) => {
-  //         console.log('getAllOffer_Error:', error);
-  //         let message = error; // Anpassen wenn nötig
-  //         this.offers$.error(message);
-  //       }
-  //     );
-  //   return this.offers$;
-  // }
 }

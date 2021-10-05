@@ -15,14 +15,8 @@ import { APIToOfferShortList, OfferPropertyItemResponse, OfferPropertyTagRespons
   providedIn: 'root',
 })
 export class OfferPropertyCache {
-  /**
-   * OfferList
-   */
-  private offerShortList$: AsyncSubject<any>;
-  private offerLongList$: AsyncSubject<any>;
-  /**
-   * PropertyList
-   */
+
+  // PropertyList
   private offerPropertyList$: AsyncSubject<any>;
   private propertyMap = new Map<string, OfferPropertyList>();
 
