@@ -1,19 +1,20 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { DataHandlerService } from 'src/app/core/http/data-handler.service';
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'futureskills-client';
+  private authInitialized: boolean = false;
 
   constructor(
-    private dataInitService: DataHandlerService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    // AutoLogin and initialize data-caching
-    this.dataInitService.authInit();
+    // if (this.authInitialized) return;
+    // this.authInitialized = true;
+    this.authService.autoLogin();
   }
 }

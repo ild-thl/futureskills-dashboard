@@ -26,10 +26,6 @@ const routes: Routes = [
   },
   {
     path: 'kurse',
-    component: OfferListComponent,
-  },
-  {
-    path: 'kurse2',
     component: OfferListPaginatedComponent,
   },
   {

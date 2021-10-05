@@ -9,7 +9,7 @@ import { StaticService } from 'src/app/config/static.service';
 
 import { Offer } from 'src/app/core/models/offer';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
-import { DataHandlerService } from 'src/app/core/http/data-handler.service';
+
 
 @Component({
   selector: 'app-offer-list',
@@ -39,7 +39,7 @@ export class OfferListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private metaDataService: MetaDataService,
     private staticConfig: StaticService,
-    private dataInitService: DataHandlerService
+
   ) {}
 
   ngOnInit() {
@@ -48,28 +48,28 @@ export class OfferListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     //TODO: PreLoad Data is necessary at the moment.
-    this.dataInitService.initialize();
+    //this.dataInitService.initialize();
     this.loadFilterMetaData();
 
-    this.onDataChange = this.offerDataService.getAllOffersForList().subscribe(
-      (offers) => {
-        this.loadedOffers = offers;
-        this.allOffers = offers;
-        this.isError = false;
-        this.isLoading = false;
-        this.message = '';
-       // console.log(this.allOffers);
-      },
-      (error) => {
-        console.log('Error in OffersList:', error);
-        this.isLoading = false;
-        this.loadedOffers = [];
-        this.allOffers = [];
-        this.isError = true;
-        // Todo: Passende Fehlermeldung
-        this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
-      }
-    );
+    // this.onDataChange = this.offerDataService.getAllOffersForList().subscribe(
+    //   (offers) => {
+    //     this.loadedOffers = offers;
+    //     this.allOffers = offers;
+    //     this.isError = false;
+    //     this.isLoading = false;
+    //     this.message = '';
+    //    // console.log(this.allOffers);
+    //   },
+    //   (error) => {
+    //     console.log('Error in OffersList:', error);
+    //     this.isLoading = false;
+    //     this.loadedOffers = [];
+    //     this.allOffers = [];
+    //     this.isError = true;
+    //     // Todo: Passende Fehlermeldung
+    //     this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
+    //   }
+    // );
 
     this.onIsAuthenticated = this.authService.userAuthenticated$.subscribe((userData: UserData) => {
       this.isAuthenticated = userData.isAuth;

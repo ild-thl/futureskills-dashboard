@@ -34,29 +34,6 @@ export class OfferPropertyCache {
   constructor(private apiService: ApiService) {}
 
   ////////////////////////////////////////////////
-  // Offers
-  ////////////////////////////////////////////////
-  public loadShortOfferList(): Observable<APIToOfferShortList[]> {
-    return new Observable((observer$) => {
-      if (!this.offerShortList$) {
-        this.offerShortList$ = new AsyncSubject();
-        this.apiService.getAllOfferShortList().subscribe(this.offerShortList$);
-      }
-      return this.offerShortList$.subscribe(observer$);
-    });
-  }
-
-  public loadLongOfferList(): Observable<PartialOffer[]> {
-    return new Observable((observer$) => {
-      if (!this.offerLongList$) {
-        this.offerLongList$ = new AsyncSubject();
-        this.apiService.getAllOffers().subscribe(this.offerLongList$);
-      }
-      return this.offerLongList$.subscribe(observer$);
-    });
-  }
-
-  ////////////////////////////////////////////////
   // Properties
   ////////////////////////////////////////////////
   public loadOfferProperties(): Observable<Map<string, OfferPropertyList>> {

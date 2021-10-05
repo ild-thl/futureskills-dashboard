@@ -44,18 +44,29 @@ export class Offer {
   }
 }
 
-// For related offers in EditForm
-export type SmallOfferListForEditForm = {
-  id: number;
-  image: string;
-  title: string;
-};
+// Main Offer Structure
+export class OfferTileData {
+  public id: number;
+  public title: string;
+  public image_path: string;
+  public offertype: {id: number, text: string};
+  public language: {id: number, text: string};
+  public institution: {id: number, title: string, url: string};
+  public competences: {ids: number[], text: string};
+  public keywords: string;
+}
+
+
 // For related offers in DetailPage
 export type SmallOfferDetailData = {
   id: number;
   image: string;
   title: string;
 };
+
+// For related offers in EditForm
+export type SmallOfferListForEditForm = {
+} & SmallOfferDetailData;
 
 // From API to Short Offer Pagination
 export type PaginatedOfferData = {
@@ -108,13 +119,3 @@ export class OfferUserData {
   constructor(public offer: Offer, public isSubscribed: boolean = false) {}
 }
 
-// unused, für später
-// export class ShortOfferTileData {
-//   public id: number;
-//   public title: string;
-//   public image_path: string;
-//   public offertype: {id: number, text: string};
-//   public language: {id: number, text: string};
-//   public institution: {id: number, text: string};
-//   public competence: {ids: number[], text: string};
-// }
