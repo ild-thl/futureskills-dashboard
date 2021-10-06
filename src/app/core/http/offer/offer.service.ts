@@ -19,7 +19,7 @@ import {
   SmallOfferDetailData,
   SmallOfferListForEditForm,
 } from 'src/app/core/models/offer';
-import { OfferPropertyList } from 'src/app/core/models/offer-properties';
+import { OfferPropertyList, PropertyIDMap, PropertyIDMapItem } from 'src/app/core/models/offer-properties';
 import { DataCacheService } from '../api/data-cache.service';
 import { DataMapping } from '../api/data-mapping';
 
@@ -48,14 +48,19 @@ export class OfferService {
   // for Pagination
   ////////////////////////////////////////////////
   getPaginatedOfferData(page?: number, count?: number): Observable<PaginatedOfferData> {
+    const propertyID$ = this.dataCacheService.getPropertyIDMap();
+    const newProperty$ = this.dataCacheService.getPropertyMap().subscribe((propMap) => {
+      console.log('PropertyMap', propMap);
+    });
+
     const paginatedOffers$ = this.apiService.getPaginatedOfferShortList(page, count);
     const property$ = this.offerPropertyCache.loadOfferProperties();
     // Parallel laden, aber erst auswerten wenn beide completed sind
-    return forkJoin([paginatedOffers$, property$]).pipe(
+    return forkJoin([paginatedOffers$, property$, propertyID$]).pipe(
       map((results) => {
         const paginated: PaginatedOfferDataFromAPI = results[0];
-        let offers = this.mapMetaPaginationStructure(paginated);
-        console.log('PaginatedOffers: ', offers);
+        let offers = this.mapMetaPaginationStructure(paginated, results[2]);
+        //console.log('PaginatedOffers: ', offers);
         console.log('Properties: ', results[1]);
         return offers;
       })
@@ -91,10 +96,11 @@ export class OfferService {
   public getShortOffersNewest(cached: boolean = true): Observable<OfferShortListForTiles[]> {
     const property$ = this.offerPropertyCache.loadOfferProperties();
     const newestOffer$ = this.dataCacheService.loadLandingCarouselList();
+    const propertyID$ = this.dataCacheService.getPropertyIDMap();
     // Parallel laden, aber erst auswerten wenn beide completed sind
-    return forkJoin([newestOffer$, property$]).pipe(
+    return forkJoin([newestOffer$, property$, propertyID$]).pipe(
       map((results) => {
-        const temp = this.mapDataInOfferStructure(results[0]);
+        const temp = this.mapDataInOfferStructure(results[0], results[2]);
         console.log('Newest Offers:', temp);
         return temp;
       })
@@ -130,17 +136,6 @@ export class OfferService {
     return this.apiService.postOffer(data).pipe(
       tap((savedOffer) => {
         console.log('New Offer:', savedOffer);
-        savedOffer.competence_text = this.createCompetenceString(savedOffer.competences);
-      })
-    );
-  }
-
-  // Angedacht für die Sortierungsliste.
-  storePartialOfferList(offerList: PartialOffer[]) {
-    const sentList = offerList.filter((offer) => offer.id !== null);
-    return this.apiService.updatePartialOfferList(sentList).pipe(
-      tap((savedOffers) => {
-        // TODO: Einzelne Datensätze updaten oder besser die Datensätze neu laden
       })
     );
   }
@@ -150,7 +145,6 @@ export class OfferService {
     return this.apiService.putOffer(id, data).pipe(
       tap((savedOffer) => {
         console.log('Updated Offer:', savedOffer);
-        savedOffer.competence_text = this.createCompetenceString(savedOffer.competences);
       })
     );
   }
@@ -160,16 +154,11 @@ export class OfferService {
     return this.apiService.deleteOffer(offer.id).pipe(tap((_) => {}));
   }
 
-
   ////////////////////////////////////////////////
   // Properties
   ////////////////////////////////////////////////
 
-  public getOfferProperties(): Observable<Map<string, OfferPropertyList>> {
-    return this.offerPropertyCache.loadOfferProperties();
-  }
-
-  public createCompetenceString(competences: number[]): string {
+  public createCompetenceString(competences: number[], competencesMap: PropertyIDMapItem): string {
     let competenceArr = [];
     let competenceStr = '';
 
@@ -177,7 +166,7 @@ export class OfferService {
       competenceStr = 'keine Angabe';
     } else {
       for (const competence of competences) {
-        const competenceText = this.offerPropertyCache.competencesMap.get(competence);
+        const competenceText = competencesMap.get(competence);
         competenceArr.push(this.compworkaroundForText(competenceText));
       }
       competenceStr = competenceArr.join(', ');
@@ -205,9 +194,9 @@ export class OfferService {
     }
   }
 
-  mapMetaPaginationStructure(paginatedData: PaginatedOfferDataFromAPI): PaginatedOfferData {
+  mapMetaPaginationStructure(paginatedData: PaginatedOfferDataFromAPI, propertyIds: PropertyIDMap): PaginatedOfferData {
     return {
-      data: this.mapDataInOfferStructure(paginatedData.data),
+      data: this.mapDataInOfferStructure(paginatedData.data, propertyIds),
       current_page: paginatedData.current_page,
       first_page_url: paginatedData.first_page_url,
       from: paginatedData.from,
@@ -222,9 +211,14 @@ export class OfferService {
     };
   }
 
-  mapDataInOfferStructure(offers: APIToOfferShortList[]): OfferShortListForTiles[] {
-    //console.log('API OFFER:', offers);
+  mapDataInOfferStructure(offers: APIToOfferShortList[], propertyIds: PropertyIDMap): OfferShortListForTiles[] {
+    console.log('PropertyIds:', propertyIds);
     let newOffer: OfferShortListForTiles[] = [];
+    const institutionMap = propertyIds.get('institutions');
+    const languageMap =  propertyIds.get('languages');
+    const formatMap=  propertyIds.get('formats');
+    const competencesMap =  propertyIds.get('competences');
+
     for (const offerItem of offers) {
       newOffer.push({
         id: offerItem.id,
@@ -233,19 +227,25 @@ export class OfferService {
         institution_id: offerItem.institution_id,
         institution: {
           id: offerItem.institution_id,
-          title: this.offerPropertyCache.institutionMap.get(offerItem.institution_id),
+          title: institutionMap.get(offerItem.institution_id),
           url: undefined,
         },
         offertype_id: offerItem.offertype_id,
-        type: this.offerPropertyCache.formatMap.get(offerItem.offertype_id),
+        type: formatMap.get(offerItem.offertype_id),
         language_id: offerItem.language_id,
-        language: this.offerPropertyCache.languageMap.get(offerItem.language_id),
+        language: languageMap.get(offerItem.language_id),
         competences: offerItem.competences,
-        competence_text: this.createCompetenceString(offerItem.competences),
+        competence_text: this.createCompetenceString(offerItem.competences, competencesMap),
         keywords: offerItem.keywords,
       });
     }
-    //console.log('Short OFFER:', newOffer);
+   console.log('Offer: ', newOffer);
+
+
+
+
+
+
     return newOffer;
   }
 
@@ -256,5 +256,4 @@ export class OfferService {
   public mapDataInSmallOfferDetailData(offers: APIToOfferShortList[]): SmallOfferDetailData[] {
     return DataMapping.mapDataInSmallOfferDetailEditData(offers);
   }
-
 }
