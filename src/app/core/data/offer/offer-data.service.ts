@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 
 import { OfferToAPI } from 'src/app/core/http/api/api.interfaces';
@@ -15,7 +15,7 @@ import {
   PaginatedOfferData,
   SmallOfferDetailData,
 } from 'src/app/core/models/offer';
-import { DataMapping } from '../../http/api/data-mapping';
+import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
 /////////////////////////////////////////////////////
 // Class contains all Data-Functions for Components

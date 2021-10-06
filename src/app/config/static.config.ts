@@ -15,7 +15,7 @@ export const CustomConfig = {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     },
   },
-  offerDefaultCount: 4,
+  offerDefaultCount: 12,
   kiConfig: {
     online: true,
     mnistPath: 'mnistnumber',
@@ -24,6 +24,12 @@ export const CustomConfig = {
       de: 'sentiment/de'
     },
     linkListPath: 'kiplayground/lnklist'
+  },
+  filterParams:{
+    institutions: 'institutions',
+    languages: 'languages',
+    competences: 'competences',
+    formats: 'formats'
   },
   paths: {
     lnkLanding: '/',

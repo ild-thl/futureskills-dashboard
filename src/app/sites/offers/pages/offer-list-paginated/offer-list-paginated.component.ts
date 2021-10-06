@@ -8,6 +8,7 @@ import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 
 import { OfferShortListForTiles, PaginatedOfferData } from 'src/app/core/models/offer';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -27,9 +28,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   pageBoundaryLinks: boolean;
   pageSize: number; //Anzahl der Items per Seite
 
-
   loadedOffers: OfferShortListForTiles[] = [];
 
+  pageQueryParam: string;
   filterListLoaded = false;
   filterMap = new Map();
 
@@ -43,6 +44,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     private offerDataService: OfferDataService,
     private authService: AuthService,
     private metaDataService: MetaDataService,
+    private route: ActivatedRoute,
     private staticService: StaticService
   ) {
     this.pageCollectionSize = 10; // Anzahl der Items
@@ -56,6 +58,16 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.message = '';
     this.isError = false;
     this.isLoading = true;
+
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
+      this.pageQueryParam = params.get('page');
+      const newPage: number = +this.pageQueryParam;
+      if (!newPage || newPage == NaN || newPage <= 0){
+        this.page = 1
+      } else {
+        this.page = newPage;
+      }
+    });
 
     this.loadData(this.page, this.pageSize);
 
@@ -86,7 +98,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
         this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
       },
       () => {
-        console.log('Completed');
+        //console.log('Completed');
       }
     );
   }

@@ -90,7 +90,7 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  public getOfferNewest(): Observable<APIToOfferShortList[]> {
+  public getOfferLatest(): Observable<APIToOfferShortList[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/search/offer/latest')
       .pipe(catchError(this.handleError));

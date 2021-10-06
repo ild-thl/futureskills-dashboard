@@ -1,11 +1,17 @@
-import { OfferPropertyList, PropertyIDMap, PropertyIDMapItem } from './../../models/offer-properties';
 import { Injectable } from '@angular/core';
-import { AsyncSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AsyncSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { SmallOfferDetailData, SmallOfferListForEditForm } from 'src/app/core/models/offer';
+import {
+  OfferPropertyList,
+  PropertyCompleteMap,
+  PropertyIDMap,
+  PropertyIDMapItem,
+} from 'src/app/core/models/offer-properties';
 import { StaticService } from 'src/app/config/static.service';
 import { DataMapping } from './data-mapping';
+
 import {
   APIToOfferShortList,
   OfferPropertyItemResponse,
@@ -47,7 +53,9 @@ export class DataCacheService {
           .getAllOfferShortList()
           .pipe(
             map((results) => {
-              return DataMapping.mapDataInSmallOfferDetailEditData(results);
+              const data = DataMapping.mapDataInSmallOfferDetailEditData(results);
+              console.log("Offers(for Related) cached: ", data);
+              return data;
             })
           )
           .subscribe(this.offerShortListForEditDetail$);
@@ -70,7 +78,9 @@ export class DataCacheService {
           .getOfferSubListWithKeyWords(this.staticService.getKeyForPlaygroundKiCourse())
           .pipe(
             map((results) => {
-              return DataMapping.mapDataInSmallOfferDetailEditData(results);
+              const data= DataMapping.mapDataInSmallOfferDetailEditData(results);
+              console.log("KI-Courses cached: ", data);
+              return data;
             })
           )
           .subscribe(this.coursePlaygroundKI$);
@@ -85,7 +95,12 @@ export class DataCacheService {
     return new Observable((observer$) => {
       if (!this.courseLandingList$) {
         this.courseLandingList$ = new AsyncSubject();
-        this.apiService.getOfferNewest().subscribe(this.courseLandingList$);
+        this.apiService
+          .getOfferLatest()
+          .pipe(tap((data) => {
+            console.log("Offer (latest) cached: ", data);
+          }))
+          .subscribe(this.courseLandingList$);
       }
       return this.courseLandingList$.subscribe(observer$);
     });
@@ -103,7 +118,9 @@ export class DataCacheService {
         this.loadProperties()
           .pipe(
             map((data: OfferPropertyTagResponse) => {
-              return this.mapIDToText(data.filter);
+              const newData = this.mapIDToText(data.filter);
+              console.log('Property-IDMaps cached: ', newData);
+              return newData;
             })
           )
           .subscribe(this.propertyIDMap$);
@@ -112,7 +129,7 @@ export class DataCacheService {
     });
   }
 
-  public getPropertyMap(): Observable<Map<string, OfferPropertyList>> {
+  public getPropertyMap(): Observable<PropertyCompleteMap> {
     return new Observable((observer$) => {
       if (!this.propertyMap$) {
         this.propertyMap$ = new AsyncSubject();
@@ -125,6 +142,7 @@ export class DataCacheService {
               for (var filterItem of propertyList) {
                 propertyMap.set(filterItem.type, filterItem);
               }
+              console.log('Property-Map cached: ', propertyMap);
               return propertyMap;
             })
           )
@@ -137,7 +155,6 @@ export class DataCacheService {
   private loadProperties(): Observable<any> {
     return new Observable((observer$) => {
       if (!this.offerPropertyList$) {
-        console.log('Loading Properties once');
         this.offerPropertyList$ = new AsyncSubject();
         this.apiService.getOfferProperties().subscribe(this.offerPropertyList$);
       }
@@ -181,10 +198,10 @@ export class DataCacheService {
           break;
       }
     }
-    propMap.set('institutions', institutionMap);
-    propMap.set('languages', languageMap);
-    propMap.set('competences', competencesMap);
-    propMap.set('formats', formatMap);
+    propMap.set(this.staticService.getFilterParams().institutions, institutionMap);
+    propMap.set(this.staticService.getFilterParams().languages, languageMap);
+    propMap.set(this.staticService.getFilterParams().competences, competencesMap);
+    propMap.set(this.staticService.getFilterParams().formats, formatMap);
     return propMap;
   }
 

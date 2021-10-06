@@ -1,38 +1,48 @@
 <div class="container page-offers">
   <h3>Kursübersicht</h3>
   <p>Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b></p>
+
   <div *ngIf="!isError && isLoading">
-   <!-- <app-skeleton-offers></app-skeleton-offers>-->
+    <app-skeleton-offers></app-skeleton-offers>
   </div>
+
   <div *ngIf="!isLoading">
-    <div *ngIf="isError">
+    <div *ngIf="isError == true; then showError; else showList"></div>
+
+    <ng-template #showError>
       <p>{{ message }}</p>
-    </div>
+    </ng-template>
 
-    <div *ngIf="!isError && loadedOffers.length === 0">
-      <p>Es wurden keine Angebote gefunden.</p>
-    </div>
+    <ng-template #showList>
+      <div *ngIf="loadedOffers.length === 0">
+        <p>Es wurden keine Angebote gefunden.</p>
+      </div>
 
-    <!-- pagination -->
-    <ngb-pagination
-      [collectionSize]="pageCollectionSize"
-      [(page)]="page"
-      [maxSize]="pageMaxSize"
-      [boundaryLinks]="pageBoundaryLinks"
-      [pageSize]="pageSize"
-      (pageChange)="pageChange()"
-    ></ngb-pagination>
+      <!-- Pagination -->
+      <ngb-pagination
+        [collectionSize]="pageCollectionSize"
+        [(page)]="page"
+        [maxSize]="pageMaxSize"
+        [boundaryLinks]="pageBoundaryLinks"
+        [pageSize]="pageSize"
+        (pageChange)="pageChange()"
+      ></ngb-pagination>
 
-    <div class="mb-5 offers-grid" *ngIf="!isError">
-      <fs-offer-tile
-        class="pr-0 page-offers"
-        *ngFor="let offer of loadedOffers"
-        [offerForTile]="offer"
-        [isSubscribed]="false"
-        displayMode="full"
-      ></fs-offer-tile>
-    </div>
+      <!-- Offers -->
+      <div class="mb-5 offers-grid">
+        <fs-offer-tile
+          class="pr-0 page-offers"
+          *ngFor="let offer of loadedOffers"
+          [offerForTile]="offer"
+          [isSubscribed]="false"
+          displayMode="full"
+        ></fs-offer-tile>
+      </div>
+    </ng-template>
 
+    <hr />
+
+    <!-- New -->
     <div class="row pr-3 pl-3">
       <div *ngIf="isAuthenticated">
         <button
