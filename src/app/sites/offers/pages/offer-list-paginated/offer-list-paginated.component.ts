@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 
@@ -43,7 +42,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   constructor(
     private offerDataService: OfferDataService,
     private authService: AuthService,
-    private metaDataService: MetaDataService,
     private route: ActivatedRoute,
     private staticService: StaticService
   ) {
@@ -55,9 +53,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.message = '';
-    this.isError = false;
-    this.isLoading = true;
+    this.onIsAuthenticated = this.authService.userAuthenticated$.subscribe((userData: UserData) => {
+      this.isAuthenticated = userData.isAuth;
+    });
 
     this.route.queryParamMap.subscribe((params: ParamMap) => {
       this.pageQueryParam = params.get('page');
@@ -70,13 +68,13 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     });
 
     this.loadData(this.page, this.pageSize);
-
-    this.onIsAuthenticated = this.authService.userAuthenticated$.subscribe((userData: UserData) => {
-      this.isAuthenticated = userData.isAuth;
-    });
   }
 
   loadData(page: number, pageSize: number) {
+    this.message = '';
+    this.isError = false;
+    this.isLoading = true;
+
     this.offerSubscription = this.offerDataService.getPaginatedOfferList(page, pageSize).subscribe(
       (paginatedData: PaginatedOfferData) => {
         this.loadedOffers = paginatedData.data;
@@ -86,7 +84,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
         //this.pageSize = paginatedData.per_page;
 
         this.isError = false;
-        this.isLoading = false;
         this.message = '';
       },
       (error) => {
@@ -98,7 +95,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
         this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
       },
       () => {
-        //console.log('Completed');
+        this.isLoading = false;
+        console.log('Completed');
       }
     );
   }
