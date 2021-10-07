@@ -29,6 +29,10 @@ const routes: Routes = [
     component: OfferListPaginatedComponent,
   },
   {
+    path: 'allekurse',
+    component: OfferListComponent,
+  },
+  {
     path: 'kurse/:id',
     component: OfferDetailComponent,
   },

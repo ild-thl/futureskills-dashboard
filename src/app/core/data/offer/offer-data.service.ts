@@ -18,7 +18,7 @@ import {
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
 /////////////////////////////////////////////////////
-// Class contains all Data-Functions for Components
+// Class contains all Offer-Data-Functions for Components
 /////////////////////////////////////////////////////
 
 @Injectable({
@@ -36,7 +36,7 @@ export class OfferDataService {
   /////////////////////////////////////////////////////
 
   // CourseList
-  public getPaginatedOfferList(page?: number, count?: number): Observable<PaginatedOfferData> {
+  public getPaginatedOfferList(page: number, count: number): Observable<PaginatedOfferData> {
     return this.offerService.getPaginatedOfferData(page, count);
   }
 

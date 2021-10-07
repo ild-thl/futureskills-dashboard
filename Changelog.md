@@ -3,6 +3,14 @@
 
 ## [UnReleased v0.7]
 
+## 2021-10-07/ml
+### new/changed/deleted
+- Offers - new PaginationComponent
+- Clean Up
+  - no data store anymore for paginated courses (no caching)
+  - Search-Data and Property-Data is cached
+  - unused functions deleted
+  - loadScript Service deleted (Tensorflow is packaged)
 
 ## 2021-10-04/ml
 ### added

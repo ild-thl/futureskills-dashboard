@@ -70,7 +70,9 @@ export abstract class DataMapping {
    * @param offers
    * @returns
    */
-  public static mapDataInSmallOfferDetailData(offers: APIToOfferShortList[]): SmallOfferDetailData[] {
+  public static mapDataInSmallOfferDetailData(
+    offers: APIToOfferShortList[]
+  ): SmallOfferDetailData[] {
     return this.mapDataInSmallOfferDetailEditData(offers);
   }
 

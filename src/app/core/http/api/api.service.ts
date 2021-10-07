@@ -50,11 +50,14 @@ export class ApiService {
   // Offers Paginated
   ////////////////////////////////////////////////
   public getPaginatedOfferShortList(
-    page: number = 1,
-    count?: number
+    page: number,
+    count: number
   ): Observable<PaginatedOfferDataFromAPI> {
-    if (!count || count < 1) {
-      count = this.staticServive.getOfferDefaultCount();
+    if (count == null || count < 0) {
+      count = 0;
+    }
+    if (page == null || page < 1) {
+      page = 1;
     }
 
     return this.http

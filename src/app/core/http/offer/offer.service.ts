@@ -5,7 +5,6 @@ import { ApiService } from 'src/app/core/http/api/api.service';
 import { StaticService } from 'src/app/config/static.service';
 
 import {
-  APIToOfferShortList,
   OfferToAPI,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
@@ -16,7 +15,6 @@ import {
   SmallOfferDetailData,
   SmallOfferListForEditForm,
 } from 'src/app/core/models/offer';
-import { PropertyIDMap, PropertyIDMapItem } from 'src/app/core/models/offer-properties';
 import { DataCacheService } from 'src/app/core/http/api/data-cache.service';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
@@ -43,7 +41,7 @@ export class OfferService {
 
   // for Pagination
   ////////////////////////////////////////////////
-  getPaginatedOfferData(page?: number, count?: number): Observable<PaginatedOfferData> {
+  getPaginatedOfferData(page: number, count: number): Observable<PaginatedOfferData> {
     const propertyID$ = this.dataCacheService.getPropertyIDMap();
     const paginatedOffers$ = this.apiService.getPaginatedOfferShortList(page, count);
 

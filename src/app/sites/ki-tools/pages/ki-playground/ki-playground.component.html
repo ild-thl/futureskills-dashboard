@@ -1,5 +1,5 @@
 <div id="ki-tools">
-  <div *ngIf="kitoolsAreOnline == true && preview == '1'; then kiOnline; else kiOffline"></div>
+  <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
 
   <ng-template #kiOnline>
     <div *ngIf="!isLoadingScripts; else loading">
@@ -41,7 +41,7 @@
                   </div>
                   <div class="card-footer">
                     <button
-                      *ngIf="scriptsAreLoaded && !mnistModelIsLoading; else mnistBtnNotClickable"
+                      *ngIf="!mnistModelIsLoading; else mnistBtnNotClickable"
                       type="button"
                       class="btn btn-outline-dark btn-sm"
                       (click)="onLoadMnistExample(true)"
@@ -67,10 +67,7 @@
                   </div>
                   <div class="card-footer">
                     <button
-                      *ngIf="
-                        scriptsAreLoaded && !sentimentModelIsLoading;
-                        else sentimentBtnNotClickable
-                      "
+                      *ngIf="!sentimentModelIsLoading; else sentimentBtnNotClickable"
                       type="button"
                       class="btn btn-outline-dark btn-sm"
                       (click)="onLoadSentimentExample(true)"
@@ -105,7 +102,7 @@
                     >
                       zur Sammlung
                     </button>
-                    <small class="text-muted float-right pt-2">Stand: 14.09.2021</small>
+                    <small class="text-muted float-right pt-2">Stand: 06.10.2021</small>
                   </div>
                 </div>
               </div>

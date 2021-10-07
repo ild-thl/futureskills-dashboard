@@ -7,7 +7,7 @@ import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 
-import { Offer } from 'src/app/core/models/offer';
+import { Offer, OfferShortListForTiles } from 'src/app/core/models/offer';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 
 
@@ -22,8 +22,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
 
   lnkAdminOfferNew = this.staticConfig.getPathInfo().lnkAdminOfferNew;
 
-  allOffers: Offer[] = [];
-  loadedOffers: Offer[] = [];
+  allOffers: OfferShortListForTiles[] = [];
+  loadedOffers: OfferShortListForTiles[] = [];
 
   filterListLoaded = false;
   filterMap = new Map();
@@ -47,29 +47,27 @@ export class OfferListComponent implements OnInit, OnDestroy {
     this.isError = false;
     this.isLoading = true;
 
-    //TODO: PreLoad Data is necessary at the moment.
-    //this.dataInitService.initialize();
     this.loadFilterMetaData();
 
-    // this.onDataChange = this.offerDataService.getAllOffersForList().subscribe(
-    //   (offers) => {
-    //     this.loadedOffers = offers;
-    //     this.allOffers = offers;
-    //     this.isError = false;
-    //     this.isLoading = false;
-    //     this.message = '';
-    //    // console.log(this.allOffers);
-    //   },
-    //   (error) => {
-    //     console.log('Error in OffersList:', error);
-    //     this.isLoading = false;
-    //     this.loadedOffers = [];
-    //     this.allOffers = [];
-    //     this.isError = true;
-    //     // Todo: Passende Fehlermeldung
-    //     this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
-    //   }
-    // );
+    this.onDataChange = this.offerDataService.getPaginatedOfferList(1, 0).subscribe(
+      (offers) => {
+        this.loadedOffers = offers.data;
+        this.allOffers = offers.data;
+        this.isError = false;
+        this.isLoading = false;
+        this.message = '';
+       // console.log(this.allOffers);
+      },
+      (error) => {
+        console.log('Error in OffersList:', error);
+        this.isLoading = false;
+        this.loadedOffers = [];
+        this.allOffers = [];
+        this.isError = true;
+        // Todo: Passende Fehlermeldung
+        this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
+      }
+    );
 
     this.onIsAuthenticated = this.authService.userAuthenticated$.subscribe((userData: UserData) => {
       this.isAuthenticated = userData.isAuth;

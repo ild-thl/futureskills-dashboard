@@ -1,19 +1,17 @@
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { Injectable, Renderer2 } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
-import { AsyncSubject, Observable, from, of, BehaviorSubject } from 'rxjs';
+import { AsyncSubject, Observable, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { KIToolsTypes } from '../interfaces/types';
 
 import * as tf from '@tensorflow/tfjs';
 import { map } from 'rxjs/operators';
-import { DemonstratorExamples } from '../components/demonstrator-example/data/example-data';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 @Injectable()
 export class KiStatusService {
-  private scriptLoading$: AsyncSubject<any>;
   private MNISTModel$: AsyncSubject<any>;
   private SentimentModel$: AsyncSubject<any>;
   private LinkList$: AsyncSubject<any>;
@@ -69,17 +67,11 @@ export class KiStatusService {
     });
   }
 
-  public loadLinkList(
-    server: boolean = true
-  ): Observable<{
+  public loadLinkList(): Observable<{
     demoCards: KIToolsTypes.LinkCardData[];
     projectCards: KIToolsTypes.LinkCardData[];
   }> {
-    if (server) {
-      return this.loadJSONLinkList();
-    } else {
-      return this.loadLinkListFromFile();
-    }
+    return this.loadJSONLinkList();
   }
 
   public loadJSONLinkList(): Observable<{
@@ -101,16 +93,6 @@ export class KiStatusService {
       }
       return this.LinkList$.subscribe(observer$);
     });
-  }
-
-  private loadLinkListFromFile(): Observable<{
-    demoCards: KIToolsTypes.LinkCardData[];
-    projectCards: KIToolsTypes.LinkCardData[];
-  }> {
-    const demoCards = DemonstratorExamples.exampleText;
-    const projectCards = DemonstratorExamples.projectText;
-    const retValue = { demoCards, projectCards };
-    return of(retValue);
   }
 
   private getLinkListJSONFile(): Observable<KIToolsTypes.LinkListJSONData> {
@@ -166,23 +148,7 @@ export class KiStatusService {
     }
   }
 
-  /**
-   * @deprecated Tensorflow wird per npm geladen
-   * @param renderer
-   * @returns
-   */
-  public loadKIScript(renderer: Renderer2): Observable<any> {
-    return new Observable((observer$) => {
-      if (!this.scriptLoading$) {
-        console.log('Dont Load Tensorflow');
-        this.scriptLoading$ = new AsyncSubject();
-        //  this.scriptLoader.load(renderer, ['tensorflow']).subscribe(this.scriptLoading$);
-      }
-      return this.scriptLoading$.subscribe(observer$);
-    });
-  }
-
-  public getKIModules(): Observable<SmallOfferDetailData[]> {
+  public getKICourses(): Observable<SmallOfferDetailData[]> {
     return this.offerDataService.getOffersForPlaygroundKIList();
   }
 }
