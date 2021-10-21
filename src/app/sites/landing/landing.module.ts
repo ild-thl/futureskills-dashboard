@@ -11,6 +11,7 @@ import { TrailerComponent } from 'src/app/sites/landing/components/trailer/trail
 import { CoursecarouselModule } from 'src/app/sites/landing/components/coursecarousel/coursecarousel.module';
 import { KiPlaygroundBlockComponent } from './components/ki-playground-block/ki-playground-block.component';
 import { RoundEasyButtonComponent } from './components/ki-playground-block/round-easy-button/round-easy-button.component';
+import { IntroBannerComponent } from './components/intro-banner/intro-banner.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RoundEasyButtonComponent } from './components/ki-playground-block/round
     PartnershipComponent,
     TrailerComponent,
     KiPlaygroundBlockComponent,
-    RoundEasyButtonComponent
+    RoundEasyButtonComponent,
+    IntroBannerComponent
   ],
   imports: [RouterModule, SharedModule, CoursecarouselModule],
   exports: [],
