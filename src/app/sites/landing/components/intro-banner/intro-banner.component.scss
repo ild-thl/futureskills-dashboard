@@ -29,23 +29,42 @@ $br-2: 41% 68% 32% 59%;
 }
 
 @keyframes blobmove {
-  10% {
-    border-radius: keyframe-border-radius(0.8, 1.1);
+  /*10% {
+    border-radius: keyframe-border-radius(1.4, 1.1);
   }
   30% {
     border-radius: keyframe-border-radius(1.0, 0.8);
   }
   50% {
-    border-radius: keyframe-border-radius(0.8, 1.1);
+    border-radius: keyframe-border-radius(0.9, 1.1);
   }
   70% {
-    border-radius: keyframe-border-radius(0.9, 0.9);
+    border-radius: keyframe-border-radius(1.1, 0.9);
   }
   90% {
     border-radius: keyframe-border-radius(0.8, 1.1);
   }
   100% {
     border-radius: keyframe-border-radius(1.0, 1.0);
+  }*/
+
+  10% {
+    border-radius: 50% 50% 45% 55% / 35% 58% 42% 65%;
+  }
+  30% {
+    border-radius: 59% 41% 53% 47% / 38% 72% 28% 62%;
+  }
+  50% {
+    border-radius: 59% 41% 42% 58% / 32% 80% 20% 68%;
+  }
+  70% {
+    border-radius: 46% 54% 42% 58% / 41% 69% 31% 59%;
+  }
+  90% {
+    border-radius: 31% 69% 26% 74% / 41% 69% 31% 59%;
+  }
+  100% {
+    border-radius: 61% 39% 38% 62% / 41% 68% 32% 59%;
   }
 }
 
@@ -53,7 +72,22 @@ $br-2: 41% 68% 32% 59%;
   display: inline-block;
   background-color: rgba(212, 0, 75, 0.85);
   animation: blobmove 20s ease-in-out infinite;
-  @include init-border-radius(#{$br-1} / #{$br-2});
-  padding: 50px;
+  border-radius: 61% 39% 38% 62% / 41% 68% 32% 59%;
+  //@include init-border-radius(#{$br-1} / #{$br-2});
+  padding: 25px;
   overflow: visible;
 }
+
+/*
+48.8% 31.2% 30.4% 49.6%/45.1% 74.8% 35.2% 64.9%
+
+61% 39% 38% 62%/32.8% 54.4% 25.6% 47.2%
+
+48.8% 31.2% 30.4% 49.6%/45.1% 74.8% 35.2% 64.9%
+
+54.9% 35.1% 34.2% 55.8%/36.9% 61.2% 28.8% 53.1%
+
+48.8% 31.2% 30.4% 49.6%/45.1% 74.8% 35.2% 64.9%
+
+61% 39% 38% 62%/41% 68% 32% 59%
+*/
