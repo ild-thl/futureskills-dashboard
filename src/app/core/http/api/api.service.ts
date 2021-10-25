@@ -49,7 +49,29 @@ export class ApiService {
   ////////////////////////////////////////////////
   // Offers Paginated
   ////////////////////////////////////////////////
-  public getPaginatedOfferShortList(
+
+  public postPaginatedOfferShortList(
+    page: number,
+    count: number
+  ): Observable<PaginatedOfferDataFromAPI> {
+    if (count == null || count < 0) {
+      count = 0;
+    }
+    if (page == null || page < 1) {
+      page = 1;
+    }
+
+    let data = [];
+
+    return this.http
+      .post<any>(
+        environment.apiURL + '/api/list/offer/short/paginated/' + count + '?page=' + page,
+        data
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  public ggetPaginatedOfferShortList(
     page: number,
     count: number
   ): Observable<PaginatedOfferDataFromAPI> {

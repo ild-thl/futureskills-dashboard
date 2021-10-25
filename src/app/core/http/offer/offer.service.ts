@@ -43,7 +43,7 @@ export class OfferService {
   ////////////////////////////////////////////////
   getPaginatedOfferData(page: number, count: number): Observable<PaginatedOfferData> {
     const propertyID$ = this.dataCacheService.getPropertyIDMap();
-    const paginatedOffers$ = this.apiService.getPaginatedOfferShortList(page, count);
+    const paginatedOffers$ = this.apiService.postPaginatedOfferShortList(page, count);
 
     // Parallel laden, aber erst auswerten wenn beide completed sind
     return forkJoin([paginatedOffers$, propertyID$]).pipe(
