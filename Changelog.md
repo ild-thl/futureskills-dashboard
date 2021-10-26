@@ -3,6 +3,12 @@
 
 ## [UnReleased v0.7]
 
+## 2021-10-26/ml
+### new/changed
+- OfferList has server-based filter
+- loading Offers: get->post
+- new environment variable: offerItemPerPage
+
 ## 2021-10-07/ml
 ### new/changed/deleted
 - Offers - new PaginationComponent

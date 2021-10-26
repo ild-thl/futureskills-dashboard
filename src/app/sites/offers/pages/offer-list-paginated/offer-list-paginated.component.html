@@ -82,19 +82,19 @@
       </div>
 
       <!-- Pagination2-->
-      <div class="row">
+      <div class="row mb-3">
         <div class="col">
           <div *ngIf="loadedOffers.length > 0">
-          <ngb-pagination
-            class="d-flex justify-content-center"
-            [collectionSize]="pageCollectionSize"
-            [(page)]="page"
-            [maxSize]="pageMaxSize"
-            [boundaryLinks]="true"
-            [pageSize]="pageSize"
-            (pageChange)="pageChange()"
-            [disabled]="componentsDisabled"
-          ></ngb-pagination>
+            <ngb-pagination
+              class="d-flex justify-content-center"
+              [collectionSize]="pageCollectionSize"
+              [(page)]="page"
+              [maxSize]="pageMaxSize"
+              [boundaryLinks]="true"
+              [pageSize]="pageSize"
+              (pageChange)="pageChange()"
+              [disabled]="componentsDisabled"
+            ></ngb-pagination>
           </div>
         </div>
       </div>
@@ -102,17 +102,21 @@
   </ng-template>
 
   <!-- New -->
-  <hr />
-  <div class="row pr-3 pl-3">
-    <div *ngIf="isAuthenticated">
-      <button
-        type="button"
-        class="btn btn-outline-primary mb-3"
-        [routerLink]="[lnkAdminOfferNew]"
-        routerLinkActive="router-link-active"
-      >
-        <span>Neues Angebot erstellen</span>
-      </button>
+  <div *ngIf="isAuthenticated">
+    <hr />
+    <div class="row">
+      <div class="col">
+        <div class="float-left">
+          <button
+            type="button"
+            class="btn btn-outline-primary mb-3"
+            [routerLink]="[lnkAdminOfferNew]"
+            routerLinkActive="router-link-active"
+          >
+            <span>Neues Angebot erstellen</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
