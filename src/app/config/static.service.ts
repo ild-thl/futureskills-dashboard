@@ -46,9 +46,6 @@ export class StaticService {
   getKeyForSuperKICourse(): string {
     return CustomConfig.courseKeyWordKeys.keyForSuperKIKurs;
   }
-  getOfferDefaultCount(): number {
-    return CustomConfig.offerDefaultCount;
-  }
   getKeyForPlaygroundKiCourse(): string {
     return CustomConfig.courseKeyWordKeys.keyForPlaygroundKIKurs;
   }

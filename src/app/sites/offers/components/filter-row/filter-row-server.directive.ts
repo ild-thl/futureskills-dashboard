@@ -37,8 +37,8 @@ export class FilterRowServerDirective implements AfterContentInit {
 
   // Filter sammeln
   private constructFilterArrays(item: FilterFunctionCallbackItem): OfferFilterToAPI {
-    console.log('Item:', item);
-    console.log("BoxMap:",  this.boxMap);
+    //console.log('Item:', item);
+    //console.log("FilterItems:",  this.boxMap);
 
     let filterObj: OfferFilterToAPI = {};
 

@@ -20,6 +20,7 @@ export type FilterFunctionCallbackItem = {
 export class FilterComboBoxComponent implements OnInit {
   @Input() defaultText: string;
   @Input() filterList: OfferPropertyList;
+  @Input() disabled: boolean=false;
   @Output() valueChanged = new EventEmitter<FilterFunctionCallbackItem>();
 
   currentText: string = '';
@@ -32,6 +33,7 @@ export class FilterComboBoxComponent implements OnInit {
     this.currentText = this.defaultText;
     // Standard Eintrag
     this.filterItems = [{ id: -1, identifier: undefined, description: this.currentText }];
+    //console.log("ComboBox:", this.currentText);
     this.loadData();
   }
 
