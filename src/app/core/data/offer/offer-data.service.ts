@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 
-import { OfferToAPI } from 'src/app/core/http/api/api.interfaces';
+import { OfferFilterToAPI, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferService } from 'src/app/core/http/offer/offer.service';
 import { UserData, UserOfferData } from 'src/app/core/data/user/user-data.interface';
@@ -36,8 +36,8 @@ export class OfferDataService {
   /////////////////////////////////////////////////////
 
   // CourseList
-  public getPaginatedOfferList(page: number, count: number): Observable<PaginatedOfferData> {
-    return this.offerService.getPaginatedOfferData(page, count);
+  public getPaginatedOfferList(page: number, count: number, filterObj: OfferFilterToAPI): Observable<PaginatedOfferData> {
+    return this.offerService.getPaginatedOfferData(page, count, filterObj);
   }
 
   // CourseCarousel

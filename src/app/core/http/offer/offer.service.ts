@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/core/http/api/api.service';
 import { StaticService } from 'src/app/config/static.service';
 
 import {
+  OfferFilterToAPI,
   OfferToAPI,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
@@ -41,9 +42,9 @@ export class OfferService {
 
   // for Pagination
   ////////////////////////////////////////////////
-  getPaginatedOfferData(page: number, count: number): Observable<PaginatedOfferData> {
+  getPaginatedOfferData(page: number, count: number, filterObj: OfferFilterToAPI): Observable<PaginatedOfferData> {
     const propertyID$ = this.dataCacheService.getPropertyIDMap();
-    const paginatedOffers$ = this.apiService.postPaginatedOfferShortList(page, count);
+    const paginatedOffers$ = this.apiService.postPaginatedOfferShortList(page, count, filterObj);
 
     // Parallel laden, aber erst auswerten wenn beide completed sind
     return forkJoin([paginatedOffers$, propertyID$]).pipe(

@@ -29,6 +29,7 @@ import { SkeletonOffersComponent } from 'src/app/sites/offers/components/skeleto
 import { FilterComboGroupComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-group.component';
 import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
 import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
+import { FilterRowServerDirective } from './sites/offers/components/filter-row/filter-row-server.directive';
 
 // Admin -> Lazy-Loaded-Modul
 // KI-Playground -> Lazy-Loaded-Modul
@@ -44,7 +45,6 @@ import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-te
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
 import { HeaderComponent } from 'src/app/sites/app-root/components/header/header.component';
 import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
-
 
 @NgModule({
   declarations: [
@@ -63,7 +63,8 @@ import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-pag
     NotfoundComponent,
     InfoStudentsComponent,
     InfoTeachingComponent,
-    OfferListPaginatedComponent
+    OfferListPaginatedComponent,
+    FilterRowServerDirective
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
-import { FilterFunctionCallbackItem } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
+
+export type FilterFunctionCallbackItem = {
+  type: string,
+  id: number
+}
 
 @Component({
   selector: 'app-filter-combo-box',

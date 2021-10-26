@@ -15,6 +15,7 @@ import {
   OfferPropertyTagResponse,
   APIToOfferShortList,
   PaginatedOfferDataFromAPI,
+  OfferFilterToAPI,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
@@ -52,7 +53,8 @@ export class ApiService {
 
   public postPaginatedOfferShortList(
     page: number,
-    count: number
+    count: number,
+    filterObj: OfferFilterToAPI = {}
   ): Observable<PaginatedOfferDataFromAPI> {
     if (count == null || count < 0) {
       count = 0;
@@ -61,17 +63,23 @@ export class ApiService {
       page = 1;
     }
 
-    let data = [];
+    console.log("FilterObj:", filterObj);
 
     return this.http
       .post<any>(
         environment.apiURL + '/api/list/offer/short/paginated/' + count + '?page=' + page,
-        data
+        filterObj
       )
       .pipe(catchError(this.handleError));
   }
 
-  public ggetPaginatedOfferShortList(
+  /**
+   * @deprecated use postPaginatedOfferShortList
+   * @param page
+   * @param count
+   * @returns
+   */
+  public getPaginatedOfferShortList(
     page: number,
     count: number
   ): Observable<PaginatedOfferDataFromAPI> {

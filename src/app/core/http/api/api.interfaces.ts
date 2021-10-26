@@ -39,10 +39,9 @@ export type APIToOfferShortList = {
 };
 
 // Data from Pagination API
-export type PaginatedOfferDataFromAPI =  {
+export type PaginatedOfferDataFromAPI = {
   data: APIToOfferShortList[];
 } & PaginatedMetaData;
-
 
 export type PaginatedMetaData = {
   current_page: number;
@@ -83,4 +82,11 @@ export type OfferToAPI = {
   competence_digital: boolean | number;
   competence_classic: boolean | number;
   relatedOffers: number[];
+};
+
+export type OfferFilterToAPI = {
+  institution_id?: number[];
+  language_id?: number[];
+  offertype_id?: number[];
+  competences?: number[];
 };

@@ -49,7 +49,7 @@ export class OfferListComponent implements OnInit, OnDestroy {
 
     this.loadFilterMetaData();
 
-    this.onDataChange = this.offerDataService.getPaginatedOfferList(1, 0).subscribe(
+    this.onDataChange = this.offerDataService.getPaginatedOfferList(1, 0, {}).subscribe(
       (offers) => {
         this.loadedOffers = offers.data;
         this.allOffers = offers.data;
