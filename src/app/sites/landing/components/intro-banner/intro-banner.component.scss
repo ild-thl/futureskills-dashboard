@@ -1,93 +1,195 @@
+@import "breakpoints";
+
 .intro-banner {
-  background-color: cornflowerblue;
+  background-color: var(--color-function-black);
   background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
   height: 100%;
   max-height: 1024px;
+
+  .blob-container {
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    padding: 10px;
+    margin: 0;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background-color: rgba(212, 0, 75, 0.85);
+      border-radius: 82% 46% 60% 63%/68% 70% 52% 59%;
+      width: 100%;
+      max-width: 330px;
+      height: 190px;
+    }
+
+    h1 {
+      &.comic-header {
+        font-size: 30px;
+      }
+    }
+    .intro-advantage {
+      display: flex;
+      align-items: center;
+      color: var(--color-function-white);
+      font-size: 17px;
+
+      &:nth-child(3) {
+        margin-left: 15px;
+      }
+      &:nth-child(4) {
+        margin-left: 30px;
+      }
+      span {
+        margin-right: 15px;
+        font-size: 30px;
+      }
+    }
+  }
+  @media(min-width: $xs) {
+    .blob-container {
+      padding: 20px;
+      margin: 10px 0;
+
+      &:before {
+        max-width: 400px;
+        height: 260px;
+        top: -10px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 36px;
+          -webkit-text-stroke: 2px #ffffff;
+        }
+      }
+      .intro-advantage {
+        font-size: 22px;
+
+        span {
+          font-size: 36px;
+          -webkit-text-stroke: 2px #ffffff;
+        }
+      }
+    }
+  }
+  @media(min-width: $sm) {
+    .blob-container {
+      padding: 20px;
+      margin: 25px 0;
+
+      &:before {
+        max-width: 520px;
+        height: 340px;
+        top: -10px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 55px;
+        }
+      }
+      .intro-advantage {
+        font-size: 26px;
+
+        span {
+          font-size: 55px;
+        }
+      }
+    }
+  }
+  @media(min-width: $md) {
+    .blob-container {
+      padding: 20px;
+      margin: 25px 0;
+
+      &:before {
+        max-width: 520px;
+        height: 340px;
+        top: -10px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 55px;
+        }
+      }
+      .intro-advantage {
+        font-size: 26px;
+
+        span {
+          font-size: 55px;
+        }
+      }
+    }
+  }
+  @media(min-width: $lg) {
+    .blob-container {
+      display: inline-block;
+      position: relative;
+      z-index: 0;
+      padding: 50px;
+      margin: 50px 0;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 70px;
+        z-index: -1;
+        animation: blobmove 50s 1 linear;
+        border-radius: 82% 46% 60% 63%/68% 70% 52% 59%;
+        width: 100%;
+        max-width: 520px;
+        height: 500px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 68px;
+        }
+      }
+
+      .intro-advantage {
+        font-size: 32px;
+
+        span {
+          font-size: 68px;
+        }
+
+        &:nth-child(3) {
+          margin-left: 15px;
+        }
+        &:nth-child(4) {
+          margin-left: 30px;
+        }
+        span {
+          margin-right: 15px;
+        }
+      }
+
+      @keyframes blobmove {
+        0% {
+            border-radius: 82% 46% 72% 64%/68% 72% 59% 55%;
+            transform: rotate(0deg);
+        }
+
+        50% {
+            border-radius: 53% 60% 70% 40%/67% 60% 44% 60%;
+            transform: rotate(180deg);
+        }
+
+        100% {
+          border-radius: 82% 46% 72% 64%/68% 72% 59% 55%;
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
 }
-
-// Mixins
-
-// Blob mixin
-
-$br-1: 61% 39% 38% 62%;
-$br-2: 41% 68% 32% 59%;
-
-@mixin init-border-radius($border-values) {
-  border-radius: $border-values;
-}
-
-// Blob function
-
-@function keyframe-border-radius($kf_ratio-1, $kf_ratio-2) {
-  $br-1-updated: ( #{(nth($br-1, 1) * $kf_ratio-1) (nth($br-1, 2) * $kf_ratio-1) (nth($br-1, 3) * $kf_ratio-1) (nth($br-1, 4) * $kf_ratio-1) } );
-  $br-2-updated: ( #{(nth($br-2, 1) * $kf_ratio-2) (nth($br-2, 2) * $kf_ratio-2) (nth($br-2, 3) * $kf_ratio-2) (nth($br-2, 4) * $kf_ratio-2) } );
-  $br-updated: (#{$br-1-updated} / #{$br-2-updated});
-  @return ($br-updated);
-}
-
-@keyframes blobmove {
-  /*10% {
-    border-radius: keyframe-border-radius(1.4, 1.1);
-  }
-  30% {
-    border-radius: keyframe-border-radius(1.0, 0.8);
-  }
-  50% {
-    border-radius: keyframe-border-radius(0.9, 1.1);
-  }
-  70% {
-    border-radius: keyframe-border-radius(1.1, 0.9);
-  }
-  90% {
-    border-radius: keyframe-border-radius(0.8, 1.1);
-  }
-  100% {
-    border-radius: keyframe-border-radius(1.0, 1.0);
-  }*/
-
-  10% {
-    border-radius: 50% 50% 45% 55% / 35% 58% 42% 65%;
-  }
-  30% {
-    border-radius: 59% 41% 53% 47% / 38% 72% 28% 62%;
-  }
-  50% {
-    border-radius: 59% 41% 42% 58% / 32% 80% 20% 68%;
-  }
-  70% {
-    border-radius: 46% 54% 42% 58% / 41% 69% 31% 59%;
-  }
-  90% {
-    border-radius: 31% 69% 26% 74% / 41% 69% 31% 59%;
-  }
-  100% {
-    border-radius: 61% 39% 38% 62% / 41% 68% 32% 59%;
-  }
-}
-
-.blob-container {
-  display: inline-block;
-  background-color: rgba(212, 0, 75, 0.85);
-  animation: blobmove 20s ease-in-out infinite;
-  border-radius: 61% 39% 38% 62% / 41% 68% 32% 59%;
-  //@include init-border-radius(#{$br-1} / #{$br-2});
-  padding: 25px;
-  overflow: visible;
-}
-
-/*
-48.8% 31.2% 30.4% 49.6%/45.1% 74.8% 35.2% 64.9%
-
-61% 39% 38% 62%/32.8% 54.4% 25.6% 47.2%
-
-48.8% 31.2% 30.4% 49.6%/45.1% 74.8% 35.2% 64.9%
-
-54.9% 35.1% 34.2% 55.8%/36.9% 61.2% 28.8% 53.1%
-
-48.8% 31.2% 30.4% 49.6%/45.1% 74.8% 35.2% 64.9%
-
-61% 39% 38% 62%/41% 68% 32% 59%
-*/
