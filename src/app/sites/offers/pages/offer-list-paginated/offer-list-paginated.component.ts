@@ -12,6 +12,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
+import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -126,9 +127,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     );
   }
 
-  onFilterChanged(filterArray: OfferFilterToAPI) {
-    console.log('FilterChanged:', filterArray);
-    this.filterObj = filterArray;
+  onFilterChanged(filterMap: Map<string,number>) {
+    this.filterObj = DataMapping.mapFilterToAPIFilter(filterMap);
+    console.log("Filter-Array to API", this.filterObj);
     this.page = 1;
     this.loadData(this.page, this.pageSize, this.filterObj);
   }

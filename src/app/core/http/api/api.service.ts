@@ -21,9 +21,10 @@ import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
 /**
  * api.service.ts
- * Contains API-Calls (also unused calls)
+ * Contains API-Calls
  * Handles Errors
- * 30.10.2020
+ * Created 30.10.2020
+ * Updated 27.10.2021/ml
  */
 
 @Injectable({
@@ -51,6 +52,14 @@ export class ApiService {
   // Offers Paginated
   ////////////////////////////////////////////////
 
+  /**
+   * Load paginated OfferList
+   * ! post not get
+   * @param page
+   * @param count
+   * @param filterObj
+   * @returns
+   */
   public postPaginatedOfferShortList(
     page: number,
     count: number,
@@ -125,13 +134,6 @@ export class ApiService {
       .delete(environment.apiURL + '/api/offer/' + id)
       .pipe(catchError(this.handleError));
   }
-
-  // Array mit Offers, die nicht vollständig sind.
-  // Angedacht für die Sortierungsliste.
-  // public updatePartialOfferList(offerList: PartialOffer[]) {
-  //   const sentList = offerList.filter((offer) => offer.id !== null);
-  //   return throwError('storePartialList not implemented');
-  // }
 
   ////////////////////////////////////////////////
   // Subscriptions

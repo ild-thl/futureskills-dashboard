@@ -7,6 +7,7 @@ import {
 } from 'src/app/core/models/offer';
 import {
   APIToOfferShortList,
+  OfferFilterToAPI,
   OfferToAPI,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
@@ -159,6 +160,53 @@ export abstract class DataMapping {
     };
     return tempOffer;
   }
+
+  /**
+   * Creates FilterArrays
+   * @param filterMap
+   * @returns
+   */
+  public static mapFilterToAPIFilter(filterMap: Map<string,number>): OfferFilterToAPI {
+    //console.log("FilterItems:",  filterMap);
+
+    let filterObj: OfferFilterToAPI = {};
+
+    // Institutionen
+    if (filterMap.has('institutions')) {
+      const institutionid = filterMap.get('institutions');
+      if (institutionid !== -1) {
+        filterObj.institution_id = [filterMap.get('institutions')];
+      }
+    }
+
+    // Languages
+    if (filterMap.has('languages')) {
+      const languageid = filterMap.get('languages');
+      if (languageid !== -1) {
+        filterObj.language_id = [filterMap.get('languages')];
+      }
+    }
+
+    // Competeneces
+    if (filterMap.has('competences')) {
+      const competenceid = filterMap.get('competences');
+      if (competenceid!== -1) {
+        filterObj.competences = [filterMap.get('competences')];
+      }
+    }
+
+    // Formats
+    if (filterMap.has('formats')) {
+      const formatid = filterMap.get('formats');
+      if (formatid !== -1) {
+        filterObj.offertype_id = [filterMap.get('formats')];
+      }
+    }
+    return filterObj;
+  }
+
+
+
 
   //////////////////////////////////////////////////////////
   // WORKAROUNDS AND STRINGS

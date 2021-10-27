@@ -21,6 +21,7 @@ export class FilterComboBoxComponent implements OnInit {
   @Input() defaultText: string;
   @Input() filterList: OfferPropertyList;
   @Input() disabled: boolean=false;
+  @Input() startIndex: number=-1;
   @Output() valueChanged = new EventEmitter<FilterFunctionCallbackItem>();
 
   currentText: string = '';
@@ -30,6 +31,7 @@ export class FilterComboBoxComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.currentIndex = this.startIndex;
     this.currentText = this.defaultText;
     // Standard Eintrag
     this.filterItems = [{ id: -1, identifier: undefined, description: this.currentText }];
