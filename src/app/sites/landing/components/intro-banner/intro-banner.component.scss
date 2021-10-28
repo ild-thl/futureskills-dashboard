@@ -9,6 +9,9 @@
   height: 100%;
   max-height: 1024px;
 
+  .container-fluid {
+    position: relative;
+  }
   .blob-container {
     display: inline-block;
     position: relative;
