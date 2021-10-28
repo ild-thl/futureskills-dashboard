@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Location } from '@angular/common'
-import { Router, NavigationEnd } from '@angular/router'
+import { Location } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NavigationService {
+  private browserHistory: string[] = [];
+  private isInit: boolean = false;
 
-  private browserHistory: string[] = []
+  constructor(private router: Router, private location: Location) {}
 
-  constructor(private router: Router, private location: Location) {
+  public initialize(){
+    if (this.isInit) return;
+
+    this.isInit = true;
+    console.log('RouterService init');
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.browserHistory.push(event.urlAfterRedirects)
+        this.browserHistory.push(event.urlAfterRedirects);
+        //console.log('Navigate',  this.browserHistory);
       }
-    })
+    });
   }
 
   navigateBack(): void {

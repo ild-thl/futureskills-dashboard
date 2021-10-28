@@ -66,7 +66,8 @@ exports: [
   LoadingSpinnerComponent,
   InfoBannerComponent,
   ConsentVideoComponent,
-  SmallOfferTileComponent
+  SmallOfferTileComponent,
+  NavBackDirective
 ]
 })
 

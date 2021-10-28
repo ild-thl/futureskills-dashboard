@@ -5,7 +5,8 @@ import { NavigationService } from 'src/app/core/services/navigation/navigation.s
 export class NavBackDirective {
 
   constructor(private navService: NavigationService) { }
-  @HostListener('click')
+
+  @HostListener('click', ['$event'])
   onClick(): void {
     this.navService.navigateBack();
   }
