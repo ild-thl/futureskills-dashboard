@@ -2,7 +2,7 @@
 
 .intro-banner {
   background-color: var(--color-function-black);
-  background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild.jpg');
+  background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_580x340.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
@@ -56,6 +56,8 @@
     }
   }
   @media(min-width: $xs) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_767x420.jpg');
+
     .blob-container {
       padding: 20px;
       margin: 10px 0;
@@ -83,6 +85,8 @@
     }
   }
   @media(min-width: $sm) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_991x560.jpg');
+
     .blob-container {
       padding: 20px;
       margin: 25px 0;
@@ -108,6 +112,8 @@
     }
   }
   @media(min-width: $md) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild.jpg');
+
     .blob-container {
       padding: 20px;
       margin: 25px 0;
