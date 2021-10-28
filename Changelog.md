@@ -3,6 +3,13 @@
 
 ## [UnReleased v0.7]
 
+## 2021-10-28/avz
+### removed
+- Components from startpage: grey top banner, speech balloon slider, trailer
+### added
+- To the startpage: introduction banner component with a header + advantages + background image + blob
+### changed
+- The imprint (impressum) regarding the background image
 
 ## 2021-10-04/ml
 ### added
