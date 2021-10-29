@@ -196,4 +196,12 @@
       margin: 50px 0 130px 0;
     }
   }
+  @media(min-width: 1800px) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_2500x1200.jpg');
+    max-height: 1500px;
+
+    .blob-container {
+      margin: 100px 0 260px 0;
+    }
+  }
 }
