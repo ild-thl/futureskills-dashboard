@@ -3,6 +3,11 @@
 
 ## [UnReleased v0.7]
 
+## 2021-10-28/ml
+### added
+- Navigation Service added
+- NavBack Directive added (fs-nav-back)
+
 ## 2021-10-28/avz
 ### removed
 - Components from startpage: grey top banner, speech balloon slider, trailer
