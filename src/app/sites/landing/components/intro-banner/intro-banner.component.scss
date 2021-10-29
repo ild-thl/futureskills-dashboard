@@ -1,0 +1,207 @@
+@import "breakpoints";
+
+.intro-banner {
+  background-color: var(--color-function-black);
+  background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_580x340.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  height: 100%;
+  max-height: 1024px;
+
+  .container-fluid {
+    position: relative;
+  }
+  .blob-container {
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    padding: 10px;
+    margin: 0;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background-color: rgba(212, 0, 75, 0.85);
+      border-radius: 82% 46% 60% 63%/68% 70% 52% 59%;
+      width: 100%;
+      max-width: 330px;
+      height: 250px;
+    }
+
+    h1 {
+      &.comic-header {
+        font-size: 30px;
+      }
+    }
+    .intro-advantage {
+      display: flex;
+      align-items: center;
+      color: var(--color-function-white);
+      font-size: 17px;
+
+      &:nth-child(3) {
+        margin-left: 15px;
+      }
+      &:nth-child(4) {
+        margin-left: 30px;
+      }
+      &:nth-child(5) {
+        margin-left: 45px;
+      }
+      span {
+        margin-right: 15px;
+        font-size: 30px;
+      }
+    }
+  }
+  @media(min-width: $xs) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_767x420.jpg');
+
+    .blob-container {
+      padding: 20px;
+      margin: 10px 0;
+
+      &:before {
+        max-width: 400px;
+        height: 310px;
+        top: -10px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 36px;
+        }
+      }
+      .intro-advantage {
+        font-size: 22px;
+
+        span {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+  @media(min-width: $sm) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_991x560.jpg');
+
+    .blob-container {
+      padding: 20px;
+      margin: 25px 0;
+
+      &:before {
+        max-width: 520px;
+        height: 410px;
+        top: -10px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 55px;
+        }
+      }
+      .intro-advantage {
+        font-size: 26px;
+
+        span {
+          font-size: 55px;
+        }
+      }
+    }
+  }
+  @media(min-width: $md) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild.jpg');
+
+    .blob-container {
+      padding: 20px;
+      margin: 25px 0;
+
+      &:before {
+        max-width: 520px;
+        height: 410px;
+        top: -10px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 55px;
+          -webkit-text-stroke: 2px #ffffff;
+        }
+      }
+      .intro-advantage {
+        font-size: 26px;
+
+        span {
+          font-size: 55px;
+          -webkit-text-stroke: 2px #ffffff;
+        }
+      }
+    }
+  }
+  @media(min-width: $lg) {
+
+    background-position: center top;
+
+    .blob-container {
+      padding: 50px;
+      margin: 30px 0 50px 0;
+
+      &:before {
+        top: 15px;
+        left: 60px;
+        animation: blobmove 60s 1 linear;
+        border-radius: 82% 46% 60% 63%/68% 70% 52% 59%;
+        max-width: 540px;
+        height: 540px;
+      }
+
+      h1 {
+        &.comic-header {
+          font-size: 68px;
+        }
+      }
+
+      .intro-advantage {
+        font-size: 32px;
+
+        span {
+          font-size: 68px;
+        }
+      }
+
+      @keyframes blobmove {
+        0% {
+            border-radius: 82% 46% 60% 63%/68% 70% 52% 59%;
+            transform: rotate(0deg);
+        }
+
+        50% {
+            border-radius: 53% 60% 70% 40%/67% 60% 44% 60%;
+            transform: rotate(180deg);
+        }
+
+        100% {
+          border-radius: 82% 46% 60% 63%/68% 70% 52% 59%;
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+  @media(min-width: 1600px) {
+
+    .blob-container {
+      margin: 50px 0 130px 0;
+    }
+  }
+  @media(min-width: 1800px) {
+    background-image: url('~src/styles/ressources/backgrounds/intro-banner-hintergrund-bild_2500x1200.jpg');
+    max-height: 1500px;
+
+    .blob-container {
+      margin: 100px 0 260px 0;
+    }
+  }
+}
