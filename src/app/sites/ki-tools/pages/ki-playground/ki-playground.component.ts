@@ -8,6 +8,7 @@ import { NgbdMnistModalComponent } from 'src/app/sites/ki-tools/pages/mnist/mnis
 import { NgbdSentimentModalComponent } from 'src/app/sites/ki-tools/pages/sentiment/sentiment-modal.component';
 import { NgbdDemonstratorsModalComponent } from 'src/app/sites/ki-tools/pages/demonstrators/demonstrators-modal.component';
 import { AlertList, KIToolsHelper } from 'src/app/sites/ki-tools/services/helper/helper';
+import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 @Component({
   selector: 'app-ki-playground',
@@ -39,6 +40,8 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
     'Die benötigten Daten konnten nicht geladen werden. Vielleicht bist du offline oder unsere Server sind nicht erreichbar.';
 
   kiModuleSub: Subscription;
+  kiOffers: SmallOfferDetailData[];
+  minKIOffers: number = 3;
 
   constructor(
     private renderer: Renderer2,
@@ -63,12 +66,12 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
     if (this.kitoolsAreOnline) {
       this.loadKIPackages();
-     // this.getKIModules();
+      this.getKIModules();
     }
   }
 
   ngOnDestroy(): void {
-   // if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
+    if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
   }
 
   loadKIPackages(packageLoad: boolean = false) {
@@ -192,9 +195,11 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
     }
   }
 
-  getKIModules(){
-    this.kiModuleSub = this.kiStatusService.getKIModules().subscribe(offers=>{
-      console.log('Module mit KI_Keyword: ', offers);
-    });
+  private getKIModules() {
+    this.kiModuleSub = this.kiStatusService
+      .getKIModules()
+      .subscribe((offers: SmallOfferDetailData[]) => {
+        this.kiOffers = offers;
+      });
   }
 }

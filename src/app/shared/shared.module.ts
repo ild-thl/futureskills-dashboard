@@ -9,6 +9,7 @@ import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinn
 import { InfoBannerComponent } from 'src/app/shared/components/info-banner/info-banner.component';
 import { ConsentVideoComponent } from 'src/app/shared/components/consent-video/consent-video.component';
 import { SmallOfferTileComponent } from 'src/app/shared/components/small-offer-tile/small-offer-tile.component';
+import { NavBackDirective } from './directives/nav-back.directive';
 
 import {
   FaIconLibrary,
@@ -18,6 +19,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import {
   faStar as fasStar,
   faChevronRight,
+  faChevronLeft,
   faCheck,
   faDoorOpen,
   faChalkboardTeacher,
@@ -36,6 +38,7 @@ import {
 
 
 
+
 @NgModule({
 declarations: [
   RoundButton,
@@ -44,7 +47,8 @@ declarations: [
   LoadingSpinnerComponent,
   InfoBannerComponent,
   ConsentVideoComponent,
-  SmallOfferTileComponent
+  SmallOfferTileComponent,
+  NavBackDirective
 ],
 imports: [
   CommonModule,
@@ -62,7 +66,8 @@ exports: [
   LoadingSpinnerComponent,
   InfoBannerComponent,
   ConsentVideoComponent,
-  SmallOfferTileComponent
+  SmallOfferTileComponent,
+  NavBackDirective
 ]
 })
 
@@ -73,6 +78,7 @@ export class SharedModule {
       farStar,
       faCheck,
       faChevronRight,
+      faChevronLeft,
       faDoorOpen,
       faCommentAlt,
       faChalkboardTeacher,

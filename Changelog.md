@@ -1,5 +1,26 @@
 # Changelog
 
+
+## [Released v0.7]
+
+## 2021-10-28/ml
+### added
+- Navigation Service added
+- NavBack Directive added (fs-nav-back)
+
+## 2021-10-28/avz
+### removed
+- Components from startpage: grey top banner, speech balloon slider, trailer
+### added
+- To the startpage: introduction banner component with a header + advantages + background image + blob
+### changed
+- The imprint (impressum) regarding the background image
+
+## 2021-10-04/ml
+### added
+- New Carousel in Playground is showing KeyWord (KIPlaygroundKurse)
+- New Classes for Caching Data
+
 ## [Released v0.6]
 
 ## 2021-09-29/dk

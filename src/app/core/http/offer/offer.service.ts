@@ -1,14 +1,22 @@
+import { StaticService } from 'src/app/config/static.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { OfferPropertyCache } from 'src/app/core/http/api/offer-property-cache.service';
 
 import { APIToOfferShortList, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
-import { Offer, OfferShortListForTiles, PartialOffer } from 'src/app/core/models/offer';
+import {
+  Offer,
+  OfferShortListForTiles,
+  PartialOffer,
+  SmallOfferDetailData,
+} from 'src/app/core/models/offer';
 import { LOAD, ADD, EDIT, REMOVE, OfferStore } from 'src/app/core/http/store/offer.store';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
+import { DataCacheService } from '../api/data-cache.service';
+import { DataMapping } from '../api/data-mapping';
 
 /**
  * offer.service.ts
@@ -22,12 +30,15 @@ import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 })
 export class OfferService {
   offers$: BehaviorSubject<Offer[]>;
-  //offerChanged$ = new BehaviorSubject({});
+  // Cache SuperKICourse
+  courseSuperKI$: AsyncSubject<any>;
 
   constructor(
     private apiService: ApiService,
     private offerStore: OfferStore,
-    private offerPropertyCache: OfferPropertyCache
+    private offerPropertyCache: OfferPropertyCache,
+    private dataCacheService: DataCacheService,
+    private staticService: StaticService
   ) {
     this.offers$ = offerStore.items$;
   }
@@ -48,7 +59,7 @@ export class OfferService {
           let offers = this.mapDataInOfferStructure(results[0]);
           this.offerStore.dispatch({ type: LOAD, data: offers });
           console.log('Short-Offers: ', offers);
-          console.log('Properties: ', results[1])
+          console.log('Properties: ', results[1]);
         })
       )
       .subscribe(
@@ -105,7 +116,41 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
-  getSubListOfferWithKeyword(keyword: string): Observable<OfferShortListForTiles[]> {
+  ////////////////////////////////////////////////
+  // Special Filtered Offers
+  ////////////////////////////////////////////////
+
+  // KISuperCourse (cached) Mini-List
+  // for Detail and Carousel
+  ////////////////////////////////////////////////
+  public getKISuperCoursesDetailList(cached: boolean = true): Observable<SmallOfferDetailData[]> {
+    if (!cached) {
+      return this.getMiniOfferWithKeywordFilter(this.staticService.getKeyForPlaygroundKiCourse());
+    } else {
+      return this.dataCacheService.loadKISuperCoursesDetailList();
+    }
+  }
+
+  /**
+   * Offers nach Keywords
+   * @param keyword
+   * @returns SmallOfferDetailData[]
+   */
+  public getMiniOfferWithKeywordFilter(keyword: string): Observable<SmallOfferDetailData[]> {
+    const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
+    return filteredOffers$.pipe(
+      map((results) => {
+        return this.mapDataInSmallOfferDetailData(results);
+      })
+    );
+  }
+
+  /**
+   * Offers nach Keywords
+   * @param keyword
+   * @returns OfferShortListForTiles[]
+   */
+  public getShortOfferWithKeywordFilter(keyword: string): Observable<OfferShortListForTiles[]> {
     const property$ = this.offerPropertyCache.loadOfferProperties();
     const filteredOffers$ = this.apiService.getOfferSubListWithKeyWords(keyword);
 
@@ -231,5 +276,13 @@ export class OfferService {
     }
     //console.log('Short OFFER:', newOffer);
     return newOffer;
+  }
+
+  /**
+   * Returns only id/title/image
+   * @param offers
+   */
+  public mapDataInSmallOfferDetailData(offers: APIToOfferShortList[]): SmallOfferDetailData[] {
+    return DataMapping.mapDataInSmallOfferDetailData(offers);
   }
 }

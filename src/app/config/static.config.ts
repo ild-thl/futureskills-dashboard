@@ -51,5 +51,6 @@ export const CustomConfig = {
   courseKeyWords: (keywords as any).default,
   courseKeyWordKeys: {
     keyForSuperKIKurs: 'fssuperkikurs',
+    keyForPlaygroundKIKurs: 'fskiplayground'
   }
 };
