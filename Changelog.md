@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [UnReleased v0.7]
+## [Released v0.7]
 
 ## 2021-10-28/ml
 ### added
