@@ -11,9 +11,14 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <a [routerLink]="lnkOffers"
-            ><fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> zur Übersicht
-          </a>
+          <div class="float-left">
+            <a fs-nav-back [routerLink]=""
+              ><fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> Zurück
+            </a>
+          </div>
+          <div class="float-right" style="text-decoration: underline">
+            <a [routerLink]="lnkOffers"> Kursübersicht </a>
+          </div>
         </div>
       </div>
     </div>

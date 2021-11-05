@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { NavigationService } from 'src/app/core/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
-  private authInitialized: boolean = false;
-
-  constructor(
-    private authService: AuthService
-  ) {}
-
+  constructor(private authService: AuthService, private navService: NavigationService) {}
   ngOnInit(): void {
-    // if (this.authInitialized) return;
-    // this.authInitialized = true;
     this.authService.autoLogin();
+    this.navService.initialize();
   }
 }

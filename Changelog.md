@@ -1,7 +1,6 @@
 # Changelog
 
-
-## [UnReleased v0.7]
+## [Unreleased v0.8]
 
 ## 2021-10-26/ml
 ### new/changed
@@ -17,6 +16,21 @@
   - Search-Data and Property-Data is cached
   - unused functions deleted
   - loadScript Service deleted (Tensorflow is packaged)
+
+## [Released v0.7]
+
+## 2021-10-28/ml
+### added
+- Navigation Service added
+- NavBack Directive added (fs-nav-back)
+
+## 2021-10-28/avz
+### removed
+- Components from startpage: grey top banner, speech balloon slider, trailer
+### added
+- To the startpage: introduction banner component with a header + advantages + background image + blob
+### changed
+- The imprint (impressum) regarding the background image
 
 ## 2021-10-04/ml
 ### added
