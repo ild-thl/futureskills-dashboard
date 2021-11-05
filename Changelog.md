@@ -3,6 +3,10 @@
 
 ## [Released v0.7]
 
+## 2021-11-05/avz
+### changed
+- Text color of the image captions
+
 ## 2021-10-28/ml
 ### added
 - Navigation Service added
