@@ -58,6 +58,22 @@ export class OfferService {
     );
   }
 
+  // all Offers (without caching)
+  ////////////////////////////////////////////////
+  public getAllShortOffersList(): Observable<OfferShortListForTiles[]> {
+    const propertyID$ = this.dataCacheService.getPropertyIDMap();
+    const offers$ = this.apiService.getAllOfferShortList();
+
+    // Parallel laden, aber erst auswerten wenn beide completed sind
+    return forkJoin([offers$, propertyID$]).pipe(
+      map((results) => {
+        let offers = DataMapping.mapDataInOfferStructure(results[0], results[1]);
+        console.log('All Offers (not cached): ', offers);
+        return offers;
+      })
+    );
+  }
+
   // for EditComponent for Related Lists
   ////////////////////////////////////////////////
   public getAllShortOffersListForEditDetail(

@@ -65,8 +65,9 @@ export class ApiService {
     count: number,
     filterObj: OfferFilterToAPI = {}
   ): Observable<PaginatedOfferDataFromAPI> {
-    if (count == null || count < 0) {
-      count = 0;
+    if (count == null || count <= 0) {
+      // default value items per page
+      count = environment.offerItemPerPage;
     }
     if (page == null || page < 1) {
       page = 1;
@@ -83,9 +84,9 @@ export class ApiService {
   // Offers
   ////////////////////////////////////////////////
 
-  public getAllOfferShortList(): Observable<Offer[]> {
+  public getAllOfferShortList(): Observable<APIToOfferShortList[]> {
     return this.http
-      .get<Offer[]>(environment.apiURL + '/api/list/offer/short')
+      .get<APIToOfferShortList[]>(environment.apiURL + '/api/list/offer/short')
       .pipe(catchError(this.handleError));
   }
 

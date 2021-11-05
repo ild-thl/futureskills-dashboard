@@ -57,6 +57,15 @@ export class OfferDataService {
     return this.offerService.getAllShortOffersListForEditDetail(offerID);
   }
 
+  // general function
+  /**
+   * @deprecated not used at the moment (-> see above)
+   * @returns
+   */
+  public getAllOffers(): Observable<OfferShortListForTiles[]> {
+    return this.offerService.getAllShortOffersList();
+  }
+
   /////////////////////////////////////////////////////
   // get/save/del Offer for Components
   /////////////////////////////////////////////////////
