@@ -118,7 +118,7 @@
       &.caption-right,
       &.caption-center {
         font-style: italic;
-        color: #aaa;
+        color: var(--color-primary-blue-dark);
         font-size: 12px;
         padding: 10px 0;
       }
