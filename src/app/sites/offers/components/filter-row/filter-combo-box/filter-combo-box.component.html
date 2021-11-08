@@ -1,5 +1,5 @@
-<div ngbDropdown class="d-inline-block">
-  <button class="btn btn-light" id="dropdownFilter" ngbDropdownToggle>
+<div ngbDropdown class="d-inline-block mb-1">
+  <button [disabled] = "disabled" class="btn btn-light" id="dropdownFilter" ngbDropdownToggle>
     {{ currentText }}
   </button>
   <div ngbDropdownMenu aria-labelledby="dropdownFilter">

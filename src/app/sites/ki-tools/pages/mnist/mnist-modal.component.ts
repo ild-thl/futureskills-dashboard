@@ -31,13 +31,12 @@ export class NgbdMnistModalComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {
-    // Im modalen Fenster sollte alles geladen sein.
     this.loadingStatus = {
       isLoaded: true,
       isError: false,
     };
   }
-  
+
   onModalClose() {
     this.activeModal.dismiss('lnkClick');
   }

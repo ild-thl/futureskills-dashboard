@@ -24,6 +24,12 @@ export const CustomConfig = {
     },
     linkListPath: 'kiplayground/lnklist'
   },
+  filterParams:{
+    institutions: 'institutions',
+    languages: 'languages',
+    competences: 'competences',
+    formats: 'formats'
+  },
   paths: {
     lnkLanding: '/',
     lnkOffers: '/kurse',

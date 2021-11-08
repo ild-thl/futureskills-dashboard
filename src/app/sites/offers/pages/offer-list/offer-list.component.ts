@@ -7,8 +7,9 @@ import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 
-import { Offer } from 'src/app/core/models/offer';
+import { Offer, OfferShortListForTiles } from 'src/app/core/models/offer';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
+
 
 @Component({
   selector: 'app-offer-list',
@@ -21,8 +22,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
 
   lnkAdminOfferNew = this.staticConfig.getPathInfo().lnkAdminOfferNew;
 
-  allOffers: Offer[] = [];
-  loadedOffers: Offer[] = [];
+  allOffers: OfferShortListForTiles[] = [];
+  loadedOffers: OfferShortListForTiles[] = [];
 
   filterListLoaded = false;
   filterMap = new Map();
@@ -37,7 +38,8 @@ export class OfferListComponent implements OnInit, OnDestroy {
     private offerDataService: OfferDataService,
     private authService: AuthService,
     private metaDataService: MetaDataService,
-    private staticConfig: StaticService
+    private staticConfig: StaticService,
+
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,7 @@ export class OfferListComponent implements OnInit, OnDestroy {
 
     this.loadFilterMetaData();
 
-    this.onDataChange = this.offerDataService.getAllOffersForList().subscribe(
+    this.onDataChange = this.offerDataService.getAllOffers().subscribe(
       (offers) => {
         this.loadedOffers = offers;
         this.allOffers = offers;

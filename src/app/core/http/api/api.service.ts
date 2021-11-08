@@ -1,29 +1,37 @@
 import { StaticService } from 'src/app/config/static.service';
 
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 import { Institution } from 'src/app/core/models/institution';
-import { Offer, PartialOffer } from 'src/app/core/models/offer';
+import { Offer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
-import { SubscriptionData, OfferToAPI, OfferPropertyTagResponse, APIToOfferShortList } from './api.interfaces';
+import {
+  SubscriptionData,
+  OfferToAPI,
+  OfferPropertyTagResponse,
+  APIToOfferShortList,
+  PaginatedOfferDataFromAPI,
+  OfferFilterToAPI,
+} from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
 /**
  * api.service.ts
- * Contains API-Calls (also unused calls)
+ * Contains API-Calls
  * Handles Errors
- * 30.10.2020
+ * Created 30.10.2020
+ * Updated 27.10.2021/ml
  */
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient, private staticServive: StaticService) {}
+  constructor(private http: HttpClient) {}
 
   ////////////////////////////////////////////////
   // Authenticate
@@ -41,23 +49,66 @@ export class ApiService {
   }
 
   ////////////////////////////////////////////////
+  // Offers Paginated
+  ////////////////////////////////////////////////
+
+  /**
+   * Load paginated OfferList
+   * ! post not get
+   * @param page
+   * @param count
+   * @param filterObj
+   * @returns
+   */
+  public postPaginatedOfferShortList(
+    page: number,
+    count: number,
+    filterObj: OfferFilterToAPI = {}
+  ): Observable<PaginatedOfferDataFromAPI> {
+    if (count == null || count <= 0) {
+      // default value items per page
+      count = environment.offerItemPerPage;
+    }
+    if (page == null || page < 1) {
+      page = 1;
+    }
+    return this.http
+      .post<PaginatedOfferDataFromAPI>(
+        environment.apiURL + '/api/list/offer/short/paginated/' + count + '?page=' + page,
+        filterObj
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  ////////////////////////////////////////////////
   // Offers
   ////////////////////////////////////////////////
+
+  public getAllOfferShortList(): Observable<APIToOfferShortList[]> {
+    return this.http
+      .get<APIToOfferShortList[]>(environment.apiURL + '/api/list/offer/short')
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * @deprecated keine lange Liste nötig, besser getAllOfferShortList
+   * @returns Observable<Offer[]>
+   */
   public getAllOffers(): Observable<Offer[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/offer')
       .pipe(catchError(this.handleError));
   }
 
-  public getAllOfferShortList(): Observable<Offer[]> {
-    return this.http
-      .get<Offer[]>(environment.apiURL + '/api/list/offer/short')
-      .pipe(catchError(this.handleError));
-  }
-
   public getOfferSubListWithKeyWords(keyword: string): Observable<APIToOfferShortList[]> {
     return this.http
       .get<Offer[]>(environment.apiURL + '/api/search/offer/sublist/' + keyword)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getOfferLatest(): Observable<APIToOfferShortList[]> {
+    return this.http
+      .get<Offer[]>(environment.apiURL + '/api/search/offer/latest')
       .pipe(catchError(this.handleError));
   }
 
@@ -83,13 +134,6 @@ export class ApiService {
     return this.http
       .delete(environment.apiURL + '/api/offer/' + id)
       .pipe(catchError(this.handleError));
-  }
-
-  // Array mit Offers, die nicht vollständig sind.
-  // Angedacht für die Sortierungsliste.
-  public updatePartialOfferList(offerList: PartialOffer[]) {
-    const sentList = offerList.filter((offer) => offer.id !== null);
-    return throwError('storePartialList not implemented');
   }
 
   ////////////////////////////////////////////////

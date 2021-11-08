@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { OfferPropertyList } from 'src/app/core/models/offer-properties';
-import { OfferService } from 'src/app/core/http/offer/offer.service';
+import { PropertyCompleteMap } from 'src/app/core/models/offer-properties';
+import { DataCacheService } from 'src/app/core/http/api/data-cache.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MetaDataService {
-  constructor(private offerService: OfferService) {}
+  constructor(private dataCacheService: DataCacheService) {}
 
-  public getOfferProperties(): Observable<Map<string, OfferPropertyList>> {
-    return this.offerService.getOfferProperties();
+  public getOfferProperties(): Observable<PropertyCompleteMap> {
+    return this.dataCacheService.getPropertyMap();
   }
 
-  public getFilterTags(): Observable<Map<string, OfferPropertyList>> {
-    return this.offerService.getOfferProperties();
+  public getFilterTags(): Observable<PropertyCompleteMap> {
+    return this.dataCacheService.getPropertyMap();
   }
 }

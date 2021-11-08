@@ -1,6 +1,5 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
-import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/page_loader';
 
 @Component({
@@ -29,15 +28,12 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/p
 })
 export class SentimentStandAloneComponent extends PageLoader implements OnInit {
   ngOnInit() {
-    // Keine Packages nachladen
-    super.ngOnInit(false);
+    super.ngOnInit();
   }
 
   constructor(
-    public renderer: Renderer2,
     public staticService: StaticService,
-    public kiStatusService: KiStatusService
   ) {
-    super(renderer, staticService, kiStatusService);
+    super(staticService);
   }
 }

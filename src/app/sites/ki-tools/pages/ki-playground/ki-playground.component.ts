@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
@@ -18,7 +18,7 @@ import { SmallOfferDetailData } from 'src/app/core/models/offer';
 export class KIPlaygroundComponent implements OnInit, OnDestroy {
   isLoadingScripts: boolean;
   // Framwork and Libs
-  scriptsAreLoaded: boolean;
+  // scriptsAreLoaded: boolean;
   errorWhileScriptLoading: boolean;
   // Models
   mnistModelIsLoading: boolean;
@@ -31,8 +31,6 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
   linkKITools_demonstrators = this.staticService.getPathInfo().linkKITools_demonstrators;
   // Text while loading
   additionalText = '';
-  // Preview Flag
-  preview = '1';
   // Alerts
   alertList: AlertList = new AlertList();
   // Errtexts
@@ -44,63 +42,30 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
   minKIOffers: number = 3;
 
   constructor(
-    private renderer: Renderer2,
     private staticService: StaticService,
     private kiStatusService: KiStatusService,
     private modalService: NgbModal,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.isLoadingScripts = false;
-    this.scriptsAreLoaded = false;
     this.mnistModelIsLoading = false;
     this.sentimentModelIsLoading = false;
     this.errorWhileScriptLoading = false;
 
-    // this.route.queryParamMap.subscribe((params: ParamMap) => {
-    //   this.preview = params.get('preview');
-    // });
     this.kitoolsAreOnline = this.staticService.getKIConfig().online;
 
     if (this.kitoolsAreOnline) {
-      this.loadKIPackages();
-      this.getKIModules();
+      // Es werden kein Tensorflow mehr nachgeladen
+      this.additionalText = '';
+      this.isLoadingScripts = false;
+      this.getKICourses();
     }
   }
 
   ngOnDestroy(): void {
     if (this.kiModuleSub) this.kiModuleSub.unsubscribe();
-  }
-
-  loadKIPackages(packageLoad: boolean = false) {
-    packageLoad = false; // Kein Tensorflow mehr extern laden
-    if (packageLoad) {
-      this.kiStatusService.loadKIScript(this.renderer).subscribe(
-        (values) => {
-          this.scriptsAreLoaded = KIToolsHelper.checkLoadedScripts(values);
-          if (!this.scriptsAreLoaded) {
-            this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
-          }
-        },
-        (error) => {
-          // If server is not available
-          console.log('Error: ', error);
-          this.alertList.addAlert('danger', this.errTextFrameWorkLoading);
-          this.errorWhileScriptLoading = true;
-          this.scriptsAreLoaded = false;
-        },
-        () => {
-          this.additionalText = '';
-          this.isLoadingScripts = false;
-        }
-      );
-    } else {
-      this.additionalText = '';
-      this.isLoadingScripts = false;
-      this.scriptsAreLoaded = true;
-    }
   }
 
   onLoadMnistExample(modal: boolean = true) {
@@ -195,11 +160,14 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getKIModules() {
+  private getKICourses() {
     this.kiModuleSub = this.kiStatusService
-      .getKIModules()
+      .getKICourses()
       .subscribe((offers: SmallOfferDetailData[]) => {
         this.kiOffers = offers;
+      }, error =>{
+        console.log("Konnte keine Kurse laden", error);
+        this.kiOffers=[];
       });
   }
 }

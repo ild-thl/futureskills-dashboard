@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased v0.8]
+
+## 2021-10-26/ml
+### new/changed
+- OfferList has server-based filter
+- loading Offers: get->post
+- new environment variable: offerItemPerPage
+
+## 2021-10-07/ml
+### new/changed/deleted
+- Offers - new PaginationComponent
+- Clean Up
+  - no data store anymore for paginated courses (no caching)
+  - Search-Data and Property-Data is cached
+  - unused functions deleted
+  - loadScript Service deleted (Tensorflow is packaged)
 
 ## [Released v0.7]
 

@@ -12,3 +12,7 @@ export class OfferPropertyList {
     public list: PropertyItem[]
   ) {}
 }
+
+export type PropertyCompleteMap = Map<string, OfferPropertyList>;
+export type PropertyIDMap = Map<string, PropertyIDMapItem>;
+export type PropertyIDMapItem = Map<number, string>;

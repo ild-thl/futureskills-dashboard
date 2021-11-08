@@ -86,7 +86,6 @@ export class CourseSliderComponent implements OnInit, OnChanges {
         };
       });
       this.sliderIsVisible = true;
-      console.log('KI-Superkurse gefunden: ', this.sliderData);
     }
   }
 
