@@ -31,6 +31,15 @@ export class StatusService {
     this.offerListFilterSiteStatus.filterOn = this.checkOnFilterOn(filterMap);
   }
 
+  public resetFilterStatus(): OfferListFilterStatus {
+    this.offerListFilterSiteStatus = {
+      page: 1,
+      filterMap: this.getEmptyOfferFilterValues(),
+      filterOn: this.checkOnFilterOn(this.getEmptyOfferFilterValues()),
+    };
+    return this.getofferListFilterStatus();
+  }
+
   public getEmptyOfferFilterValues(): Map<string, number> {
     const resetMap = new Map();
     resetMap.set('competences', -1);

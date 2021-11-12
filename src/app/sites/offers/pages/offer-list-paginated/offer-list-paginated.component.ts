@@ -13,6 +13,7 @@ import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
+import { OfferListFilterStatus } from 'src/app/core/services/status/status.service';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -70,14 +71,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.isAuthenticated = userData.isAuth;
     });
 
-    const savedFilters = this.statusService.getofferListFilterStatus();
-    console.log("savedFilters:", savedFilters);
-    this.filterInit = savedFilters.filterMap;
-    this.currentFilter = this.filterInit;
-    this.page = savedFilters.page;
-    this.noFilterSet = !savedFilters.filterOn;
-    this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
-
+    const savedFilter = this.statusService.getofferListFilterStatus();
+    this.setFilterParams(savedFilter);
     this.loadFilterMetaData();
     this.loadData();
   }
@@ -154,9 +149,24 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
+  onResetFilter() {
+    //const resetFilter = this.statusService.resetFilterStatus();
+    //this.setFilterParams(resetFilter);
+    //this.loadData();
+  }
+
   ngOnDestroy(): void {
     if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
     if (this.offerSubscription) this.offerSubscription.unsubscribe();
     if (this.metaSubscription) this.metaSubscription.unsubscribe();
+  }
+
+  setFilterParams(filter: OfferListFilterStatus) {
+    console.log('savedFilters:', filter);
+    this.filterInit = filter.filterMap;
+    this.currentFilter = this.filterInit;
+    this.page = filter.page;
+    this.noFilterSet = !filter.filterOn;
+    this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
   }
 }
