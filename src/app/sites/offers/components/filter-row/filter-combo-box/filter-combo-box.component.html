@@ -7,7 +7,7 @@
       [ngClass]="{ 'font-weight-bold': currentIndex === listItem.id }"
       *ngFor="let listItem of filterItems; let i = index"
       ngbDropdownItem
-      (click)="setFilter(listItem)"
+      (click)="onChangeFilter(listItem)"
     >
       {{ listItem.description }}
     </button>

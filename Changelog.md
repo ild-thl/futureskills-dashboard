@@ -3,6 +3,10 @@
 ## [Unreleased v0.8]
 
 ## 2021-10-26/ml
+### changed
+- Filterstatus is saved now / reloading courselist loads filter
+
+## 2021-10-26/ml
 ### new/changed
 - OfferList has server-based filter
 - loading Offers: get->post

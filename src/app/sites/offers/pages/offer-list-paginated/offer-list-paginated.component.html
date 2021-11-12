@@ -12,25 +12,26 @@
       <app-filter-combo-group
         app-server-filter
         (filterChanged)="onFilterChanged($event)"
-        *ngIf="filterListLoaded && !isError"
+        [initFilterMap]="filterInit"
+        *ngIf="filterMapIsLoaded && !isError"
       >
         <app-filter-combo-box
-          [filterList]="filterMap.get('competences')"
+          [filterList]="staticFilterList.get('competences')"
           [defaultText]="'Alle Programme'"
           [disabled]="componentsDisabled"
         ></app-filter-combo-box>
         <app-filter-combo-box
-          [filterList]="filterMap.get('institutions')"
+          [filterList]="staticFilterList.get('institutions')"
           [defaultText]="'Alle Anbieter'"
           [disabled]="componentsDisabled"
         ></app-filter-combo-box>
         <app-filter-combo-box
-          [filterList]="filterMap.get('formats')"
+          [filterList]="staticFilterList.get('formats')"
           [defaultText]="'Alle Formate'"
           [disabled]="componentsDisabled"
         ></app-filter-combo-box>
         <app-filter-combo-box
-          [filterList]="filterMap.get('languages')"
+          [filterList]="staticFilterList.get('languages')"
           [defaultText]="'Alle Sprachen'"
           [disabled]="componentsDisabled"
         ></app-filter-combo-box>

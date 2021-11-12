@@ -8,7 +8,7 @@ import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import { OfferShortListForTiles, PaginatedOfferData } from 'src/app/core/models/offer';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { StatusService } from 'src/app/core/services/status/status.service';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
@@ -22,6 +22,7 @@ import { DataMapping } from 'src/app/core/http/api/data-mapping';
 export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   private onIsAuthenticated: Subscription;
   private offerSubscription: Subscription;
+  private metaSubscription: Subscription;
 
   lnkAdminOfferNew = this.staticService.getPathInfo().lnkAdminOfferNew;
 
@@ -33,30 +34,35 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
 
   loadedOffers: OfferShortListForTiles[] = [];
 
-  pageQueryParam: string;
-  filterListLoaded = false;
-  filterMap = new Map();
-  filterObj: OfferFilterToAPI;
-
   isAuthenticated = false;
+  componentsDisabled = true;
+  noFilterSet = true;
+
+  // Filter
+  filterMapIsLoaded = false;
+  staticFilterList: Map<string, OfferPropertyList>; // Properties/Filter aus der API
+  filterObj: OfferFilterToAPI; // Filter an die API
+  filterInit: Map<string, number>; // gespeicherter Filter
+  currentFilter: Map<string, number>; //aktueller Filter
 
   message: string;
   isError: boolean;
   isLoading: boolean;
-  componentsDisabled: boolean;
 
   constructor(
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private authService: AuthService,
-    private route: ActivatedRoute,
+    private statusService: StatusService,
     private staticService: StaticService
   ) {
     this.pageCollectionSize = 10; // Anzahl der Items
-    this.page = 1; // aktuelle Seite
     this.pageMaxSize = 5; //max.Seiten die angezeigt werden
-    this.pageSize = environment.offerItemPerPage;
-    this.componentsDisabled = true;
+    this.pageSize = environment.offerItemPerPage; // Items per Page
+
+    this.page = 1; // aktuelle Seite
+    this.filterObj = {};
+    this.staticFilterList = new Map();
   }
 
   ngOnInit() {
@@ -64,29 +70,41 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.isAuthenticated = userData.isAuth;
     });
 
-    this.route.queryParamMap.subscribe((params: ParamMap) => {
-      this.pageQueryParam = params.get('page');
-      const newPage: number = +this.pageQueryParam;
-      if (!newPage || newPage == NaN || newPage <= 0) {
-        this.page = 1;
-      } else {
-        this.page = newPage;
-      }
-    });
+    const savedFilters = this.statusService.getofferListFilterStatus();
+    console.log("savedFilters:", savedFilters);
+    this.filterInit = savedFilters.filterMap;
+    this.currentFilter = this.filterInit;
+    this.page = savedFilters.page;
+    this.noFilterSet = !savedFilters.filterOn;
+    this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
 
-    this.filterObj = {};
     this.loadFilterMetaData();
-    this.loadData(this.page, this.pageSize, this.filterObj);
+    this.loadData();
   }
 
-  loadData(page: number, pageSize: number, filterObj: OfferFilterToAPI) {
+  loadFilterMetaData() {
+    this.metaSubscription = this.metaDataService.getFilterTags().subscribe(
+      (filterMap: Map<string, OfferPropertyList>) => {
+        this.staticFilterList = filterMap;
+        this.filterMapIsLoaded = true;
+      },
+      (error) => {
+        this.staticFilterList.delete;
+        this.filterObj = {};
+        this.filterMapIsLoaded = false;
+        console.log('Error-Filterdaten: ', error);
+      }
+    );
+  }
+
+  loadData() {
     this.message = '';
     this.isError = false;
     this.isLoading = true;
     this.componentsDisabled = true;
 
     this.offerSubscription = this.offerDataService
-      .getPaginatedOfferList(page, pageSize, filterObj)
+      .getPaginatedOfferList(this.page, this.pageSize, this.filterObj)
       .subscribe(
         (paginatedData: PaginatedOfferData) => {
           this.loadedOffers = paginatedData.data;
@@ -108,39 +126,37 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
         },
         () => {
           this.isLoading = false;
-         // console.log('Completed');
+          // console.log('Completed');
         }
       );
   }
 
-  loadFilterMetaData() {
-    this.metaDataService.getFilterTags().subscribe(
-      (filterMap: Map<string, OfferPropertyList>) => {
-        this.filterMap = filterMap;
-        this.filterListLoaded = true;
-      },
-      (error) => {
-        this.filterMap.delete;
-        this.filterListLoaded = false;
-        console.log('Error-Filterdaten: ', error);
-      }
-    );
+  onFilterChanged(filterInComboboxes: Map<string, number>) {
+    this.currentFilter = filterInComboboxes;
+    this.changeFilter();
   }
 
-  onFilterChanged(filterMap: Map<string,number>) {
-    this.filterObj = DataMapping.mapFilterToAPIFilter(filterMap);
-    console.log("Filter-Array to API", this.filterObj);
-    this.page = 1;
-    this.loadData(this.page, this.pageSize, this.filterObj);
+  private changeFilter(page: number = 1) {
+    this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
+    this.noFilterSet = Object.keys(this.filterObj).length == 0;
+    this.page = page;
+
+    console.log('Filter-Map', this.currentFilter);
+    console.log('Filter-Array to API', this.filterObj);
+
+    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.loadData();
   }
 
   pageChange() {
-   // console.log('PageChange', this.page);
-    this.loadData(this.page, this.pageSize, this.filterObj);
+    //console.log('PageChange', this.page);
+    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.loadData();
   }
 
   ngOnDestroy(): void {
     if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
     if (this.offerSubscription) this.offerSubscription.unsubscribe();
+    if (this.metaSubscription) this.metaSubscription.unsubscribe();
   }
 }
