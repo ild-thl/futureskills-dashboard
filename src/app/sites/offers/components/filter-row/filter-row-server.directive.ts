@@ -32,14 +32,11 @@ export class FilterRowServerDirective implements AfterContentInit, OnChanges {
       let currentIndex = -1;
 
       if (this.initboxMap) {
-        // Defaultwerte setzen
-        currentIndex = this.initboxMap.get(filterBox.filterList.type);
+        currentIndex = this.initboxMap.get(type);
         filterBox.onChangeFilterFromExtern(currentIndex);
       } else {
-        // Standardwerte setzen
         currentIndex = filterBox.currentIndex;
       }
-
       this.boxMap.set(type, currentIndex);
 
       filterBox.valueChanged.subscribe((item: FilterFunctionCallbackItem) => {
@@ -47,18 +44,17 @@ export class FilterRowServerDirective implements AfterContentInit, OnChanges {
         this.filterChanged.emit(this.boxMap);
       });
     });
-    // console.log("CurrentMap:", this.boxMap);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.initFilterMap) {
-      console.log('Filter changed.', changes);
+      // console.log('Filter changed.', changes);
       if (changes.initFilterMap.previousValue == undefined) {
         this.initboxMap = changes.initFilterMap.currentValue;
-        console.log('First Values for Comboboxes', this.initboxMap);
+        //console.log('First Values for Comboboxes', this.initboxMap);
       } else {
         const newFilterMap = changes.initFilterMap.currentValue;
-        console.log('New Values for Comboboxes', this.initboxMap);
+        //console.log('New Values for Comboboxes', this.initboxMap);
         this.setComboBoxValues(newFilterMap);
       }
     }
