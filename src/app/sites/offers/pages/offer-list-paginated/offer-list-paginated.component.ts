@@ -150,9 +150,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   onResetFilter() {
-    //const resetFilter = this.statusService.resetFilterStatus();
-    //this.setFilterParams(resetFilter);
-    //this.loadData();
+    const resetFilter = this.statusService.resetFilterStatus();
+    this.setFilterParams(resetFilter);
+    this.loadData();
   }
 
   ngOnDestroy(): void {
