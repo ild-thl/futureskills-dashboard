@@ -1,36 +1,40 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 
 export type FilterFunctionCallbackItem = {
-  type: string,
-  id: number
-}
+  type: string;
+  id: number;
+};
 
 @Component({
   selector: 'app-filter-combo-box',
   templateUrl: './filter-combo-box.component.html',
-  styles: [
-    `
-      :host {
-        margin-right: 10px;
-      }
-    `,
-  ],
+  styleUrls: ['./filter-combo-box.component.scss']
 })
 export class FilterComboBoxComponent implements OnInit, OnChanges {
   @Input() defaultText: string;
   @Input() filterList: OfferPropertyList;
-  @Input() disabled: boolean=false;
+  @Input() disabled: boolean = false;
   @Output() valueChanged = new EventEmitter<FilterFunctionCallbackItem>();
 
   currentText: string = 'Alle';
   filterItems: PropertyItem[];
   currentIndex: number = -1;
+  filterOn: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
     this.currentIndex = -1;
+    this.checkFilterOn();
     this.currentText = this.defaultText;
     this.filterItems = [{ id: -1, identifier: undefined, description: this.currentText }];
     this.filterItems = this.filterItems.concat(this.filterList.list);
@@ -41,10 +45,9 @@ export class FilterComboBoxComponent implements OnInit, OnChanges {
    * @param changes
    */
   ngOnChanges(changes: SimpleChanges): void {
-   if (this.filterList){
+    if (this.filterList) {
       //console.log ("comboBox ", this.filterList.type, ' changed: ', changes);
-   }
-
+    }
   }
 
   /**
@@ -57,10 +60,11 @@ export class FilterComboBoxComponent implements OnInit, OnChanges {
 
     this.currentIndex = item.id;
     this.currentText = item.description;
+    this.checkFilterOn();
 
     this.valueChanged.emit({
       type: this.filterList.type,
-      id: item.id
+      id: item.id,
     });
   }
 
@@ -69,15 +73,20 @@ export class FilterComboBoxComponent implements OnInit, OnChanges {
    * @see FilterRowServerDirective
    * @param index
    */
-  onChangeFilterFromExtern(index: number){
+  onChangeFilterFromExtern(index: number) {
     //console.log("CurrentIndex for:", this.filterList.type, ' index:', index);
 
     const selectedItem = this.filterItems.find((item) => {
       return item.id === index;
     });
-    if (selectedItem){
+    if (selectedItem) {
       this.currentIndex = index;
       this.currentText = selectedItem.description;
+      this.checkFilterOn();
     }
+  }
+
+  private checkFilterOn() {
+    this.filterOn = this.currentIndex == -1 ? false : true;
   }
 }

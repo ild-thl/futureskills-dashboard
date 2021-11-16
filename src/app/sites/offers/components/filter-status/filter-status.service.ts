@@ -10,7 +10,7 @@ export type OfferListFilterStatus = {
 @Injectable({
   providedIn: 'root',
 })
-export class StatusService {
+export class FilterStatusService {
   private offerListFilterSiteStatus: OfferListFilterStatus;
 
   public getofferListFilterStatus(): OfferListFilterStatus {

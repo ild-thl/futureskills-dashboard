@@ -8,12 +8,12 @@ import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import { OfferShortListForTiles, PaginatedOfferData } from 'src/app/core/models/offer';
-import { StatusService } from 'src/app/core/services/status/status.service';
+import { FilterStatusService } from 'src/app/sites/offers/components/filter-status/filter-status.service';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
-import { OfferListFilterStatus } from 'src/app/core/services/status/status.service';
+import { OfferListFilterStatus } from 'src/app/sites/offers/components/filter-status/filter-status.service';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -54,14 +54,14 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private authService: AuthService,
-    private statusService: StatusService,
+    private statusService: FilterStatusService,
     private staticService: StaticService
   ) {
     this.pageCollectionSize = 10; // Anzahl der Items
     this.pageMaxSize = 5; //max.Seiten die angezeigt werden
     this.pageSize = environment.offerItemPerPage; // Items per Page
 
-    this.page = 1; // aktuelle Seite
+    this.page = 1; // Current Page
     this.filterObj = {};
     this.staticFilterList = new Map();
   }
@@ -77,7 +77,43 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  loadFilterMetaData() {
+  ngOnDestroy(): void {
+    if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
+    if (this.offerSubscription) this.offerSubscription.unsubscribe();
+    if (this.metaSubscription) this.metaSubscription.unsubscribe();
+  }
+
+  /**
+   * Called from Directive when FilterBox was changed
+   * @param filterInComboboxes
+   */
+  onFilterChanged(filterInComboboxes: Map<string, number>) {
+    this.currentFilter = filterInComboboxes;
+    this.changeFilter();
+  }
+
+  /**
+   * Called from PaginationComponent when page was changed
+   */
+  onPageChange() {
+    //console.log('PageChange', this.page);
+    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.loadData();
+  }
+
+  /**
+   * Called from Reset Button
+   */
+  onResetFilter() {
+    const resetFilter = this.statusService.resetFilterStatus();
+    this.setFilterParams(resetFilter);
+    this.loadData();
+  }
+
+  /**
+   * Loads FilterProperties from API
+   */
+  private loadFilterMetaData() {
     this.metaSubscription = this.metaDataService.getFilterTags().subscribe(
       (filterMap: Map<string, OfferPropertyList>) => {
         this.staticFilterList = filterMap;
@@ -92,7 +128,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadData() {
+  /**
+   * Loads Offerdata (with Pagination and Filter)
+   */
+  private loadData() {
     this.message = '';
     this.isError = false;
     this.isLoading = true;
@@ -126,11 +165,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       );
   }
 
-  onFilterChanged(filterInComboboxes: Map<string, number>) {
-    this.currentFilter = filterInComboboxes;
-    this.changeFilter();
-  }
-
+  /**
+   * Called when Filter was changed in Comboboxes
+   * @param page
+   */
   private changeFilter(page: number = 1) {
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
     this.noFilterSet = Object.keys(this.filterObj).length == 0;
@@ -143,25 +181,11 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  pageChange() {
-    //console.log('PageChange', this.page);
-    this.statusService.saveFilterStatus(this.page, this.currentFilter);
-    this.loadData();
-  }
-
-  onResetFilter() {
-    const resetFilter = this.statusService.resetFilterStatus();
-    this.setFilterParams(resetFilter);
-    this.loadData();
-  }
-
-  ngOnDestroy(): void {
-    if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
-    if (this.offerSubscription) this.offerSubscription.unsubscribe();
-    if (this.metaSubscription) this.metaSubscription.unsubscribe();
-  }
-
-  setFilterParams(filter: OfferListFilterStatus) {
+  /**
+   * Sets local FilterParams from saved params
+   * @param filter
+   */
+  private setFilterParams(filter: OfferListFilterStatus) {
     console.log('savedFilters:', filter);
     this.filterInit = filter.filterMap;
     this.currentFilter = this.filterInit;
