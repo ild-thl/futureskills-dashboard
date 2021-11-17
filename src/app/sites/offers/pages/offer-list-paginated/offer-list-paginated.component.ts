@@ -8,11 +8,12 @@ import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import { OfferShortListForTiles, PaginatedOfferData } from 'src/app/core/models/offer';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { FilterStatusService } from 'src/app/sites/offers/components/filter-status/filter-status.service';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
+import { OfferListFilterStatus } from 'src/app/sites/offers/components/filter-status/filter-status.service';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -22,6 +23,7 @@ import { DataMapping } from 'src/app/core/http/api/data-mapping';
 export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   private onIsAuthenticated: Subscription;
   private offerSubscription: Subscription;
+  private metaSubscription: Subscription;
 
   lnkAdminOfferNew = this.staticService.getPathInfo().lnkAdminOfferNew;
 
@@ -33,30 +35,35 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
 
   loadedOffers: OfferShortListForTiles[] = [];
 
-  pageQueryParam: string;
-  filterListLoaded = false;
-  filterMap = new Map();
-  filterObj: OfferFilterToAPI;
-
   isAuthenticated = false;
+  componentsDisabled = true;
+  noFilterSet = true;
+
+  // Filter
+  filterMapIsLoaded = false;
+  staticFilterList: Map<string, OfferPropertyList>; // Properties/Filter aus der API
+  filterObj: OfferFilterToAPI; // Filter an die API
+  filterInit: Map<string, number>; // gespeicherter Filter
+  currentFilter: Map<string, number>; //aktueller Filter
 
   message: string;
   isError: boolean;
   isLoading: boolean;
-  componentsDisabled: boolean;
 
   constructor(
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private authService: AuthService,
-    private route: ActivatedRoute,
+    private statusService: FilterStatusService,
     private staticService: StaticService
   ) {
     this.pageCollectionSize = 10; // Anzahl der Items
-    this.page = 1; // aktuelle Seite
     this.pageMaxSize = 5; //max.Seiten die angezeigt werden
-    this.pageSize = environment.offerItemPerPage;
-    this.componentsDisabled = true;
+    this.pageSize = environment.offerItemPerPage; // Items per Page
+
+    this.page = 1; // Current Page
+    this.filterObj = {};
+    this.staticFilterList = new Map();
   }
 
   ngOnInit() {
@@ -64,29 +71,74 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.isAuthenticated = userData.isAuth;
     });
 
-    this.route.queryParamMap.subscribe((params: ParamMap) => {
-      this.pageQueryParam = params.get('page');
-      const newPage: number = +this.pageQueryParam;
-      if (!newPage || newPage == NaN || newPage <= 0) {
-        this.page = 1;
-      } else {
-        this.page = newPage;
-      }
-    });
-
-    this.filterObj = {};
+    const savedFilter = this.statusService.getofferListFilterStatus();
+    this.setFilterParams(savedFilter);
     this.loadFilterMetaData();
-    this.loadData(this.page, this.pageSize, this.filterObj);
+    this.loadData();
   }
 
-  loadData(page: number, pageSize: number, filterObj: OfferFilterToAPI) {
+  ngOnDestroy(): void {
+    if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
+    if (this.offerSubscription) this.offerSubscription.unsubscribe();
+    if (this.metaSubscription) this.metaSubscription.unsubscribe();
+  }
+
+  /**
+   * Called from Directive when FilterBox was changed
+   * @param filterInComboboxes
+   */
+  onFilterChanged(filterInComboboxes: Map<string, number>) {
+    this.currentFilter = filterInComboboxes;
+    this.changeFilter();
+  }
+
+  /**
+   * Called from PaginationComponent when page was changed
+   */
+  onPageChange() {
+    //console.log('PageChange', this.page);
+    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.loadData();
+  }
+
+  /**
+   * Called from Reset Button
+   */
+  onResetFilter() {
+    const resetFilter = this.statusService.resetFilterStatus();
+    this.setFilterParams(resetFilter);
+    this.loadData();
+  }
+
+  /**
+   * Loads FilterProperties from API
+   */
+  private loadFilterMetaData() {
+    this.metaSubscription = this.metaDataService.getFilterTags().subscribe(
+      (filterMap: Map<string, OfferPropertyList>) => {
+        this.staticFilterList = filterMap;
+        this.filterMapIsLoaded = true;
+      },
+      (error) => {
+        this.staticFilterList.delete;
+        this.filterObj = {};
+        this.filterMapIsLoaded = false;
+        console.log('Error-Filterdaten: ', error);
+      }
+    );
+  }
+
+  /**
+   * Loads Offerdata (with Pagination and Filter)
+   */
+  private loadData() {
     this.message = '';
     this.isError = false;
     this.isLoading = true;
     this.componentsDisabled = true;
 
     this.offerSubscription = this.offerDataService
-      .getPaginatedOfferList(page, pageSize, filterObj)
+      .getPaginatedOfferList(this.page, this.pageSize, this.filterObj)
       .subscribe(
         (paginatedData: PaginatedOfferData) => {
           this.loadedOffers = paginatedData.data;
@@ -108,39 +160,37 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
         },
         () => {
           this.isLoading = false;
-         // console.log('Completed');
+          // console.log('Completed');
         }
       );
   }
 
-  loadFilterMetaData() {
-    this.metaDataService.getFilterTags().subscribe(
-      (filterMap: Map<string, OfferPropertyList>) => {
-        this.filterMap = filterMap;
-        this.filterListLoaded = true;
-      },
-      (error) => {
-        this.filterMap.delete;
-        this.filterListLoaded = false;
-        console.log('Error-Filterdaten: ', error);
-      }
-    );
+  /**
+   * Called when Filter was changed in Comboboxes
+   * @param page
+   */
+  private changeFilter(page: number = 1) {
+    this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
+    this.noFilterSet = Object.keys(this.filterObj).length == 0;
+    this.page = page;
+
+    console.log('Filter-Map', this.currentFilter);
+    console.log('Filter-Array to API', this.filterObj);
+
+    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.loadData();
   }
 
-  onFilterChanged(filterMap: Map<string,number>) {
-    this.filterObj = DataMapping.mapFilterToAPIFilter(filterMap);
-    console.log("Filter-Array to API", this.filterObj);
-    this.page = 1;
-    this.loadData(this.page, this.pageSize, this.filterObj);
-  }
-
-  pageChange() {
-   // console.log('PageChange', this.page);
-    this.loadData(this.page, this.pageSize, this.filterObj);
-  }
-
-  ngOnDestroy(): void {
-    if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
-    if (this.offerSubscription) this.offerSubscription.unsubscribe();
+  /**
+   * Sets local FilterParams from saved params
+   * @param filter
+   */
+  private setFilterParams(filter: OfferListFilterStatus) {
+    console.log('savedFilters:', filter);
+    this.filterInit = filter.filterMap;
+    this.currentFilter = this.filterInit;
+    this.page = filter.page;
+    this.noFilterSet = !filter.filterOn;
+    this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
   }
 }

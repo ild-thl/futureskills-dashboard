@@ -8,33 +8,48 @@
 
   <!--Filter-->
   <div class="row mb-1">
-    <div class="col">
-      <app-filter-combo-group
-        app-server-filter
-        (filterChanged)="onFilterChanged($event)"
-        *ngIf="filterListLoaded && !isError"
-      >
-        <app-filter-combo-box
-          [filterList]="filterMap.get('competences')"
-          [defaultText]="'Alle Programme'"
-          [disabled]="componentsDisabled"
-        ></app-filter-combo-box>
-        <app-filter-combo-box
-          [filterList]="filterMap.get('institutions')"
-          [defaultText]="'Alle Anbieter'"
-          [disabled]="componentsDisabled"
-        ></app-filter-combo-box>
-        <app-filter-combo-box
-          [filterList]="filterMap.get('formats')"
-          [defaultText]="'Alle Formate'"
-          [disabled]="componentsDisabled"
-        ></app-filter-combo-box>
-        <app-filter-combo-box
-          [filterList]="filterMap.get('languages')"
-          [defaultText]="'Alle Sprachen'"
-          [disabled]="componentsDisabled"
-        ></app-filter-combo-box>
-      </app-filter-combo-group>
+    <div class="col-12">
+      <div class="float-left">
+        <app-filter-combo-group
+          app-server-filter
+          (filterChanged)="onFilterChanged($event)"
+          [initFilterMap]="filterInit"
+          *ngIf="filterMapIsLoaded && !isError"
+        >
+          <app-filter-combo-box
+            [filterList]="staticFilterList.get('competences')"
+            [defaultText]="'Alle Programme'"
+            [disabled]="componentsDisabled"
+          ></app-filter-combo-box>
+          <app-filter-combo-box
+            [filterList]="staticFilterList.get('institutions')"
+            [defaultText]="'Alle Anbieter'"
+            [disabled]="componentsDisabled"
+          ></app-filter-combo-box>
+          <app-filter-combo-box
+            [filterList]="staticFilterList.get('formats')"
+            [defaultText]="'Alle Formate'"
+            [disabled]="componentsDisabled"
+          ></app-filter-combo-box>
+          <app-filter-combo-box
+            [filterList]="staticFilterList.get('languages')"
+            [defaultText]="'Alle Sprachen'"
+            [disabled]="componentsDisabled"
+          ></app-filter-combo-box>
+        </app-filter-combo-group>
+      </div>
+      <div class="float-right">
+        <button
+          (click)="onResetFilter()"
+          [disabled]="componentsDisabled || noFilterSet"
+          class="btn btn-link"
+          type="button"
+        >
+          <span>
+            <fa-icon [icon]="['fas', 'undo']"></fa-icon>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -92,7 +107,7 @@
               [maxSize]="pageMaxSize"
               [boundaryLinks]="true"
               [pageSize]="pageSize"
-              (pageChange)="pageChange()"
+              (pageChange)="onPageChange()"
               [disabled]="componentsDisabled"
             ></ngb-pagination>
           </div>

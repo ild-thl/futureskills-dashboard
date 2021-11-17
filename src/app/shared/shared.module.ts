@@ -33,7 +33,8 @@ import {
   faArrowLeft,
   faChevronDown,
   faAngleDown,
-  faExternalLinkAlt
+  faExternalLinkAlt,
+  faUndo
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -91,7 +92,8 @@ export class SharedModule {
       faArrowLeft,
       faChevronDown,
       faAngleDown,
-      faExternalLinkAlt
+      faExternalLinkAlt,
+      faUndo
     );
   }
 }
