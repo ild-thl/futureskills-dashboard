@@ -4,6 +4,7 @@
 
 ## 2021-11-19/ml
 ### changed
+- Searchstring can be saved
 - Searchstring as Parameter in API-Fnct (Bug-filterObj is cloned now)
 - Responsive row in filter-list
 

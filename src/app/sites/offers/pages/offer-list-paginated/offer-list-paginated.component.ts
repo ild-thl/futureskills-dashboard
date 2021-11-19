@@ -75,7 +75,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.isAuthenticated = userData.isAuth;
     });
 
-    const savedFilter = this.statusService.getofferListFilterStatus();
+    const savedFilter = this.statusService.getofferListSearchFilterStatus();
+    this.searchString = savedFilter.searchString;
     this.setFilterParams(savedFilter);
     this.loadFilterMetaData();
     this.loadData();
@@ -101,7 +102,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    */
   onPageChange() {
     //console.log('PageChange', this.page);
-    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.statusService.saveFilterStatus(this.page, this.currentFilter, this.searchString);
     this.loadData();
   }
 
@@ -109,7 +110,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    * Called from Reset Button
    */
   onResetFilter() {
-    const resetFilter = this.statusService.resetFilterStatus();
+    const resetFilter = this.statusService.resetFilterSearchStatus();
+    this.searchString = '';
     this.setFilterParams(resetFilter);
     this.loadData();
   }
@@ -181,7 +183,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     console.log('Filter-Map', this.currentFilter);
     //console.log('Filter-Array to API', this.filterObj);
 
-    this.statusService.saveFilterStatus(this.page, this.currentFilter);
+    this.statusService.saveFilterStatus(this.page, this.currentFilter, this.searchString);
     this.loadData();
   }
 
