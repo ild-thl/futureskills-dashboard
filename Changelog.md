@@ -2,6 +2,11 @@
 
 ## [Unreleased v0.8]
 
+## 2021-11-19/ml
+### changed
+- Searchstring as Parameter in API-Fnct (Bug-filterObj is cloned now)
+- Responsive row in filter-list
+
 ## 2021-10-26/ml
 ### changed
 - Filterstatus is saved now / reloading courselist loads filter

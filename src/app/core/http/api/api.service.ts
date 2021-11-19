@@ -16,6 +16,7 @@ import {
   APIToOfferShortList,
   PaginatedOfferDataFromAPI,
   OfferFilterToAPI,
+  OfferSearchFilterToAPI,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 
@@ -63,7 +64,7 @@ export class ApiService {
   public postPaginatedOfferShortList(
     page: number,
     count: number,
-    filterObj: OfferFilterToAPI = {}
+    filterSearchObj: OfferSearchFilterToAPI
   ): Observable<PaginatedOfferDataFromAPI> {
     if (count == null || count <= 0) {
       // default value items per page
@@ -72,10 +73,14 @@ export class ApiService {
     if (page == null || page < 1) {
       page = 1;
     }
+    if (!filterSearchObj) {
+      filterSearchObj = {};
+    }
+
     return this.http
       .post<PaginatedOfferDataFromAPI>(
         environment.apiURL + '/api/list/offer/short/paginated/' + count + '?page=' + page,
-        filterObj
+        filterSearchObj
       )
       .pipe(catchError(this.handleError));
   }

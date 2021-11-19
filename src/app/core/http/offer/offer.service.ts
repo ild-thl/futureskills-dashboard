@@ -3,9 +3,11 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { StaticService } from 'src/app/config/static.service';
+import { environment } from 'src/environments/environment';
 
 import {
   OfferFilterToAPI,
+  OfferSearchFilterToAPI,
   OfferToAPI,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
@@ -42,9 +44,28 @@ export class OfferService {
 
   // for Pagination
   ////////////////////////////////////////////////
-  getPaginatedOfferData(page: number, count: number, filterObj: OfferFilterToAPI): Observable<PaginatedOfferData> {
+  getPaginatedOfferData(
+    page: number,
+    count: number,
+    filterObj: OfferFilterToAPI,
+    searchString: string
+  ): Observable<PaginatedOfferData> {
+    // Check data from filter and search
+    let postObj: OfferSearchFilterToAPI = {};
+    if (count == null || count <= 0) {
+      count = environment.offerItemPerPage;
+    }
+    if (page == null || page < 1) {
+      page = 1;
+    }
+    if (filterObj) {
+      postObj = { ...filterObj };
+    }
+
+    console.log('Filter-Search to API:', postObj);
+
     const propertyID$ = this.dataCacheService.getPropertyIDMap();
-    const paginatedOffers$ = this.apiService.postPaginatedOfferShortList(page, count, filterObj);
+    const paginatedOffers$ = this.apiService.postPaginatedOfferShortList(page, count, postObj);
 
     // Parallel laden, aber erst auswerten wenn beide completed sind
     return forkJoin([paginatedOffers$, propertyID$]).pipe(
