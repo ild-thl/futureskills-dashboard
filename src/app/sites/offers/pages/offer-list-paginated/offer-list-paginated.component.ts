@@ -46,6 +46,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   filterInit: Map<string, number>; // gespeicherter Filter
   currentFilter: Map<string, number>; //aktueller Filter
 
+  //Search
+  searchString: string;
+
   message: string;
   isError: boolean;
   isLoading: boolean;
@@ -64,6 +67,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = 1; // Current Page
     this.filterObj = {};
     this.staticFilterList = new Map();
+    this.searchString = '';
   }
 
   ngOnInit() {
@@ -138,7 +142,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.componentsDisabled = true;
 
     this.offerSubscription = this.offerDataService
-      .getPaginatedOfferList(this.page, this.pageSize, this.filterObj)
+      .getPaginatedOfferList(this.page, this.pageSize, this.filterObj, this.searchString)
       .subscribe(
         (paginatedData: PaginatedOfferData) => {
           this.loadedOffers = paginatedData.data;
@@ -175,7 +179,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = page;
 
     console.log('Filter-Map', this.currentFilter);
-    console.log('Filter-Array to API', this.filterObj);
+    //console.log('Filter-Array to API', this.filterObj);
 
     this.statusService.saveFilterStatus(this.page, this.currentFilter);
     this.loadData();
