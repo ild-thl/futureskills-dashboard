@@ -116,7 +116,8 @@ body {
 p,
 li,
 .course-detail-text,
-.metadata-content {
+.metadata-content,
+.meta-text {
   font-size: 16px;
   font-weight: normal;
 }
@@ -125,7 +126,8 @@ li,
   p,
   li,
   .course-detail-text,
-  .metadata-content {
+  .metadata-content,
+  .meta-text {
     font-size: 17px;
   }
 }
@@ -133,7 +135,8 @@ li,
   p,
   li,
   .course-detail-text,
-  .metadata-content {
+  .metadata-content,
+  .meta-text {
     font-size: 18px;
   }
 }
