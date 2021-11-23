@@ -36,8 +36,8 @@ export class OfferDataService {
   /////////////////////////////////////////////////////
 
   // CourseList
-  public getPaginatedOfferList(page: number, count: number, filterObj: OfferFilterToAPI): Observable<PaginatedOfferData> {
-    return this.offerService.getPaginatedOfferData(page, count, filterObj);
+  public getPaginatedOfferList(page: number, count: number, filterObj: OfferFilterToAPI, searchString: string): Observable<PaginatedOfferData> {
+    return this.offerService.getPaginatedOfferData(page, count, filterObj, searchString);
   }
 
   // CourseCarousel

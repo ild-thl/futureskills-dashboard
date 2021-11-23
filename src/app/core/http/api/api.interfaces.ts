@@ -90,3 +90,5 @@ export type OfferFilterToAPI = {
   offertype_id?: number[];
   competences?: number[];
 };
+
+export type OfferSearchFilterToAPI = OfferFilterToAPI & { textsearch?: string } ;

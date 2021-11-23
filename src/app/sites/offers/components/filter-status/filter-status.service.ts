@@ -5,6 +5,7 @@ export type OfferListFilterStatus = {
   page: number;
   filterMap: Map<string, number>;
   filterOn: boolean;
+  searchString: string;
 };
 
 @Injectable({
@@ -13,31 +14,30 @@ export type OfferListFilterStatus = {
 export class FilterStatusService {
   private offerListFilterSiteStatus: OfferListFilterStatus;
 
-  public getofferListFilterStatus(): OfferListFilterStatus {
+  public getofferListSearchFilterStatus(): OfferListFilterStatus {
     return this.offerListFilterSiteStatus;
   }
 
   constructor() {
-    this.offerListFilterSiteStatus = {
-      page: 1,
-      filterMap: this.getEmptyOfferFilterValues(),
-      filterOn: this.checkOnFilterOn(this.getEmptyOfferFilterValues()),
-    };
+    this.resetFilterSearchStatus();
   }
 
-  public saveFilterStatus(page: number, filterMap: Map<string, number>) {
+  public saveFilterStatus(page: number, filterMap: Map<string, number>, searchString: string) {
     this.offerListFilterSiteStatus.page = page;
     this.offerListFilterSiteStatus.filterMap = filterMap;
     this.offerListFilterSiteStatus.filterOn = this.checkOnFilterOn(filterMap);
+    this.offerListFilterSiteStatus.searchString = searchString;
   }
 
-  public resetFilterStatus(): OfferListFilterStatus {
+  public resetFilterSearchStatus(): OfferListFilterStatus {
+    const searchString = '';
     this.offerListFilterSiteStatus = {
       page: 1,
       filterMap: this.getEmptyOfferFilterValues(),
       filterOn: this.checkOnFilterOn(this.getEmptyOfferFilterValues()),
+      searchString: searchString,
     };
-    return this.getofferListFilterStatus();
+    return this.getofferListSearchFilterStatus();
   }
 
   public getEmptyOfferFilterValues(): Map<string, number> {
@@ -58,5 +58,10 @@ export class FilterStatusService {
       }
     }
     return returnValue;
+  }
+
+  private checkOnSearchFilterOn(filterMap: Map<string, number>, searchString: string): boolean {
+    if (searchString && searchString.length > 0) return true;
+    return this.checkOnFilterOn(filterMap);
   }
 }
