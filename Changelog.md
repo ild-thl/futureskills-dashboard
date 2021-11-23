@@ -2,6 +2,10 @@
 
 ## [Unreleased v0.8]
 
+## 2021-11-23/ml
+### added
+- Searchfield added
+
 ## 2021-11-19/ml
 ### changed
 - Searchstring can be saved

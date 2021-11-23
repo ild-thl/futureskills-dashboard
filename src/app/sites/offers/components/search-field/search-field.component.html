@@ -1,0 +1,22 @@
+<form novalidate (ngSubmit)="onClickEvent(searchForm.value)" #searchForm="ngForm">
+  <!--<div class="form-group input-group searchgroup">-->
+  <div class="input-group fs-search-field">
+    <input
+      type="text"
+      name="searchField"
+      class="form-control fs-filter-inline"
+      placeholder=""
+      aria-label="Suche"
+      maxlength="30"
+      minlength="3"
+      [ngModel]="searchString"
+    />
+    <div class="input-group-append">
+      <button class="btn fs-light" type="button" id="button-addon2">
+        <span>
+          <fa-icon [icon]="['fas', 'search']"></fa-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+</form>

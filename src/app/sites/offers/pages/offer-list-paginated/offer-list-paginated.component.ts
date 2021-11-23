@@ -117,6 +117,15 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * SearchButton was clicked
+   */
+  onStartSearch(searchString: string) {
+    console.log('SearchString:', searchString);
+    //this.searchString = searchString;
+    //this.loadData();
+  }
+
+  /**
    * Loads FilterProperties from API
    */
   private loadFilterMetaData() {

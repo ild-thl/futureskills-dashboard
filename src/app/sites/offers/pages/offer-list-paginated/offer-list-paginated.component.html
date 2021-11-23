@@ -8,9 +8,13 @@
     </div>
 
     <!--Filter-->
-    <div class="row mb-1">
+    <div class="row align-items-start filter-row">
       <div class="col">
         <div class="float-left">
+          <app-search-field
+            [disabled]="componentsDisabled"
+            (clicked)="onStartSearch($event)"
+          ></app-search-field>
           <app-filter-combo-group
             app-server-filter
             (filterChanged)="onFilterChanged($event)"
@@ -45,7 +49,7 @@
           <button
             (click)="onResetFilter()"
             [disabled]="componentsDisabled || noFilterSet"
-            class="btn btn-link"
+            class="btn btn-link fs-reset-btn"
             type="button"
           >
             <span>

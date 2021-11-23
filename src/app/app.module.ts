@@ -45,6 +45,7 @@ import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-te
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
 import { HeaderComponent } from 'src/app/sites/app-root/components/header/header.component';
 import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
+import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-pag
     InfoStudentsComponent,
     InfoTeachingComponent,
     OfferListPaginatedComponent,
-    FilterRowServerDirective
+    FilterRowServerDirective,
+    SearchFieldComponent
   ],
   imports: [
     BrowserModule,
