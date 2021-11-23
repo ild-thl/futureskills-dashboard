@@ -8,12 +8,12 @@ import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import { OfferShortListForTiles, PaginatedOfferData } from 'src/app/core/models/offer';
-import { FilterStatusService } from 'src/app/sites/offers/components/filter-status/filter-status.service';
+import { FilterStatusService } from 'src/app/sites/offers/services/filter-status/filter-status.service';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
-import { OfferListFilterStatus } from 'src/app/sites/offers/components/filter-status/filter-status.service';
+import { OfferListFilterStatus } from 'src/app/sites/offers/services/filter-status/filter-status.service';
 
 @Component({
   selector: 'app-offer-list-paginated',
