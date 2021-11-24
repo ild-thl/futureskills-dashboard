@@ -173,7 +173,7 @@ li,
   .comic-header {
     font-size: 55px;
     text-shadow: 3px 3px 5px rgba(0,0,0,0.5);
-    -webkit-text-stroke: 1px #ffffff;
+    -webkit-text-stroke: 2px #ffffff;
 
     span {
       font-size: 30px;
@@ -204,7 +204,7 @@ li,
 }
 @media (max-width: 480px) {
   .comic-header {
-    font-size: 30px;
+    font-size: 32px;
     text-shadow: 3px 3px 5px rgba(0,0,0,0.5);
     -webkit-text-stroke: 1px #ffffff;
 
@@ -215,7 +215,7 @@ li,
 }
 @media (max-width: 430px) {
   .comic-header {
-    font-size: 26px;
+    font-size: 32px;
     text-shadow: 3px 3px 5px rgba(0,0,0,0.5);
     -webkit-text-stroke: 1px #ffffff;
 
@@ -226,7 +226,7 @@ li,
 }
 @media (max-width: 364px) {
   .comic-header {
-    font-size: 23px;
+    font-size: 30px;
     text-shadow: 3px 3px 5px rgba(0,0,0,0.5);
     -webkit-text-stroke: 1px #ffffff;
 
