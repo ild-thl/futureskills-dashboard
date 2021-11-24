@@ -12,6 +12,7 @@
       <div class="col">
         <div class="float-left">
           <app-search-field
+            [(text)]="searchString"
             [disabled]="componentsDisabled"
             (clicked)="onStartSearch($event)"
           ></app-search-field>

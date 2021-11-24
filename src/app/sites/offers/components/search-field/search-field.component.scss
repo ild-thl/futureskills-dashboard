@@ -5,6 +5,18 @@
   margin-bottom: 5px;
 }
 
+:host ::ng-deep {
+  .tooltip {
+    .tooltip-inner {
+      background-color: var(--color-primary-blue-dark);
+      font-size: 80%;
+    }
+  }
+  .tooltip .arrow::before {
+    border-top-color: var(--color-primary-blue-dark);
+  }
+}
+
 .fs-search-field {
   min-width: 200px;
 

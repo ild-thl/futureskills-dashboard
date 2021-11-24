@@ -111,7 +111,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    */
   onResetFilter() {
     const resetFilter = this.statusService.resetFilterSearchStatus();
-    this.searchString = '';
     this.setFilterParams(resetFilter);
     this.loadData();
   }
@@ -120,9 +119,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    * SearchButton was clicked
    */
   onStartSearch(searchString: string) {
-    console.log('SearchString:', searchString);
-    //this.searchString = searchString;
-    //this.loadData();
+    console.log('StartSearch with :', this.searchString);
+    // this.loadData();
   }
 
   /**
@@ -206,6 +204,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.currentFilter = this.filterInit;
     this.page = filter.page;
     this.noFilterSet = !filter.filterOn;
+    this.searchString = filter.searchString;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
   }
 }

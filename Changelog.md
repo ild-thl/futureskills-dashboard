@@ -4,7 +4,8 @@
 
 ## 2021-11-23/ml
 ### added
-- Searchfield added
+- Searchfield (new component) added (+tooltip)
+- Searchdata is saved with filter-data
 
 ## 2021-11-19/ml
 ### changed

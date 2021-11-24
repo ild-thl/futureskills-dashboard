@@ -1,13 +1,5 @@
-import { NgForm } from '@angular/forms';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search-field',
@@ -15,24 +7,32 @@ import {
   styleUrls: ['./search-field.component.scss'],
 })
 export class SearchFieldComponent implements OnChanges {
-  constructor() {}
+  constructor(tooltipConfig: NgbTooltipConfig) {
+    tooltipConfig.placement = 'top';
+    tooltipConfig.openDelay = 500;
+    tooltipConfig.tooltipClass = 'tooltip';
+  }
 
+  @Input('text') searchText: string = '';
   @Input() disabled: boolean = false;
-  @Input() defaultText: string = '';
-  @Output() clicked = new EventEmitter<string>();
-  @ViewChild('searchForm', { static: true }) searchForm: NgForm;
-  searchString: string = '';
+  @Output('textChange') searchTextChanged = new EventEmitter<string>();
+  @Output('clicked') clicked = new EventEmitter<string>();
+  fieldText: string = '';
 
   onClickEvent(value: any) {
     this.clicked.emit(value.searchField);
   }
 
+  onFieldTextChanged(event: any) {
+    //console.log('onModelChange: ', event);
+    this.fieldText = event;
+    this.searchTextChanged.emit(event);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.defaultText) {
-      if (!changes.defaultText.previousValue) {
-        console.log('Changes in String', changes.defaultText.currentValue);
-        this.searchString = changes.defaultText.currentValue;
-      }
+    if (changes.searchText) {
+      //console.log('ngOnChanges', changes);
+      this.fieldText = this.searchText;
     }
   }
 }

@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 export type OfferListFilterStatus = {
@@ -25,8 +24,8 @@ export class FilterStatusService {
   public saveFilterStatus(page: number, filterMap: Map<string, number>, searchString: string) {
     this.offerListFilterSiteStatus.page = page;
     this.offerListFilterSiteStatus.filterMap = filterMap;
-    this.offerListFilterSiteStatus.filterOn = this.checkOnFilterOn(filterMap);
     this.offerListFilterSiteStatus.searchString = searchString;
+    this.offerListFilterSiteStatus.filterOn = this.checkOnSearchFilterOn(filterMap, searchString);
   }
 
   public resetFilterSearchStatus(): OfferListFilterStatus {
@@ -34,7 +33,7 @@ export class FilterStatusService {
     this.offerListFilterSiteStatus = {
       page: 1,
       filterMap: this.getEmptyOfferFilterValues(),
-      filterOn: this.checkOnFilterOn(this.getEmptyOfferFilterValues()),
+      filterOn: this.checkOnSearchFilterOn(this.getEmptyOfferFilterValues(), searchString),
       searchString: searchString,
     };
     return this.getofferListSearchFilterStatus();
