@@ -3,12 +3,14 @@
     <div class="row">
       <div class="col">
         <h3>Kursübersicht</h3>
-        <p>Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b></p>
+        <p *ngIf="!isError">
+          Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b>
+        </p>
       </div>
     </div>
 
     <!--Filter-->
-    <div class="row align-items-start filter-row">
+    <div class="row align-items-start filter-row" *ngIf="!isError">
       <div class="col">
         <div class="float-left">
           <app-search-field
@@ -20,7 +22,7 @@
             app-server-filter
             (filterChanged)="onFilterChanged($event)"
             [initFilterMap]="filterInit"
-            *ngIf="filterMapIsLoaded && !isError"
+            *ngIf="filterMapIsLoaded"
           >
             <app-filter-combo-box
               [filterList]="staticFilterList.get('competences')"
@@ -65,9 +67,13 @@
 
     <!-- Error Block -->
     <ng-template #showError>
-      <div class="row">
+      <div class="row mt-4">
         <div class="col">
-          {{ message }}
+          <p>{{ message }}</p>
+
+          <button type="button" class="btn btn-outline-primary mr-3 mb-3" [routerLink]="lnkLanding">
+            Zur Startseite
+          </button>
         </div>
       </div>
     </ng-template>
@@ -88,7 +94,7 @@
         <div class="row">
           <div class="col">
             <div *ngIf="loadedOffers.length === 0">
-              <p>Es wurden keine Angebote gefunden.</p>
+              <p>Es wurden leider keine Angebote gefunden, die den Suchkriterien entsprechen.</p>
             </div>
 
             <!-- Offers -->

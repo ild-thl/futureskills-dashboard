@@ -26,6 +26,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   private metaSubscription: Subscription;
 
   lnkAdminOfferNew = this.staticService.getPathInfo().lnkAdminOfferNew;
+  lnkLanding = this.staticService.getPathInfo().lnkLanding;
+  lnkOffers = this.staticService.getPathInfo().lnkOffers;
 
   // Pagination
   pageCollectionSize: number; // Anzahl der Items
@@ -77,7 +79,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
 
     const savedFilter = this.statusService.getofferListSearchFilterStatus();
     this.searchString = savedFilter.searchString;
-    this.setFilterParams(savedFilter);
+    this.setFilterParams(savedFilter); //
     this.loadFilterMetaData();
     this.loadData();
   }
@@ -87,6 +89,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     if (this.offerSubscription) this.offerSubscription.unsubscribe();
     if (this.metaSubscription) this.metaSubscription.unsubscribe();
   }
+
+  // //////// EVENTS //////////////////////////////////////
+  // //////////////////////////////////////////////////////
 
   /**
    * Called from Directive when FilterBox was changed
@@ -98,12 +103,19 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * SearchButton was clicked
+   * @param searchString
+   */
+  onStartSearch(searchString: string) {
+    // this.searchstring wird autom. upgedated (two-way-binding)
+    this.changeSearch();
+  }
+
+  /**
    * Called from PaginationComponent when page was changed
    */
   onPageChange() {
-    //console.log('PageChange', this.page);
-    this.statusService.saveFilterStatus(this.page, this.currentFilter, this.searchString);
-    this.loadData();
+    this.pageChange();
   }
 
   /**
@@ -115,13 +127,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  /**
-   * SearchButton was clicked
-   */
-  onStartSearch(searchString: string) {
-    console.log('StartSearch with :', this.searchString);
-    // this.loadData();
-  }
+  // //////////////////////////////////////////////////////
+
+  // //////// LOADING DATA FROM API ////////////////////////
+  // //////////////////////////////////////////////////////
 
   /**
    * Loads FilterProperties from API
@@ -169,7 +178,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
           this.loadedOffers = [];
           this.isError = true;
           this.componentsDisabled = true;
-          this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
+          this.message =
+            'Ein Fehler ist aufgetreten. Es konnten leider keine Angebote geladen werden.';
+          const resetFilter = this.statusService.resetFilterSearchStatus();
+          this.setFilterParams(resetFilter);
         },
         () => {
           this.isLoading = false;
@@ -178,19 +190,56 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       );
   }
 
+  // //////////////////////////////////////////////////////
+
+  // //////// FILTER/SEARCH CHANGE ////////////////////////
+  // //////////////////////////////////////////////////////
+
   /**
    * Called when Filter was changed in Comboboxes
    * @param page
    */
   private changeFilter(page: number = 1) {
+    this.page = page;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
-    this.noFilterSet = Object.keys(this.filterObj).length == 0;
+
+    console.log('filter-change: ', this.currentFilter);
+    this.reloadAndSaveData();
+  }
+
+  /**
+   * Called when search was changed
+   * @param page
+   */
+  private changeSearch(page: number = 1) {
     this.page = page;
 
-    console.log('Filter-Map', this.currentFilter);
-    //console.log('Filter-Array to API', this.filterObj);
+    console.log('search-change: ', this.currentFilter);
+    this.reloadAndSaveData();
+  }
 
-    this.statusService.saveFilterStatus(this.page, this.currentFilter, this.searchString);
+  private pageChange() {
+    console.log('page-change: ', this.page);
+    this.reloadAndSaveData();
+  }
+
+  // ////////////////////////////////////////////////////////
+
+  // //////// SAVE/CHANGE DATA IN PROPS /////////////////////
+  // ////////////////////////////////////////////////////////
+
+  /**
+   * saves filter and search
+   * sets reload-Button
+   * starts loading
+   */
+  private reloadAndSaveData() {
+    this.noFilterSet = !this.statusService.saveFilterStatus(
+      this.page,
+      this.currentFilter,
+      this.searchString
+    );
+    console.log('Saved Filter :', this.statusService.getofferListSearchFilterStatus());
     this.loadData();
   }
 

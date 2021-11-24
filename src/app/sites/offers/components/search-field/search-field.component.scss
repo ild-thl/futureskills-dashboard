@@ -6,14 +6,16 @@
 }
 
 :host ::ng-deep {
-  .tooltip {
-    .tooltip-inner {
-      background-color: var(--color-primary-blue-dark);
-      font-size: 80%;
+  .fs-search-field {
+    .tooltip {
+      .tooltip-inner {
+        background-color: var(--color-primary-blue-dark);
+        font-size: 80%;
+      }
     }
-  }
-  .tooltip .arrow::before {
-    border-top-color: var(--color-primary-blue-dark);
+    .tooltip .arrow::before {
+      border-top-color: var(--color-primary-blue-dark);
+    }
   }
 }
 
