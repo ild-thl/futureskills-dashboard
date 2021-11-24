@@ -78,8 +78,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     });
 
     const savedFilter = this.statusService.getofferListSearchFilterStatus();
-    this.searchString = savedFilter.searchString;
-    this.setFilterParams(savedFilter); //
+    this.setFilterParams(savedFilter);
     this.loadFilterMetaData();
     this.loadData();
   }
@@ -125,6 +124,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     const resetFilter = this.statusService.resetFilterSearchStatus();
     this.setFilterParams(resetFilter);
     this.loadData();
+  }
+
+  onReloadAfterError() {
+    this.onResetFilter();
   }
 
   // //////////////////////////////////////////////////////
@@ -203,7 +206,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = page;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
 
-    console.log('filter-change: ', this.currentFilter);
+    console.log('filter-change:', this.currentFilter);
     this.reloadAndSaveData();
   }
 
@@ -214,12 +217,13 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   private changeSearch(page: number = 1) {
     this.page = page;
 
-    console.log('search-change: ', this.currentFilter);
+    this.checkSearchText();
+    console.log('search-change:', this.searchString);
     this.reloadAndSaveData();
   }
 
   private pageChange() {
-    console.log('page-change: ', this.page);
+    console.log('page-change:', this.page);
     this.reloadAndSaveData();
   }
 
@@ -239,7 +243,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.currentFilter,
       this.searchString
     );
-    console.log('Saved Filter :', this.statusService.getofferListSearchFilterStatus());
+    console.log('Saved Filter:', this.statusService.getofferListSearchFilterStatus());
     this.loadData();
   }
 
@@ -255,5 +259,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.noFilterSet = !filter.filterOn;
     this.searchString = filter.searchString;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
+  }
+
+  private checkSearchText(): any {
+    // this.searchString = this.searchString.trim();
+    // in HTML?      pattern="[a-zA-Z0-9-_()& ]*"
   }
 }

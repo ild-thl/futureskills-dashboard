@@ -67,12 +67,14 @@
 
     <!-- Error Block -->
     <ng-template #showError>
-      <div class="row mt-4">
+      <div class="row mt-4 mb-3">
         <div class="col">
           <p>{{ message }}</p>
-
-          <button type="button" class="btn btn-outline-primary mr-3 mb-3" [routerLink]="lnkLanding">
+          <button type="button" class="btn btn-light mr-3 mb-3" [routerLink]="lnkLanding">
             Zur Startseite
+          </button>
+          <button type="button" class="btn btn-light mr-3 mb-3" (click)="onReloadAfterError()">
+            Kursliste neu laden
           </button>
         </div>
       </div>
