@@ -1,4 +1,4 @@
-<div ngbDropdown>
+<div ngbDropdown [ngClass]="{'fs-right-gap': lastInLine==false}">
   <button [disabled]="disabled" class="btn btn-light" id="dropdownFilter" ngbDropdownToggle>
     <span [ngClass]="{ filterOn: filterOn }">{{ currentText }} </span>
   </button>

@@ -11,7 +11,7 @@
 
     <!--Filter-->
     <div class="row align-items-start filter-row" *ngIf="!isError">
-      <div class="col">
+      <div class="col pr-0">
         <div class="float-left">
           <app-search-field
             [(text)]="searchString"
@@ -43,6 +43,7 @@
               [filterList]="staticFilterList.get('languages')"
               [defaultText]="'Alle Sprachen'"
               [disabled]="componentsDisabled"
+              [lastInLine]="true"
             ></app-filter-combo-box>
           </app-filter-combo-group>
         </div>
