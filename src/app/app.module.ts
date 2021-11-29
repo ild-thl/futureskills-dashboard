@@ -22,12 +22,10 @@ import { AuthInterceptorService } from 'src/app/core/interceptors/auth-intercept
 import { AppComponent } from 'src/app/sites/app-root/pages/app.component';
 
 // Offers (Todo: eigenes Modul)
-import { OfferListComponent } from 'src/app/sites/offers/pages/offer-list/offer-list.component';
 import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
 import { SkeletonOffersComponent } from 'src/app/sites/offers/components/skeleton-offers/skeleton-offers.component';
 
 import { FilterComboGroupComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-group.component';
-import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
 import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
 import { FilterRowServerDirective } from './sites/offers/components/filter-row/filter-row-server.directive';
 
@@ -51,9 +49,7 @@ import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-pag
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    OfferListComponent,
     FilterComboGroupComponent,
-    FilterRowDirective,
     FilterComboBoxComponent,
     SkeletonOffersComponent,
     OfferDetailComponent,
