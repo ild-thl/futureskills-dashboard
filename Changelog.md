@@ -2,6 +2,10 @@
 
 ## [Unreleased v0.8]
 
+## 2021-11-29/avz
+### changed
+- ngif in OfferDetail (ngif > show metadata container)
+
 ## 2021-11-29/ml
 ### deleted
 - OfferList deleted, filter-row directive deleted
