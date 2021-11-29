@@ -2,10 +2,14 @@
 
 ## [Unreleased v0.8]
 
-## 2021-11-23/ml
+## 2021-11-30/ml
 ### added
 - Searchfield (new component) added (+tooltip)
 - Searchdata is saved with filter-data
+- 
+## 2021-11-29/ml
+### deleted
+- OfferList deleted, filter-row directive deleted
 
 ## 2021-11-19/ml
 ### changed
