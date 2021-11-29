@@ -2,6 +2,10 @@
 
 ## [Unreleased v0.8]
 
+## 2021-11-29/ml
+### deleted
+- OfferList deleted, filter-row directive deleted
+
 ## 2021-11-19/ml
 ### changed
 - Searchstring can be saved
