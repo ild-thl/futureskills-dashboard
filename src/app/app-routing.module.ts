@@ -6,7 +6,6 @@ import { AuthGuard } from 'src/app/core/guards/auth-guard';
 
 // Pages
 import { LandingComponent } from 'src/app/sites/landing/pages/landing/landing.components';
-import { OfferListComponent } from 'src/app/sites/offers/pages/offer-list/offer-list.component';
 import { AuthComponent } from 'src/app/sites/login/pages/auth/auth.component';
 import { ImprintComponent } from 'src/app/sites/imprint/pages/imprint/imprint.component';
 import { PrivacyComponent } from 'src/app/sites/privacy/pages/privacy/privacy.component';
@@ -27,10 +26,6 @@ const routes: Routes = [
   {
     path: 'kurse',
     component: OfferListPaginatedComponent,
-  },
-  {
-    path: 'allekurse',
-    component: OfferListComponent,
   },
   {
     path: 'kurse/:id',
