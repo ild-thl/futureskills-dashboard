@@ -6,7 +6,11 @@
 ### added
 - Searchfield (new component) added (+tooltip)
 - Searchdata is saved with filter-data
-- 
+  
+## 2021-11-29/avz
+### changed
+- ngif in OfferDetail (ngif > show metadata container)
+
 ## 2021-11-29/ml
 ### deleted
 - OfferList deleted, filter-row directive deleted
