@@ -14,19 +14,6 @@
 }
 
 @font-face {
-  font-family: 'ArchitectsDaughter';
-  src: url('~src/styles/ressources/fonts/ArchitectsDaughter-Regular.eot');
-  src: url('~src/styles/ressources/fonts/ArchitectsDaughter-Regular.eot?#iefix') format('embedded-opentype'),
-      url('~src/styles/ressources/fonts/ArchitectsDaughter-Regular.woff2') format('woff2'),
-      url('~src/styles/ressources/fonts/ArchitectsDaughter-Regular.woff') format('woff'),
-      url('~src/styles/ressources/fonts/ArchitectsDaughter-Regular.ttf') format('truetype'),
-      url('~src/styles/ressources/fonts/ArchitectsDaughter-Regular.svg') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
   font-family: 'Open Sans';
   src: url('~src/styles/ressources/fonts/OpenSans-LightItalic.eot');
   src: url('~src/styles/ressources/fonts/OpenSans-LightItalic.eot?#iefix') format('embedded-opentype'),
@@ -120,6 +107,15 @@ li,
 .meta-text {
   font-size: 16px;
   font-weight: normal;
+}
+
+.fs-consent-video-form h4 {
+  font-size: 20px;
+}
+
+.fs-consent-video-form p,
+.fs-consent-video-form button {
+  font-size: 15px;
 }
 
 @media(min-width: $xs) {
