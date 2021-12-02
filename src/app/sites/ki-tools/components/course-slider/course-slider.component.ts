@@ -14,6 +14,7 @@ type SliderData = {
   id: number;
   title: string;
   image: string;
+  crop?: string;
   sliderid: string;
 };
 
@@ -80,7 +81,7 @@ export class CourseSliderComponent implements OnInit, OnChanges {
         return {
           id: item.id,
           title: item.title,
-          crop: this.cropTextLength(item.title, 80),
+          crop: this.cropTextLength(item.title, 75),
           image: item.image,
           sliderid: item.id.toString(),
         };
