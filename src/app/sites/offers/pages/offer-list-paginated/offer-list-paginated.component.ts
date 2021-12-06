@@ -8,12 +8,12 @@ import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import { OfferShortListForTiles, PaginatedOfferData } from 'src/app/core/models/offer';
-import { FilterStatusService } from 'src/app/sites/offers/components/filter-status/filter-status.service';
+import { FilterStatusService } from 'src/app/sites/offers/services/filter-status/filter-status.service';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
-import { OfferListFilterStatus } from 'src/app/sites/offers/components/filter-status/filter-status.service';
+import { OfferListFilterStatus } from 'src/app/sites/offers/services/filter-status/filter-status.service';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -26,6 +26,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   private metaSubscription: Subscription;
 
   lnkAdminOfferNew = this.staticService.getPathInfo().lnkAdminOfferNew;
+  lnkLanding = this.staticService.getPathInfo().lnkLanding;
+  lnkOffers = this.staticService.getPathInfo().lnkOffers;
 
   // Pagination
   pageCollectionSize: number; // Anzahl der Items
@@ -76,7 +78,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     });
 
     const savedFilter = this.statusService.getofferListSearchFilterStatus();
-    this.searchString = savedFilter.searchString;
     this.setFilterParams(savedFilter);
     this.loadFilterMetaData();
     this.loadData();
@@ -88,6 +89,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     if (this.metaSubscription) this.metaSubscription.unsubscribe();
   }
 
+  // //////// EVENTS //////////////////////////////////////
+  // //////////////////////////////////////////////////////
+
   /**
    * Called from Directive when FilterBox was changed
    * @param filterInComboboxes
@@ -98,12 +102,19 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * SearchButton was clicked
+   * @param searchString
+   */
+  onStartSearch(searchString: string) {
+    // this.searchstring wird autom. upgedated (two-way-binding)
+    this.changeSearch();
+  }
+
+  /**
    * Called from PaginationComponent when page was changed
    */
   onPageChange() {
-    //console.log('PageChange', this.page);
-    this.statusService.saveFilterStatus(this.page, this.currentFilter, this.searchString);
-    this.loadData();
+    this.pageChange();
   }
 
   /**
@@ -111,10 +122,18 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    */
   onResetFilter() {
     const resetFilter = this.statusService.resetFilterSearchStatus();
-    this.searchString = '';
     this.setFilterParams(resetFilter);
     this.loadData();
   }
+
+  onReloadAfterError() {
+    this.onResetFilter();
+  }
+
+  // //////////////////////////////////////////////////////
+
+  // //////// LOADING DATA FROM API ////////////////////////
+  // //////////////////////////////////////////////////////
 
   /**
    * Loads FilterProperties from API
@@ -162,7 +181,10 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
           this.loadedOffers = [];
           this.isError = true;
           this.componentsDisabled = true;
-          this.message = 'Ein Fehler ist aufgetreten. Es konnten keine Angebote geladen werden.';
+          this.message =
+            'Ein Fehler ist aufgetreten. Es konnten leider keine Angebote geladen werden.';
+          const resetFilter = this.statusService.resetFilterSearchStatus();
+          this.setFilterParams(resetFilter);
         },
         () => {
           this.isLoading = false;
@@ -171,19 +193,57 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       );
   }
 
+  // //////////////////////////////////////////////////////
+
+  // //////// FILTER/SEARCH CHANGE ////////////////////////
+  // //////////////////////////////////////////////////////
+
   /**
    * Called when Filter was changed in Comboboxes
    * @param page
    */
   private changeFilter(page: number = 1) {
+    this.page = page;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
-    this.noFilterSet = Object.keys(this.filterObj).length == 0;
+
+    console.log('filter-change:', this.currentFilter);
+    this.reloadAndSaveData();
+  }
+
+  /**
+   * Called when search was changed
+   * @param page
+   */
+  private changeSearch(page: number = 1) {
     this.page = page;
 
-    console.log('Filter-Map', this.currentFilter);
-    //console.log('Filter-Array to API', this.filterObj);
+    this.checkSearchText();
+    console.log('search-change:', this.searchString);
+    this.reloadAndSaveData();
+  }
 
-    this.statusService.saveFilterStatus(this.page, this.currentFilter, this.searchString);
+  private pageChange() {
+    console.log('page-change:', this.page);
+    this.reloadAndSaveData();
+  }
+
+  // ////////////////////////////////////////////////////////
+
+  // //////// SAVE/CHANGE DATA IN PROPS /////////////////////
+  // ////////////////////////////////////////////////////////
+
+  /**
+   * saves filter and search
+   * sets reload-Button
+   * starts loading
+   */
+  private reloadAndSaveData() {
+    this.noFilterSet = !this.statusService.saveFilterStatus(
+      this.page,
+      this.currentFilter,
+      this.searchString
+    );
+    console.log('Saved Filter:', this.statusService.getofferListSearchFilterStatus());
     this.loadData();
   }
 
@@ -197,6 +257,12 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.currentFilter = this.filterInit;
     this.page = filter.page;
     this.noFilterSet = !filter.filterOn;
+    this.searchString = filter.searchString;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.filterInit);
+  }
+
+  private checkSearchText(): any {
+    // this.searchString = this.searchString.trim();
+    // in HTML?      pattern="[a-zA-Z0-9-_()& ]*"
   }
 }

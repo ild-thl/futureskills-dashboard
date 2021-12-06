@@ -11,6 +11,11 @@
   - Colorcontrast
   - Viewport in combination with fontsize
 
+## 2021-11-30/ml
+### added
+- Searchfield (new component) added (+tooltip)
+- Searchdata is saved with filter-data
+
 ## 2021-11-29/avz
 ### changed
 - ngif in OfferDetail (ngif > show metadata container)

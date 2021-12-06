@@ -3,19 +3,26 @@
     <div class="row">
       <div class="col">
         <h3>Kursübersicht</h3>
-        <p>Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b></p>
+        <p *ngIf="!isError">
+          Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b>
+        </p>
       </div>
     </div>
 
     <!--Filter-->
-    <div class="row mb-1">
-      <div class="col">
+    <div class="row align-items-start filter-row" *ngIf="!isError">
+      <div class="col pr-0">
         <div class="float-left">
+          <app-search-field
+            [(text)]="searchString"
+            [disabled]="componentsDisabled"
+            (clicked)="onStartSearch($event)"
+          ></app-search-field>
           <app-filter-combo-group
             app-server-filter
             (filterChanged)="onFilterChanged($event)"
             [initFilterMap]="filterInit"
-            *ngIf="filterMapIsLoaded && !isError"
+            *ngIf="filterMapIsLoaded"
           >
             <app-filter-combo-box
               [filterList]="staticFilterList.get('competences')"
@@ -36,6 +43,7 @@
               [filterList]="staticFilterList.get('languages')"
               [defaultText]="'Alle Sprachen'"
               [disabled]="componentsDisabled"
+              [lastInLine]="true"
             ></app-filter-combo-box>
           </app-filter-combo-group>
         </div>
@@ -45,7 +53,7 @@
           <button
             (click)="onResetFilter()"
             [disabled]="componentsDisabled || noFilterSet"
-            class="btn btn-link"
+            class="btn btn-link fs-reset-btn"
             type="button"
           >
             <span>
@@ -60,9 +68,15 @@
 
     <!-- Error Block -->
     <ng-template #showError>
-      <div class="row">
+      <div class="row mt-4 mb-3">
         <div class="col">
-          {{ message }}
+          <p>{{ message }}</p>
+          <button type="button" class="btn btn-light mr-3 mb-3" [routerLink]="lnkLanding">
+            Zur Startseite
+          </button>
+          <button type="button" class="btn btn-light mr-3 mb-3" (click)="onReloadAfterError()">
+            Kursliste neu laden
+          </button>
         </div>
       </div>
     </ng-template>
@@ -83,7 +97,7 @@
         <div class="row">
           <div class="col">
             <div *ngIf="loadedOffers.length === 0">
-              <p>Es wurden keine Angebote gefunden.</p>
+              <p>Es wurden leider keine Angebote gefunden, die den Suchkriterien entsprechen.</p>
             </div>
 
             <!-- Offers -->

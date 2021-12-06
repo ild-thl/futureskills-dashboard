@@ -17,12 +17,13 @@ export type FilterFunctionCallbackItem = {
 @Component({
   selector: 'app-filter-combo-box',
   templateUrl: './filter-combo-box.component.html',
-  styleUrls: ['./filter-combo-box.component.scss']
+  styleUrls: ['./filter-combo-box.component.scss'],
 })
 export class FilterComboBoxComponent implements OnInit, OnChanges {
   @Input() defaultText: string;
   @Input() filterList: OfferPropertyList;
   @Input() disabled: boolean = false;
+  @Input() lastInLine: boolean = false;
   @Output() valueChanged = new EventEmitter<FilterFunctionCallbackItem>();
 
   currentText: string = 'Alle';
