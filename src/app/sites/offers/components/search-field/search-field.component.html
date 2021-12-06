@@ -1,0 +1,28 @@
+<form novalidate (ngSubmit)="onClickEvent(searchForm.value)" #searchForm="ngForm">
+  <div class="input-group fs-search-field">
+    <input
+      type="text"
+      name="searchField"
+      class="form-control fs-filter-inline"
+      placeholder=""
+      aria-label="Suche"
+      maxlength="30"
+      minlength="3"
+      ngbTooltip="Kurssuche (mind. 3 Zeichen)"
+      [disabled]="disabled"
+      [ngModel]="fieldText"
+      (ngModelChange)="onFieldTextChanged($event)"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn fs-light"
+        type="submit"
+        [disabled]="disabled || !searchForm.valid"
+      >
+        <span>
+          <fa-icon [icon]="['fas', 'search']"></fa-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+</form>

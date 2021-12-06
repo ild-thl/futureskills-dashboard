@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 export type OfferListFilterStatus = {
@@ -22,11 +21,12 @@ export class FilterStatusService {
     this.resetFilterSearchStatus();
   }
 
-  public saveFilterStatus(page: number, filterMap: Map<string, number>, searchString: string) {
+  public saveFilterStatus(page: number, filterMap: Map<string, number>, searchString: string): boolean {
     this.offerListFilterSiteStatus.page = page;
     this.offerListFilterSiteStatus.filterMap = filterMap;
-    this.offerListFilterSiteStatus.filterOn = this.checkOnFilterOn(filterMap);
     this.offerListFilterSiteStatus.searchString = searchString;
+    this.offerListFilterSiteStatus.filterOn = this.checkOnSearchFilterOn(filterMap, searchString);
+    return this.offerListFilterSiteStatus.filterOn;
   }
 
   public resetFilterSearchStatus(): OfferListFilterStatus {
@@ -34,7 +34,7 @@ export class FilterStatusService {
     this.offerListFilterSiteStatus = {
       page: 1,
       filterMap: this.getEmptyOfferFilterValues(),
-      filterOn: this.checkOnFilterOn(this.getEmptyOfferFilterValues()),
+      filterOn: this.checkOnSearchFilterOn(this.getEmptyOfferFilterValues(), searchString),
       searchString: searchString,
     };
     return this.getofferListSearchFilterStatus();
@@ -63,5 +63,12 @@ export class FilterStatusService {
   private checkOnSearchFilterOn(filterMap: Map<string, number>, searchString: string): boolean {
     if (searchString && searchString.length > 0) return true;
     return this.checkOnFilterOn(filterMap);
+  }
+
+  public isFilterOrSearchOn(): boolean {
+    return this.checkOnSearchFilterOn(
+      this.offerListFilterSiteStatus.filterMap,
+      this.offerListFilterSiteStatus.searchString
+    );
   }
 }

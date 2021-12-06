@@ -62,6 +62,10 @@ export class OfferService {
       postObj = { ...filterObj };
     }
 
+    if (searchString && searchString.length > 0) {
+      postObj.textsearch = searchString;
+    }
+
     console.log('Filter-Search to API:', postObj);
 
     const propertyID$ = this.dataCacheService.getPropertyIDMap();
