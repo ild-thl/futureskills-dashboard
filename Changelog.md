@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased v0.8]
+## [Released v0.8]
 
 ## 2021-12-01/avz
 ### changed
