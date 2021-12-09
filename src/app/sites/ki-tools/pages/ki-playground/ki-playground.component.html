@@ -1,5 +1,5 @@
 <div id="ki-tools">
-  <div *ngIf="kitoolsAreOnline == true && preview == '1'; then kiOnline; else kiOffline"></div>
+  <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
 
   <ng-template #kiOnline>
     <div *ngIf="!isLoadingScripts; else loading">
@@ -7,7 +7,7 @@
         <div class="container">
           <div class="row">
             <div class="col-12 col-md-10 col-lg-7">
-              <h3 class="h1">KI-Playground</h3>
+              <h1 class="h3">KI-Playground</h1>
               <p>
                 <!--Einleitung-->
                 Hier dreht sich alles um das Thema Machine Learning. Die Anzahl der Anwendungen, die
@@ -41,7 +41,7 @@
                   </div>
                   <div class="card-footer">
                     <button
-                      *ngIf="scriptsAreLoaded && !mnistModelIsLoading; else mnistBtnNotClickable"
+                      *ngIf="!mnistModelIsLoading; else mnistBtnNotClickable"
                       type="button"
                       class="btn btn-outline-dark btn-sm"
                       (click)="onLoadMnistExample(true)"
@@ -49,9 +49,9 @@
                       Beispiel laden
                     </button>
                     <ng-template #mnistBtnNotClickable>
-                      <small class="text-muted">Lade ...</small>
+                      <button type="button" class="btn btn-link btn-sm" disabled>Lade ...</button>
                     </ng-template>
-                    <small class="text-muted float-right pt-2">Download: ca. 3MB</small>
+                    <div class="fs-text-muted float-right pt-2">Download: ca. 3MB</div>
                   </div>
                 </div>
 
@@ -67,10 +67,7 @@
                   </div>
                   <div class="card-footer">
                     <button
-                      *ngIf="
-                        scriptsAreLoaded && !sentimentModelIsLoading;
-                        else sentimentBtnNotClickable
-                      "
+                      *ngIf="!sentimentModelIsLoading; else sentimentBtnNotClickable"
                       type="button"
                       class="btn btn-outline-dark btn-sm"
                       (click)="onLoadSentimentExample(true)"
@@ -78,9 +75,9 @@
                       Beispiel laden
                     </button>
                     <ng-template #sentimentBtnNotClickable>
-                      <small class="text-muted">Lade ...</small>
+                      <button type="button" class="btn btn-link btn-sm" disabled>Lade ...</button>
                     </ng-template>
-                    <small class="text-muted float-right pt-2">Download: ca. 6MB</small>
+                    <div class="fs-text-muted float-right pt-2">Download: ca. 6MB</div>
                   </div>
                 </div>
 
@@ -105,7 +102,7 @@
                     >
                       zur Sammlung
                     </button>
-                    <small class="text-muted float-right pt-2">Stand: 14.09.2021</small>
+                    <div class="fs-text-muted float-right pt-2">Stand: 02.12.2021</div>
                   </div>
                 </div>
               </div>
@@ -117,7 +114,7 @@
             <hr />
             <div class="row mt-5">
               <div class="col-12 col-md-10 col-lg-7">
-                <h3 class="h1">KI-Kurse in FutureSkills</h3>
+                <h2 class="h3">KI-Kurse in FutureSkills</h2>
                 <p>
                   Future Skills bietet dir eine Reihe von Kursen an, die Klarheit in die Begriffe
                   bringen möchte und praktische Anwendungsfelder für KI zeigt.

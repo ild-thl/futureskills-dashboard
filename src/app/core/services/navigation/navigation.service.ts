@@ -11,7 +11,7 @@ export class NavigationService {
 
   constructor(private router: Router, private location: Location) {}
 
-  public initialize(){
+  public initialize() {
     if (this.isInit) return;
 
     this.isInit = true;
@@ -32,6 +32,19 @@ export class NavigationService {
       this.location.back();
     } else {
       this.router.navigateByUrl('/');
+    }
+  }
+
+  /**
+   * Checked ob man von Detail zur List springt
+   * Unused
+   */
+  private checkDetailToList() {
+    if (this.browserHistory.length >= 2) {
+      const isDetail = /kurse\/\d/.test(this.browserHistory[this.browserHistory.length - 1]);
+      if (this.browserHistory[this.browserHistory.length - 2] === '/kurse' && isDetail) {
+        console.log('ROUTE VON DETAIL zu LIST');
+      }
     }
   }
 }

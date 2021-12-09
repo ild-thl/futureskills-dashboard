@@ -34,6 +34,9 @@ export class StaticService {
       return CustomConfig.kiConfig.sentimentPath.en;
     }
   }
+  getFilterParams(): any{
+    return CustomConfig.filterParams;
+  }
   getCourseNumbers(): any {
     return CustomConfig.courseNumbers;
   }

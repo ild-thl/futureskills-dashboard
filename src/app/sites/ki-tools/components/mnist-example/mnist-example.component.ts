@@ -160,7 +160,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     const maxValue = tf.argMax(prediction, 1).dataSync()[0];
     const pMaxValue = tf.max(prediction, 1).dataSync()[0];
     console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
-    
+
 
 
     if (pMaxValue >= this.THRESHOLD) {
@@ -214,14 +214,14 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  private randomNumber(min: number, max: number) { // min and max included 
+  private randomNumber(min: number, max: number) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
   /**
-   * 
+   *
    * @param predictions @deprecated
-   * @returns 
+   * @returns
    */
   private getPredictedNumber(predictions: any[]) {
     return predictions

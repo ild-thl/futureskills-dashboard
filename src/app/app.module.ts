@@ -22,13 +22,12 @@ import { AuthInterceptorService } from 'src/app/core/interceptors/auth-intercept
 import { AppComponent } from 'src/app/sites/app-root/pages/app.component';
 
 // Offers (Todo: eigenes Modul)
-import { OfferListComponent } from 'src/app/sites/offers/pages/offer-list/offer-list.component';
 import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
 import { SkeletonOffersComponent } from 'src/app/sites/offers/components/skeleton-offers/skeleton-offers.component';
 
 import { FilterComboGroupComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-group.component';
-import { FilterRowDirective } from 'src/app/sites/offers/components/filter-row/filter-row.directive';
 import { FilterComboBoxComponent } from 'src/app/sites/offers/components/filter-row/filter-combo-box/filter-combo-box.component';
+import { FilterRowServerDirective } from './sites/offers/components/filter-row/filter-row-server.directive';
 
 // Admin -> Lazy-Loaded-Modul
 // KI-Playground -> Lazy-Loaded-Modul
@@ -43,16 +42,15 @@ import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-te
 
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
 import { HeaderComponent } from 'src/app/sites/app-root/components/header/header.component';
-
+import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
+import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    OfferListComponent,
     FilterComboGroupComponent,
-    FilterRowDirective,
     FilterComboBoxComponent,
     SkeletonOffersComponent,
     OfferDetailComponent,
@@ -61,7 +59,10 @@ import { HeaderComponent } from 'src/app/sites/app-root/components/header/header
     PrivacyComponent,
     NotfoundComponent,
     InfoStudentsComponent,
-    InfoTeachingComponent
+    InfoTeachingComponent,
+    OfferListPaginatedComponent,
+    FilterRowServerDirective,
+    SearchFieldComponent
   ],
   imports: [
     BrowserModule,

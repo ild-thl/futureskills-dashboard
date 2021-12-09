@@ -1,0 +1,51 @@
+:host {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: 5px;
+}
+
+:host ::ng-deep {
+  .fs-search-field {
+    .tooltip {
+      .tooltip-inner {
+        background-color: var(--color-primary-blue-dark);
+        font-size: 80%;
+      }
+    }
+    .tooltip .arrow::before {
+      border-top-color: var(--color-primary-blue-dark);
+    }
+  }
+}
+
+.fs-search-field {
+  min-width: 200px;
+
+  .fs-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border: 1px solid #e4e9ee;
+  }
+
+  .fs-light:hover {
+    color: #212529;
+    background-color: #e2e6ea;
+    border-color: var(--color-function-grey);
+  }
+
+  .fs-light:focus {
+    border-color: var(--color-primary-blue-dark) !important;
+    box-shadow: 0 0 0 0.1rem rgb(16 45 93 / 25%);
+  }
+
+  .form-control {
+    border: 1px solid #e4e9ee !important;
+  }
+  .form-control:focus {
+    color: var(--color-primary-blue-dark) !important;
+    border-color: var(--color-primary-blue-dark) !important;
+    box-shadow: 0 0 0 0.1rem rgb(16 45 93 / 25%);
+  }
+}

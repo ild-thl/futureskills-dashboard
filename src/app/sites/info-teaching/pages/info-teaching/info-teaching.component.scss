@@ -127,8 +127,8 @@
       &.caption-right,
       &.caption-center {
         font-style: italic;
-        color: #aaa;
-        font-size: 12px;
+        color: var(--color-primary-blue-dark);
+        font-size: 14px;
         padding: 10px 0;
       }
       &.caption-center {
@@ -270,7 +270,7 @@
           border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
         }
 
-        
+
       }
 }
 

@@ -26,7 +26,7 @@ export interface OfferPropertyItemResponse {
   }[];
 }
 
-// From API to a short Offer
+// From API to Short Offer
 export type APIToOfferShortList = {
   id: number;
   title: string;
@@ -36,7 +36,26 @@ export type APIToOfferShortList = {
   language_id: number;
   competences: number[];
   keywords: string;
-}
+};
+
+// Data from Pagination API
+export type PaginatedOfferDataFromAPI = {
+  data: APIToOfferShortList[];
+} & PaginatedMetaData;
+
+export type PaginatedMetaData = {
+  current_page: number;
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  next_page_url: string;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+};
 
 // Data to API
 export type OfferToAPI = {
@@ -63,18 +82,13 @@ export type OfferToAPI = {
   competence_digital: boolean | number;
   competence_classic: boolean | number;
   relatedOffers: number[];
-}
+};
 
+export type OfferFilterToAPI = {
+  institution_id?: number[];
+  language_id?: number[];
+  offertype_id?: number[];
+  competences?: number[];
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
+export type OfferSearchFilterToAPI = OfferFilterToAPI & { textsearch?: string } ;

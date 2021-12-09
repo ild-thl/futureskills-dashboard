@@ -1,0 +1,155 @@
+<div id="offer-list">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>Kursübersicht</h3>
+        <p *ngIf="!isError">
+          Wähle aus drei Programmen: <b>Tech-Kurse, Digital Basic-Kurse, Classic-Kurse.</b>
+        </p>
+      </div>
+    </div>
+
+    <!--Filter-->
+    <div class="row align-items-start filter-row" *ngIf="!isError">
+      <div class="col pr-0">
+        <div class="float-left">
+          <app-search-field
+            [(text)]="searchString"
+            [disabled]="componentsDisabled"
+            (clicked)="onStartSearch($event)"
+          ></app-search-field>
+          <app-filter-combo-group
+            app-server-filter
+            (filterChanged)="onFilterChanged($event)"
+            [initFilterMap]="filterInit"
+            *ngIf="filterMapIsLoaded"
+          >
+            <app-filter-combo-box
+              [filterList]="staticFilterList.get('competences')"
+              [defaultText]="'Alle Programme'"
+              [disabled]="componentsDisabled"
+            ></app-filter-combo-box>
+            <app-filter-combo-box
+              [filterList]="staticFilterList.get('institutions')"
+              [defaultText]="'Alle Anbieter'"
+              [disabled]="componentsDisabled"
+            ></app-filter-combo-box>
+            <app-filter-combo-box
+              [filterList]="staticFilterList.get('formats')"
+              [defaultText]="'Alle Formate'"
+              [disabled]="componentsDisabled"
+            ></app-filter-combo-box>
+            <app-filter-combo-box
+              [filterList]="staticFilterList.get('languages')"
+              [defaultText]="'Alle Sprachen'"
+              [disabled]="componentsDisabled"
+              [lastInLine]="true"
+            ></app-filter-combo-box>
+          </app-filter-combo-group>
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="float-right">
+          <button
+            (click)="onResetFilter()"
+            [disabled]="componentsDisabled || noFilterSet"
+            class="btn btn-link fs-reset-btn"
+            type="button"
+          >
+            <span>
+              <fa-icon [icon]="['fas', 'undo']"></fa-icon>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isError == true; then showError; else showList"></div>
+
+    <!-- Error Block -->
+    <ng-template #showError>
+      <div class="row mt-4 mb-3">
+        <div class="col">
+          <p>{{ message }}</p>
+          <button type="button" class="btn btn-light mr-3 mb-3" [routerLink]="lnkLanding">
+            Zur Startseite
+          </button>
+          <button type="button" class="btn btn-light mr-3 mb-3" (click)="onReloadAfterError()">
+            Kursliste neu laden
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #showList>
+      <div *ngIf="isLoading; else showOffers">
+        <div class="row">
+          <div class="col">
+            <!-- Offer Block List -->
+            <div *ngIf="!isError && isLoading">
+              <app-skeleton-offers></app-skeleton-offers>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #showOffers>
+        <div class="row">
+          <div class="col">
+            <div *ngIf="loadedOffers.length === 0">
+              <p>Es wurden leider keine Angebote gefunden, die den Suchkriterien entsprechen.</p>
+            </div>
+
+            <!-- Offers -->
+            <div class="mb-5 offers-grid">
+              <fs-offer-tile
+                class="pr-0"
+                *ngFor="let offer of loadedOffers"
+                [offerForTile]="offer"
+                [isSubscribed]="false"
+                displayMode="full"
+              ></fs-offer-tile>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination2-->
+        <div class="row mb-3">
+          <div class="col">
+            <div *ngIf="loadedOffers.length > 0">
+              <ngb-pagination
+                class="d-flex justify-content-center"
+                [collectionSize]="pageCollectionSize"
+                [(page)]="page"
+                [maxSize]="pageMaxSize"
+                [boundaryLinks]="true"
+                [pageSize]="pageSize"
+                (pageChange)="onPageChange()"
+                [disabled]="componentsDisabled"
+              ></ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-template>
+
+    <!-- New -->
+    <div *ngIf="isAuthenticated">
+      <hr />
+      <div class="row">
+        <div class="col">
+          <div class="float-left">
+            <button
+              type="button"
+              class="btn btn-outline-primary mb-3"
+              [routerLink]="[lnkAdminOfferNew]"
+              routerLinkActive="router-link-active"
+            >
+              <span>Neues Angebot erstellen</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

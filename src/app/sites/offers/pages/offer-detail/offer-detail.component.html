@@ -132,10 +132,10 @@
       <div class="row">
         <div class="col-12 col-md-7">
           <h3>Was erwartet dich im Kurs?</h3>
-          <div [innerHTML]="offer?.description"></div>
+          <div class="course-detail-text" [innerHTML]="offer?.description"></div>
         </div>
         <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
-          <div class="course-metadata" *ngIf="offer?.meta.length > 0 || offer?.author != null">
+          <div class="course-metadata" *ngIf="offer?.meta != null || offer?.author != null">
             <h5 class="mb-3">Eckdaten</h5>
             <div class="course-metadata-detail" *ngIf="offer?.author">
               <div class="metadata-icon">

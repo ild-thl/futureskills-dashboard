@@ -1,7 +1,59 @@
 # Changelog
 
+## [Released v0.8]
+
+## 2021-12-01/avz
+### changed
+- Reviewed and integrated all pages on accessibility:
+  - Typography
+  - Layout
+  - Images
+  - Colorcontrast
+  - Viewport in combination with fontsize
+
+## 2021-11-30/ml
+### added
+- Searchfield (new component) added (+tooltip)
+- Searchdata is saved with filter-data
+
+## 2021-11-29/avz
+### changed
+- ngif in OfferDetail (ngif > show metadata container)
+
+## 2021-11-29/ml
+### deleted
+- OfferList deleted, filter-row directive deleted
+
+## 2021-11-19/ml
+### changed
+- Searchstring can be saved
+- Searchstring as Parameter in API-Fnct (Bug-filterObj is cloned now)
+- Responsive row in filter-list
+
+## 2021-10-26/ml
+### changed
+- Filterstatus is saved now / reloading courselist loads filter
+
+## 2021-10-26/ml
+### new/changed
+- OfferList has server-based filter
+- loading Offers: get->post
+- new environment variable: offerItemPerPage
+
+## 2021-10-07/ml
+### new/changed/deleted
+- Offers - new PaginationComponent
+- Clean Up
+  - no data store anymore for paginated courses (no caching)
+  - Search-Data and Property-Data is cached
+  - unused functions deleted
+  - loadScript Service deleted (Tensorflow is packaged)
 
 ## [Released v0.7]
+
+## 2021-11-05/avz
+### changed
+- Text color of the image captions
 
 ## 2021-10-28/ml
 ### added

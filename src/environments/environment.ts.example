@@ -8,6 +8,8 @@ export const environment = {
 
   apiURL: 'http://localhost:8000',
 
+  offerItemPerPage: 12, // Anzahl der Kurse auf einer Seite
+
   clientLoginData: {
     grantType: 'password',
     clientId: '',
