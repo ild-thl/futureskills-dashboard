@@ -8,6 +8,7 @@ import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
 import { StaticService } from 'src/app/config/static.service';
+import { Objects, Permissions } from 'src/app/core/models/permissions';
 
 @Component({
   selector: 'app-offer-detail',
@@ -24,7 +25,9 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   public user: User;
   public isLoading = false;
   public subscribed = false;
-  public isAuthenticated = false;
+
+  object = Objects;
+  permission = Permissions;
 
   isError: boolean;
   errMessage: string;
@@ -54,10 +57,6 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.errMessage = '';
           this.isError = false;
-          // TODO: Proper Auth check when user roles are available
-          if (this.user !== undefined) {
-            this.isAuthenticated = true;
-          }
         },
         (error) => {
           console.log('ErrorMessage:', error);

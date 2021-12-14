@@ -44,6 +44,7 @@ import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer
 import { HeaderComponent } from 'src/app/sites/app-root/components/header/header.component';
 import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
 import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
+import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { SearchFieldComponent } from './sites/offers/components/search-field/sea
     InfoTeachingComponent,
     OfferListPaginatedComponent,
     FilterRowServerDirective,
-    SearchFieldComponent
+    SearchFieldComponent,
+    NotAllowedComponent
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap, concatMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { PossibleUserRoles, User } from 'src/app/core/models/user';
+import { User, UserStorageData } from 'src/app/core/models/user';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthResponseData, AuthTokenStructure } from 'src/app/core/auth/auth.interfaces';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { CookieDataService } from 'src/app/core/services/cookie/cookie-data.service';
 import { StaticService } from 'src/app/config/static.service';
+import { ObjectPermission, Objects, Permissions, UserRoles } from 'src/app/core/models/permissions';
 import jwt_decode from 'jwt-decode';
 
 /**
@@ -47,22 +48,35 @@ export class AuthService {
   login(email: string, password: string): Observable<User> {
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-        // console.table(serverResponse);
-        const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
+        console.table(serverResponse);
+
         const decoded = this.getDecodedToken(serverResponse.access_token);
-        // console.log('Decoded Token: ', decoded);
+        console.log('Access-Token: ', decoded);
+
+
+        const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
+        const tokenExpires = new Date(decoded.exp);
+        console.log("Expires In:", tokenExpires);
+        console.log("expirationDate:", expirationDate);
+
+
+
         const user_role =
-          decoded.user_role == undefined ? PossibleUserRoles.DEFAULT : decoded.user_role;
+          decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
+
         const user = new User(
           decoded.user_id,
           email,
           decoded.user_name,
           user_role,
           serverResponse.access_token,
-          expirationDate
+          expirationDate,
+          this.setUserPermissions(user_role)
         );
+
+        this.saveUserDataToLocalStorage(user);
         this.user$.next(user);
-        this.cookieDataService.setLocalStorageItem('userData', JSON.stringify(user));
+
         const expirationDuration =
           new Date(user.tokenExpirationDate).getTime() - new Date().getTime();
         this.autoLogout(expirationDuration);
@@ -88,37 +102,9 @@ export class AuthService {
   }
 
   autoLogin() {
-    // Userdaten sind jetzt mit ID und Namen im localStorage
-    const userData: {
-      id: number;
-      email: string;
-      name: string;
-      role: PossibleUserRoles;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(this.cookieDataService.getLocalStorageItem('userData'));
-
-    if (!userData || !userData._token) {
-      this.user$.next(null);
-      return;
-    }
- 
-    // Übergangsweise checken ob die Rolle im localStorage ist, Standard ist default
-    const user_role = userData.role == undefined ? PossibleUserRoles.DEFAULT : userData.role ;
-
-    //console.log('UserData: ', userData);
-    //console.log('LocalStorage' + JSON.stringify(localStorage.getItem('userData')));
-
-    const user = new User(
-      userData.id,
-      userData.email,
-      userData.name,
-      user_role,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
-    );
-
-    console.log('User (localStorage): ', user);
+    // Userdaten im localStorage
+    const user = this.loadUserDataFromLocalStorage();
+    if (user) console.log('User (localStorage): ', user);
     this.user$.next(user);
   }
 
@@ -128,5 +114,56 @@ export class AuthService {
     } catch (Error) {
       return null;
     }
+  }
+
+  private setUserPermissions(user_role: string | string[]): ObjectPermission[] {
+    const userPermissions: ObjectPermission[] = [];
+
+    switch(user_role){
+      case UserRoles.ADMIN:
+        userPermissions.push({
+          object: Objects.OFFERS,
+          permission: Permissions.ADMINACCESS
+        })
+    }
+    return userPermissions;
+  }
+
+  saveUserDataToLocalStorage(user: User) {
+    const saveData: UserStorageData = {
+      token: user.token,
+      tokenExpirationDate: user.tokenExpirationDate,
+    };
+    this.cookieDataService.setLocalStorageItem('userData', JSON.stringify(saveData));
+  }
+
+  loadUserDataFromLocalStorage(): User {
+    const userData: UserStorageData = JSON.parse(
+      this.cookieDataService.getLocalStorageItem('userData')
+    );
+    // Kein User
+    if (!userData || !userData.token) {
+      return null;
+    }
+
+    const decoded = this.getDecodedToken(userData.token);
+    const user_role =
+    decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
+
+
+    // Featurepermission setzen
+    const user_featurepermission = this.setUserPermissions(user_role);
+
+    const user = new User(
+      decoded.user_id,
+      undefined,
+      decoded.user_name,
+      user_role,
+      userData.token,
+      new Date(userData.tokenExpirationDate),
+      user_featurepermission
+    );
+
+    return user;
   }
 }

@@ -1,16 +1,16 @@
-export enum PossibleUserRoles {
-  ADMIN = 'admin',
-  DEFAULT = 'default' 
-}
+import { ObjectPermission, UserRoles } from './permissions';
+
+export type UserStorageData = Pick<User, "token" | "tokenExpirationDate">
 
 export class User {
   constructor(
     public id: number,
     public email: string,
     public name: string,
-    public role: PossibleUserRoles,
+    public role: UserRoles,
     private _token: string,
-    private _tokenExpirationDate: Date
+    private _tokenExpirationDate: Date,
+    private _featurePermissions: ObjectPermission[]
   ) {}
 
   get token() {
@@ -22,5 +22,13 @@ export class User {
 
   get tokenExpirationDate() {
     return this._tokenExpirationDate;
+  }
+
+  public get featurePermissions(): ObjectPermission[] {
+    return this._featurePermissions;
+  }
+
+  public set featurePermissions(value: ObjectPermission[]) {
+    this._featurePermissions = value;
   }
 }

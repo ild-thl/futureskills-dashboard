@@ -38,6 +38,7 @@ export const CustomConfig = {
     lnkImprint: '/impressum',
     lnkPrivacy: '/datenschutz',
     lnkLogin: '/login',
+    lnkNotAllowed: '/kein-zugriff',
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
