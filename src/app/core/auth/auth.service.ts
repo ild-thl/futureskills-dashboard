@@ -52,10 +52,10 @@ export class AuthService {
   login(email: string, password: string): Observable<User> {
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-       // console.table(serverResponse);
+        // console.table(serverResponse);
 
         const decoded = this.getDecodedToken(serverResponse.access_token);
-       // console.log('Access-Token: ', decoded);
+        // console.log('Access-Token: ', decoded);
 
         // TODO: Refresh Token senden bei Ablauf
         //const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
@@ -125,6 +125,13 @@ export class AuthService {
           object: Objects.OFFERS,
           permission: Permissions.ADMINACCESS,
         });
+        break;
+      case UserRoles.DEFAULT:
+        userPermissions.push({
+          object: Objects.OFFERS,
+          permission: Permissions.NONE,
+        });
+        break;
     }
     return userPermissions;
   }
