@@ -10,7 +10,7 @@ export class User {
     public role: UserRoles,
     private _token: string,
     private _tokenExpirationDate: Date,
-    private _featurePermissions: ObjectPermission[]
+    private _objectPermissions: ObjectPermission[]
   ) {}
 
   get token() {
@@ -24,11 +24,11 @@ export class User {
     return this._tokenExpirationDate;
   }
 
-  public get featurePermissions(): ObjectPermission[] {
-    return this._featurePermissions;
+  public get objectPermissions(): ObjectPermission[] {
+    return this._objectPermissions;
   }
 
-  public set featurePermissions(value: ObjectPermission[]) {
-    this._featurePermissions = value;
+  public set objectPermissions(value: ObjectPermission[]) {
+    this._objectPermissions = value;
   }
 }

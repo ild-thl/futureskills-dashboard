@@ -25,6 +25,10 @@ export class AuthService {
   public user$ = new BehaviorSubject<User>(null);
   // Userdata, streams with every change
   public userAuthenticated$: Observable<UserData>;
+  // exp-Date in form _x.xxxxxx
+  private EXPIRES_FACTOR = 1000;
+
+  // TODO: Delete
   private tokenExpirationTimer: any;
 
   lnkAfterLogout = this.staticConfig.getRoutingInfo().lnkAfterLogout;
@@ -48,21 +52,17 @@ export class AuthService {
   login(email: string, password: string): Observable<User> {
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-        console.table(serverResponse);
+       // console.table(serverResponse);
 
         const decoded = this.getDecodedToken(serverResponse.access_token);
-        console.log('Access-Token: ', decoded);
+       // console.log('Access-Token: ', decoded);
 
+        // TODO: Refresh Token senden bei Ablauf
+        //const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
+        const expirationDate = new Date(decoded.exp * this.EXPIRES_FACTOR);
+        //console.log('expirationDate:', expirationDate);
 
-        const expirationDate = new Date(new Date().getTime() + +serverResponse.expires_in * 1000);
-        const tokenExpires = new Date(decoded.exp);
-        console.log("Expires In:", tokenExpires);
-        console.log("expirationDate:", expirationDate);
-
-
-
-        const user_role =
-          decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
+        const user_role = decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
 
         const user = new User(
           decoded.user_id,
@@ -119,12 +119,12 @@ export class AuthService {
   private setUserPermissions(user_role: string | string[]): ObjectPermission[] {
     const userPermissions: ObjectPermission[] = [];
 
-    switch(user_role){
+    switch (user_role) {
       case UserRoles.ADMIN:
         userPermissions.push({
           object: Objects.OFFERS,
-          permission: Permissions.ADMINACCESS
-        })
+          permission: Permissions.ADMINACCESS,
+        });
     }
     return userPermissions;
   }
@@ -147,12 +147,11 @@ export class AuthService {
     }
 
     const decoded = this.getDecodedToken(userData.token);
-    const user_role =
-    decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
-
+    const user_role = decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
 
     // Featurepermission setzen
     const user_featurepermission = this.setUserPermissions(user_role);
+    const expirationDate = new Date(decoded.exp * this.EXPIRES_FACTOR);
 
     const user = new User(
       decoded.user_id,
@@ -160,7 +159,7 @@ export class AuthService {
       decoded.user_name,
       user_role,
       userData.token,
-      new Date(userData.tokenExpirationDate),
+      expirationDate,
       user_featurepermission
     );
 

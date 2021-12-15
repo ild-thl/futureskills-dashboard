@@ -9,7 +9,7 @@ export class PermissionService {
   constructor() {}
 
   checkPermission(user: User, object: Objects, permissionToCheck: Permissions): boolean {
-    const objectPermissions = user.featurePermissions.find((f) => {
+    const objectPermissions = user.objectPermissions.find((f) => {
       return f.object === object;
     });
 
