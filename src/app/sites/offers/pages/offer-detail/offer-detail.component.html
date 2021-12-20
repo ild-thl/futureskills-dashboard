@@ -90,8 +90,7 @@
                     {Blended Learning}}
                   </div>
                   <div class="buttons">
-                    <div class="edit-button" ngbDropdown *ngIf="isAuthenticated">
-                      <!-- todo: Nur Admins! -->
+                    <div class="edit-button" ngbDropdown *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
                       <button class="btn btn-light cog" id="dropdownBasic1" ngbDropdownToggle>
                         <fa-icon [icon]="['fas', 'cog']"></fa-icon>
                       </button>

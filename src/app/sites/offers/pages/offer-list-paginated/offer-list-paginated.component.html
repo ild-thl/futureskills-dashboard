@@ -134,7 +134,7 @@
     </ng-template>
 
     <!-- New -->
-    <div *ngIf="isAuthenticated">
+    <div *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
       <hr />
       <div class="row">
         <div class="col">

@@ -1,5 +1,13 @@
 # Changelog
 
+## [Not Released v0.9]
+
+
+## 2021-12-15/ml
+### added
+- User and Roles in auth.service
+- UserData is not saved in localStorage any more, only token
+
 ## [Released v0.8]
 
 ## 2021-12-01/avz

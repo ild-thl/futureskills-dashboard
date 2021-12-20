@@ -37,6 +37,7 @@ import {
   faUndo,
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
+import { CheckPermissionsDirective } from './directives/check-permissions.directive';
 
 
 
@@ -50,7 +51,8 @@ declarations: [
   InfoBannerComponent,
   ConsentVideoComponent,
   SmallOfferTileComponent,
-  NavBackDirective
+  NavBackDirective,
+  CheckPermissionsDirective
 ],
 imports: [
   CommonModule,
@@ -69,7 +71,8 @@ exports: [
   InfoBannerComponent,
   ConsentVideoComponent,
   SmallOfferTileComponent,
-  NavBackDirective
+  NavBackDirective,
+  CheckPermissionsDirective
 ]
 })
 

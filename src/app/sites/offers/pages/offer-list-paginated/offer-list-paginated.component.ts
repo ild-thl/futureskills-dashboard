@@ -14,6 +14,7 @@ import { OfferPropertyList } from 'src/app/core/models/offer-properties';
 import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 import { OfferListFilterStatus } from 'src/app/sites/offers/services/filter-status/filter-status.service';
+import { Objects, Permissions } from 'src/app/core/models/permissions';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -21,13 +22,15 @@ import { OfferListFilterStatus } from 'src/app/sites/offers/services/filter-stat
   styleUrls: ['./offer-list-paginated.component.scss'],
 })
 export class OfferListPaginatedComponent implements OnInit, OnDestroy {
-  private onIsAuthenticated: Subscription;
   private offerSubscription: Subscription;
   private metaSubscription: Subscription;
 
   lnkAdminOfferNew = this.staticService.getPathInfo().lnkAdminOfferNew;
   lnkLanding = this.staticService.getPathInfo().lnkLanding;
   lnkOffers = this.staticService.getPathInfo().lnkOffers;
+
+  object = Objects;
+  permission = Permissions;
 
   // Pagination
   pageCollectionSize: number; // Anzahl der Items
@@ -37,7 +40,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
 
   loadedOffers: OfferShortListForTiles[] = [];
 
-  isAuthenticated = false;
   componentsDisabled = true;
   noFilterSet = true;
 
@@ -73,10 +75,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.onIsAuthenticated = this.authService.userAuthenticated$.subscribe((userData: UserData) => {
-      this.isAuthenticated = userData.isAuth;
-    });
-
     const savedFilter = this.statusService.getofferListSearchFilterStatus();
     this.setFilterParams(savedFilter);
     this.loadFilterMetaData();
@@ -84,7 +82,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.onIsAuthenticated) this.onIsAuthenticated.unsubscribe();
     if (this.offerSubscription) this.offerSubscription.unsubscribe();
     if (this.metaSubscription) this.metaSubscription.unsubscribe();
   }
