@@ -18,11 +18,11 @@
   </p>
 
   <!--wait until loaded-->
-  <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
+  <div *ngIf="modelLoaded === false || scriptLoadingStatus.isLoaded === false">
     <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
   </div>
   <div
-    [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }"
+    [ngClass]="{ 'blur-on-load': modelLoaded === false || scriptLoadingStatus.isLoaded === false }"
   >
     <!-- Bubble < xs-->
     <div class="row d-block d-sm-none">

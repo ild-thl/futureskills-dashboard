@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div *ngIf="isError == true; then showError; else showList"></div>
+    <div *ngIf="isError === true; then showError; else showList"></div>
 
     <!-- Error Block -->
     <ng-template #showError>

@@ -40,7 +40,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   private NUM_WORDS = 10000;
   private UNKNOWN_CHAR = 2;
 
-  modelLoaded = false;
+  modelLoaded: boolean = false;
   alertList: AlertList = new AlertList();
   constructor(private kiService: KiStatusService, private staticService: StaticService) {}
 

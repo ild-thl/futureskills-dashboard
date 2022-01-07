@@ -24,11 +24,11 @@
   </p>
 
   <!--wait until loaded-->
-  <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
+  <div *ngIf="modelLoaded === false || scriptLoadingStatus.isLoaded === false">
     <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
   </div>
   <div
-    [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }"
+    [ngClass]="{ 'blur-on-load': modelLoaded === false || scriptLoadingStatus.isLoaded === false }"
   >
 
   <div class="row mb-5">
@@ -95,11 +95,11 @@
               <div
                 class="float-right emoji"
                 [ngClass]="{
-                  vnegative: emojiIndex == 0,
-                  negative: emojiIndex == 1,
-                  neutral: emojiIndex == 2,
-                  positive: emojiIndex == 3,
-                  vpositive: emojiIndex == 4
+                  vnegative: emojiIndex === 0,
+                  negative: emojiIndex === 1,
+                  neutral: emojiIndex === 2,
+                  positive: emojiIndex === 3,
+                  vpositive: emojiIndex === 4
                 }"
               >
                 {{ sentimentNumber }}

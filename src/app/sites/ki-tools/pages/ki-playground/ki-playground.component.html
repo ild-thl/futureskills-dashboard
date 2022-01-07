@@ -1,5 +1,5 @@
 <div id="ki-tools">
-  <div *ngIf="kitoolsAreOnline == true; then kiOnline; else kiOffline"></div>
+  <div *ngIf="kitoolsAreOnline === true; then kiOnline; else kiOffline"></div>
 
   <ng-template #kiOnline>
     <div *ngIf="!isLoadingScripts; else loading">

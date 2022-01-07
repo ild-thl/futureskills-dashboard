@@ -4,6 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
+      "parser": "@angular-eslint/template-parser",
       "parserOptions": {
         "project": ["tsconfig.eslint.json"],
         "createDefaultProgram": true
@@ -13,7 +14,6 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
-        "@angular-eslint/template/eqeqeq": "off",
         "@angular-eslint/no-input-rename": "off",
         "@angular-eslint/no-output-rename": "off",
         "@angular-eslint/component-class-suffix": "off"
@@ -39,7 +39,6 @@
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {        
-        "@angular-eslint/template/eqeqeq": "off",
         "@angular-eslint/no-input-rename": "off",
         "@angular-eslint/no-output-rename": "off",
         "@angular-eslint/component-class-suffix": "off"
