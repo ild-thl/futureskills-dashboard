@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-notfound',
   templateUrl: './notfound.component.html'
 })
-export class NotfoundComponent implements OnInit {
+export class NotfoundComponent {
 
   errorText:string;
   constructor() { 
     this.errorText = 'Die Seite wurde nicht gefunden.';
   }
-
-  ngOnInit(): void {
-  }
-
 }

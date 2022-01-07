@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { KIToolsTypes } from '../../../interfaces/types';
 
 @Component({
@@ -6,11 +6,10 @@ import { KIToolsTypes } from '../../../interfaces/types';
   templateUrl: './example-card.component.html',
   styleUrls: ['./example-card.component.scss']
 })
-export class ExampleCardComponent implements OnInit {
+export class ExampleCardComponent {
 
   @Input() public cardTextData: KIToolsTypes.LinkCardData;
   constructor() { }
-  ngOnInit(): void {}
 
   goToUrl(url: string){
     console.log(url);

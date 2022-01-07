@@ -1,17 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.eslint.json"
-        ],
+        "project": ["tsconfig.eslint.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -19,6 +13,11 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "@angular-eslint/use-lifecycle-interface":"off",
+        "@angular-eslint/template/eqeqeq": "off",
+        "@angular-eslint/no-input-rename": "off",
+        "@angular-eslint/no-output-rename": "off",
+        "@angular-eslint/component-class-suffix": "off"
         // "@angular-eslint/directive-selector": [
         //   "error",
         //   {
@@ -26,7 +25,7 @@
         //     "prefix": "app",
         //     "style": "camelCase"
         //   }
-        // ],
+        // ]
         // "@angular-eslint/component-selector": [
         //   "error",
         //   {
@@ -38,13 +37,15 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {}
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {        
+        "@angular-eslint/use-lifecycle-interface":"off",
+        "@angular-eslint/template/eqeqeq": "off",
+        "@angular-eslint/no-input-rename": "off",
+        "@angular-eslint/no-output-rename": "off",
+        "@angular-eslint/component-class-suffix": "off"
+      }
     }
   ]
 }

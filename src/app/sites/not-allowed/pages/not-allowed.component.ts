@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 
 @Component({
@@ -6,13 +6,10 @@ import { StaticService } from 'src/app/config/static.service';
   templateUrl: './not-allowed.component.html',
   styleUrls: ['./not-allowed.component.scss']
 })
-export class NotAllowedComponent implements OnInit {
+export class NotAllowedComponent {
 
   constructor(private staticService: StaticService) { }
   lnkLanding = this.staticService.getPathInfo().lnkLanding;
   lnkLogin=this.staticService.getPathInfo().lnkLogin;
-
-  ngOnInit(): void {
-  }
 
 }
