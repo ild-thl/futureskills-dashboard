@@ -31,9 +31,14 @@ Bitte updaten:
 - /deep/ ist deprecated , ::ng-deep scheint aber ok zu sein (todo für die nächsten Versionen)
 
 ### Typescript
-Schon in Typescript 4.3 gab es viele Änderungen. Es wird Zeit auch einige zu nutzen
-- STRICT Mode in tsconfig.json: Der soll nach und nach angeschaltet werden, d.h alle Variablen müssen initialisiert werden und dürfen kein any type als default haben
-- Override (Funktionen, die überschrieben werden müssen explizit mit override gekennzeichnet werden. Ist im Momment nur im KI-Playground und in der Konfiguration für hammer.js relevant)
+Schon in Typescript 4.3 gab es viele Änderungen. Es wird Zeit auch einige Features auch zu nutzen. 
+Angular 13 passt die tsconfig automatisch entsprechend an, einige Punkte sind aber noch auskommentiert. Das muss in den nächsten Wochen angepasst werden. 
+
+- STRICT Mode in tsconfig.json: Der soll zukünftig angeschaltet werden, d.h alle Variablen müssen initialisiert werden und dürfen kein any type als default haben. Die Anpassung ist etwas aufwändiger.
+- strictTemplates für HTML: Soll auch angeschaltet werden, hier werden alle HTML-Templates geprüft, ob die angesprochenen Objekte die Properties besitzen, die angesprochen werden (sehr praktisch!).
+- Override (Funktionen, die überschrieben werden müssen explizit mit override gekennzeichnet werden. Ist im Moment nur im KI-Playground und in der Konfiguration für hammer.js relevant)
+- Zugriff auf Properties: Der Zugriff darf nicht mehr in der Form `this.route.snapshot.params.id` (ein Beispiel) erfolgen, sondern müssen so angesprochen werden: `['id']`. Das ist zieht sich ebenfalls durch den kompletten Quellcode und muss nach und nach angepasst werden.
+
 
 
 ### Tests und Linting
@@ -56,4 +61,4 @@ Schon in Typescript 4.3 gab es viele Änderungen. Es wird Zeit auch einige zu nu
 Ein paar Sachen sind schon aufgefallen:    
 
 - Da scheinen irgendwo noch Angaben für die Übersetzung (i18) im Quellcode zu sein.
-- RXJS7 -> Ddeprecated functions (->todo)
+- RXJS7 -> Deprecated functions (->todo)
