@@ -23,6 +23,7 @@
 - RXJS ist jetzt auf Version 7.4. Damit scheinen einige Funktionen DEPRECATED zu sein. Das muss noch angepasst werden.
 - Unter .vscode konnten schon immer Einstellungen für das Projekt gespeichert werden, die waren aber nicht in Github eingecheckt. Neu sind die Vorschläge für die erforderlichen Plugins im Ordner. Diese sind jetzt auch eingecheckt.
 - STRICT Mode in tsconfig.json: Der soll nach und nach angeschaltet werden (->todo, Anpassungen im Code)
+- /deep/ ist deprecated , ::ng-deep scheint aber ok zu sein (todo für die nächsten Versionen)
 
 ### Tests und Linting
 - Da Protractor ab 2023 nicht mehr unterstützt wird, gibt es keine Konfiguration mehr für die e2e Testumgebung. 
@@ -35,6 +36,6 @@
 ## KNOWN ISSUES 
 Ein paar Sachen sind schon aufgefallen:    
 
-- Erste Seite: Buttons 
-- Zurück Button in Detailfenster ohne Mousezeiger
-- /deep/ ist deprecated , ::ng-deep scheint ok zu sein?
+- Da scheinen irgendwo noch Angaben für die Übersetzung (i18) im Quellcode zu sein.
+- RXJS7 -> deprecated Warnings
+- 

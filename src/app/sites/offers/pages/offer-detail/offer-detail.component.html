@@ -12,12 +12,14 @@
       <div class="row">
         <div class="col-12">
           <div class="float-left">
-            <a fs-nav-back [routerLink]=""
-              ><fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> Zurück
-            </a>
+            <button fs-nav-back type="button" class="btn btn-link">
+              <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> Zurück
+            </button>
           </div>
-          <div class="float-right" style="text-decoration: underline">
-            <a [routerLink]="lnkOffers"> Kursübersicht </a>
+          <div class="float-right">
+            <button [routerLink]="lnkOffers" type="button" class="btn btn-link">
+              <span style="text-decoration: underline">Kursübersicht</span>
+            </button>
           </div>
         </div>
       </div>
