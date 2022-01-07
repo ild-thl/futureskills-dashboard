@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 
-import { PageLoader } from '../../components/shared/templates/page_loader';
+import { PageLoaderComponent } from '../../components/shared/templates/page_loader';
 
 @Component({
   selector: 'app-mnist',
@@ -21,7 +21,7 @@ import { PageLoader } from '../../components/shared/templates/page_loader';
     </div>
   </section>`,
 })
-export class MnistStandaloneComponent extends PageLoader implements OnInit {
+export class MnistStandaloneComponent extends PageLoaderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
   }

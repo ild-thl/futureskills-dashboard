@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
-import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/page_loader';
+import { PageLoaderComponent } from 'src/app/sites/ki-tools/components/shared/templates/page_loader';
 
 @Component({
   selector: 'app-sentiment',
@@ -26,7 +26,7 @@ import { PageLoader } from 'src/app/sites/ki-tools/components/shared/templates/p
     </section>
   `,
 })
-export class SentimentStandAloneComponent extends PageLoader implements OnInit {
+export class SentimentStandAloneComponent extends PageLoaderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
   }

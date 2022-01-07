@@ -15,7 +15,7 @@ import { KIToolsTypes } from '../../../interfaces/types';
     selector: 'app-page-loader',
     template: ``
 })
-export class PageLoader implements OnInit {
+export class PageLoaderComponent implements OnInit {
 
     loadingStatus: KIToolsTypes.ScriptLoadingStatus;
     kitoolsAreOnline: boolean;

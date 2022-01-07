@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
-import { PageLoader } from '../../components/shared/templates/page_loader';
+import { PageLoaderComponent } from '../../components/shared/templates/page_loader';
 
 @Component({
   selector: 'app-demonstrators',
@@ -24,7 +24,7 @@ import { PageLoader } from '../../components/shared/templates/page_loader';
     </div>
   </section>`,
 })
-export class DemonstratorsStandaloneComponent extends PageLoader implements OnInit {
+export class DemonstratorsStandaloneComponent extends PageLoaderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
   }

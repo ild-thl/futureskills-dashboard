@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalLmsContent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
-import { NgbdModalOfferDelete } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
+import { NgbdModalLmsContentComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
+import { NgbdModalOfferDeleteComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
@@ -111,7 +111,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   }
 
   showModalWindowToLMS() {
-    const modalRef = this.modalService.open(NgbdModalLmsContent, {
+    const modalRef = this.modalService.open(NgbdModalLmsContentComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = this.offer.title;
@@ -128,7 +128,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   }
 
   showModalWindowDeleteOffer() {
-    const modalRef = this.modalService.open(NgbdModalOfferDelete, {
+    const modalRef = this.modalService.open(NgbdModalOfferDeleteComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = this.offer.title;
