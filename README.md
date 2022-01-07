@@ -7,6 +7,15 @@
 
 - Danach dann Installation der Pakete per npm:  `npm install`
 
+### Extensions für Visual Studio Code
+#### Bitte installieren:    
+- Prettier - Code Formatter (esbenp.prettier-vscode) 
+- Kontextsensitive Hilfe mit Angular Language Service (angular.ng-template)
+- ESLint: (dbaeumer.vscode-eslint)
+
+#### optional:    
+- Angular Snippets (johnpapa.angular2)   
+
 ## Umgebung
 Es gibt drei Umgebungen -> (development/staging/production)
 
@@ -30,21 +39,6 @@ Alle drei Umgebungen lassen sich mit `ng build` als Webseiten-Projekt exportiere
 
 ### Linting
 - Eslint ist jetzt konfiguriert: `npm run lint`
-
-### Extensions für Visual Studio Code
-#### Bitte installieren:    
-- Einheitliche Formatierung des Quellcodes mit prettier.  
-  - Prettier - Code Formatter (esbenp.prettier-vscode)
-- Kontextsensitive Hilfe mit Angular Language Service
-  - Angular Language Service (angular.ng-template)
-
-
-#### Kann man installieren:    
-- Angular Snippets (johnpapa.angular2)   
-
-
-
---- under construction
 
 ### Tests
 - Unit-Tests per Karma: ```npm run test```

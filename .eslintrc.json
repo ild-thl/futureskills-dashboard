@@ -14,23 +14,23 @@
       ],
       "rules": {
         "@angular-eslint/no-input-rename": "off",
-        "@angular-eslint/no-output-rename": "off"
-        // "@angular-eslint/directive-selector": [
-        //   "error",
-        //   {
-        //     "type": "attribute",
-        //     "prefix": "app",
-        //     "style": "camelCase"
-        //   }
-        // ]
-        // "@angular-eslint/component-selector": [
-        //   "error",
-        //   {
-        //     "type": "element",
-        //     "prefix": "app",
-        //     "style": "kebab-case"
-        //   }
-        // ]
+        "@angular-eslint/no-output-rename": "off",
+        "@angular-eslint/directive-selector": [
+          "off",
+          {
+            "type": "attribute",
+            "prefix": "fs",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "off",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ]
       }
     },
     {
