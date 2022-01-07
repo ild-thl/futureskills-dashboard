@@ -1,5 +1,5 @@
 import { forkJoin, Observable } from 'rxjs';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { KIToolsTypes } from '../../interfaces/types';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
@@ -12,7 +12,7 @@ import * as tf from '@tensorflow/tfjs';
   templateUrl: './sentiment-example.component.html',
   styleUrls: ['./sentiment-example.component.scss'],
 })
-export class SentimentExampleComponent implements OnInit {
+export class SentimentExampleComponent implements OnInit, OnChanges {
   @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
   @Input() public modus = 'window';
   @Output() modalClose = new EventEmitter<any>();

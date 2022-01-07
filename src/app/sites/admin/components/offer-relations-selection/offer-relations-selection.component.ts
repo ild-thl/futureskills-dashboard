@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable, OperatorFunction, Subscription } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ interface Alert {
   templateUrl: './offer-relations-selection.component.html',
   styleUrls: ['./offer-relations-selection.component.scss'],
 })
-export class OfferRelationsSelectionComponent implements OnInit {
+export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
   @Input() offer: Offer;
   @Output() relatedOffersOutput = new EventEmitter<number[]>();
 
