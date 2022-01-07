@@ -25,12 +25,12 @@ import { PageLoaderComponent } from '../../components/shared/templates/page_load
   </section>`,
 })
 export class DemonstratorsStandaloneComponent extends PageLoaderComponent implements OnInit {
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
   }
 
   constructor(
-    public staticService: StaticService,
+    public override staticService: StaticService,
   ) {
     super(staticService);
   }

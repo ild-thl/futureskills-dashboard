@@ -27,12 +27,12 @@ import { PageLoaderComponent } from 'src/app/sites/ki-tools/components/shared/te
   `,
 })
 export class SentimentStandAloneComponent extends PageLoaderComponent implements OnInit {
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
   }
 
   constructor(
-    public staticService: StaticService,
+    public override staticService: StaticService,
   ) {
     super(staticService);
   }

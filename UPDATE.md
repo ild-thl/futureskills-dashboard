@@ -27,8 +27,14 @@ Bitte updaten:
 - Das Package-Format ist jetzt APF (Angular Package Format), also modernere Module (ES Modules und ES2020), die kompilierten Dateien sind kleiner (knapp 1MB)
 - Angular erstellt jetzt einen Cache (.angular/cache). Soll bis zu 68% schneller kompilieren. Ab und zu wenn etwas merkwürdig erscheint, kann man den Ordner einfach mal löschen.
 - Unter .vscode konnten schon immer Einstellungen für das Projekt gespeichert werden, die waren aber nicht in Github eingecheckt. Neu sind die Vorschläge für die erforderlichen Plugins im Ordner. Diese sind jetzt auch eingecheckt.
-- STRICT Mode in tsconfig.json: Der soll nach und nach angeschaltet werden (->todo, Anpassungen im Code)
+
 - /deep/ ist deprecated , ::ng-deep scheint aber ok zu sein (todo für die nächsten Versionen)
+
+### Typescript
+Schon in Typescript 4.3 gab es viele Änderungen. Es wird Zeit auch einige zu nutzen
+- STRICT Mode in tsconfig.json: Der soll nach und nach angeschaltet werden, d.h alle Variablen müssen initialisiert werden und dürfen kein any type als default haben
+- Override (Funktionen, die überschrieben werden müssen explizit mit override gekennzeichnet werden. Ist im Momment nur im KI-Playground und in der Konfiguration für hammer.js relevant)
+
 
 ### Tests und Linting
 - Da Protractor ab 2023 nicht mehr unterstützt wird, gibt es keine Konfiguration mehr für die e2e Testumgebung. 
