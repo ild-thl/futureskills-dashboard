@@ -28,7 +28,7 @@ Alle drei Umgebungen lassen sich mit `ng build` als Webseiten-Projekt exportiere
 
 ### SERVE -  (http://localhost:4200)
 - Development: `ng serve`  oder `npm run start`
-- Theoretisch funktionieren auch die beiden anderen, habe ich aber noch nicht getestet:
+- Theoretisch funktionieren auch die Staging/Prod Umgebungen (die Envs verweisen aber auf externe Server)
   - Staging: `ng serve --configuration=staging` 
   - Production: `ng serve --configuration=production` 
 

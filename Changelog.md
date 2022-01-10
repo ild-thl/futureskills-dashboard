@@ -2,6 +2,11 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-10/ml
+### changed
+- Update to Angular13
+- Update Packages
+- Update Angular.json, tsconfig
 
 ## 2021-12-15/ml
 ### added
