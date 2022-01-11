@@ -6,23 +6,23 @@ Der node_modules-Ordner enthält zu viele Änderungen und die .gitignore ist ebe
 ## Globale Voraussetzungen
 Bitte updaten:
 
-- node.js in Version 16/LTS (nicht die neue 17!) 
-	-> https://nodejs.org/en/download/ 
+- node.js in Version 16/LTS (nicht die neue 17!) https://nodejs.org/en/download/ 
+
 - npm mind. in Version 8.1
-	-> 	Kommandozeile als Admin ausführen, Installationspfad ggf. anpassen
-		cd /c/Programme/nodejs
-		npm install npm@latest
-		npm -v
+  - *Kommandozeile als Admin ausführen, Installationspfad ggf. anpassen*
+  - cd /c/Programme/nodejs
+  - npm install npm@latest
+  - npm -v
+
 - Angular-CLI (falls ihr die auch global installiert habt): @angular/cli@13.1.1 https://www.npmjs.com/package/@angular/cli#usage
-	->	npm uninstall -g @angular/cli
-		npm cache verify
-		# Fehlermeldung bei cache verify? Kommandozeile als Admin ausführen und dort Installation fortsetzen. 
-		npm install -g @angular/cli@latest
-		# Angular wird als Admin ggf. in den falschen Ordner installiert. Daher nach Installation schauen, ob C:\Users\USERNAME\AppData\Roaming\npm\node_modules\@angular vorhanden ist.
-		# Wenn nicht, Anmeldenamen als USERNAME einsetzen: (nur als Admin User): npm config set prefix 'C:\Users\USERNAME\AppData\Roaming\npm'
-		# Erneut den npm install Befehl eingeben
-		
-		# Testen: Funktionieren die Befehle ng und npm? Wenn nicht, https://stackoverflow.com/a/46066042
+  - npm uninstall -g @angular/cli
+  - npm cache verify
+  - *Fehlermeldung bei cache verify? Kommandozeile als Admin ausführen und dort Installation fortsetzen.*
+  - npm install -g @angular/cli@latest
+  - *Angular wird als Admin ggf. in den falschen Ordner installiert. Daher nach Installation schauen, ob C:\Users\USERNAME\AppData\Roaming\npm\node_modules\@angular vorhanden ist.*
+  - *Wenn nicht, Anmeldenamen als USERNAME einsetzen: (nur als Admin User): npm config set prefix 'C:\Users\USERNAME\AppData\Roaming\npm'*
+  - *Erneut den npm install Befehl eingeben*
+  - *Testen: Funktionieren die Befehle ng und npm? Wenn nicht, https://stackoverflow.com/a/46066042*
 
 ## Änderungen in Angular
 
