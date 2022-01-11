@@ -11,6 +11,7 @@ import {
   Renderer2,
   Output,
   EventEmitter,
+  OnChanges,
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StaticService } from 'src/app/config/static.service';
@@ -27,7 +28,7 @@ import * as tf from '@tensorflow/tfjs';
   templateUrl: './mnist-example.component.html',
   styleUrls: ['./mnist-example.component.scss'],
 })
-export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() public width = 200;
   @Input() public height = 200;
   @Input() public modus = 'window';

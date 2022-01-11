@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './fs-round-button.component.html',
   styleUrls: ['./fs-round-button.component.scss'],
 })
-export class RoundButton {
+export class RoundButtonComponent {
   constructor() {}
 }

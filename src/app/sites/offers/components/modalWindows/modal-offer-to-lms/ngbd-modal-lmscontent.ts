@@ -6,7 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './ngbd-modal-lmscontent.html',
   styleUrls: ['./ngbd-modal-lmscontent.scss'],
 })
-export class NgbdModalLmsContent {
+export class NgbdModalLmsContentComponent {
   @Input() title;
 
   constructor(public activeModal: NgbActiveModal) {}
