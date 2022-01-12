@@ -9,15 +9,16 @@ Bitte updaten:
 - node.js in Version 16/LTS (nicht die neue 17!) https://nodejs.org/en/download/ 
 
 - npm mind. in Version 8.1
-  - *Kommandozeile als Admin ausführen, Installationspfad ggf. anpassen*
-  - cd /c/Programme/nodejs
-  - npm install npm@latest
-  - npm -v
+  - Unter Windows:
+    - *Kommandozeile als Admin ausführen, Installationspfad ggf. anpassen*
+    - cd /c/Programme/nodejs
+    - npm install npm@latest
+    - npm -v
 
 - Angular-CLI (falls ihr die auch global installiert habt): @angular/cli@13.1.1 https://www.npmjs.com/package/@angular/cli#usage
   - npm uninstall -g @angular/cli
-  - npm cache verify
-  - npm install -g @angular/cli@latest
+  - npm cache verify (optional, nicht immer notwendig)
+  - npm install -g @angular/cli@13.1.1
 
 - node_modules Ordner löschen, wenn von einer vorhandenen Installation upgedatet wird.
 
