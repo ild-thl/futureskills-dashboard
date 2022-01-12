@@ -1,7 +1,6 @@
 # Update auf Angular 13
 
-Am besten, man checkt die neue Version in einen neuen Ordner aus. So kann man an beiden Versionen parallel arbeiten.
-Der node_modules-Ordner enthält zu viele Änderungen und die .gitignore ist ebenfalls anders konfiguriert (Änderungen in der Ordnerstruktur)
+Aktuelle Version -> auch in der Doku (https://github.com/ild-thl/futureskills-doku/tree/main/Protokolle)
 
 ## Globale Voraussetzungen
 Bitte updaten:
