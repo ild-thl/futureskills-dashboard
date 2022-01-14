@@ -5,7 +5,7 @@ export type UserStorageData = Pick<User, "token" | "tokenExpirationDate">
 export class User {
   constructor(
     public id: number,
-    public email: string,
+    public email: string | undefined,
     public name: string,
     public role: UserRoles,
     private _token: string,
