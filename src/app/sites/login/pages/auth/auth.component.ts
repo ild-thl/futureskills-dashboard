@@ -13,26 +13,35 @@ import { User } from 'src/app/core/models/user';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit, OnDestroy {
-
   lnkAfterLogin = this.staticConfig.getRoutingInfo().lnkAfterLogin;
-
   loginSubscription: Subscription;
   authSubsription: Subscription;
+
+  isLoggedIn: boolean;
   isLoading = false;
-  error: string = null;
+  errorMessage: string = null;
+  isError: boolean = false;
+
   @ViewChild('authForm') authForm: NgForm;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private staticConfig: StaticService
-  ) {}
+  ) {
+    this.isLoggedIn = false;
+  }
   ngOnInit() {
     this.authSubsription = this.authService.userAuthenticated$.subscribe((userData) => {
-      if (userData.isAuth) {
-        console.log('AuthComponent: User is logged in.', userData.user);
-      }
+      this.isLoggedIn = userData.isAuth;
     });
+
+    if (!this.isLoggedIn) {
+      setTimeout(() => {
+        this.authForm.controls['email'].setValue('admin@futureskills-sh.de');
+        this.authForm.controls['password'].setValue('secret');
+      }, 300);
+    }
   }
 
   onSubmit(form: NgForm) {
@@ -43,26 +52,31 @@ export class AuthComponent implements OnInit, OnDestroy {
     const email = form.value.email;
     const password = form.value.password;
     this.isLoading = true;
-    this.error = '';
+    this.errorMessage = '';
+    this.isError = false;
 
-    this.loginSubscription = this.authService.login(email, password).subscribe(
-      (resData: User) => {
-        //console.log('AuthComponent:', resData);
+    this.loginSubscription = this.authService.login(email, password).subscribe({
+      next: (resData: User) => {
+        // console.log('resultFrom Server:', resData);
         this.isLoading = false;
         this.router.navigate([this.lnkAfterLogin]);
       },
-      (errorMessage) => {
+      error: (errorMessage) => {
         console.log('AuthComponent Error:', errorMessage);
-        this.error = errorMessage;
+        this.errorMessage = 'Fehler beim Login';
+        this.isError = true;
         this.isLoading = false;
       }
-    );
-
+    });
     form.reset();
   }
 
   ngOnDestroy(): void {
     if (this.loginSubscription) this.loginSubscription.unsubscribe();
     if (this.authSubsription) this.authSubsription.unsubscribe();
+  }
+
+  onLogout() {
+    this.authService.logoutUser().subscribe();
   }
 }
