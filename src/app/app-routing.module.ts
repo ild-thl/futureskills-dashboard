@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'ki-playground',
     loadChildren: () => import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
   },
+  {
+    path: 'auth',
+    loadChildren: () => import('./sites/authenticate/auth.module').then((s) => s.AuthModule),
+  },
   { path: 'kein-zugriff', component: NotAllowedComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '**', redirectTo: '/notfound' }, // this must be the last route!
