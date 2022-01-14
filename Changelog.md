@@ -2,6 +2,11 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-14/ml
+### added
+- new module auth
+- env Path for idp
+- redirect path
 
 ## 2022-01-14/ml
 ### changed
