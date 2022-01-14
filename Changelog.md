@@ -3,6 +3,13 @@
 ## [Not Released v0.9]
 
 ## 2022-01-14/ml
+### changed
+- login => if logged in , button to log out
+- header, 
+  - new subscription syntax
+  - no i18 items
+
+## 2022-01-14/ml
 ### added
 - new module auth
 - env Path for idp
