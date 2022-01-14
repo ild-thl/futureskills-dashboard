@@ -35,13 +35,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authSubsription = this.authService.userAuthenticated$.subscribe((userData) => {
       this.isLoggedIn = userData.isAuth;
     });
-
-    if (!this.isLoggedIn) {
-      setTimeout(() => {
-        this.authForm.controls['email'].setValue('admin@futureskills-sh.de');
-        this.authForm.controls['password'].setValue('secret');
-      }, 300);
-    }
   }
 
   onSubmit(form: NgForm) {
