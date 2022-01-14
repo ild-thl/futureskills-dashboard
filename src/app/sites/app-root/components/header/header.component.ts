@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, LOCALE_ID, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { Router } from '@angular/router';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { User } from 'src/app/core/models/user';
@@ -15,6 +16,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
   lnkLanding = this.staticConfig.getPathInfo().lnkLanding;
+  lnkAfterLogout = this.staticConfig.getRoutingInfo().lnkAfterLogout;
+  
   private userSubscription: Subscription;
   isAuthenticated = false;
   public user: User;
@@ -27,6 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private staticConfig: StaticService,
+    private router: Router,
     @Inject(LOCALE_ID) public localeId: string
   ) {}
 
@@ -44,6 +48,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.authService.logoutUser().subscribe({
+      next: (x) => {
+        this.router.navigate([this.lnkAfterLogout]);
+      }
+    });
   }
 }

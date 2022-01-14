@@ -2,6 +2,17 @@
 
 ## [Not Released v0.9]
 
+
+## 2022-01-14/ml
+### changed
+- AuthService 
+  - Token expired when login -> automatically logout
+  - CleanUp (no timer anymore)
+- Users Emailadress is no longer saved
+### added
+- token service
+
+
 ## 2022-01-10/ml
 ### changed
 - Update to Angular13
