@@ -43,6 +43,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   private MODEL_SIZE = 28;
   modelLoaded = false;
+  modelLoadError: boolean = false;
   private viewIsInitialized = false;
 
   private model: any;
@@ -143,14 +144,18 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   private loadingModel() {
-    this.kiService.loadMNISTModel().subscribe((model) => {
-      this.model = model;
-      this.modelLoaded = true;
-      //console.log(this.model.summary());
-    },
-    error=>{
-      console.log("Modell kann nicht geladen werden.");
-      this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
+    this.kiService.loadMNISTModel().subscribe({
+      next: (model) => {
+        this.model = model;
+        this.modelLoaded = true;
+        this.modelLoadError = false;
+        //console.log(this.model.summary());
+      },
+      error: error => {
+        this.modelLoadError = true;
+        console.log("Modell kann nicht geladen werden.");
+        this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
+      }
     });
   }
 

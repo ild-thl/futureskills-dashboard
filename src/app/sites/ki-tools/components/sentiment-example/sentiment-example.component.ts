@@ -32,7 +32,9 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
     'positiv',
     'nicht bewertbar',
   ];
-  lnkCoursePath1 = this.staticService.getPathInfo().lnkOffers + this.staticService.getCourseNumbers().futureskillsKI;
+  lnkCoursePath1 =
+    this.staticService.getPathInfo().lnkOffers +
+    this.staticService.getCourseNumbers().futureskillsKI;
 
   // Modellvariablen
   private model: any;
@@ -41,6 +43,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   private UNKNOWN_CHAR = 2;
 
   modelLoaded: boolean = false;
+  modelLoadError: boolean = false;
   alertList: AlertList = new AlertList();
   constructor(private kiService: KiStatusService, private staticService: StaticService) {}
 
@@ -65,7 +68,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
     }
   }
 
-  onCloseModalWindow(){
+  onCloseModalWindow() {
     this.modalClose.emit();
   }
 
@@ -89,18 +92,17 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
     if (this.modelLoaded) {
       this.isCalculating = true;
 
-      this.calculatePrediction().subscribe(
-        (value) => {
+      this.calculatePrediction().subscribe({
+        next: (value) => {
+          this.isCalculating = false;
           console.log('value: ' + value);
           this.showResults(value);
         },
-        (error) => {
+        error: (error) => {
+          this.isCalculating = false;
           console.log('Error:' + error);
         },
-        () => {
-          this.isCalculating = false;
-        }
-      );
+      });
     }
   }
 
@@ -193,13 +195,21 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
     forkJoin({
       model: this.kiService.loadSentimentModel(),
       index: this.kiService.loadWordIndex(),
-    }).subscribe((values) => {
-      this.model = values.model;
-      this.WordToIndex = values.index;
-      this.modelLoaded = true;
-    }, error=>{
-      console.log("Modell kann nicht geladen werden.");
-      this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
+    }).subscribe({
+      next: (values) => {
+        this.model = values.model;
+        this.WordToIndex = values.index;
+        this.modelLoaded = true;
+        this.modelLoadError = false;
+      },
+      error: (error) => {
+        this.modelLoadError = true;
+        console.log('Modell kann nicht geladen werden.');
+        this.alertList.addAlert(
+          'danger',
+          'Die benötigten Daten können leider nicht geladen werden.'
+        );
+      },
     });
   }
 }
