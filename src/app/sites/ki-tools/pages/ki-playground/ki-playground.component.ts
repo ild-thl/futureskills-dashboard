@@ -29,6 +29,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
   lnkKITools_mnist = this.staticService.getPathInfo().lnkKITools_mnist;
   lnkKITools_sentiment = this.staticService.getPathInfo().lnkKITools_sentiment;
   linkKITools_demonstrators = this.staticService.getPathInfo().linkKITools_demonstrators;
+  linkListDate = this.staticService.getKIConfig().linkListDate;
   // Text while loading
   additionalText = '';
   // Alerts
@@ -70,9 +71,11 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
   onLoadMnistExample(modal: boolean = true) {
     this.mnistModelIsLoading = true;
+    this.alertList.closeaAllAlerts();
 
-    this.kiStatusService.loadMNISTModel().subscribe(
-      (model) => {
+    this.kiStatusService.loadMNISTModel().subscribe({
+      next: (model: any) => {
+        this.mnistModelIsLoading = false;
         if (modal) {
           const modalRef = this.modalService.open(NgbdMnistModalComponent, {
             scrollable: true,
@@ -84,31 +87,31 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
           modalRef.result.then(
             (result) => {},
             (reason) => {
-              console.log('Cancel ', reason);
+              //console.log('Cancel ', reason);
             }
           );
         } else {
           this.router.navigate([this.lnkKITools_mnist]);
         }
       },
-      (error) => {
+      error: (error) => {
+        this.mnistModelIsLoading = false;
         console.log('Error: ', error);
         this.alertList.addAlert(
           'danger',
-          'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).'
+          'Fehler: Das MNIST-Beispiel konnten nicht geladen werden.'
         );
       },
-      () => {
-        this.mnistModelIsLoading = false;
-      }
-    );
+    });
   }
 
   onLoadSentimentExample(modal: boolean = true) {
     this.sentimentModelIsLoading = true;
+    this.alertList.closeaAllAlerts();
 
-    this.kiStatusService.loadSentimentModel().subscribe(
-      (model) => {
+    this.kiStatusService.loadSentimentModel().subscribe({
+      next: (model) => {
+        this.sentimentModelIsLoading = false;
         if (modal) {
           const modalRef = this.modalService.open(NgbdSentimentModalComponent, {
             scrollable: true,
@@ -127,20 +130,19 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
           this.router.navigate([this.lnkKITools_sentiment]);
         }
       },
-      (error) => {
+      error: (error) => {
+        this.sentimentModelIsLoading = false;
         console.log('Error: ', error);
         this.alertList.addAlert(
           'danger',
-          'Fehler: Die Daten konnten nicht geladen werden (Modelldateien).'
+          'Fehler: Die Sentimentanalyse konnte nicht geladen werden.'
         );
       },
-      () => {
-        this.sentimentModelIsLoading = false;
-      }
-    );
+    });
   }
 
   onLoadLinkExamples(modal: boolean = true) {
+    this.alertList.closeaAllAlerts();
     if (modal) {
       const modalRef = this.modalService.open(NgbdDemonstratorsModalComponent, {
         scrollable: true,
@@ -161,13 +163,14 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
   }
 
   private getKICourses() {
-    this.kiModuleSub = this.kiStatusService
-      .getKICourses()
-      .subscribe((offers: SmallOfferDetailData[]) => {
+    this.kiModuleSub = this.kiStatusService.getKICourses().subscribe({
+      next: (offers: SmallOfferDetailData[]) => {
         this.kiOffers = offers;
-      }, error =>{
-        console.log("Konnte keine Kurse laden", error);
-        this.kiOffers=[];
-      });
+      },
+      error: (error) => {
+        console.log('KIKurse konnten nicht geladen werden');
+        this.kiOffers = [];
+      },
+    });
   }
 }

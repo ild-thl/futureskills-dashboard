@@ -2,6 +2,13 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-17/ml
+### changed
+- rxjs completed path deleted in playground 
+- new errorhandling in pöayground
+- date for linklist in static var
+- course-list: cleanup packages, deleted complete path
+
 ## 2022-01-14/ml
 ### changed
 - login => if logged in , button to log out

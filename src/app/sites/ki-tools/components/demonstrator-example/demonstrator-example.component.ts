@@ -25,25 +25,26 @@ export class DemonstratorExampleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   if (this.linkListSub) this.linkListSub.unsubscribe();
+    if (this.linkListSub) this.linkListSub.unsubscribe();
   }
 
   initText() {
     this.isLoading = true;
-    this.linkListSub = this.kiStatusService.loadLinkList().subscribe((list) => {
-      console.log("Lists: ", list);
-      this.demoList = list.demoCards;
-      this.projectList = list.projectCards;
+    this.linkListSub = this.kiStatusService.loadLinkList().subscribe({
+      next: (list) => {
+        console.log('Lists: ', list);
+        this.demoList = list.demoCards;
+        this.projectList = list.projectCards;
 
-      KIToolsHelper.shuffleArray(this.demoList);
-      KIToolsHelper.shuffleArray(this.projectList);
-      this.errorOccurred = false;
-
-    }, error=>{
-      this.errorOccurred = true;
-      console.log("DemoError: ", error);
-    }, ()=>{
-      this.isLoading = false;
+        KIToolsHelper.shuffleArray(this.demoList);
+        KIToolsHelper.shuffleArray(this.projectList);
+        this.errorOccurred = false;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorOccurred = true;
+        console.log('DemoError: ', error);
+      },
     });
   }
 }

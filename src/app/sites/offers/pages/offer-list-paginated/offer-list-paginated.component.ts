@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
@@ -60,7 +59,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   constructor(
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
-    private authService: AuthService,
     private statusService: FilterStatusService,
     private staticService: StaticService
   ) {
@@ -161,33 +159,27 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
 
     this.offerSubscription = this.offerDataService
       .getPaginatedOfferList(this.page, this.pageSize, this.filterObj, this.searchString)
-      .subscribe(
-        (paginatedData: PaginatedOfferData) => {
+      .subscribe({
+        next: (paginatedData: PaginatedOfferData) => {
           this.loadedOffers = paginatedData.data;
           this.pageCollectionSize = paginatedData.total;
-
-          //this.page = paginatedData.current_page;
-          //this.pageSize = paginatedData.per_page;
-
           this.isError = false;
           this.componentsDisabled = false;
           this.message = '';
+          this.isLoading = false;
         },
-        (error) => {
+        error: (error) => {
           console.log('Error in OffersList:', error);
           this.loadedOffers = [];
           this.isError = true;
+          this.isLoading = false;
           this.componentsDisabled = true;
           this.message =
             'Ein Fehler ist aufgetreten. Es konnten leider keine Angebote geladen werden.';
           const resetFilter = this.statusService.resetFilterSearchStatus();
           this.setFilterParams(resetFilter);
         },
-        () => {
-          this.isLoading = false;
-          // console.log('Completed');
-        }
-      );
+      });
   }
 
   // //////////////////////////////////////////////////////
