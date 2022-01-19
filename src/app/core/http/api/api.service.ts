@@ -1,7 +1,7 @@
 import { StaticService } from 'src/app/config/static.service';
 
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -265,9 +265,12 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  public deleteInstitution(institution: Institution) {
+  public deleteInstitution(institution: Institution): Observable<any> {
     let id = institution.id;
-    if (id == undefined) return;
+    if (id == undefined) {
+      // TODO: Rückgabewert nochmal checken
+      return of(false);
+    } 
     return this.http
       .delete(environment.apiURL + '/api/institution' + id)
       .pipe(catchError(this.handleError));

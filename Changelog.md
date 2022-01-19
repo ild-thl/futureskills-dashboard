@@ -2,6 +2,11 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-19/ml
+### changed
+- clean console.logs
+- Implicit Returns ate not allowed anymore
+
 ## 2022-01-17/ml
 ### changed
 - rxjs completed path deleted in playground 
