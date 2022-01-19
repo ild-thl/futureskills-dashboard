@@ -1,5 +1,3 @@
-import { StaticService } from 'src/app/config/static.service';
-
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -15,10 +13,11 @@ import {
   OfferPropertyTagResponse,
   APIToOfferShortList,
   PaginatedOfferDataFromAPI,
-  OfferFilterToAPI,
   OfferSearchFilterToAPI,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
+import { LogService } from 'src/app/core/services/logger/log.service';
+import { ErrorCodes, ErrorHandlerService } from '../../services/error-handling';
 
 /**
  * api.service.ts
@@ -32,7 +31,11 @@ import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private logService: LogService,
+    private errorHandler: ErrorHandlerService
+  ) {}
 
   ////////////////////////////////////////////////
   // Authenticate
@@ -46,7 +49,11 @@ export class ApiService {
         client_id: environment.clientLoginData.clientId,
         client_secret: environment.clientLoginData.clientSecret,
       })
-      .pipe(catchError(this.handleLoginError));
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          return this.handleLoginError(errorResponse);
+        })
+      );
   }
 
   ////////////////////////////////////////////////
@@ -270,7 +277,7 @@ export class ApiService {
     if (id == undefined) {
       // TODO: Rückgabewert nochmal checken
       return of(false);
-    } 
+    }
     return this.http
       .delete(environment.apiURL + '/api/institution' + id)
       .pipe(catchError(this.handleError));
@@ -338,10 +345,25 @@ export class ApiService {
     return throwError(errorMessage);
   }
 
-  private handleLoginError(errorRes: HttpErrorResponse) {
-    // Todo: Fehlermeldungstexte für die GUI
-    let errorMessage = 'Fehler beim Login.';
-    console.log('LoginError : ', errorRes);
-    return throwError(errorMessage);
+  private handleLoginError(errorRes: HttpErrorResponse): Observable<never> {
+    let errorCode = ErrorCodes.UNKNOWN;
+
+    switch (errorRes.status) {
+      case 400:
+        errorCode = ErrorCodes.E400LOGIN;
+        break;
+      case 401:
+        errorCode = ErrorCodes.E401;
+        break;
+      case 403:
+        errorCode = ErrorCodes.E403;
+        break;
+      case 500:
+        errorCode = ErrorCodes.E500;
+        break;
+    }
+    let newError = new Error(errorCode);
+    this.logService.log('api.service - HttpErrorResponse:', errorRes);
+    return throwError(() => newError);
   }
 }

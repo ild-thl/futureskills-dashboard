@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { StaticService } from 'src/app/config/static.service';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling';
 import { User } from 'src/app/core/models/user';
 
 @Component({
@@ -27,7 +28,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private staticConfig: StaticService
+    private staticConfig: StaticService,
+    private errorHandler: ErrorHandlerService
   ) {
     this.isLoggedIn = false;
   }
@@ -38,7 +40,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    //console.log(form.value);
     if (!form.valid) {
       return;
     }
@@ -50,13 +51,14 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.loginSubscription = this.authService.login(email, password).subscribe({
       next: (resData: User) => {
+        // TODO: Könnte auch null drin sein!!
         // console.log('resultFrom Server:', resData);
         this.isLoading = false;
         this.router.navigate([this.lnkAfterLogin]);
       },
-      error: (errorMessage) => {
-        console.log('AuthComponent Error:', errorMessage);
-        this.errorMessage = 'Fehler beim Login';
+      error: (error: Error) => {
+        //console.log('AuthComponent:', error);
+        this.errorMessage = this.errorHandler.getErrorMessage(error);
         this.isError = true;
         this.isLoading = false;
       }

@@ -15,24 +15,29 @@ import { ILogService } from './log.interface';
 })
 export class LogService implements ILogService {
   constructor() {}
-  info(value: any, ...opt: any[]): void {
+  info(description: string, value: any = ''): void {
     if (!environment.production) {
-      console.info(value, opt);
+      console.info(description, value);
     }
   }
-  log(value: any, ...opt: any[]): void {
+  log(description: string, value: any = ''): void {
     if (!environment.production) {
-      console.log(value, opt);
+      console.log(description, value);
     }
   }
-  warn(value: any, ...opt: any[]): void {
+  warn(description: string, value: any = ''): void {
     if (!environment.production) {
-      console.warn(value, opt);
+      console.warn(description, value);
     }
   }
-  error(value: any, ...opt: any[]): void {
+  error(description: string, value: any = ''): void {
     if (!environment.production) {
-      console.error(value, opt);
+      console.error(description, value);
+    }
+  }
+  table(data: any): void {
+    if (!environment.production) {
+      console.table(data);
     }
   }
 }
