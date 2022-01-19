@@ -18,7 +18,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log('HTTP-Request: ', request);
+    //console.log('HTTP-Request: ', request);
 
     const response = this.authService.userAuthenticated$.pipe(
       take(1),

@@ -171,21 +171,18 @@ export class ApiService {
   }
 
   public putSubscription(id: number, data: Object): Observable<SubscriptionData> {
-    console.log(data);
     return this.http
       .put<SubscriptionData>(environment.apiURL + '/api/subscription/' + id, data)
       .pipe(catchError(this.handleError));
   }
 
   public postSubscription(data: Object): Observable<SubscriptionData> {
-    console.log(data);
     return this.http
       .post<SubscriptionData>(environment.apiURL + '/api/subscription', data)
       .pipe(catchError(this.handleError));
   }
 
   public deleteSubscription(id: number) {
-    console.log('del Subscription' + id);
     return this.http
       .delete(environment.apiURL + '/api/subscription/' + id)
       .pipe(catchError(this.handleError));
@@ -301,6 +298,7 @@ export class ApiService {
     const e404 = 'Es wurden keine Daten gefunden.';
     const e422 = 'Fehler beim Speichern der Daten.';
     const e500 = 'Ein Serverfehler ist aufgetreten.';
+    // eslint-disable-next-line no-console
     console.log('ErrorHandler : ', errorRes);
 
     // Mehrere Möglichkeiten

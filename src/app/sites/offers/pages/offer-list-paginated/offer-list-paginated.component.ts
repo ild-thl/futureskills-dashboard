@@ -195,7 +195,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = page;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
 
-    console.log('filter-change:', this.currentFilter);
     this.reloadAndSaveData();
   }
 
@@ -207,12 +206,11 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = page;
 
     this.checkSearchText();
-    console.log('search-change:', this.searchString);
+
     this.reloadAndSaveData();
   }
 
   private pageChange() {
-    console.log('page-change:', this.page);
     this.reloadAndSaveData();
   }
 
@@ -232,7 +230,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.currentFilter,
       this.searchString
     );
-    console.log('Saved Filter:', this.statusService.getofferListSearchFilterStatus());
+    //console.log('Saved Filter:', this.statusService.getofferListSearchFilterStatus());
     this.loadData();
   }
 
@@ -241,7 +239,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    * @param filter
    */
   private setFilterParams(filter: OfferListFilterStatus) {
-    console.log('savedFilters:', filter);
+    //console.log('savedFilters:', filter);
     this.filterInit = filter.filterMap;
     this.currentFilter = this.filterInit;
     this.page = filter.page;

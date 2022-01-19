@@ -28,10 +28,8 @@ export class TokenCheckInterceptor implements HttpInterceptor {
           const isValid = this.tokenService.isTokenValid(token);
 
           if (isValid) {
-            console.log('Token check (Interceptor) ok');
             return next.handle(request);
           } else {
-            console.log('Token expired');
             // Erstmal kein Logout
             return next.handle(request);
             // this.handleExpiredToken();

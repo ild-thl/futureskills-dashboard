@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ILogService } from './log.interface';
+
+/* eslint-disable no-console */
+
 /**
  * log.service.ts
  * Service to log Console Messages

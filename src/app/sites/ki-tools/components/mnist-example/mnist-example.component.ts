@@ -161,11 +161,11 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   private showResults(prediction: any) {
     let predictionArr = Array.from(prediction.dataSync()) as number[];
-    console.log('Predictions => ', predictionArr);
+    //console.log('Predictions => ', predictionArr);
 
     const maxValue = tf.argMax(prediction, 1).dataSync()[0];
     const pMaxValue = tf.max(prediction, 1).dataSync()[0];
-    console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
+    //console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
 
 
 

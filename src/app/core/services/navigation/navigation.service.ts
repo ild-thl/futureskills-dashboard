@@ -15,7 +15,7 @@ export class NavigationService {
     if (this.isInit) return;
 
     this.isInit = true;
-    console.log('RouterService init');
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.browserHistory.push(event.urlAfterRedirects);
@@ -43,7 +43,7 @@ export class NavigationService {
     if (this.browserHistory.length >= 2) {
       const isDetail = /kurse\/\d/.test(this.browserHistory[this.browserHistory.length - 1]);
       if (this.browserHistory[this.browserHistory.length - 2] === '/kurse' && isDetail) {
-        console.log('ROUTE VON DETAIL zu LIST');
+        //console.log('ROUTE VON DETAIL zu LIST');
       }
     }
   }

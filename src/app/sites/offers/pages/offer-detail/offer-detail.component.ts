@@ -43,14 +43,14 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.paramsSub = this.route.paramMap.subscribe((params) => {
       const offerId = +params.get('id');
-      console.log('Aktuelle Id:', offerId);
+
       this.isLoading = true;
       this.errMessage = '';
       this.isError = false;
 
       this.userSub = this.offerDataService.getOfferDataForDetail(offerId).subscribe(
         (data) => {
-          console.log('Detaildata:', data);
+          //console.log('Detaildata:', data);
           this.user = data.user;
           this.offer = data.offerData;
           this.subscribed = false;
@@ -69,7 +69,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   }
 
   deleteOffer() {
-    console.log('delete:' + this.offer.id);
+    // console.log('delete:' + this.offer.id);
     // Kurse, die gebucht sind lassen sich nicht löschen
     // Todo: Vorher prüfen oder Fehlermeldung abfangen
 

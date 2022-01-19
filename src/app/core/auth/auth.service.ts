@@ -48,14 +48,14 @@ export class AuthService {
   public login(email: string, password: string): Observable<User | null> {
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-        console.table(serverResponse);
+
         let tmpUser: User = null;
 
         if (serverResponse.access_token) {
           tmpUser = this.createUserFromToken(serverResponse.access_token);
           if (tmpUser) {
             this.tokenService.saveToken(serverResponse.access_token, tmpUser.tokenExpirationDate);
-            console.log('User from Server: ', tmpUser);
+            console.log('Login User: ', tmpUser);
           }
         }
         this.user$.next(tmpUser);
@@ -75,24 +75,22 @@ export class AuthService {
     if (token) {
       tmpUser = this.createUserFromToken(token);
       if (tmpUser) {
-        console.log('AutoLogin: ', tmpUser);
+        console.log('AutoLogin User: ', tmpUser);
       } else {
         this.tokenService.removeToken();
       }
-    } else {
-      console.log('No AutoLogin');
     }
     this.user$.next(tmpUser);
   }
 
   public logoutUser(): Observable<boolean> {
-    console.log('User logged out manually.');
+    console.log('Logout User');
     this.signOff();
     return of(true);
   }
 
   public logoutUserOnTokenExpired(): Observable<boolean> {
-    console.log('Token expired. User logged out automatically.');
+    console.log('Logout User automatically');
     this.signOff();
     return of(true);
   }

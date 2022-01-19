@@ -32,7 +32,7 @@ export class DemonstratorExampleComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.linkListSub = this.kiStatusService.loadLinkList().subscribe({
       next: (list) => {
-        console.log('Lists: ', list);
+        // console.log('Lists: ', list);
         this.demoList = list.demoCards;
         this.projectList = list.projectCards;
 
