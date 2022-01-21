@@ -134,7 +134,7 @@
     </ng-template>
 
     <!-- New -->
-    <div *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
+    <ng-container *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
       <hr />
       <div class="row">
         <div class="col">
@@ -150,6 +150,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>
