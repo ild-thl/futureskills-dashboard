@@ -176,6 +176,8 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
           this.isError = true;
           this.isLoading = false;
           this.componentsDisabled = true;
+          // this.message = this.errorHandler.getErrorMessage(error,'offers');
+          // Besser immer die not-found-Fehlermeldung anzeigen.
           this.message = this.errorHandler.ERROR_MESSAGES.E404_OFFERS_NOT_FOUND;
           const resetFilter = this.statusService.resetFilterSearchStatus();
           this.setFilterParams(resetFilter);

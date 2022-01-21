@@ -42,24 +42,28 @@ export class AuthService {
   }
 
   /**
-   * Login 
+   * Login
    * @param email
-   * @param password 
-   * @returns 
+   * @param password
+   * @returns
    */
   public login(email: string, password: string): Observable<User | null> {
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-
         let tmpUser: User = null;
 
         if (serverResponse.access_token) {
           tmpUser = this.createUserFromToken(serverResponse.access_token);
           if (tmpUser) {
             this.tokenService.saveToken(serverResponse.access_token, tmpUser.tokenExpirationDate);
-            this.logService.log('AuthService','login', tmpUser);
+            this.logService.log('AuthService', 'login', tmpUser);
           }
         }
+        if (!tmpUser) {
+          // eslint-disable-next-line no-console
+          console.warn('Auth:', 'Es wurde kein Token gesendet');
+        }
+
         this.user$.next(tmpUser);
         return tmpUser;
       })

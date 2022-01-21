@@ -217,7 +217,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.addAlert('success', 'Speichern war erfolgreich');
       },
       (error: Error) => {
-        this.addAlert('danger', this.errorHandler.getErrorMessage(error));
+        this.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
         this.isLoading = false;
       }
     );

@@ -55,12 +55,13 @@ export class AuthComponent implements OnInit, OnDestroy {
         if (resData){
           this.router.navigate([this.lnkAfterLogin]);
         } else {
+          // user is null
           this.isError = true;
           this.errorMessage = this.errorHandler.ERROR_MESSAGES.DEFAULT_ERROR;
         }
       },
       error: (error: Error) => {
-        this.errorMessage = this.errorHandler.getErrorMessage(error);
+        this.errorMessage = this.errorHandler.getErrorMessage(error, 'login');
         this.isError = true;
         this.isLoading = false;
       }

@@ -65,6 +65,8 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
         error: (error: Error) => {
           this.isLoading = false;
           this.isError = true;
+          //this.errMessage =this.errorHandler.getErrorMessage(error, 'offer');
+          // Besser immer die not-found-Fehlermeldung anzeigen.
           this.errMessage = this.errorHandler.ERROR_MESSAGES.E404_OFFER_NOT_FOUND;
         },
       });

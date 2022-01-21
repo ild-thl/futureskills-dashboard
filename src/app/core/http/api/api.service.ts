@@ -384,8 +384,17 @@ export class ApiService {
       case 401:
         errorCode = ErrorCodes.E401;
         break;
+      case 403:
+        errorCode = ErrorCodes.E403;
+        break;
       case 404:
         errorCode = ErrorCodes.E404;
+        break;
+      case 422:
+        errorCode = ErrorCodes.E422;
+        break;
+      case 429:
+        errorCode = ErrorCodes.E429;
         break;
       case 500:
         errorCode = ErrorCodes.E500;
