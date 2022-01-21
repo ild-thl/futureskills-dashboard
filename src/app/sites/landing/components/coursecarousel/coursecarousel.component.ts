@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { OfferShortListForTiles } from 'src/app/core/models/offer';
@@ -13,10 +7,9 @@ import { StaticService } from 'src/app/config/static.service';
 @Component({
   selector: 'app-coursecarousel',
   templateUrl: './coursecarousel.component.html',
-  styleUrls: ['./coursecarousel.component.scss']
+  styleUrls: ['./coursecarousel.component.scss'],
 })
 export class CoursecarouselComponent implements OnInit, OnDestroy {
-
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
 
   @ViewChild('coursecarousel') coursecarousel: ElementRef;
@@ -24,8 +17,8 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
   private onOffersChange: Subscription;
   loadedOffers: OfferShortListForTiles[] = [];
 
-  resizeObservable$: Observable<Event>
-  resizeSubscription: Subscription
+  resizeObservable$: Observable<Event>;
+  resizeSubscription: Subscription;
   tilewidth: number = 220;
   tilemargin: number = 16;
   tileshow: number = 0;
@@ -37,32 +30,28 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Hier werden aktuell alle 20 neuesten Offer angezeigt
-    this.onOffersChange = this.offerDataService
-      .getOffersForCourseCarousel()
-      .subscribe(
-        (offersForTiles) => {
-          this.loadedOffers = offersForTiles;
+    this.onOffersChange = this.offerDataService.getOffersForCourseCarousel().subscribe({
+      next: (offersForTiles) => {
+        this.loadedOffers = offersForTiles;
 
-          // trigger resize event to set tile width as soon as offers are loaded
-          setTimeout( () => {
-            window.dispatchEvent(new Event('resize'));
-          },0)
+        // trigger resize event to set tile width as soon as offers are loaded
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 0);
+      },
+      error: (error: Error) => {
+        // Handle Data
+        this.loadedOffers = [];
+      },
+    });
 
-        },
-        (error) => {
-          // Handle Data
-          console.log('Error in CarouselList: ', error);
-          this.loadedOffers = [];
-        }
-      );
-
-      // set tile width on each window resize event and reset position to 0
-      this.resizeObservable$ = fromEvent(window, 'resize')
-      this.resizeSubscription = this.resizeObservable$.subscribe( evt => {
-        this.carouselWidth = this.coursecarousel.nativeElement.offsetWidth;
-        this.coursecarousel.nativeElement.scrollLeft = 0;
-        this.setTileWidth();
-      })
+    // set tile width on each window resize event and reset position to 0
+    this.resizeObservable$ = fromEvent(window, 'resize');
+    this.resizeSubscription = this.resizeObservable$.subscribe((evt) => {
+      this.carouselWidth = this.coursecarousel.nativeElement.offsetWidth;
+      this.coursecarousel.nativeElement.scrollLeft = 0;
+      this.setTileWidth();
+    });
   }
 
   ngOnDestroy(): void {
@@ -70,20 +59,19 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
     this.resizeSubscription.unsubscribe();
   }
 
-
   setTileWidth(): number {
     let width = document.documentElement.clientWidth;
 
     // bootstrap breakpoints
-    if(width >= 1300) {
+    if (width >= 1300) {
       this.tileshow = 5;
-    } else if(width >= 1030) {
+    } else if (width >= 1030) {
       this.tileshow = 4;
-    } else if(width >= 820) {
+    } else if (width >= 820) {
       this.tileshow = 3;
-    } else if(width >= 576) {
+    } else if (width >= 576) {
       this.tileshow = 2;
-    } else if(width < 576) {
+    } else if (width < 576) {
       this.tileshow = 1;
     }
 
@@ -93,11 +81,11 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
   }
 
   getTileWidth(forScroll: boolean = false): number {
-    let res = (((Math.floor(this.carouselWidth) + this.tilemargin) / this.tileshow) - this.tilemargin);
+    let res = (Math.floor(this.carouselWidth) + this.tilemargin) / this.tileshow - this.tilemargin;
     let width = document.documentElement.clientWidth;
 
-    if(forScroll) {
-      if(width >= 768) {
+    if (forScroll) {
+      if (width >= 768) {
         let w = (res + this.tilemargin) * 2;
         res = w;
       } else {
@@ -109,11 +97,10 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
     return Math.floor(res);
   }
 
-
   scrollLeft(): void {
     let elem = this.coursecarousel.nativeElement;
 
-    if ( elem.scrollLeft === 0) {
+    if (elem.scrollLeft === 0) {
       let carousel = document.querySelector('.fs-car-tiles');
       let childcount = carousel.querySelectorAll('.fs-car-tile').length;
       this.coursecarousel.nativeElement.scrollLeft += this.getTileWidth(true) * childcount;
@@ -125,7 +112,7 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
   scrollRight(): void {
     let elem = this.coursecarousel.nativeElement;
 
-    if ( elem.scrollLeft + elem.offsetWidth === elem.scrollWidth) {
+    if (elem.scrollLeft + elem.offsetWidth === elem.scrollWidth) {
       elem.scrollLeft = 0;
     } else {
       elem.scrollLeft += this.getTileWidth(true);

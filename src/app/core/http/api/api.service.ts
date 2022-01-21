@@ -17,7 +17,10 @@ import {
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { LogService } from 'src/app/core/services/logger/log.service';
-import { ErrorCodes, ErrorHandlerService } from '../../services/error-handling';
+import {
+  ErrorCodes,
+  ErrorHandlerService,
+} from 'src/app/core/services/error-handling/error-handling';
 
 /**
  * api.service.ts
@@ -26,6 +29,8 @@ import { ErrorCodes, ErrorHandlerService } from '../../services/error-handling';
  * Created 30.10.2020
  * Updated 27.10.2021/ml
  */
+
+/* eslint-disable no-console */
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +56,7 @@ export class ApiService {
       })
       .pipe(
         catchError((errorResponse: HttpErrorResponse) => {
-          return this.handleLoginError(errorResponse);
+          return this.handleError(errorResponse);
         })
       );
   }
@@ -89,7 +94,11 @@ export class ApiService {
         environment.apiURL + '/api/list/offer/short/paginated/' + count + '?page=' + page,
         filterSearchObj
       )
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          return this.handleError(errorResponse);
+        })
+      );
   }
 
   ////////////////////////////////////////////////
@@ -97,9 +106,11 @@ export class ApiService {
   ////////////////////////////////////////////////
 
   public getAllOfferShortList(): Observable<APIToOfferShortList[]> {
-    return this.http
-      .get<APIToOfferShortList[]>(environment.apiURL + '/api/list/offer/short')
-      .pipe(catchError(this.handleError));
+    return this.http.get<APIToOfferShortList[]>(environment.apiURL + '/api/list/offer/short').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   /**
@@ -107,45 +118,59 @@ export class ApiService {
    * @returns Observable<Offer[]>
    */
   public getAllOffers(): Observable<Offer[]> {
-    return this.http
-      .get<Offer[]>(environment.apiURL + '/api/offer')
-      .pipe(catchError(this.handleError));
+    return this.http.get<Offer[]>(environment.apiURL + '/api/offer').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getOfferSubListWithKeyWords(keyword: string): Observable<APIToOfferShortList[]> {
-    return this.http
-      .get<Offer[]>(environment.apiURL + '/api/search/offer/sublist/' + keyword)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Offer[]>(environment.apiURL + '/api/search/offer/sublist/' + keyword).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getOfferLatest(): Observable<APIToOfferShortList[]> {
-    return this.http
-      .get<Offer[]>(environment.apiURL + '/api/search/offer/latest')
-      .pipe(catchError(this.handleError));
+    return this.http.get<Offer[]>(environment.apiURL + '/api/search/offer/latest').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getOffer(id: number): Observable<Offer> {
-    return this.http
-      .get<Offer>(environment.apiURL + '/api/offer/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Offer>(environment.apiURL + '/api/offer/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public putOffer(id: number, data: OfferToAPI): Observable<Offer> {
-    return this.http
-      .put<Offer>(environment.apiURL + '/api/offer/' + id, data)
-      .pipe(catchError(this.handleError));
+    return this.http.put<Offer>(environment.apiURL + '/api/offer/' + id, data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public postOffer(data: OfferToAPI): Observable<Offer> {
-    return this.http
-      .post<Offer>(environment.apiURL + '/api/offer', data)
-      .pipe(catchError(this.handleError));
+    return this.http.post<Offer>(environment.apiURL + '/api/offer', data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public deleteOffer(id: number) {
-    return this.http
-      .delete(environment.apiURL + '/api/offer/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(environment.apiURL + '/api/offer/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   ////////////////////////////////////////////////
@@ -154,45 +179,65 @@ export class ApiService {
   ////////////////////////////////////////////////
 
   public getAllSubscriptions(): Observable<SubscriptionData[]> {
-    return this.http
-      .get<SubscriptionData[]>(environment.apiURL + '/api/subscription')
-      .pipe(catchError(this.handleError));
+    return this.http.get<SubscriptionData[]>(environment.apiURL + '/api/subscription').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getSubscriptionById(id: number): Observable<SubscriptionData> {
-    return this.http
-      .get<SubscriptionData>(environment.apiURL + '/api/subscription/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.get<SubscriptionData>(environment.apiURL + '/api/subscription/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getSubscriptionByIds(user_id: number, offer_id: number): Observable<SubscriptionData[]> {
     return this.http
       .get<SubscriptionData[]>(environment.apiURL + '/api/subscription/' + user_id + '/' + offer_id)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          return this.handleError(errorResponse);
+        })
+      );
   }
 
   public getUserSubscriptions(user_id: number) {
     return this.http
       .get<SubscriptionData[]>(environment.apiURL + '/api/subscription/user/' + user_id)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          return this.handleError(errorResponse);
+        })
+      );
   }
 
   public putSubscription(id: number, data: Object): Observable<SubscriptionData> {
     return this.http
       .put<SubscriptionData>(environment.apiURL + '/api/subscription/' + id, data)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          return this.handleError(errorResponse);
+        })
+      );
   }
 
   public postSubscription(data: Object): Observable<SubscriptionData> {
-    return this.http
-      .post<SubscriptionData>(environment.apiURL + '/api/subscription', data)
-      .pipe(catchError(this.handleError));
+    return this.http.post<SubscriptionData>(environment.apiURL + '/api/subscription', data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public deleteSubscription(id: number) {
-    return this.http
-      .delete(environment.apiURL + '/api/subscription/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(environment.apiURL + '/api/subscription/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   ////////////////////////////////////////////////
@@ -200,39 +245,51 @@ export class ApiService {
   ////////////////////////////////////////////////
 
   public getAllUsers(): Observable<User[]> {
-    return this.http
-      .get<User[]>(environment.apiURL + '/api/user')
-      .pipe(catchError(this.handleError));
+    return this.http.get<User[]>(environment.apiURL + '/api/user').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getUser(id: number): Observable<User> {
-    return this.http
-      .get<User>(environment.apiURL + '/api/user/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.get<User>(environment.apiURL + '/api/user/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getUserByEmail(email: string): Observable<User> {
-    return this.http
-      .get<User>(environment.apiURL + '/api/user/email?email=' + email)
-      .pipe(catchError(this.handleError));
+    return this.http.get<User>(environment.apiURL + '/api/user/email?email=' + email).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public putUser(id: number, data: Object): Observable<User> {
-    return this.http
-      .put<User>(environment.apiURL + '/api/user/' + id, data)
-      .pipe(catchError(this.handleError));
+    return this.http.put<User>(environment.apiURL + '/api/user/' + id, data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public postUser(data: Object): Observable<User> {
-    return this.http
-      .post<User>(environment.apiURL + '/api/user', data)
-      .pipe(catchError(this.handleError));
+    return this.http.post<User>(environment.apiURL + '/api/user', data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public deleteUser(id: number) {
-    return this.http
-      .delete(environment.apiURL + '/api/user/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(environment.apiURL + '/api/user/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   ////////////////////////////////////////////////
@@ -240,15 +297,19 @@ export class ApiService {
   ////////////////////////////////////////////////
 
   public getInstitutions(): Observable<Institution[]> {
-    return this.http
-      .get<Institution[]>(environment.apiURL + '/api/institution/')
-      .pipe(catchError(this.handleError));
+    return this.http.get<Institution[]>(environment.apiURL + '/api/institution/').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public getInstitutionById(id: number): Observable<Institution> {
-    return this.http
-      .get<Institution>(environment.apiURL + '/api/institution/' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Institution>(environment.apiURL + '/api/institution/' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public postInstitution(institution: Institution): Observable<Institution> {
@@ -256,9 +317,11 @@ export class ApiService {
       title: institution.title,
       url: institution.url,
     };
-    return this.http
-      .post<Institution>(environment.apiURL + '/api/institution/', data)
-      .pipe(catchError(this.handleError));
+    return this.http.post<Institution>(environment.apiURL + '/api/institution/', data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public putInstitution(institution: Institution): Observable<Institution> {
@@ -267,9 +330,11 @@ export class ApiService {
       title: institution.title,
       url: institution.url,
     };
-    return this.http
-      .put<Institution>(environment.apiURL + '/api/institution/' + id, data)
-      .pipe(catchError(this.handleError));
+    return this.http.put<Institution>(environment.apiURL + '/api/institution/' + id, data).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   public deleteInstitution(institution: Institution): Observable<any> {
@@ -278,9 +343,11 @@ export class ApiService {
       // TODO: Rückgabewert nochmal checken
       return of(false);
     }
-    return this.http
-      .delete(environment.apiURL + '/api/institution' + id)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(environment.apiURL + '/api/institution' + id).pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   ////////////////////////////////////////////////
@@ -288,9 +355,11 @@ export class ApiService {
   ///////////////////////////////////////////////
 
   public getFilterTags(): Observable<OfferPropertyTagResponse> {
-    return this.http
-      .get<OfferPropertyTagResponse>(environment.apiURL + '/api/filter/tags')
-      .pipe(catchError(this.handleError));
+    return this.http.get<OfferPropertyTagResponse>(environment.apiURL + '/api/filter/tags').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
   }
 
   // Die Filter sind im Moment identisch mit den Properties
@@ -302,68 +371,29 @@ export class ApiService {
   // ErrorHandling
   ////////////////////////////////////////////////
   // Todo: Fehlermeldungstexte für die GUI
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'Ein unbekannter Fehler ist aufgetreten.';
-    const e401 = 'Fehler beim Zugriff auf Benutzerdaten.';
-    const e404 = 'Es wurden keine Daten gefunden.';
-    const e422 = 'Fehler beim Speichern der Daten.';
-    const e500 = 'Ein Serverfehler ist aufgetreten.';
-    // eslint-disable-next-line no-console
-    console.log('ErrorHandler : ', errorRes);
-
-    // Mehrere Möglichkeiten
-    // Abfrage auf Status
-    // 401 - Unauthorized
-    switch (errorRes.status) {
-      case 401:
-        errorMessage = e401;
-        return throwError(errorMessage);
-      case 404:
-        errorMessage = e404;
-        return throwError(errorMessage);
-      case 422:
-        errorMessage = e422;
-        return throwError(errorMessage);
-      case 500:
-        errorMessage = e500;
-        return throwError(errorMessage);
-    }
-
-    // oder Abfrage der Message
-    if (!errorRes.error) {
-      return throwError(errorMessage);
-    } else {
-      // return an observable with a user-facing error message
-      console.log('ErrorMessage: ', errorRes.error.message);
-      switch (errorRes.error.message) {
-        case 'Unauthenticated.':
-          errorMessage = e401;
-          break;
-      }
-    }
-
-    return throwError(errorMessage);
-  }
-
-  private handleLoginError(errorRes: HttpErrorResponse): Observable<never> {
+  private handleError(errorRes: HttpErrorResponse): Observable<never> {
     let errorCode = ErrorCodes.UNKNOWN;
 
     switch (errorRes.status) {
+      case 0:
+        errorCode = ErrorCodes.E0;
+        break;
       case 400:
-        errorCode = ErrorCodes.E400LOGIN;
+        errorCode = ErrorCodes.E400;
         break;
       case 401:
         errorCode = ErrorCodes.E401;
         break;
-      case 403:
-        errorCode = ErrorCodes.E403;
+      case 404:
+        errorCode = ErrorCodes.E404;
         break;
       case 500:
         errorCode = ErrorCodes.E500;
         break;
     }
     let newError = new Error(errorCode);
-    this.logService.log('api.service - HttpErrorResponse:', errorRes);
+
+    console.log('ErrorResponse:', errorRes);
     return throwError(() => newError);
   }
 }

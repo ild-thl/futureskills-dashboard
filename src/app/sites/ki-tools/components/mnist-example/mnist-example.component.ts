@@ -153,7 +153,6 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
       },
       error: error => {
         this.modelLoadError = true;
-        console.log("Modell kann nicht geladen werden.");
         this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
       }
     });

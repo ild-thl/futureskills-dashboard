@@ -100,7 +100,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
         },
         error: (error) => {
           this.isCalculating = false;
-          console.log('Error:' + error);
+          // console.log('Error:' + error);
         },
       });
     }
@@ -204,7 +204,6 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
       },
       error: (error) => {
         this.modelLoadError = true;
-        console.log('Modell kann nicht geladen werden.');
         this.alertList.addAlert(
           'danger',
           'Die benötigten Daten können leider nicht geladen werden.'

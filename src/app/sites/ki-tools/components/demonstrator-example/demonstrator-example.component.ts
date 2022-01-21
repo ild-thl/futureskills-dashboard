@@ -1,8 +1,9 @@
-import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { KIToolsHelper } from './../../services/helper/helper';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { KIToolsTypes } from '../../interfaces/types';
 import { Subscription } from 'rxjs';
+import { KIToolsTypes } from '../../interfaces/types';
+
+import { KIToolsHelper } from 'src/app/sites/ki-tools/services/helper/helper';
+import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 
 @Component({
   selector: 'fs-demonstrator-example',
@@ -32,7 +33,6 @@ export class DemonstratorExampleComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.linkListSub = this.kiStatusService.loadLinkList().subscribe({
       next: (list) => {
-        // console.log('Lists: ', list);
         this.demoList = list.demoCards;
         this.projectList = list.projectCards;
 
@@ -43,7 +43,6 @@ export class DemonstratorExampleComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.errorOccurred = true;
-        console.log('DemoError: ', error);
       },
     });
   }

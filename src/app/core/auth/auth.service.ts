@@ -8,6 +8,7 @@ import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { ObjectPermission, Objects, Permissions, UserRoles } from 'src/app/core/models/permissions';
 import { TokenService } from 'src/app/core/services/token-check/token.service';
+import { LogService } from './../services/logger/log.service';
 
 /**
  * auth.service.ts
@@ -27,7 +28,8 @@ export class AuthService {
 
   constructor(
     private apiService: ApiService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private logService: LogService
   ) {
     this.userAuthenticated$ = this.user$.pipe(
       map((user: User) => {
@@ -55,7 +57,7 @@ export class AuthService {
           tmpUser = this.createUserFromToken(serverResponse.access_token);
           if (tmpUser) {
             this.tokenService.saveToken(serverResponse.access_token, tmpUser.tokenExpirationDate);
-            console.log('Login User: ', tmpUser);
+            this.logService.log('AuthService','login', tmpUser);
           }
         }
         this.user$.next(tmpUser);
@@ -75,7 +77,7 @@ export class AuthService {
     if (token) {
       tmpUser = this.createUserFromToken(token);
       if (tmpUser) {
-        console.log('AutoLogin User: ', tmpUser);
+        this.logService.log('AuthService', 'autologin: ', tmpUser);
       } else {
         this.tokenService.removeToken();
       }
@@ -84,13 +86,13 @@ export class AuthService {
   }
 
   public logoutUser(): Observable<boolean> {
-    console.log('Logout User');
+    this.logService.log('AuthService', 'logout');
     this.signOff();
     return of(true);
   }
 
   public logoutUserOnTokenExpired(): Observable<boolean> {
-    console.log('Logout User automatically');
+    this.logService.log('AuthService', 'logout(automatically)');
     this.signOff();
     return of(true);
   }

@@ -96,7 +96,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.mnistModelIsLoading = false;
-        console.log('Error: ', error);
+
         this.alertList.addAlert(
           'danger',
           'Fehler: Das MNIST-Beispiel konnten nicht geladen werden.'
@@ -132,7 +132,6 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.sentimentModelIsLoading = false;
-        console.log('Error: ', error);
         this.alertList.addAlert(
           'danger',
           'Fehler: Die Sentimentanalyse konnte nicht geladen werden.'
@@ -168,7 +167,6 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
         this.kiOffers = offers;
       },
       error: (error) => {
-        console.log('KIKurse konnten nicht geladen werden');
         this.kiOffers = [];
       },
     });

@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { StaticService } from 'src/app/config/static.service';
-import { ErrorHandlerService } from 'src/app/core/services/error-handling';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { User } from 'src/app/core/models/user';
 
 @Component({
@@ -51,13 +51,15 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.loginSubscription = this.authService.login(email, password).subscribe({
       next: (resData: User) => {
-        // TODO: Könnte auch null drin sein!!
-        // console.log('resultFrom Server:', resData);
         this.isLoading = false;
-        this.router.navigate([this.lnkAfterLogin]);
+        if (resData){
+          this.router.navigate([this.lnkAfterLogin]);
+        } else {
+          this.isError = true;
+          this.errorMessage = this.errorHandler.ERROR_MESSAGES.DEFAULT_ERROR;
+        }
       },
       error: (error: Error) => {
-        //console.log('AuthComponent:', error);
         this.errorMessage = this.errorHandler.getErrorMessage(error);
         this.isError = true;
         this.isLoading = false;
