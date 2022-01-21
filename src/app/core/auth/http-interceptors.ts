@@ -5,12 +5,20 @@ import { AuthInterceptorService } from 'src/app/core/interceptors/auth-intercept
 export const httpInterceptors = [
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: TokenCheckInterceptor,
-    multi: true,
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true,
   },
 ];
+
+// export const httpInterceptors = [
+//   {
+//     provide: HTTP_INTERCEPTORS,
+//     useClass: TokenCheckInterceptor,
+//     multi: true,
+//   },
+//   {
+//     provide: HTTP_INTERCEPTORS,
+//     useClass: AuthInterceptorService,
+//     multi: true,
+//   },
+// ];
