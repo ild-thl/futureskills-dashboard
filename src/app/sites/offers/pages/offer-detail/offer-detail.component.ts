@@ -54,7 +54,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
 
       this.userSub = this.offerDataService.getOfferDataForDetail(offerId).subscribe({
         next: (data) => {
-          this.logService.log('offer-detail', 'Detaildata', data);
+          //this.logService.log('offer-detail', 'Detaildata', data);
           this.user = data.user;
           this.offer = data.offerData;
           this.subscribed = false;

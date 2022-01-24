@@ -56,7 +56,8 @@ export class AuthService {
           tmpUser = this.createUserFromToken(serverResponse.access_token);
           if (tmpUser) {
             this.tokenService.saveToken(serverResponse.access_token, tmpUser.tokenExpirationDate);
-            this.logService.log('AuthService', 'login', tmpUser);
+           // this.logService.log('AuthService', 'login', tmpUser);
+            this.logService.log('AuthService', 'login:', tmpUser.name);
           }
         }
         if (!tmpUser) {
