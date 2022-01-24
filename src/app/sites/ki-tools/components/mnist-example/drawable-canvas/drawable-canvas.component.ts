@@ -124,7 +124,7 @@ export class DrawableCanvasComponent implements AfterViewInit, OnDestroy {
 
       ctx.fillStyle = '#FFFFFF';
       this.canvasResized.emit({ width: canvas.width, height: canvas.height });
-      console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
+      //console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
     }
     return wasChanged;
   }

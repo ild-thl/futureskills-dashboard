@@ -1,6 +1,7 @@
 export interface ILogService {
-  info(value: any, ...opt: any[]): void;
-  log(value: any, ...opt: any[]): void;
-  warn(value: any, ...opt: any[]): void;
-  error(value: any, ...opt: any[]): void;
+  info(source: string, description: string, value: any): void;
+  log(source: string, description: string, value: any): void;
+  warn(source: string, description: string, value: any): void;
+  error(source: string, description: string, value: any): void;
+  table(data: any): void;
 }

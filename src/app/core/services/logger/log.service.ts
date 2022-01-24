@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ILogService } from './log.interface';
+
+/* eslint-disable no-console */
+
 /**
  * log.service.ts
  * Service to log Console Messages
@@ -12,24 +15,29 @@ import { ILogService } from './log.interface';
 })
 export class LogService implements ILogService {
   constructor() {}
-  info(value: any, ...opt: any[]): void {
+  info(source: string, description: string, value: any = ''): void {
     if (!environment.production) {
-      console.info(value, opt);
+      console.info(source + ':' + description, value);
     }
   }
-  log(value: any, ...opt: any[]): void {
+  log(source: string, description: string, value: any = ''): void {
     if (!environment.production) {
-      console.log(value, opt);
+      console.log(source + ':' + description, value);
     }
   }
-  warn(value: any, ...opt: any[]): void {
+  warn(source: string, description: string, value: any = ''): void {
     if (!environment.production) {
-      console.warn(value, opt);
+      console.warn(source + ':' + description, value);
     }
   }
-  error(value: any, ...opt: any[]): void {
+  error(source: string, description: string, value: any = ''): void {
     if (!environment.production) {
-      console.error(value, opt);
+      console.error(source + ':' + description, value);
+    }
+  }
+  table(data: any): void {
+    if (!environment.production) {
+      console.table(data);
     }
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
@@ -14,6 +13,8 @@ import { OfferFilterToAPI } from 'src/app/core/http/api/api.interfaces';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 import { OfferListFilterStatus } from 'src/app/sites/offers/services/filter-status/filter-status.service';
 import { Objects, Permissions } from 'src/app/core/models/permissions';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
+import { LogService } from 'src/app/core/services/logger/log.service';
 
 @Component({
   selector: 'app-offer-list-paginated',
@@ -60,7 +61,9 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private statusService: FilterStatusService,
-    private staticService: StaticService
+    private staticService: StaticService,
+    private errorHandler: ErrorHandlerService,
+    private logService: LogService
   ) {
     this.pageCollectionSize = 10; // Anzahl der Items
     this.pageMaxSize = 5; //max.Seiten die angezeigt werden
@@ -134,18 +137,17 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    * Loads FilterProperties from API
    */
   private loadFilterMetaData() {
-    this.metaSubscription = this.metaDataService.getFilterTags().subscribe(
-      (filterMap: Map<string, OfferPropertyList>) => {
+    this.metaSubscription = this.metaDataService.getFilterTags().subscribe({
+      next: (filterMap: Map<string, OfferPropertyList>) => {
         this.staticFilterList = filterMap;
         this.filterMapIsLoaded = true;
       },
-      (error) => {
+      error: (error: Error) => {
         this.staticFilterList.delete;
         this.filterObj = {};
         this.filterMapIsLoaded = false;
-        console.log('Error-Filterdaten: ', error);
-      }
-    );
+      },
+    });
   }
 
   /**
@@ -167,15 +169,16 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
           this.componentsDisabled = false;
           this.message = '';
           this.isLoading = false;
+          //this.logService.log('offer-list', 'Offers', this.loadedOffers);
         },
-        error: (error) => {
-          console.log('Error in OffersList:', error);
+        error: (error: Error) => {
           this.loadedOffers = [];
           this.isError = true;
           this.isLoading = false;
           this.componentsDisabled = true;
-          this.message =
-            'Ein Fehler ist aufgetreten. Es konnten leider keine Angebote geladen werden.';
+          // this.message = this.errorHandler.getErrorMessage(error,'offers');
+          // Besser immer die not-found-Fehlermeldung anzeigen.
+          this.message = this.errorHandler.ERROR_MESSAGES.E404_OFFERS_NOT_FOUND;
           const resetFilter = this.statusService.resetFilterSearchStatus();
           this.setFilterParams(resetFilter);
         },
@@ -195,7 +198,6 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = page;
     this.filterObj = DataMapping.mapFilterToAPIFilter(this.currentFilter);
 
-    console.log('filter-change:', this.currentFilter);
     this.reloadAndSaveData();
   }
 
@@ -207,12 +209,11 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.page = page;
 
     this.checkSearchText();
-    console.log('search-change:', this.searchString);
+
     this.reloadAndSaveData();
   }
 
   private pageChange() {
-    console.log('page-change:', this.page);
     this.reloadAndSaveData();
   }
 
@@ -232,7 +233,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
       this.currentFilter,
       this.searchString
     );
-    console.log('Saved Filter:', this.statusService.getofferListSearchFilterStatus());
+    //console.log('Saved Filter:', this.statusService.getofferListSearchFilterStatus());
     this.loadData();
   }
 
@@ -241,7 +242,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
    * @param filter
    */
   private setFilterParams(filter: OfferListFilterStatus) {
-    console.log('savedFilters:', filter);
+    //console.log('savedFilters:', filter);
     this.filterInit = filter.filterMap;
     this.currentFilter = this.filterInit;
     this.page = filter.page;

@@ -92,7 +92,8 @@
                     {Blended Learning}}
                   </div>
                   <div class="buttons">
-                    <div class="edit-button" ngbDropdown *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
+                    <ng-container *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
+                    <div class="edit-button" ngbDropdown>
                       <button class="btn btn-light cog" id="dropdownBasic1" ngbDropdownToggle>
                         <fa-icon [icon]="['fas', 'cog']"></fa-icon>
                       </button>
@@ -113,6 +114,7 @@
                         </button>
                       </div>
                     </div>
+                    </ng-container>
                     <div class="card-button">
                       <button class="secondary-button dark" (click)="showModalWindowToLMS()">
                         Zum Kurs

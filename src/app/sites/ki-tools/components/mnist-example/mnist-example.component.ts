@@ -153,7 +153,6 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
       },
       error: error => {
         this.modelLoadError = true;
-        console.log("Modell kann nicht geladen werden.");
         this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
       }
     });
@@ -161,11 +160,11 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   private showResults(prediction: any) {
     let predictionArr = Array.from(prediction.dataSync()) as number[];
-    console.log('Predictions => ', predictionArr);
+    //console.log('Predictions => ', predictionArr);
 
     const maxValue = tf.argMax(prediction, 1).dataSync()[0];
     const pMaxValue = tf.max(prediction, 1).dataSync()[0];
-    console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
+    //console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
 
 
 

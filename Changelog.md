@@ -2,10 +2,19 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-19/ml
+### changed
+- clean console.logs (eslint warning on)
+- Implicit Returns are not allowed anymore
+- several pages -> GUI shows different messages
+### added
+- ErrorService for ErrorMessages
+- API Services handles Server-Status Codes
+
 ## 2022-01-17/ml
 ### changed
 - rxjs completed path deleted in playground 
-- new errorhandling in pöayground
+- new errorhandling in playground
 - date for linklist in static var
 - course-list: cleanup packages, deleted complete path
 

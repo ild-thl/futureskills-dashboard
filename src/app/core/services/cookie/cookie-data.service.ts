@@ -29,7 +29,7 @@ export class CookieDataService {
 
   public checkCookies(): void {
     const cookieExists: boolean = this.cookieService.check(this.cookieName);
-    console.log('Saved COOKIE?', cookieExists);
+
     if (cookieExists && !this.cookie.cookieSet) {
       this.cookie.cookieSet = true;
       this.cookie.technical = true; //default
@@ -56,7 +56,7 @@ export class CookieDataService {
   }
 
   private saveCookiePreferences(cookieData: ICookieData) {
-    console.log('cookieData:', cookieData);
+
     const cookieConvertedValue = this.convertToCookieString(cookieData);
     const exp: number = this.options.getCookieOptions().technical.expiresIn;
     this.cookieService.set(this.cookieName, cookieConvertedValue, {
@@ -67,7 +67,7 @@ export class CookieDataService {
   private getCookiePreferences(): ICookieData {
     const cookieConvertedValue = this.cookieService.get(this.cookieName);
     const cookieValue = this.convertToDataObject(cookieConvertedValue);
-    console.log('GetCookieValue: ', cookieValue);
+
     return cookieValue;
   }
 
@@ -87,7 +87,7 @@ export class CookieDataService {
 
   public checkLocalStorage() {
     this._localStorageIsOk = this.testLocalStorage();
-    console.log('LocalStorage: ', this.localStorageIsOk);
+
   }
 
   private testLocalStorage(): boolean {

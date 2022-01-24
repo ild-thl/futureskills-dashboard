@@ -95,12 +95,12 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
       this.calculatePrediction().subscribe({
         next: (value) => {
           this.isCalculating = false;
-          console.log('value: ' + value);
+          //console.log('value: ' + value);
           this.showResults(value);
         },
         error: (error) => {
           this.isCalculating = false;
-          console.log('Error:' + error);
+          // console.log('Error:' + error);
         },
       });
     }
@@ -109,7 +109,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   calculatePrediction(): Observable<any> {
     return new Observable((subscriber) => {
       const editedText = this.editText(this.textAreaText);
-      console.log('Text bearbeitet: ', editedText);
+
       const wordToIndex = this.wordsToIndex(editedText);
       const value = this.getSentimentValue(wordToIndex);
 
@@ -149,7 +149,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
       }
       wordIds.push(foundWordIndex);
     }
-    console.log('WordIndex: ', wordIds);
+    //console.log('WordIndex: ', wordIds);
     const paddedSentence = this.padLeft(wordIds, this.MAX_REVIEW_LENGTH);
     return paddedSentence;
   }
@@ -204,7 +204,6 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
       },
       error: (error) => {
         this.modelLoadError = true;
-        console.log('Modell kann nicht geladen werden.');
         this.alertList.addAlert(
           'danger',
           'Die benötigten Daten können leider nicht geladen werden.'

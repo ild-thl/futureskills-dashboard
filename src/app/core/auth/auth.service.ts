@@ -8,6 +8,7 @@ import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { ObjectPermission, Objects, Permissions, UserRoles } from 'src/app/core/models/permissions';
 import { TokenService } from 'src/app/core/services/token-check/token.service';
+import { LogService } from './../services/logger/log.service';
 
 /**
  * auth.service.ts
@@ -27,7 +28,8 @@ export class AuthService {
 
   constructor(
     private apiService: ApiService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private logService: LogService
   ) {
     this.userAuthenticated$ = this.user$.pipe(
       map((user: User) => {
@@ -40,24 +42,29 @@ export class AuthService {
   }
 
   /**
-   * Login 
+   * Login
    * @param email
-   * @param password 
-   * @returns 
+   * @param password
+   * @returns
    */
   public login(email: string, password: string): Observable<User | null> {
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-        console.table(serverResponse);
         let tmpUser: User = null;
 
         if (serverResponse.access_token) {
           tmpUser = this.createUserFromToken(serverResponse.access_token);
           if (tmpUser) {
             this.tokenService.saveToken(serverResponse.access_token, tmpUser.tokenExpirationDate);
-            console.log('User from Server: ', tmpUser);
+           // this.logService.log('AuthService', 'login', tmpUser);
+            this.logService.log('AuthService', 'login:', tmpUser.name);
           }
         }
+        if (!tmpUser) {
+          // eslint-disable-next-line no-console
+          console.warn('Auth:', 'Es wurde kein Token gesendet');
+        }
+
         this.user$.next(tmpUser);
         return tmpUser;
       })
@@ -75,24 +82,22 @@ export class AuthService {
     if (token) {
       tmpUser = this.createUserFromToken(token);
       if (tmpUser) {
-        console.log('AutoLogin: ', tmpUser);
+        this.logService.log('AuthService', 'autologin: ', tmpUser);
       } else {
         this.tokenService.removeToken();
       }
-    } else {
-      console.log('No AutoLogin');
     }
     this.user$.next(tmpUser);
   }
 
   public logoutUser(): Observable<boolean> {
-    console.log('User logged out manually.');
+    this.logService.log('AuthService', 'logout');
     this.signOff();
     return of(true);
   }
 
   public logoutUserOnTokenExpired(): Observable<boolean> {
-    console.log('Token expired. User logged out automatically.');
+    this.logService.log('AuthService', 'logout(automatically)');
     this.signOff();
     return of(true);
   }
