@@ -99,7 +99,7 @@ export class KIPlaygroundComponent implements OnInit, OnDestroy {
 
         this.alertList.addAlert(
           'danger',
-          'Fehler: Das MNIST-Beispiel konnten nicht geladen werden.'
+          'Fehler: Das MNIST-Beispiel konnte nicht geladen werden.'
         );
       },
     });

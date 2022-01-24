@@ -29,7 +29,7 @@ export class ErrorHandlerService {
     E403_OFFER_FORBIDDEN: 'Es fehlen die Rechte um diesen Kurs zu bearbeiten.',
     E404_DEFAULT_NOT_FOUND: 'Die angeforderten Daten konnten nicht gefunden werden.',
     E404_OFFERS_NOT_FOUND:
-    'Ein Fehler ist aufgetreten. Es konnten leider keine Kurse geladen werden.',
+    'Es konnten leider keine Kurse geladen werden. Bitte versuche es später noch einmal.',
     E404_OFFER_NOT_FOUND: 'Der Kurs konnte leider nicht gefunden werden.',
     E422_DEFAULT_UNPROCESSABLE: 'Die Daten konnten nicht verarbeitet werden.',
     E429_DEFAULT_TOO_MANY_REQUESTS: 'Ein Fehler ist aufgetreten.',
