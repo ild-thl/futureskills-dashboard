@@ -60,7 +60,8 @@
                 "styles": {
                   "minify": true,
                   "inlineCritical": false
-                }
+                },
+                "fonts": true
               },
               "outputHashing": "all",
               "sourceMap": false,
@@ -97,7 +98,8 @@
                 "styles": {
                   "minify": true,
                   "inlineCritical": false
-                }
+                },
+                "fonts": true
               },
               "outputHashing": "all",
               "sourceMap": true,
