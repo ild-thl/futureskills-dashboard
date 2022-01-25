@@ -7,40 +7,47 @@
         </a>
 
         <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
-          &#9776;
+          <!--&#9776;-->
+          <div class="animated-hamburger" [ngClass]="!isMenuCollapsed ? 'open' : 'closed'">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </button>
 
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item h-100" [routerLinkActive]="['active']">
-              <a class="nav-link" [routerLink]="lnkOffers" (click)="isMenuCollapsed = true">Alle Kurse</a>
+              <a class="nav-link" [routerLink]="lnkOffers" (click)="isMenuCollapsed = true">Alle Kurse
+                <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon></a>
             </li>
             <li class="nav-item h-100" [routerLinkActive]="['active']">
-              <a class="nav-link" [routerLink]="lnkKITools" (click)="isMenuCollapsed = true">KI Playground</a>
+              <a class="nav-link" [routerLink]="lnkKITools" (click)="isMenuCollapsed = true">KI Playground
+                <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon></a>
             </li>
             <li class="nav-item" ngbDropdown [routerLinkActive]="['active']">
               <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
-                Über Uns
+                Infos
+                <fa-icon class="chevron-down" [icon]="['fas', 'chevron-down']"></fa-icon>
               </a>
               <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
                 <a ngbDropdownItem [routerLink]="lnkInfoStudents" (click)="isMenuCollapsed = true">Info für Studierenden</a>
                 <a ngbDropdownItem [routerLink]="lnkInfoTeaching" (click)="isMenuCollapsed = true">Info für Lehrende</a>
               </div>
             </li>
-
-            <li class="nav-item h-100 login" [routerLinkActive]="['active']">
+<!--[ngClass]="(!isAuthenticated) ? 'd-block' : 'd-none'"-->
+            <li class="nav-item h-100 login" [routerLinkActive]="['active']" *ngIf="!isAuthenticated">
               <a class="nav-link"
               data-toggle="button"
               aria-pressed="false"
-              *ngIf="!isAuthenticated"
               [routerLink]="lnkLogin"
               routerLinkActive="router-link-active"
               (click)="isMenuCollapsed = true"><img src="assets/icons/avatar.png"></a>
             </li>
 
             <li class="nav-item h-100 login-ok" ngbDropdown [routerLinkActive]="['active']" *ngIf="isAuthenticated">
-              <a class="nav-link logout" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button"
-              (click)="isMenuCollapsed = true">
+              <a class="nav-link logout d-flex justify-content-start align-items-center" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
                 <span class="avatar-name">Admin</span>
                 <img src="assets/icons/avatar.png">
               </a>
