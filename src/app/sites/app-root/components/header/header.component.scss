@@ -36,13 +36,7 @@ $navbar-height: 58px;
             height: 20px;
             position: relative;
             margin: 0px;
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -o-transform: rotate(0deg);
             transform: rotate(0deg);
-            -webkit-transition: .5s ease-in-out;
-            -moz-transition: .5s ease-in-out;
-            -o-transition: .5s ease-in-out;
             transition: .5s ease-in-out;
             cursor: pointer;
             span {
@@ -209,32 +203,23 @@ $navbar-height: 58px;
     header {
       nav {
         max-width: 690px;
+        &.navbar {
+          .navbar-nav {
+            .nav-item {
+              .dropdown-menu {
+                &.show {
+                  .dropdown-item {
+                    font-size: 17px;
+                    padding: 5px 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
-  /*@media(max-width: $md) {
-    .navbar-collapse {
-      position: absolute;
-      top: 54px;
-      right: -125%;
-      padding-left: 15px;
-      padding-right: 15px;
-      padding-bottom: 15px;
-      width: 100%;
-      transition: all 0.2s ease;
-      display: block;
-      background-color: cornsilk;
-    }
-    .navbar-collapse.collapsing {
-        height: auto !important;
-        margin-right: 0%;
-        transition: all 0.2s ease;
-        display: block;
-    }
-    .navbar-collapse.show {
-        right: 0;
-    }
-  }*/
   @media(min-width: $md) {
     height: $navbar-height;
     header {
@@ -252,7 +237,7 @@ $navbar-height: 58px;
               &:not(:last-child) {
                 border-bottom: $hover-border solid transparent;
                 border-top: $hover-border solid transparent;
-                margin: 0 5px;
+                margin: 0 15px;
                 .nav-link {
                   padding: 10px 0;
                 }
@@ -281,7 +266,6 @@ $navbar-height: 58px;
                   img {
                     max-width: 40px;
                     border: 2px solid var(--color-function-grey);
-                    //padding: 2px;
                     border-radius: 50px;
                     transition: ease-out 0.2s;
                     &:hover {
@@ -302,14 +286,12 @@ $navbar-height: 58px;
                   .avatar-name {
                     font-family: Bangers, "sans-serif";
                     font-size: 16px;
-                    //padding-right: 10px;
                   }
                   img {
                     border: 2px solid var(--color-primary-blue);
                     border-radius: 50px;
                     transition: ease-out 0.15s;
                     max-width: 40px;
-                    //padding: 2px;
                   }
                   &:hover {
                     img {
@@ -318,17 +300,18 @@ $navbar-height: 58px;
                   }
                 }
               }
-              //a#navbarDropdown3.dropdown-toggle.nav-link.logout::after { content: none; }
               .dropdown-menu {
-                //padding: 0;
-                //margin: 0;
                 border: 1px solid var(--color-function-grey);
+                &.show {
+                  .dropdown-item {
+                    font-size: 18px;
+                    padding: 5px 15px;
+                  }
+                }
                 .dropdown-item {
                   cursor: pointer;
                   color: var(--color-primary-blue);
                   background-color: transparent;
-                  //padding-top: 7px;
-                  //padding-bottom: 7px;
                   &:hover {
                     color: var(--color-primary-blue-hover);
                     background-color: #eeeeee;
@@ -339,8 +322,6 @@ $navbar-height: 58px;
                     border-top: 1px dashed var(--color-primary-red);
                     color: var(--color-primary-red);
                     background-color: transparent;
-                    //padding-top: 10px;
-                    //padding-bottom: 10px;
                     &:hover {
                       color: var(--color-function-white);
                       background-color: var(--color-primary-red);
@@ -349,9 +330,13 @@ $navbar-height: 58px;
                 }
               }
               .nav-link {
-                //padding-right: 10px;
-                //padding-left: 10px;
                 color: var(--color-primary-blue);
+                .chevron-right {
+                  display: none;
+                }
+                .chevron-down {
+                  margin-left: -4px;
+                }
               }
             }
           }
@@ -367,14 +352,3 @@ $navbar-height: 58px;
     }
   }
 }
-
-
-
-/* .toolbar-fill-remaining-space {
-  flex: 1 1 auto;
-}
-
-.router-link-active {
-  background-color:#102d5d;
-  color:#ffffff;
-} */

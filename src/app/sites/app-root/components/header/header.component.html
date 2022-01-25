@@ -36,7 +36,7 @@
                 <a ngbDropdownItem [routerLink]="lnkInfoTeaching" (click)="isMenuCollapsed = true">Info für Lehrende</a>
               </div>
             </li>
-<!--[ngClass]="(!isAuthenticated) ? 'd-block' : 'd-none'"-->
+
             <li class="nav-item h-100 login" [routerLinkActive]="['active']" *ngIf="!isAuthenticated">
               <a class="nav-link"
               data-toggle="button"
