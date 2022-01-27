@@ -5,6 +5,44 @@
 ## 2022-01-27/avz
 ### changed
 - added navigation bar to the header component
+## 2022-01-19/ml
+### changed
+- clean console.logs (eslint warning on)
+- Implicit Returns are not allowed anymore
+- several pages -> GUI shows different messages
+### added
+- ErrorService for ErrorMessages
+- API Services handles Server-Status Codes
+
+## 2022-01-17/ml
+### changed
+- rxjs completed path deleted in playground 
+- new errorhandling in playground
+- date for linklist in static var
+- course-list: cleanup packages, deleted complete path
+
+## 2022-01-14/ml
+### changed
+- login => if logged in , button to log out
+- header, 
+  - new subscription syntax
+  - no i18 items
+
+## 2022-01-14/ml
+### added
+- new module auth
+- env Path for idp
+- redirect path
+
+## 2022-01-14/ml
+### changed
+- AuthService 
+  - Token expired when login -> automatically logout
+  - CleanUp (no timer anymore)
+- Users Emailadress is no longer saved
+### added
+- token service
+
 
 ## 2022-01-10/ml
 ### changed

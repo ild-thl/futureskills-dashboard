@@ -7,6 +7,9 @@ export const environment = {
   dataURL: 'assets/data/', // path to additional data
 
   apiURL: 'http://localhost:8000',
+  idpURL: {
+    emulated: 'http://localhost:8000/emulated/idp',
+  },  
 
   offerItemPerPage: 24, // Anzahl der Kurse auf einer Seite
 

@@ -5,7 +5,7 @@ export class KIToolsHelper {
     let scriptOk = true;
     for (var script of scripts) {
       if (!script.loaded) {
-        console.error(script);
+        //console.error(script);
         scriptOk = false;
         break;
       }

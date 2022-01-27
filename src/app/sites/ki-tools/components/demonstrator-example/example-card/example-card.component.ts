@@ -11,10 +11,6 @@ export class ExampleCardComponent {
   @Input() public cardTextData: KIToolsTypes.LinkCardData;
   constructor() { }
 
-  goToUrl(url: string){
-    console.log(url);
-  }
-
   getType(){
     return this.cardTextData.style;
   }

@@ -10,6 +10,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 import { KeyWordItem } from '../../components/multiselect/multiselect.component';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 
 interface Alert {
   type: string;
@@ -42,6 +43,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   public createNewOffer = false;
   public isCollapsed = true;
   public isError = false;
+  errMessage: string = '';
   alerts: Alert[] = [];
 
   offerEditForm: FormGroup;
@@ -54,7 +56,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private route: ActivatedRoute,
-    private staticConfig: StaticService
+    private staticConfig: StaticService,
+    private errorHandler: ErrorHandlerService
   ) {}
 
   editorConfig: AngularEditorConfig = {
@@ -146,9 +149,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
    * @param offerId
    */
   private loadOfferData(offerId: number) {
-
-    this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe(
-      (offer) => {
+    this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe({
+      next: (offer) => {
         this.offer = offer;
         this.offerEditForm.get('id').setValue(this.offer.id);
         this.offerEditForm.get('title').setValue(this.offer.title);
@@ -180,18 +182,16 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.offerEditForm.get('keywords').setValue(this.offer.keywords);
         this.relatedOfferFormArray.reset(this.offer.relatedOffers);
 
-        //console.log('FormOfferData: ', this.offerEditForm.value);
-        //console.log('OfferData: ', this.offer);
-
         this.isLoading = false;
+        this.errMessage = '';
         this.isError = false;
       },
-      (error) => {
+      error: (error: Error) => {
         this.isError = true;
+        this.errMessage = this.errorHandler.ERROR_MESSAGES.E404_OFFER_NOT_FOUND;
         this.isLoading = false;
-        console.log('Error loading OfferData', error);
-      }
-    );
+      },
+    });
   }
 
   /**
@@ -216,9 +216,8 @@ export class OfferEditComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.addAlert('success', 'Speichern war erfolgreich');
       },
-      (error) => {
-        console.log('Error saving offer: ', error);
-        this.addAlert('danger', error);
+      (error: Error) => {
+        this.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
         this.isLoading = false;
       }
     );
@@ -250,20 +249,19 @@ export class OfferEditComponent implements OnInit, OnDestroy {
   //////////////////////////////////////////////
 
   private loadPropertyMetaData() {
-    this.metaDataService.getOfferProperties().subscribe(
-      (filterMap: Map<string, OfferPropertyList>) => {
+    this.metaDataService.getOfferProperties().subscribe({
+      next: (filterMap: Map<string, OfferPropertyList>) => {
         this.setPropertyOutput(filterMap);
         this.propertiesLoaded = true;
       },
-      (error) => {
+      error: (error: Error) => {
         this.propCompetences = [];
         this.propInstitutions = [];
         this.propFormats = [];
         this.propLanguages = [];
         this.propertiesLoaded = false;
-        console.log('Error-Filterdaten: ', error);
-      }
-    );
+      },
+    });
   }
 
   private setPropertyOutput(propertyMap: Map<string, OfferPropertyList>) {

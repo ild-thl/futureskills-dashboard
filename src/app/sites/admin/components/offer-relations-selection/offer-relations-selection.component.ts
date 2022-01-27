@@ -115,8 +115,7 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
         this.showLoadedRelatedOffers();
         this.offerListIsLoaded = true;
       },
-      (error) => {
-        console.log('Error loading Offers: ', error);
+      (error: Error) => {
         this.offerListIsLoaded = false;
         this.completeOfferList = [];
       }
@@ -124,13 +123,16 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
   }
 
   showLoadedRelatedOffers() {
-    for (var i = 0; i < this.offer.relatedOffers.length; i++) {
-      let offerIndex = this.completeOfferList.findIndex(
-        (offer) => offer.id == this.offer.relatedOffers[i]
-      );
-      let tmpOffer = this.completeOfferList[offerIndex];
-      this.relatedOffersArray.push(tmpOffer);
+    if (this.offer && this.offer.relatedOffers) {
+      for (var i = 0; i < this.offer.relatedOffers.length; i++) {
+        let offerIndex = this.completeOfferList.findIndex(
+          (offer) => offer.id == this.offer.relatedOffers[i]
+        );
+        let tmpOffer = this.completeOfferList[offerIndex];
+        this.relatedOffersArray.push(tmpOffer);
+      }
     }
+
   }
   ngOnDestroy(): void {
     if (this.onOffersListChange) this.onOffersListChange.unsubscribe();

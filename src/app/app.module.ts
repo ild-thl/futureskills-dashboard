@@ -15,8 +15,8 @@ import { LandingPageModule } from 'src/app/sites/landing/landing.module';
 // Shared
 import { SharedModule } from 'src/app/shared/shared.module';
 
-// Services
-import { AuthInterceptorService } from 'src/app/core/interceptors/auth-interceptor.service';
+// Interceptor
+import { httpInterceptors } from './core/auth/http-interceptors';
 
 // Components
 import { AppComponent } from 'src/app/sites/app-root/pages/app.component';
@@ -78,12 +78,7 @@ import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.compo
   ],
   providers: [
     CookieService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    }
-
+    [...httpInterceptors]
   ],
   bootstrap: [AppComponent],
 })

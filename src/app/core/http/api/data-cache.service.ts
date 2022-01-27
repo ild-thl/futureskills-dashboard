@@ -54,7 +54,7 @@ export class DataCacheService {
           .pipe(
             map((results) => {
               const data = DataMapping.mapDataInSmallOfferDetailEditData(results);
-              console.log("Offers(for Related) cached: ", data);
+              //console.log("Offers(for Related) cached: ", data);
               return data;
             })
           )
@@ -79,7 +79,7 @@ export class DataCacheService {
           .pipe(
             map((results) => {
               const data= DataMapping.mapDataInSmallOfferDetailEditData(results);
-              console.log("KI-Courses cached: ", data);
+              //console.log("KI-Courses cached: ", data);
               return data;
             })
           )
@@ -98,7 +98,7 @@ export class DataCacheService {
         this.apiService
           .getOfferLatest()
           .pipe(tap((data) => {
-            console.log("Offer (latest) cached: ", data);
+            //console.log("Offer (latest) cached: ", data);
           }))
           .subscribe(this.courseLandingList$);
       }
@@ -119,7 +119,7 @@ export class DataCacheService {
           .pipe(
             map((data: OfferPropertyTagResponse) => {
               const newData = this.mapIDToText(data.filter);
-              console.log('Property-IDMaps cached: ', newData);
+              //console.log('Property-IDMaps cached: ', newData);
               return newData;
             })
           )
@@ -142,7 +142,7 @@ export class DataCacheService {
               for (var filterItem of propertyList) {
                 propertyMap.set(filterItem.type, filterItem);
               }
-              console.log('Property-Map cached: ', propertyMap);
+              //console.log('Property-Map cached: ', propertyMap);
               return propertyMap;
             })
           )

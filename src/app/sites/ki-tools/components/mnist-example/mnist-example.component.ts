@@ -43,6 +43,7 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   private MODEL_SIZE = 28;
   modelLoaded = false;
+  modelLoadError: boolean = false;
   private viewIsInitialized = false;
 
   private model: any;
@@ -143,24 +144,27 @@ export class MNISTExampleComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   private loadingModel() {
-    this.kiService.loadMNISTModel().subscribe((model) => {
-      this.model = model;
-      this.modelLoaded = true;
-      //console.log(this.model.summary());
-    },
-    error=>{
-      console.log("Modell kann nicht geladen werden.");
-      this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
+    this.kiService.loadMNISTModel().subscribe({
+      next: (model) => {
+        this.model = model;
+        this.modelLoaded = true;
+        this.modelLoadError = false;
+        //console.log(this.model.summary());
+      },
+      error: error => {
+        this.modelLoadError = true;
+        this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
+      }
     });
   }
 
   private showResults(prediction: any) {
     let predictionArr = Array.from(prediction.dataSync()) as number[];
-    console.log('Predictions => ', predictionArr);
+    //console.log('Predictions => ', predictionArr);
 
     const maxValue = tf.argMax(prediction, 1).dataSync()[0];
     const pMaxValue = tf.max(prediction, 1).dataSync()[0];
-    console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
+    //console.log('MaxValue: ', maxValue, "P(MaxValue): ", pMaxValue);
 
 
 

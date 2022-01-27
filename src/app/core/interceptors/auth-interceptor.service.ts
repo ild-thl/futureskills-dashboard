@@ -4,42 +4,46 @@ import {
   HttpRequest,
   HttpHandler,
   HttpHeaders,
+  HttpEvent,
 } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
 import { take, exhaustMap } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { UserData } from 'src/app/core/data/user/user-data.interface';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    //console.log('HTTP-Request: ', request);
 
-    console.log('HTTP Request', req);
-    return this.authService.user$.pipe(
+    const response = this.authService.userAuthenticated$.pipe(
       take(1),
-      exhaustMap((user) => {
-        if (!user) {
-          return next.handle(req);
+      exhaustMap((userData: UserData) => {
+        if (userData.isAuth) {
+          const headerSettings: { [name: string]: string | string[] } = {};
+
+          for (const key of request.headers.keys()) {
+            headerSettings[key] = request.headers.getAll(key);
+          }
+
+          headerSettings['Authorization'] = 'Bearer ' + userData.user.token;
+          headerSettings['Content-Type'] = 'application/json';
+          const newHeader = new HttpHeaders(headerSettings);
+
+          const modifiedReq = request.clone({
+            headers: newHeader,
+          });
+
+          return next.handle(modifiedReq);
+        } else {
+          return next.handle(request);
         }
-
-        const headerSettings: { [name: string]: string | string[] } = {};
-
-        for (const key of req.headers.keys()) {
-          headerSettings[key] = req.headers.getAll(key);
-        }
-
-        headerSettings['Authorization'] = 'Bearer ' + user.token;
-
-        headerSettings['Content-Type'] = 'application/json';
-        const newHeader = new HttpHeaders(headerSettings);
-
-        const modifiedReq = req.clone({
-          headers: newHeader,
-        });
-
-        return next.handle(modifiedReq);
       })
     );
+    return response;
   }
 }
