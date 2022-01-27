@@ -2,6 +2,10 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-27/avz
+### changed
+- added navigation bar to the header component
+
 ## 2022-01-10/ml
 ### changed
 - Update to Angular13

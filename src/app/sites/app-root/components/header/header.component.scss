@@ -154,7 +154,6 @@ $navbar-height: 58px;
               }
               .logout-container {
                 .dropdown-item {
-                  border-top: 1px dashed var(--color-primary-red);
                   color: var(--color-primary-red);
                   background-color: transparent;
                 }
@@ -319,7 +318,6 @@ $navbar-height: 58px;
                 }
                 .logout-container {
                   .dropdown-item {
-                    border-top: 1px dashed var(--color-primary-red);
                     color: var(--color-primary-red);
                     background-color: transparent;
                     &:hover {
