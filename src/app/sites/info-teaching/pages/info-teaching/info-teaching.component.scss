@@ -272,7 +272,7 @@
   &.video {
     background-color: rgb(30,174,156);
     border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
-    margin: 0 2%;
+    margin: 0 0%;
     .single-card {
       background-color: var(--color-function-white);
       box-shadow: 0 2.8px 2.2px rgba(0,0,0,.02),
@@ -322,6 +322,11 @@
           width: 110px;
         }
       }
+    }
+  }
+  @media(min-width: $lg) {
+    &.video {
+      margin: 0 10%;
     }
   }
 }
