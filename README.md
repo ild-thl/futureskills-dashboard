@@ -3,17 +3,37 @@
 ## Voraussetzungen
 - Das Projekt basiert auf Angular 13 ([Angular CLI](https://github.com/angular/angular-cli) Version 13.1.2., npm package:  @angular/cli@13.1.2)
 - Notwendig: [Node.js](https://nodejs.org/en/) in der LTS Version 16 (NICHT die 17!) 
-- Paketinstaller npm mind. in Version 8.1 (npm install -g npm)
+- mit der Node.js Version 16 wird auch automatisch der Paketinstaller npm in Version 8.1 installiert
 
-- Danach dann Installation der Pakete per npm:  `npm install`
+### Paketinstaller
+WICHTIG: Wir wechseln auf YARN (https://yarnpkg.com/getting-started/install). 
 
-### Extensions für Visual Studio Code
-#### Bitte installieren:    
+- Wenn Node.js Version >=16, dann ist Yarn schon installiert.
+  - Run:  `corepack enable`
+  - Für Windows: corepack muss als Administrator ausgeführt werden
+
+
+- Wenn Node.js Version <16,
+  - Run `npm i -g corepack` (die Variante geht natürlich immer, dann hat man YARN einfach nochmal extra installiert)
+
+Danach auf die neueste Version 3.1.x updaten mit : ` yarn set version stable` .
+Auch das Update muss unter Windows als Admin ausgeführt werden.
+
+Die Befehle zum Hinzufügen und Ändern von Packages unterscheidet sich von npm.    
+Siehe unter https://yarnpkg.com/getting-started/usage    
+(z.B: `yarn add` --> Hinzufügen von packages )
+
+## Installation
+Einfach nur: `yarn`
+
+
+## Extensions für Visual Studio Code
+### Bitte installieren:    
 - Prettier - Code Formatter (esbenp.prettier-vscode) 
 - Kontextsensitive Hilfe mit Angular Language Service (angular.ng-template)
 - ESLint: (dbaeumer.vscode-eslint)
 
-#### optional:    
+### optional:    
 - Angular Snippets (johnpapa.angular2)   
 
 ## Umgebung
