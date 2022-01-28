@@ -5,6 +5,11 @@
 ## 2022-01-27/avz
 ### changed
 - added navigation bar to the header component
+
+## 2022-01-26/ml
+### changed
+- kolkov/editor updated to 2.0.0 (Ivy Version)
+
 ## 2022-01-19/ml
 ### changed
 - clean console.logs (eslint warning on)
