@@ -13,9 +13,16 @@ import { StaticService } from 'src/app/config/static.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  public isMenuCollapsed = true;
+
   lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
   lnkLanding = this.staticConfig.getPathInfo().lnkLanding;
   lnkAfterLogout = this.staticConfig.getRoutingInfo().lnkAfterLogout;
+  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+  lnkKITools = this.staticConfig.getPathInfo().lnkKITools;
+  lnkInfoStudents = this.staticConfig.getPathInfo().lnkInfoStudents;
+  lnkInfoTeaching = this.staticConfig.getPathInfo().lnkInfoTeaching;
 
   isAuthenticated = false;
   user: User;
