@@ -2,7 +2,7 @@
   <header>
     <div class="container">
       <nav class="navbar navbar-expand-lg fixed-top">
-        <a class="navbar-brand" [routerLink]="[lnkLanding]">
+        <a class="navbar-brand mr-auto" [routerLink]="[lnkLanding]">
           <img src="assets/logos/logo_sh.svg" class="logo" alt="Das Future Skills Logo.">
         </a>
 
@@ -32,18 +32,19 @@
                 <fa-icon class="chevron-down" [icon]="['fas', 'chevron-down']"></fa-icon>
               </a>
               <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
-                <a ngbDropdownItem [routerLink]="lnkInfoStudents" (click)="isMenuCollapsed = true">Info für Studierenden</a>
-                <a ngbDropdownItem [routerLink]="lnkInfoTeaching" (click)="isMenuCollapsed = true">Info für Lehrende</a>
+                <a ngbDropdownItem [routerLink]="lnkInfoStudents" (click)="isMenuCollapsed = true">Infos für Studierende</a>
+                <a ngbDropdownItem [routerLink]="lnkInfoTeaching" (click)="isMenuCollapsed = true">Infos für Lehrende</a>
               </div>
             </li>
 
             <li class="nav-item h-100 login" [routerLinkActive]="['active']" *ngIf="!isAuthenticated">
-              <a class="nav-link"
-              data-toggle="button"
-              aria-pressed="false"
+              <a class="nav-link d-flex justify-content-start align-items-center"
               [routerLink]="lnkLogin"
               routerLinkActive="router-link-active"
-              (click)="isMenuCollapsed = true"><img src="assets/icons/avatar.png"></a>
+              (click)="isMenuCollapsed = true">
+              <span class="avatar-name">Einloggen</span>
+              <img src="assets/icons/avatar.png">
+            </a>
             </li>
 
             <li class="nav-item h-100 login-ok" ngbDropdown [routerLinkActive]="['active']" *ngIf="isAuthenticated">

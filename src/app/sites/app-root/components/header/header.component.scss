@@ -5,7 +5,7 @@ $navbar-height: 58px;
 
 .header-section {
   position: relative;
-  z-index: 10;
+  z-index: 110;
   height: $navbar-height-hamburger;
   header {
     height: $navbar-height-hamburger;
@@ -40,7 +40,7 @@ $navbar-height: 58px;
             transition: .5s ease-in-out;
             cursor: pointer;
             span {
-              background-color: black;
+              background-color: var(--color-primary-blue);
               position: absolute;
               display: block;
               height: 3px;
@@ -93,7 +93,7 @@ $navbar-height: 58px;
             width: 50%;
             &.active {
               .nav-link {
-                color: var(--color-primary-blue-hover);
+                color: var(--color-primary-blue);
               }
             }
             &:not(:last-child) {
@@ -114,7 +114,7 @@ $navbar-height: 58px;
               &.active {
                 .nav-link {
                   img {
-                    border: 2px solid var(--color-primary-blue-hover);
+                    border: 2px solid var(--color-primary-blue);
                   }
                 }
               }
@@ -125,6 +125,10 @@ $navbar-height: 58px;
                   font-family: Bangers, "sans-serif";
                   font-size: 16px;
                   order: 2;
+                  max-width: 300px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
                 }
                 img {
                   border: 2px solid var(--color-primary-blue);
@@ -254,20 +258,32 @@ $navbar-height: 58px;
               }
               &.active {
                 a {
-                  color: var(--color-primary-blue-hover);
+                  color: var(--color-primary-blue);
                 }
                 &:not(:last-child) {
-                  border-bottom: $hover-border solid var(--color-primary-blue-hover);
+                  border-bottom: $hover-border solid var(--color-primary-blue);
                 }
               }
               &.login {
                 .nav-link {
+                  .avatar-name {
+                    font-family: Bangers, "sans-serif";
+                    font-size: 16px;
+                    order: 1;
+                    text-align: right;
+                    margin-top: 3px;
+                  }
                   img {
                     max-width: 40px;
                     border: 2px solid var(--color-function-grey);
                     border-radius: 50px;
                     transition: ease-out 0.2s;
-                    &:hover {
+                    order: 2;
+                    margin-right: 0px;
+                    margin-left: 5px;
+                  }
+                  &:hover {
+                    img {
                       border: 2px solid var(--color-primary-blue-hover);
                     }
                   }
@@ -285,12 +301,19 @@ $navbar-height: 58px;
                   .avatar-name {
                     font-family: Bangers, "sans-serif";
                     font-size: 16px;
+                    order: 1;
+                    text-align: right;
+                    margin-top: 3px;
+                    max-width: 200px;
                   }
                   img {
                     border: 2px solid var(--color-primary-blue);
                     border-radius: 50px;
                     transition: ease-out 0.15s;
                     max-width: 40px;
+                    order: 2;
+                    margin-right: 0px;
+                    margin-left: 5px;
                   }
                   &:hover {
                     img {
@@ -334,8 +357,23 @@ $navbar-height: 58px;
                 }
                 .chevron-down {
                   margin-left: -4px;
+                  transform: translateY(5px);
                 }
               }
+              &.show {
+                .nav-link {
+                  .chevron-down {
+                    transform: rotate(180deg) translateY(-5px);
+                  }
+                }
+              }
+            }
+          }
+        }
+        .navbar-collapse {
+          &.collapse {
+            &.show {
+              box-shadow: none !important;
             }
           }
         }
