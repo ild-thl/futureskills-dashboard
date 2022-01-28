@@ -90,7 +90,7 @@ $navbar-height: 58px;
         }
         .navbar-nav {
           .nav-item {
-            width: 50%;
+            width: 60%;
             &.active {
               .nav-link {
                 color: var(--color-primary-blue);
@@ -101,11 +101,19 @@ $navbar-height: 58px;
             }
             &.login {
               .nav-link {
+                .avatar-name {
+                  font-family: Bangers, "sans-serif";
+                  font-size: 16px;
+                  padding-right: 3px;
+                  order: 2;
+                }
                 img {
                   max-width: 40px;
                   border: 2px solid var(--color-function-grey);
                   border-radius: 50px;
                   transition: ease-out 0.2s;
+                  order: 1;
+                  margin-right: 5px;
                   &:hover {
                     border: 2px solid var(--color-primary-blue-hover);
                   }
@@ -129,6 +137,7 @@ $navbar-height: 58px;
                   overflow: hidden;
                   white-space: nowrap;
                   text-overflow: ellipsis;
+                  padding-right: 3px;
                 }
                 img {
                   border: 2px solid var(--color-primary-blue);
