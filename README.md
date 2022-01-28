@@ -7,24 +7,10 @@
 
 ### Paketinstaller
 WICHTIG: Wir wechseln auf YARN (https://yarnpkg.com/getting-started/install). 
-
-- Wenn Node.js Version >=16, dann ist Yarn schon installiert.
-  - Run:  `corepack enable`
-  - Für Windows: corepack muss als Administrator ausgeführt werden
-
-
-- Wenn Node.js Version <16,
-  - Run `npm i -g corepack` (die Variante geht natürlich immer, dann hat man YARN einfach nochmal extra installiert)
-
-Danach auf die neueste Version 3.1.x updaten mit : ` yarn set version stable` .
-Auch das Update muss unter Windows als Admin ausgeführt werden.
-
-Die Befehle zum Hinzufügen und Ändern von Packages unterscheidet sich von npm.    
-Siehe unter https://yarnpkg.com/getting-started/usage    
-(z.B: `yarn add` --> Hinzufügen von packages )
+--> siehe UPDATE.md
 
 ## Installation
-Einfach nur: `yarn`
+Nach der Installation -> Aufruf: `yarn` 
 
 
 ## Extensions für Visual Studio Code
