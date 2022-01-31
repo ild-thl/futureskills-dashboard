@@ -4,6 +4,12 @@
 
 ## 2022-01-31/ml
 - Pagination Bar is shorter 
+- Login/Logout Button in ng-container to delete out of dom-structure
+- visible var in static service
+
+## 2022-01-27/avz
+### added
+- Textcomponent with video on the teacher info page
 
 ## 2022-01-27/avz
 ### changed

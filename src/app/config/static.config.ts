@@ -15,6 +15,12 @@ export const CustomConfig = {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     },
   },
+  general: {
+    isVisible : {
+      loginButton: false,
+      logoutButton: true
+    }
+  },
   kiConfig: {
     online: true,
     linkListDate: '17.01.2022',
