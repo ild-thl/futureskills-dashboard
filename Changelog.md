@@ -2,6 +2,10 @@
 
 ## [Not Released v0.9]
 
+## 2022-01.31/ml
+- Login/Logout Button in ng-container to delete out of dom-structure
+- visible var in static service
+
 ## 2022-01-27/avz
 ### added
 - Textcomponent with video on the teacher info page

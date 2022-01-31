@@ -49,4 +49,7 @@ export class StaticService {
   getKeyForPlaygroundKiCourse(): string {
     return CustomConfig.courseKeyWordKeys.keyForPlaygroundKIKurs;
   }
+  getComponentVisibility(): any {
+    return CustomConfig.general.isVisible;
+  }
 }
