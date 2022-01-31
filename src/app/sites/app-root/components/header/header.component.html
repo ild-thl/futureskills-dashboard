@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg fixed-top">
         <a class="navbar-brand mr-auto" [routerLink]="[lnkLanding]">
-          <img src="assets/logos/logo_sh.svg" class="logo" alt="Das Future Skills Logo.">
+          <img src="assets/logos/logo_sh.svg" class="logo" alt="Das Future Skills Logo." />
         </a>
 
         <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
@@ -19,12 +19,16 @@
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item h-100" [routerLinkActive]="['active']">
-              <a class="nav-link" [routerLink]="lnkOffers" (click)="isMenuCollapsed = true">Alle Kurse
-                <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon></a>
+              <a class="nav-link" [routerLink]="lnkOffers" (click)="isMenuCollapsed = true"
+                >Alle Kurse
+                <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon
+              ></a>
             </li>
             <li class="nav-item h-100" [routerLinkActive]="['active']">
-              <a class="nav-link" [routerLink]="lnkKITools" (click)="isMenuCollapsed = true">KI Playground
-                <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon></a>
+              <a class="nav-link" [routerLink]="lnkKITools" (click)="isMenuCollapsed = true"
+                >KI Playground
+                <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon
+              ></a>
             </li>
             <li class="nav-item" ngbDropdown [routerLinkActive]="['active']">
               <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
@@ -32,37 +36,51 @@
                 <fa-icon class="chevron-down" [icon]="['fas', 'chevron-down']"></fa-icon>
               </a>
               <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
-                <a ngbDropdownItem [routerLink]="lnkInfoStudents" (click)="isMenuCollapsed = true">Infos für Studierende</a>
-                <a ngbDropdownItem [routerLink]="lnkInfoTeaching" (click)="isMenuCollapsed = true">Infos für Lehrende</a>
+                <a ngbDropdownItem [routerLink]="lnkInfoStudents" (click)="isMenuCollapsed = true"
+                  >Infos für Studierende</a
+                >
+                <a ngbDropdownItem [routerLink]="lnkInfoTeaching" (click)="isMenuCollapsed = true"
+                  >Infos für Lehrende</a
+                >
               </div>
             </li>
 
-            <li class="nav-item h-100 login" [routerLinkActive]="['active']" *ngIf="!isAuthenticated">
-              <a class="nav-link d-flex justify-content-start align-items-center"
-              [routerLink]="lnkLogin"
-              routerLinkActive="router-link-active"
-              (click)="isMenuCollapsed = true">
-              <span class="avatar-name">Einloggen</span>
-              <img src="assets/icons/avatar.png">
-            </a>
-            </li>
+            <ng-container *ngIf="!isAuthenticated && loginBtnVisible">
+              <li class="nav-item h-100 login" [routerLinkActive]="['active']">
+                <a
+                  class="nav-link d-flex justify-content-start align-items-center"
+                  [routerLink]="lnkLogin"
+                  routerLinkActive="router-link-active"
+                  (click)="isMenuCollapsed = true"
+                >
+                  <span class="avatar-name">Einloggen</span>
+                  <img src="assets/icons/avatar.png" />
+                </a>
+              </li>
+            </ng-container>
 
-            <li class="nav-item h-100 login-ok" ngbDropdown [routerLinkActive]="['active']" *ngIf="isAuthenticated">
-              <a class="nav-link logout d-flex justify-content-start align-items-center" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
-                <span class="avatar-name">Admin</span>
-                <img src="assets/icons/avatar.png">
-              </a>
-              <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
-                <div class="logout-container">
-                  <a ngbDropdownItem (click)="onLogout()">Ausloggen</a>
+            <ng-container *ngIf="isAuthenticated && logoutBtnVisible">
+              <li class="nav-item h-100 login-ok" ngbDropdown [routerLinkActive]="['active']">
+                <a
+                  class="nav-link logout d-flex justify-content-start align-items-center"
+                  tabindex="0"
+                  ngbDropdownToggle
+                  id="navbarDropdown3"
+                  role="button"
+                >
+                  <span class="avatar-name">Admin</span>
+                  <img src="assets/icons/avatar.png" />
+                </a>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                  <div class="logout-container">
+                    <a ngbDropdownItem (click)="onLogout()">Ausloggen</a>
+                  </div>
                 </div>
-              </div>
-            </li>
-
+              </li>
+            </ng-container>
           </ul>
         </div>
       </nav>
     </div>
   </header>
 </section>
-
