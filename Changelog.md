@@ -3,6 +3,10 @@
 ## [Not Released v0.9]
 
 ## 2022-01-27/avz
+### added
+- Textcomponent with video on the teacher info page
+
+## 2022-01-27/avz
 ### changed
 - added navigation bar to the header component
 
