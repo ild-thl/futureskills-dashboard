@@ -2,6 +2,9 @@
 
 ## [Not Released v0.9]
 
+## 2022-01-31/ml
+- Pagination Bar is shorter 
+
 ## 2022-01-27/avz
 ### changed
 - added navigation bar to the header component

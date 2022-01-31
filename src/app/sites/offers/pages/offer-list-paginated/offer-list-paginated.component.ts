@@ -66,7 +66,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     private logService: LogService
   ) {
     this.pageCollectionSize = 10; // Anzahl der Items
-    this.pageMaxSize = 5; //max.Seiten die angezeigt werden
+    this.pageMaxSize = 1; // max.Seiten die in der Pagination Leiste angezeigt werden (+1 und max)
     this.pageSize = environment.offerItemPerPage; // Items per Page
 
     this.page = 1; // Current Page
@@ -254,5 +254,14 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   private checkSearchText(): any {
     // this.searchString = this.searchString.trim();
     // in HTML?      pattern="[a-zA-Z0-9-_()& ]*"
+  }
+
+  // disabled
+  private setPaginationMaxLength() {
+    if (window) {
+      if (window.innerWidth > 576) {
+        this.pageMaxSize = 3;
+      }
+    }
   }
 }
