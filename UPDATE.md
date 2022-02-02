@@ -5,14 +5,37 @@ Aktuelle Version -> auch in der Doku (https://github.com/ild-thl/futureskills-do
 ## Globale Voraussetzungen
 Bitte updaten:
 
+### Node und npm
+
 - node.js in Version 16/LTS (nicht die neue 17!) https://nodejs.org/en/download/ 
+  - Mac: Am besten mit Brew (https://formulae.brew.sh/formula/node@16) installieren.
 
 - npm mind. in Version 8.1
+  - Unter Mac ist die Version in Node16 enthalten (Pfad setzen!)
   - Unter Windows:
     - *Kommandozeile als Admin ausführen, Installationspfad ggf. anpassen*
     - cd /c/Programme/nodejs
     - npm install npm@latest
     - npm -v
+
+### YARN
+
+- Wechsel des Package Managers zu yarn (https://yarnpkg.coml).
+- Wenn Node.js Version >=16, dann ist Yarn schon installiert.
+  - Run:  `corepack enable`
+  - Für Windows: corepack muss als Administrator ausgeführt werden
+
+- Wenn Node.js Version <16,
+  - Run `npm i -g corepack` (die Variante geht natürlich immer, dann hat man YARN einfach nochmal extra installiert)
+
+- Testen der Version mit `yarn --version`, sollte aktuell 1.22.17 sein.
+- wenn nicht: `yarn set version 1.22.17` . (Auch das Setzen der Version muss unter Windows als Admin ausgeführt werden)
+
+- Die Befehle zum Hinzufügen und Ändern von Packages unterscheidet sich von npm.    
+Siehe unter https://yarnpkg.com/getting-started/usage    
+(z.B: `yarn add` --> Hinzufügen von packages )
+
+## Angular-CLI
 
 - Angular-CLI (falls ihr die auch global installiert habt): @angular/cli@13.1.1 https://www.npmjs.com/package/@angular/cli#usage
   - npm uninstall -g @angular/cli
@@ -28,6 +51,7 @@ Bitte updaten:
 - ng-bootstrap von 9 auf 11 
 - cookie-service von 11 auf 13
 - ngx-owl-carousel-o von 5 auf 7
+- kolkov/editor auf Version 2.0.0
 
 - kein Support mehr für IE
 - Typescript Version 4.4

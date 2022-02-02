@@ -16,6 +16,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public isMenuCollapsed = true;
 
+  loginBtnVisible = this.staticConfig.getComponentVisibility().loginButton;
+  logoutBtnVisible = this.staticConfig.getComponentVisibility().logoutButton;
+
   lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
   lnkLanding = this.staticConfig.getPathInfo().lnkLanding;
   lnkAfterLogout = this.staticConfig.getRoutingInfo().lnkAfterLogout;

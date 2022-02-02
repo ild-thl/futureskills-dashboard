@@ -35,7 +35,8 @@ import {
   faAngleDown,
   faExternalLinkAlt,
   faUndo,
-  faSearch
+  faSearch,
+  faVideo
 } from '@fortawesome/free-solid-svg-icons';
 import { CheckPermissionsDirective } from './directives/check-permissions.directive';
 
@@ -98,6 +99,7 @@ export class SharedModule {
       faAngleDown,
       faExternalLinkAlt,
       faUndo,
+      faVideo,
       faSearch
     );
   }
