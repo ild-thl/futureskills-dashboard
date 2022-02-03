@@ -18,19 +18,19 @@
 
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto d-flex align-items-center">
-            <li class="nav-item h-100" [routerLinkActive]="['active']">
+            <li class="nav-item h-100 text-link" [routerLinkActive]="['active']">
               <a class="nav-link" [routerLink]="lnkOffers" (click)="isMenuCollapsed = true"
                 >Alle Kurse
                 <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon
               ></a>
             </li>
-            <li class="nav-item h-100" [routerLinkActive]="['active']">
+            <li class="nav-item h-100 text-link" [routerLinkActive]="['active']">
               <a class="nav-link" [routerLink]="lnkKITools" (click)="isMenuCollapsed = true"
                 >KI Playground
                 <fa-icon class="chevron-right" [icon]="['fas', 'chevron-right']"></fa-icon
               ></a>
             </li>
-            <li class="nav-item" ngbDropdown [routerLinkActive]="['active']">
+            <li class="nav-item text-link" ngbDropdown [routerLinkActive]="['active']">
               <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
                 Infos
                 <fa-icon class="chevron-down" [icon]="['fas', 'chevron-down']"></fa-icon>
@@ -46,7 +46,7 @@
             </li>
 
             <ng-container *ngIf="!isAuthenticated && loginBtnVisible">
-              <li class="nav-item h-100 login" [routerLinkActive]="['active']">
+              <li class="nav-item h-100 login icon-link" [routerLinkActive]="['active']">
                 <a
                   class="nav-link d-flex justify-content-start align-items-center"
                   [routerLink]="lnkLogin"
@@ -60,7 +60,7 @@
             </ng-container>
 
             <ng-container *ngIf="isAuthenticated && logoutBtnVisible">
-              <li class="nav-item h-100 login-ok" ngbDropdown [routerLinkActive]="['active']">
+              <li class="nav-item h-100 login-ok icon-link" ngbDropdown [routerLinkActive]="['active']">
                 <a
                   class="nav-link logout d-flex justify-content-start align-items-center"
                   tabindex="0"

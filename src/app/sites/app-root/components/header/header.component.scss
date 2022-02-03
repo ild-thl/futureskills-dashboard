@@ -94,6 +94,7 @@ $navbar-height: 58px;
             &.active {
               .nav-link {
                 color: var(--color-primary-blue);
+                font-weight: 700;
               }
             }
             &:not(:last-child) {
@@ -246,7 +247,7 @@ $navbar-height: 58px;
             .nav-item {
               width: auto;
               transition: ease-out 0.15s;
-              &:not(:last-child) {
+              &.text-link {
                 border-bottom: $hover-border solid transparent;
                 border-top: $hover-border solid transparent;
                 margin: 0 15px;
@@ -261,7 +262,7 @@ $navbar-height: 58px;
                 a {
                   color: var(--color-primary-blue-hover);
                 }
-                &:not(:last-child) {
+                &.text-link {
                   border-bottom: $hover-border solid var(--color-primary-blue-hover);
                 }
               }
@@ -269,8 +270,11 @@ $navbar-height: 58px;
                 a {
                   color: var(--color-primary-blue);
                 }
-                &:not(:last-child) {
+                &.text-link {
                   border-bottom: $hover-border solid var(--color-primary-blue);
+                  .nav-link {
+                    font-weight: 400;
+                  }
                 }
               }
               &.login {
