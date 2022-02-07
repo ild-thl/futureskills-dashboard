@@ -46,6 +46,7 @@ import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-pag
 import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
 import { RecommendedComponent } from './sites/offers/components/recommended/recommended.component';
+import { CardComponent } from './sites/offers/components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { RecommendedComponent } from './sites/offers/components/recommended/reco
     FilterRowServerDirective,
     SearchFieldComponent,
     NotAllowedComponent,
-    RecommendedComponent
+    RecommendedComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

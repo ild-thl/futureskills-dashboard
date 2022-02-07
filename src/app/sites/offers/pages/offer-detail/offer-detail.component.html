@@ -200,22 +200,6 @@
     </div>
   </section>
 
-  <section class="detail-page recommended py-5" *ngIf="offer?.relatedOfferData?.length > 0">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 pb-5">
-          <h3 class="h2 text-center header">Weil du dir "{{ offer?.title }}" angesehen hast.</h3>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div
-          class="col-auto mb-3"
-          *ngFor="let relatedOffer of offer?.relatedOfferData; let i = index"
-        >
-          <fs-small-offer-tile [offerForTile]="relatedOffer"></fs-small-offer-tile>
-        </div>
-      </div>
-    </div>
-  </section>
+  <app-recommended></app-recommended>
 </div>
 <!-- EO !error -->
