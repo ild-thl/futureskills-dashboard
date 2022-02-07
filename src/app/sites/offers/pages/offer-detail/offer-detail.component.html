@@ -130,76 +130,7 @@
     </div>
   </section>
 
-  <section class="detail-page content py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-7">
-          <h3>Was erwartet dich im Kurs?</h3>
-          <div class="course-detail-text" [innerHTML]="offer?.description"></div>
-        </div>
-        <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
-          <div class="course-metadata" *ngIf="offer?.meta !== null || offer?.author !== null">
-            <h5 class="mb-3">Eckdaten</h5>
-            <div class="course-metadata-detail" *ngIf="offer?.author">
-              <div class="metadata-icon">
-                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
-              </div>
-              <div class="metadata-content">
-                <h6>Autor/innen</h6>
-                <p>{{ offer?.author }}</p>
-              </div>
-            </div>
-            <div class="course-metadata-detail" *ngIf="offer?.meta.time_requirement">
-              <div class="metadata-icon">
-                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
-              </div>
-              <div class="metadata-content">
-                <h6>Arbeitsaufwand</h6>
-                {{ offer?.meta.time_requirement }}
-              </div>
-            </div>
-            <div class="course-metadata-detail" *ngIf="offer?.meta.requirements">
-              <div class="metadata-icon">
-                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
-              </div>
-              <div class="metadata-content">
-                <h6>Voraussetzungen</h6>
-                {{ offer?.meta.requirements }}
-              </div>
-            </div>
-            <div class="course-metadata-detail" *ngIf="offer?.meta.niveau">
-              <div class="metadata-icon">
-                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
-              </div>
-              <div class="metadata-content">
-                <h6>Niveau</h6>
-                {{ offer?.meta.niveau }}
-              </div>
-            </div>
-            <div class="course-metadata-detail" *ngIf="offer?.meta.exam">
-              <div class="metadata-icon">
-                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
-              </div>
-              <div class="metadata-content">
-                <h6>Prüfung</h6>
-                {{ offer?.meta.exam }}
-              </div>
-            </div>
-            <div class="course-metadata-detail" *ngIf="offer?.meta.sponsor">
-              <div class="metadata-icon">
-                <fa-icon class="metadata-check" [icon]="['fas', 'check']"></fa-icon>
-              </div>
-              <div class="metadata-content">
-                <h6>Sponsor</h6>
-                {{ offer?.meta.sponsor }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <app-offer-text></app-offer-text>
   <app-recommended></app-recommended>
 </div>
 <!-- EO !error -->

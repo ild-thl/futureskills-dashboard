@@ -279,61 +279,9 @@
   }
 }
 
-.course-metadata {
-  background-color: #EEEEEE;
-  padding: 20px;
-
-  h5 {
-    font-weight: bold;
-  }
-
-  .course-metadata-detail {
-    display: flex;
-    align-items: flex-start;
-
-    .metadata-icon {
-      flex: 1;
-      color: #1EAE9C;
-    }
-    .metadata-content {
-      flex: 11;
-
-      h6 {
-        font-weight: bold;
-      }
-    }
-  }
-  @media(min-width: $sm) {
-    .course-metadata-detail {
-      .metadata-content {
-        flex: 8;
-      }
-    }
-  }
-  @media(min-width: $md) {
-    .course-metadata-detail {
-      .metadata-content {
-        flex: 11;
-      }
-    }
-  }
-}
-
-.recommended {
-  background-color: #b55c9c;
-
-  .container-fluid {
-    .row {
-      .header {
-        color: var(--color-function-white);
-      }
-    }
-  }
-}
-
 //end new development
 
-
+/*
 .offer-detail {
     th {
         border-top: 0;
@@ -356,7 +304,6 @@
 
     ol ol > li:before {
         content: counters(item, ".") ". ";
-        // margin-left: -20px;
     }
 }
 
@@ -470,3 +417,4 @@
         }
     }
 }
+*/
