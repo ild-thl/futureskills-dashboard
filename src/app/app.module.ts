@@ -47,6 +47,7 @@ import { SearchFieldComponent } from './sites/offers/components/search-field/sea
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
 import { RecommendedComponent } from './sites/offers/components/recommended/recommended.component';
 import { CardComponent } from './sites/offers/components/card/card.component';
+import { OfferTextComponent } from './sites/offers/components/offer-text/offer-text.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { CardComponent } from './sites/offers/components/card/card.component';
     SearchFieldComponent,
     NotAllowedComponent,
     RecommendedComponent,
-    CardComponent
+    CardComponent,
+    OfferTextComponent
   ],
   imports: [
     BrowserModule,
