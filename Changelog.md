@@ -1,4 +1,5 @@
 # Changelog
+
 ## [Not Released v0.10.0]
 
 ## 2022-02-08/ml
@@ -10,7 +11,7 @@
 - new extern Definitionfile
 - OfferDetail/OfferPagination/FilterService - complete strictmode
 
-## [Not Released v0.9]
+## [Released v0.9]
 
 ## 2022-01-31/ml
 - Pagination Bar is shorter 
