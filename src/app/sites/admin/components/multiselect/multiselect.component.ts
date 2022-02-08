@@ -106,7 +106,7 @@ export class MultiselectComponent implements OnInit, ControlValueAccessor {
   }
 
   // onChange Function
-  onChange = (keyWordList) => {};
+  onChange = (keyWordList: any) => {};
 
   // onTouch Function
   onTouched = () => {};
