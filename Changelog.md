@@ -1,5 +1,16 @@
 # Changelog
 
+## [Not Released v0.10.0]
+
+## 2022-02-08/ml
+- strictRules
+  - strictBindCallApply
+  - strictFunctionTypes
+  - noImplicitThis
+  - noImplicitAny
+- new extern Definitionfile
+- OfferDetail/OfferPagination/FilterService - complete strictmode
+
 ## [Released v0.9]
 
 ## 2022-01-31/ml

@@ -34,7 +34,7 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
   constructor(private offerDataService: OfferDataService, private route: ActivatedRoute) {}
 
   relatedOfferFormatter = (x: { title: string }) => x.title;
-  relatedOfferSearch: OperatorFunction<string, readonly { title }[]> = (
+  relatedOfferSearch: OperatorFunction<string, readonly { title: any }[]> = (
     text$: Observable<string>
   ) =>
     text$.pipe(
@@ -49,7 +49,7 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
       )
     );
 
-  deleteOffer(i) {
+  deleteOffer(i: any) {
     this.relatedOffersArray.splice(i, 1);
     this.offer.relatedOffers.splice(i, 1);
     this.relatedOffersOutput.emit(this.offer.relatedOffers);
@@ -59,7 +59,7 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
   approveOffer() {
     if (this.selectedOfferModel != null) {
       let offerIsInRelations = this.relatedOffersArray.findIndex(
-        (offer) => offer.id == this.selectedOfferModel.id
+        (offer: any) => offer.id == this.selectedOfferModel.id
       );
       if (offerIsInRelations < 0) {
         let offer = this.selectedOfferModel;
@@ -81,7 +81,7 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
     this.inputState = !this.inputState;
   }
 
-  onItemSelection(event) {
+  onItemSelection(event: any) {
     this.closeaAllAlerts();
     this.setTooltipMessage(true);
   }

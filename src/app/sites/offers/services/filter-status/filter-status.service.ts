@@ -13,15 +13,19 @@ export type OfferListFilterStatus = {
 export class FilterStatusService {
   private offerListFilterSiteStatus: OfferListFilterStatus;
 
+  constructor() {
+    this.offerListFilterSiteStatus = this.createEmptyFilterStatus();
+  }
+
   public getofferListSearchFilterStatus(): OfferListFilterStatus {
     return this.offerListFilterSiteStatus;
   }
 
-  constructor() {
-    this.resetFilterSearchStatus();
-  }
-
-  public saveFilterStatus(page: number, filterMap: Map<string, number>, searchString: string): boolean {
+  public saveFilterStatus(
+    page: number,
+    filterMap: Map<string, number>,
+    searchString: string
+  ): boolean {
     this.offerListFilterSiteStatus.page = page;
     this.offerListFilterSiteStatus.filterMap = filterMap;
     this.offerListFilterSiteStatus.searchString = searchString;
@@ -31,12 +35,7 @@ export class FilterStatusService {
 
   public resetFilterSearchStatus(): OfferListFilterStatus {
     const searchString = '';
-    this.offerListFilterSiteStatus = {
-      page: 1,
-      filterMap: this.getEmptyOfferFilterValues(),
-      filterOn: this.checkOnSearchFilterOn(this.getEmptyOfferFilterValues(), searchString),
-      searchString: searchString,
-    };
+    this.offerListFilterSiteStatus = this.createEmptyFilterStatus();
     return this.getofferListSearchFilterStatus();
   }
 
@@ -47,6 +46,17 @@ export class FilterStatusService {
     resetMap.set('formats', -1);
     resetMap.set('languages', -1);
     return resetMap;
+  }
+
+  private createEmptyFilterStatus(): OfferListFilterStatus {
+    const searchString = '';
+    const emptyFilterStatus = {
+      page: 1,
+      filterMap: this.getEmptyOfferFilterValues(),
+      filterOn: this.checkOnSearchFilterOn(this.getEmptyOfferFilterValues(), searchString),
+      searchString: searchString,
+    };
+    return emptyFilterStatus;
   }
 
   private checkOnFilterOn(filterMap: Map<string, number>): boolean {
