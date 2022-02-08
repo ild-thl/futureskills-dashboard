@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'fs-info-banner',
@@ -6,7 +6,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./info-banner.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class InfoBannerComponent implements OnInit {
+export class InfoBannerComponent {
   constructor() {}
-  ngOnInit(): void {}
 }

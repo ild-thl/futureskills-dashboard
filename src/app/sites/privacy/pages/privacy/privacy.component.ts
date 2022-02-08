@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-privacy',
   templateUrl: './privacy.component.html'
 })
-export class PrivacyComponent implements OnInit {
+export class PrivacyComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

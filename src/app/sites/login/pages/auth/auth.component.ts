@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { StaticService } from 'src/app/config/static.service';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { User } from 'src/app/core/models/user';
 
 @Component({
@@ -13,56 +14,67 @@ import { User } from 'src/app/core/models/user';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit, OnDestroy {
-
   lnkAfterLogin = this.staticConfig.getRoutingInfo().lnkAfterLogin;
-
   loginSubscription: Subscription;
   authSubsription: Subscription;
+
+  isLoggedIn: boolean;
   isLoading = false;
-  error: string = null;
+  errorMessage: string = null;
+  isError: boolean = false;
+
   @ViewChild('authForm') authForm: NgForm;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private staticConfig: StaticService
-  ) {}
+    private staticConfig: StaticService,
+    private errorHandler: ErrorHandlerService
+  ) {
+    this.isLoggedIn = false;
+  }
   ngOnInit() {
     this.authSubsription = this.authService.userAuthenticated$.subscribe((userData) => {
-      if (userData.isAuth) {
-        console.log('AuthComponent: User is logged in.', userData.user);
-      }
+      this.isLoggedIn = userData.isAuth;
     });
   }
 
   onSubmit(form: NgForm) {
-    //console.log(form.value);
     if (!form.valid) {
       return;
     }
     const email = form.value.email;
     const password = form.value.password;
     this.isLoading = true;
-    this.error = '';
+    this.errorMessage = '';
+    this.isError = false;
 
-    this.loginSubscription = this.authService.login(email, password).subscribe(
-      (resData: User) => {
-        //console.log('AuthComponent:', resData);
+    this.loginSubscription = this.authService.login(email, password).subscribe({
+      next: (resData: User) => {
         this.isLoading = false;
-        this.router.navigate([this.lnkAfterLogin]);
+        if (resData){
+          this.router.navigate([this.lnkAfterLogin]);
+        } else {
+          // user is null
+          this.isError = true;
+          this.errorMessage = this.errorHandler.ERROR_MESSAGES.DEFAULT_ERROR;
+        }
       },
-      (errorMessage) => {
-        console.log('AuthComponent Error:', errorMessage);
-        this.error = errorMessage;
+      error: (error: Error) => {
+        this.errorMessage = this.errorHandler.getErrorMessage(error, 'login');
+        this.isError = true;
         this.isLoading = false;
       }
-    );
-
+    });
     form.reset();
   }
 
   ngOnDestroy(): void {
     if (this.loginSubscription) this.loginSubscription.unsubscribe();
     if (this.authSubsription) this.authSubsription.unsubscribe();
+  }
+
+  onLogout() {
+    this.authService.logoutUser().subscribe();
   }
 }

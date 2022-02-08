@@ -11,7 +11,7 @@ import { CoursecarouselComponent } from './coursecarousel.component';
 
 @Injectable()
 export class HammerConfig extends HammerGestureConfig {
-  overrides = {
+  override overrides = {
     swipe: { direction: Hammer.DIRECTION_ALL },
   };
 }

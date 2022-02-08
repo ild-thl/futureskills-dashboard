@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { StaticService } from 'src/app/config/static.service';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   constructor(private staticConfig: StaticService) {}
 
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
@@ -16,5 +16,4 @@ export class FooterComponent implements OnInit {
   lnkPrivacy = this.staticConfig.getPathInfo().lnkPrivacy;
   lnkLanding = this.staticConfig.getPathInfo().lnkLanding;
 
-  ngOnInit(): void {}
 }

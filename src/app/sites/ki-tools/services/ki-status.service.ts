@@ -29,7 +29,7 @@ export class KiStatusService {
 
     return new Observable((observer$) => {
       if (!this.MNISTModel$) {
-        console.log('Load MNIST-Model:', kiToolsMnistModelPath);
+        //console.log('Load MNIST-Model:', kiToolsMnistModelPath);
         this.MNISTModel$ = new AsyncSubject();
         from(tf.loadLayersModel(kiToolsMnistModelPath)).subscribe(this.MNISTModel$);
       }
@@ -43,7 +43,7 @@ export class KiStatusService {
 
     return new Observable((observer$) => {
       if (!this.SentimentModel$) {
-        console.log('Load Sentiment-Model');
+        //console.log('Load Sentiment-Model');
         this.SentimentModel$ = new AsyncSubject();
         from(tf.loadLayersModel(kiToolsSentimentModelPath_en)).subscribe(this.SentimentModel$);
       }
@@ -59,7 +59,7 @@ export class KiStatusService {
 
     return new Observable((observers$) => {
       if (!this.WordIndex$) {
-        console.log('Load Word-Index');
+        //console.log('Load Word-Index');
         this.WordIndex$ = new AsyncSubject();
         this.httpClient.get(kiToolsSentimentIndexPath_en).subscribe(this.WordIndex$);
       }
@@ -80,7 +80,7 @@ export class KiStatusService {
   }> {
     return new Observable((observer$) => {
       if (!this.LinkList$) {
-        console.log('Load Link List');
+        //console.log('Load Link List');
         this.LinkList$ = new AsyncSubject();
         const list = this.getLinkListJSONFile().pipe(
           map((items) => {

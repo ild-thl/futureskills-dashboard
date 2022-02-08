@@ -1,47 +1,59 @@
 # Futureskills Dashboard
 
-- Das Projekt basiert auf Angular.       
-[Angular CLI](https://github.com/angular/angular-cli) version 11.2.11. 
+## Voraussetzungen
+- Das Projekt basiert auf Angular 13 ([Angular CLI](https://github.com/angular/angular-cli) Version 13.1.2., npm package:  @angular/cli@13.1.2)
+- Notwendig: [Node.js](https://nodejs.org/en/) in der LTS Version 16 (NICHT die 17!) 
+- mit der Node.js Version 16 wird auch automatisch der Paketinstaller npm in Version 8.1 installiert
 
-- Installation der Pakete per npm:  `npm install`
+### Paketinstaller
+WICHTIG: Wir wechseln auf YARN (https://yarnpkg.com/getting-started/install). 
+--> siehe UPDATE.md
 
-## Environment
+## Installation
+Nach der Installation -> Aufruf: `yarn` 
+
+
+## Extensions für Visual Studio Code
+### Bitte installieren:    
+- Prettier - Code Formatter (esbenp.prettier-vscode) 
+- Kontextsensitive Hilfe mit Angular Language Service (angular.ng-template)
+- ESLint: (dbaeumer.vscode-eslint)
+
+### optional:    
+- Angular Snippets (johnpapa.angular2)   
+
+## Umgebung
+Es gibt drei Umgebungen -> (development/staging/production)
+
 - /src/environments/environment.ts.example dublizieren und umbennenen in environment.ts
 - Für die staging/production Umgebungen bei Bedarf ebenfalls Kopien erstellen.
 - ClientId und ClientSecret eintragen (die Werte werden bei der Einrichtung des Backends generiert).
 
-### Development Server
-- Starten des Development-Servers: `ng serve`  (`http://localhost:4200`)
-- Starten des Development-Servers mit npm: `npm run start`  (`http://localhost:4201`)
+## Starten der Build/Serve Umgebungen
+Alle drei Umgebungen lassen sich mit `ng build` als Webseiten-Projekt exportieren als auch als Entwicklungs-Projekt mit `ng serve` starten. Angular 13 kompiliert per Standard als _production_. Das wurde in diesem Projekt wieder zurück auf _development_ gestellt (wie in Angular 11)!
 
+### SERVE -  (http://localhost:4200)
+- Development: `ng serve`  oder `npm run start`
+- Theoretisch funktionieren auch die Staging/Prod Umgebungen (die Envs verweisen aber auf externe Server)
+  - Staging: `ng serve --configuration=staging` 
+  - Production: `ng serve --configuration=production` 
 
-### Build Environments
-- Dev: ```npm run build``` oder ```ng build```
-- Staging: ```npm run staging``` oder ```ng build --configuration=staging```
-- Production: ```npm run production``` oder ```ng build --prod```
+### BUILD -  (unter dist/futureskills-client)
+- Development: `ng build`  oder `npm run build`
+- Staging: `ng build --configuration=staging`  oder `npm run staging`
+- Production: `ng build --configuration=production`   oder `npm run production`
+
+### Linting
+- Eslint ist jetzt konfiguriert: `npm run lint`
 
 ### Tests
-- Unit-Tests per Jest: ```npm run test```
-  - mit Watcher: ```npm run test:watch```
-  - mit Coverage: ```npm run test:coverage```
-- e2e-Tests per Protractor: ```npm run e2e```
-
-## Extensions für Visual Studio Code
-Neu - Einheitliche Formatierung des Quellcodes mit prettier.  
-Falls Probleme in Kombination mit TSLint auftauchen - Bescheid geben, dann muss die Datei noch angepasst werden.  
-Extension: 
-- Prettier - Code Formatter (esbenp.prettier-vscode)
-
-Empfohlen:     
-- Angular Snippets (johnpapa.angular2)   
-- Angular Language Service (angular.ng-template)
-
+- Unit-Tests per Karma: ```npm run test```
 
 <hr>
 
-# Angular Readme
+# Official Angular Readme
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.11.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
 ## Development server
 
@@ -53,15 +65,15 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Jest](https://jestjs.io).
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 

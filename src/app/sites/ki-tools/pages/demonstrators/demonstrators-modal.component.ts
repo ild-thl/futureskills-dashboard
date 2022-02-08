@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { KIToolsTypes } from '../../interfaces/types';
 
 @Component({
   selector: 'app-demonstrators-modal',
@@ -22,7 +21,6 @@ import { KIToolsTypes } from '../../interfaces/types';
       </div>
     </div>`,
 })
-export class NgbdDemonstratorsModalComponent implements OnInit {
-  ngOnInit() {}
+export class NgbdDemonstratorsModalComponent {
   constructor(public activeModal: NgbActiveModal) {}
 }

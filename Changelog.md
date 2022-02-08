@@ -1,5 +1,74 @@
 # Changelog
 
+## [Released v0.9]
+
+## 2022-01-31/ml
+- Pagination Bar is shorter 
+- Login/Logout Button in ng-container to delete out of dom-structure
+- visible var in static service
+
+## 2022-01-27/avz
+### added
+- Textcomponent with video on the teacher info page
+
+## 2022-01-27/avz
+### changed
+- added navigation bar to the header component
+
+## 2022-01-26/ml
+### changed
+- kolkov/editor updated to 2.0.0 (Ivy Version)
+
+## 2022-01-19/ml
+### changed
+- clean console.logs (eslint warning on)
+- Implicit Returns are not allowed anymore
+- several pages -> GUI shows different messages
+### added
+- ErrorService for ErrorMessages
+- API Services handles Server-Status Codes
+
+## 2022-01-17/ml
+### changed
+- rxjs completed path deleted in playground 
+- new errorhandling in playground
+- date for linklist in static var
+- course-list: cleanup packages, deleted complete path
+
+## 2022-01-14/ml
+### changed
+- login => if logged in , button to log out
+- header, 
+  - new subscription syntax
+  - no i18 items
+
+## 2022-01-14/ml
+### added
+- new module auth
+- env Path for idp
+- redirect path
+
+## 2022-01-14/ml
+### changed
+- AuthService 
+  - Token expired when login -> automatically logout
+  - CleanUp (no timer anymore)
+- Users Emailadress is no longer saved
+### added
+- token service
+
+
+## 2022-01-10/ml
+### changed
+- Update to Angular13
+- Update Packages
+- Update Angular.json, tsconfig
+
+## 2021-12-15/ml
+### added
+- User and Roles in auth.service
+- UserData is not saved in localStorage any more, only token
+
 ## [Released v0.8]
 
 ## 2021-12-01/avz

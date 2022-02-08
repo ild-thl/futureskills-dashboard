@@ -3,7 +3,6 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
@@ -23,7 +22,7 @@ type SliderData = {
   templateUrl: './course-slider.component.html',
   styleUrls: ['./course-slider.component.scss'],
 })
-export class CourseSliderComponent implements OnInit, OnChanges {
+export class CourseSliderComponent implements OnChanges {
   @Input() kiOffers: SmallOfferDetailData[] = [];
   @ViewChild('owlCarousel') owlCar: CarouselComponent;
   @ViewChild('courseCarousel') courseCarousel: ElementRef;
@@ -71,8 +70,6 @@ export class CourseSliderComponent implements OnInit, OnChanges {
 
   constructor(private staticConfig: StaticService) {}
 
-  ngOnInit(): void {}
-
   ngOnChanges(): void {
     if (!this.kiOffers || this.kiOffers.length < 1) {
       this.sliderIsVisible = false;
@@ -89,8 +86,6 @@ export class CourseSliderComponent implements OnInit, OnChanges {
       this.sliderIsVisible = true;
     }
   }
-
-  ngOnDestroy(): void {}
 
   private cropTextLength(str: string, length: number): string {
     return str.length <= length ? str : str.substr(0, length) + '\u2026';

@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalLmsContent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
-import { NgbdModalOfferDelete } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
+import { NgbdModalLmsContentComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
+import { NgbdModalOfferDeleteComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
 import { StaticService } from 'src/app/config/static.service';
+import { Objects, Permissions } from 'src/app/core/models/permissions';
+import { LogService } from 'src/app/core/services/logger/log.service';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 
 @Component({
   selector: 'app-offer-detail',
@@ -24,7 +27,9 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   public user: User;
   public isLoading = false;
   public subscribed = false;
-  public isAuthenticated = false;
+
+  object = Objects;
+  permission = Permissions;
 
   isError: boolean;
   errMessage: string;
@@ -34,55 +39,50 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private staticConfig: StaticService
+    private staticConfig: StaticService,
+    private logService: LogService,
+    private errorHandler: ErrorHandlerService
   ) {}
 
   ngOnInit() {
     this.paramsSub = this.route.paramMap.subscribe((params) => {
       const offerId = +params.get('id');
-      console.log('Aktuelle Id:', offerId);
+
       this.isLoading = true;
       this.errMessage = '';
       this.isError = false;
 
-      this.userSub = this.offerDataService.getOfferDataForDetail(offerId).subscribe(
-        (data) => {
-          console.log('Detaildata:', data);
+      this.userSub = this.offerDataService.getOfferDataForDetail(offerId).subscribe({
+        next: (data) => {
+          //this.logService.log('offer-detail', 'Detaildata', data);
           this.user = data.user;
           this.offer = data.offerData;
           this.subscribed = false;
           this.isLoading = false;
           this.errMessage = '';
           this.isError = false;
-          // TODO: Proper Auth check when user roles are available
-          if (this.user !== undefined) {
-            this.isAuthenticated = true;
-          }
         },
-        (error) => {
-          console.log('ErrorMessage:', error);
+        error: (error: Error) => {
           this.isLoading = false;
           this.isError = true;
-          this.errMessage = 'Der Kurs wurde nicht gefunden.';
-        }
-      );
+          //this.errMessage =this.errorHandler.getErrorMessage(error, 'offer');
+          // Besser immer die not-found-Fehlermeldung anzeigen.
+          this.errMessage = this.errorHandler.ERROR_MESSAGES.E404_OFFER_NOT_FOUND;
+        },
+      });
     });
   }
 
   deleteOffer() {
-    console.log('delete:' + this.offer.id);
-    // Kurse, die gebucht sind lassen sich nicht löschen
-    // Todo: Vorher prüfen oder Fehlermeldung abfangen
-
     // TODO: Lädt-Anzeige an
-    this.offerDataService.deleteOffer(this.offer).subscribe((value) => {
-      // TODO: Lädt-Anzeige aus
-      this.router.navigate([this.lnkOffers]);
-    }),
-      (error) => {
-        // TODO: Lädt-Anzeige aus + Fehlermeldung
-        console.log('Error Delete: ', error);
-      };
+    this.offerDataService.deleteOffer(this.offer).subscribe({
+      next: (value) => {
+        this.router.navigate([this.lnkOffers]);
+      },
+      error: (error: Error) => {
+        // TODO: Rückmeldung?
+      },
+    });
   }
 
   /**
@@ -93,15 +93,14 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
 
   forwardToLMS() {
     if (this.offer.url == null || this.offer.url == undefined) {
-      console.log('PATH is not defined');
+      this.logService.log('offer-detail:', 'PATH is not defined');
       return;
     }
 
     if (!this.isExternalURL(this.offer.url)) {
-      console.log('PATH is not valid: ', this.offer.url);
+      this.logService.log('offer-detail: ', 'PATH is not valid: ', this.offer.url);
       return;
     } else {
-      console.log('Redirect to: ', this.offer.url);
     }
 
     if (window) {
@@ -112,7 +111,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   }
 
   showModalWindowToLMS() {
-    const modalRef = this.modalService.open(NgbdModalLmsContent, {
+    const modalRef = this.modalService.open(NgbdModalLmsContentComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = this.offer.title;
@@ -129,19 +128,15 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   }
 
   showModalWindowDeleteOffer() {
-    const modalRef = this.modalService.open(NgbdModalOfferDelete, {
+    const modalRef = this.modalService.open(NgbdModalOfferDeleteComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = this.offer.title;
     modalRef.result.then(
       (result) => {
-        // console.log('Weiter ', result);
         this.deleteOffer();
       },
-      (reason) => {
-        // Cancel by button or ModalDismissReasons
-        // console.log('Cancel ', reason);
-      }
+      (reason) => {}
     );
   }
 

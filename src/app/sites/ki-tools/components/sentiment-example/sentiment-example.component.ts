@@ -1,5 +1,5 @@
 import { forkJoin, Observable } from 'rxjs';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { KIToolsTypes } from '../../interfaces/types';
 import { StaticService } from 'src/app/config/static.service';
 import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
@@ -12,7 +12,7 @@ import * as tf from '@tensorflow/tfjs';
   templateUrl: './sentiment-example.component.html',
   styleUrls: ['./sentiment-example.component.scss'],
 })
-export class SentimentExampleComponent implements OnInit {
+export class SentimentExampleComponent implements OnInit, OnChanges {
   @Input() scriptLoadingStatus: KIToolsTypes.ScriptLoadingStatus;
   @Input() public modus = 'window';
   @Output() modalClose = new EventEmitter<any>();
@@ -32,7 +32,9 @@ export class SentimentExampleComponent implements OnInit {
     'positiv',
     'nicht bewertbar',
   ];
-  lnkCoursePath1 = this.staticService.getPathInfo().lnkOffers + this.staticService.getCourseNumbers().futureskillsKI;
+  lnkCoursePath1 =
+    this.staticService.getPathInfo().lnkOffers +
+    this.staticService.getCourseNumbers().futureskillsKI;
 
   // Modellvariablen
   private model: any;
@@ -40,7 +42,8 @@ export class SentimentExampleComponent implements OnInit {
   private NUM_WORDS = 10000;
   private UNKNOWN_CHAR = 2;
 
-  modelLoaded = false;
+  modelLoaded: boolean = false;
+  modelLoadError: boolean = false;
   alertList: AlertList = new AlertList();
   constructor(private kiService: KiStatusService, private staticService: StaticService) {}
 
@@ -65,7 +68,7 @@ export class SentimentExampleComponent implements OnInit {
     }
   }
 
-  onCloseModalWindow(){
+  onCloseModalWindow() {
     this.modalClose.emit();
   }
 
@@ -89,25 +92,24 @@ export class SentimentExampleComponent implements OnInit {
     if (this.modelLoaded) {
       this.isCalculating = true;
 
-      this.calculatePrediction().subscribe(
-        (value) => {
-          console.log('value: ' + value);
+      this.calculatePrediction().subscribe({
+        next: (value) => {
+          this.isCalculating = false;
+          //console.log('value: ' + value);
           this.showResults(value);
         },
-        (error) => {
-          console.log('Error:' + error);
-        },
-        () => {
+        error: (error) => {
           this.isCalculating = false;
-        }
-      );
+          // console.log('Error:' + error);
+        },
+      });
     }
   }
 
   calculatePrediction(): Observable<any> {
     return new Observable((subscriber) => {
       const editedText = this.editText(this.textAreaText);
-      console.log('Text bearbeitet: ', editedText);
+
       const wordToIndex = this.wordsToIndex(editedText);
       const value = this.getSentimentValue(wordToIndex);
 
@@ -147,7 +149,7 @@ export class SentimentExampleComponent implements OnInit {
       }
       wordIds.push(foundWordIndex);
     }
-    console.log('WordIndex: ', wordIds);
+    //console.log('WordIndex: ', wordIds);
     const paddedSentence = this.padLeft(wordIds, this.MAX_REVIEW_LENGTH);
     return paddedSentence;
   }
@@ -193,13 +195,20 @@ export class SentimentExampleComponent implements OnInit {
     forkJoin({
       model: this.kiService.loadSentimentModel(),
       index: this.kiService.loadWordIndex(),
-    }).subscribe((values) => {
-      this.model = values.model;
-      this.WordToIndex = values.index;
-      this.modelLoaded = true;
-    }, error=>{
-      console.log("Modell kann nicht geladen werden.");
-      this.alertList.addAlert('danger', 'Die benötigten Daten können leider nicht geladen werden.');
+    }).subscribe({
+      next: (values) => {
+        this.model = values.model;
+        this.WordToIndex = values.index;
+        this.modelLoaded = true;
+        this.modelLoadError = false;
+      },
+      error: (error) => {
+        this.modelLoadError = true;
+        this.alertList.addAlert(
+          'danger',
+          'Die benötigten Daten können leider nicht geladen werden.'
+        );
+      },
     });
   }
 }

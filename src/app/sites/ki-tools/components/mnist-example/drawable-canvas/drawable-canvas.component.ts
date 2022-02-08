@@ -19,7 +19,7 @@ import { CanvasPosition } from './event-canvas.directive';
   templateUrl: './drawable-canvas.component.html',
   styleUrls: ['./drawable-canvas.component.scss'],
 })
-export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DrawableCanvasComponent implements AfterViewInit, OnDestroy {
   @ViewChild('drawCanvas', { static: true }) public canvas: ElementRef;
   @Input() public width = 250;
   @Input() public height = 250;
@@ -34,8 +34,6 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
   resizingEventSubscription: Subscription;
 
   constructor(private renderer: Renderer2) {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     // CTX-Drawing Canvas
@@ -126,7 +124,7 @@ export class DrawableCanvasComponent implements OnInit, AfterViewInit, OnDestroy
 
       ctx.fillStyle = '#FFFFFF';
       this.canvasResized.emit({ width: canvas.width, height: canvas.height });
-      console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
+      //console.log('Canvas Size changed: ', canvas.width, ' ', canvas.height);
     }
     return wasChanged;
   }

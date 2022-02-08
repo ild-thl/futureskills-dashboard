@@ -12,12 +12,14 @@
       <div class="row">
         <div class="col-12">
           <div class="float-left">
-            <a fs-nav-back [routerLink]=""
-              ><fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> Zurück
-            </a>
+            <button fs-nav-back type="button" class="btn btn-link">
+              <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon> Zurück
+            </button>
           </div>
-          <div class="float-right" style="text-decoration: underline">
-            <a [routerLink]="lnkOffers"> Kursübersicht </a>
+          <div class="float-right">
+            <button [routerLink]="lnkOffers" type="button" class="btn btn-link">
+              <span style="text-decoration: underline">Kursübersicht</span>
+            </button>
           </div>
         </div>
       </div>
@@ -47,29 +49,29 @@
                       class="chip tech popinfo"
                       ngbPopover="Mit „TECH“ werden Future Skills Kurse gekennzeichnet, in denen technologische Fähigkeiten erworben werden können. Technologische Fähigkeiten umfassen jene Fähigkeiten, die für die Gestaltung von transformativen Technologien notwendig sind, wie z. B. bei der Webentwicklung oder der Blockchain-Entwicklung."
                       popoverTitle="Was bedeutet TECH?"
-                      *ngIf="offer?.competence_tech == true"
+                      *ngIf="offer?.competence_tech === 1"
                       >Tech</span
                     >
                     <span
                       class="chip digital"
                       ngbPopover="Mit „DIGITAL BASIC“ werden Future Skills Kurse gekennzeichnet, in denen digitale Grundfähigkeiten erworben werden können. Digitale Grundfähigkeiten beschreiben Fähigkeiten sich in einer digitalisierten Umwelt zurechtzufinden und aktiv an ihr teilzunehmen, wie z. B. die Fähigkeit zum kollaborativen Arbeiten."
                       popoverTitle="Was bedeutet DIGITAL BASIC?"
-                      *ngIf="offer?.competence_digital == true"
+                      *ngIf="offer?.competence_digital === 1"
                       >Digital Basic</span
                     >
                     <span
                       class="chip classic"
                       ngbPopover="Mit „CLASSIC“ werden Future Skills Kurse gekennzeichnet, in denen „klassische“ bzw. nicht-digitale Grundfähigkeiten erworben werden können. Die Bedeutung dieser Fähigkeiten, wie z. B. Adaptionsfähigkeit, Kreativität und Durchhaltevermögen, werden aus Sicht der Unternehmen in den kommenden Jahren im Arbeitsleben zunehmen."
                       popoverTitle="Was bedeutet CLASSIC?"
-                      *ngIf="offer?.competence_classic == true"
+                      *ngIf="offer?.competence_classic === 1"
                       >Classic</span
                     >
                     <span
                       class="chip none"
                       *ngIf="
-                        offer?.competence_tech != true &&
-                        offer?.competence_digital != true &&
-                        offer?.competence_classic != true
+                        offer?.competence_tech !== 1 &&
+                        offer?.competence_digital !== 1 &&
+                        offer?.competence_classic !== 1
                       "
                       >keine Angabe</span
                     >
@@ -90,8 +92,8 @@
                     {Blended Learning}}
                   </div>
                   <div class="buttons">
-                    <div class="edit-button" ngbDropdown *ngIf="isAuthenticated">
-                      <!-- todo: Nur Admins! -->
+                    <ng-container *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
+                    <div class="edit-button" ngbDropdown>
                       <button class="btn btn-light cog" id="dropdownBasic1" ngbDropdownToggle>
                         <fa-icon [icon]="['fas', 'cog']"></fa-icon>
                       </button>
@@ -112,6 +114,7 @@
                         </button>
                       </div>
                     </div>
+                    </ng-container>
                     <div class="card-button">
                       <button class="secondary-button dark" (click)="showModalWindowToLMS()">
                         Zum Kurs
@@ -135,7 +138,7 @@
           <div class="course-detail-text" [innerHTML]="offer?.description"></div>
         </div>
         <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
-          <div class="course-metadata" *ngIf="offer?.meta != null || offer?.author != null">
+          <div class="course-metadata" *ngIf="offer?.meta !== null || offer?.author !== null">
             <h5 class="mb-3">Eckdaten</h5>
             <div class="course-metadata-detail" *ngIf="offer?.author">
               <div class="metadata-icon">

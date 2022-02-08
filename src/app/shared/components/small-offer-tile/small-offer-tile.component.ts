@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
@@ -7,11 +7,9 @@ import { SmallOfferDetailData } from 'src/app/core/models/offer';
   templateUrl: './small-offer-tile.component.html',
   styleUrls: ['./small-offer-tile.component.scss'],
 })
-export class SmallOfferTileComponent implements OnInit {
+export class SmallOfferTileComponent {
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
 
   @Input() offerForTile: SmallOfferDetailData;
   constructor(private staticConfig: StaticService) {}
-
-  ngOnInit(): void {}
 }

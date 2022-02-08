@@ -66,7 +66,7 @@ export class OfferService {
       postObj.textsearch = searchString;
     }
 
-    console.log('Filter-Search to API:', postObj);
+    //console.log('Filter-Search to API:', postObj);
 
     const propertyID$ = this.dataCacheService.getPropertyIDMap();
     const paginatedOffers$ = this.apiService.postPaginatedOfferShortList(page, count, postObj);
@@ -77,7 +77,7 @@ export class OfferService {
         const paginated: PaginatedOfferDataFromAPI = results[0];
         const propertyIds = results[1];
         let offers = DataMapping.mapMetaPaginationStructure(paginated, propertyIds);
-        console.log('PaginatedOffers: ', offers);
+        //console.log('PaginatedOffers: ', offers);
         return offers;
       })
     );
@@ -93,7 +93,7 @@ export class OfferService {
     return forkJoin([offers$, propertyID$]).pipe(
       map((results) => {
         let offers = DataMapping.mapDataInOfferStructure(results[0], results[1]);
-        console.log('All Offers (not cached): ', offers);
+        //console.log('All Offers (not cached): ', offers);
         return offers;
       })
     );
@@ -165,7 +165,7 @@ export class OfferService {
   storeOffer(data: OfferToAPI) {
     return this.apiService.postOffer(data).pipe(
       tap((savedOffer) => {
-        console.log('New Offer:', savedOffer);
+        //console.log('New Offer:', savedOffer);
       })
     );
   }
@@ -173,13 +173,13 @@ export class OfferService {
   updateOffer(id: number, data: OfferToAPI) {
     return this.apiService.putOffer(id, data).pipe(
       tap((savedOffer) => {
-        console.log('Updated Offer:', savedOffer);
+        //console.log('Updated Offer:', savedOffer);
       })
     );
   }
 
   deleteOffer(offer: Offer) {
-    console.log('Delete Offer:' + offer.id);
+    //console.log('Delete Offer:' + offer.id);
     return this.apiService.deleteOffer(offer.id).pipe(tap((_) => {}));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable, OperatorFunction, Subscription } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ interface Alert {
   templateUrl: './offer-relations-selection.component.html',
   styleUrls: ['./offer-relations-selection.component.scss'],
 })
-export class OfferRelationsSelectionComponent implements OnInit {
+export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
   @Input() offer: Offer;
   @Output() relatedOffersOutput = new EventEmitter<number[]>();
 
@@ -115,8 +115,7 @@ export class OfferRelationsSelectionComponent implements OnInit {
         this.showLoadedRelatedOffers();
         this.offerListIsLoaded = true;
       },
-      (error) => {
-        console.log('Error loading Offers: ', error);
+      (error: Error) => {
         this.offerListIsLoaded = false;
         this.completeOfferList = [];
       }
@@ -124,13 +123,16 @@ export class OfferRelationsSelectionComponent implements OnInit {
   }
 
   showLoadedRelatedOffers() {
-    for (var i = 0; i < this.offer.relatedOffers.length; i++) {
-      let offerIndex = this.completeOfferList.findIndex(
-        (offer) => offer.id == this.offer.relatedOffers[i]
-      );
-      let tmpOffer = this.completeOfferList[offerIndex];
-      this.relatedOffersArray.push(tmpOffer);
+    if (this.offer && this.offer.relatedOffers) {
+      for (var i = 0; i < this.offer.relatedOffers.length; i++) {
+        let offerIndex = this.completeOfferList.findIndex(
+          (offer) => offer.id == this.offer.relatedOffers[i]
+        );
+        let tmpOffer = this.completeOfferList[offerIndex];
+        this.relatedOffersArray.push(tmpOffer);
+      }
     }
+
   }
   ngOnDestroy(): void {
     if (this.onOffersListChange) this.onOffersListChange.unsubscribe();

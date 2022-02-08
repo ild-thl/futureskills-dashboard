@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, LOCALE_ID, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { Router } from '@angular/router';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { User } from 'src/app/core/models/user';
@@ -13,30 +14,37 @@ import { StaticService } from 'src/app/config/static.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  public isMenuCollapsed = true;
+
+  loginBtnVisible = this.staticConfig.getComponentVisibility().loginButton;
+  logoutBtnVisible = this.staticConfig.getComponentVisibility().logoutButton;
+
   lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
   lnkLanding = this.staticConfig.getPathInfo().lnkLanding;
-  private userSubscription: Subscription;
-  isAuthenticated = false;
-  public user: User;
+  lnkAfterLogout = this.staticConfig.getRoutingInfo().lnkAfterLogout;
+  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+  lnkKITools = this.staticConfig.getPathInfo().lnkKITools;
+  lnkInfoStudents = this.staticConfig.getPathInfo().lnkInfoStudents;
+  lnkInfoTeaching = this.staticConfig.getPathInfo().lnkInfoTeaching;
 
-  languages = [
-    { code: 'de', label: 'Deutsch' },
-    { code: 'en', label: 'English' },
-  ];
+  isAuthenticated = false;
+  user: User;
+
+  private userSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
     private staticConfig: StaticService,
-    @Inject(LOCALE_ID) public localeId: string
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.userSubscription = this.authService.userAuthenticated$.subscribe(
-      (userData: UserData) => {
+    this.userSubscription = this.authService.userAuthenticated$.subscribe({
+      next: (userData: UserData) => {
         this.isAuthenticated = userData.isAuth;
         this.user = userData.user;
-      }
-    );
+      },
+    });
   }
 
   ngOnDestroy() {
@@ -44,6 +52,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.authService.logoutUser().subscribe({
+      next: (x) => {
+        this.router.navigate([this.lnkAfterLogout]);
+      },
+    });
   }
 }

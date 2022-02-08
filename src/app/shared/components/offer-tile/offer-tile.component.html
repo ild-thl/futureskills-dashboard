@@ -2,7 +2,7 @@
   <div class="offer-tile-header">
     <div class="offer-tile-header-image" [ngStyle]="{'background-image': 'url(' + offerForTile.image_path + ')'}"></div>
 
-    <div *ngIf="displayMode == 'full'"> <!-- vorbereitung für eine kompaktere darstellung in wunschliste -->
+    <div *ngIf="displayMode === 'full'"> <!-- vorbereitung für eine kompaktere darstellung in wunschliste -->
 
     </div>
     <div class="offer-tile-header-content">
@@ -24,7 +24,7 @@
   <div class="offer-tile-body">
     <div class="offer-tile-body-container">
       <p class="offer-tile-body-header">
-        <span class="offer-tile-title font-weight-bold d-block"><fa-icon *ngIf="isSubscribed == true" [icon]="['fas', 'check']" class="pr-1"></fa-icon>{{offerForTile.title}}</span>
+        <span class="offer-tile-title font-weight-bold d-block"><fa-icon *ngIf="isSubscribed === true" [icon]="['fas', 'check']" class="pr-1"></fa-icon>{{offerForTile.title}}</span>
         <!--<small class="offer-tile-author" [innerHTML]="offerForTile.offer.institution.title"></small>-->
       </p>
 

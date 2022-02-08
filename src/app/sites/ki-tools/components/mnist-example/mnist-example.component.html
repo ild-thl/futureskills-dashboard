@@ -18,11 +18,12 @@
   </p>
 
   <!--wait until loaded-->
-  <div *ngIf="modelLoaded == false || scriptLoadingStatus.isLoaded == false">
-    <p class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
+  <div *ngIf="modelLoaded === false || scriptLoadingStatus.isLoaded === false">
+    <p *ngIf="!modelLoadError" class="text-center"><fs-loading-spinner></fs-loading-spinner></p>
   </div>
   <div
-    [ngClass]="{ 'blur-on-load': modelLoaded == false || scriptLoadingStatus.isLoaded == false }"
+    *ngIf="!modelLoadError"
+    [ngClass]="{ 'blur-on-load': modelLoaded === false || scriptLoadingStatus.isLoaded === false }"
   >
     <!-- Bubble < xs-->
     <div class="row d-block d-sm-none">
@@ -59,7 +60,10 @@
           </ng-template>
         </div>
         <div class="row">
-          <img class="align-baseline user-select-none" src="assets/images/ki-tools/nadia-persona-lg.png" />
+          <img
+            class="align-baseline user-select-none"
+            src="assets/images/ki-tools/nadia-persona-lg.png"
+          />
         </div>
       </div>
     </div>
@@ -174,7 +178,7 @@
                         class="text-reset primary fs-extern-link"
                         target="_blank"
                       >
-                      Tensorflow/Keras und Tensorflow.js.</a
+                        Tensorflow/Keras und Tensorflow.js.</a
                       >&nbsp;<fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
                     </li>
                   </ul>

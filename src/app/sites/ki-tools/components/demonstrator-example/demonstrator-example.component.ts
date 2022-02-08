@@ -1,8 +1,9 @@
-import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
-import { KIToolsHelper } from './../../services/helper/helper';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { KIToolsTypes } from '../../interfaces/types';
 import { Subscription } from 'rxjs';
+import { KIToolsTypes } from '../../interfaces/types';
+
+import { KIToolsHelper } from 'src/app/sites/ki-tools/services/helper/helper';
+import { KiStatusService } from 'src/app/sites/ki-tools/services/ki-status.service';
 
 @Component({
   selector: 'fs-demonstrator-example',
@@ -25,25 +26,24 @@ export class DemonstratorExampleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   if (this.linkListSub) this.linkListSub.unsubscribe();
+    if (this.linkListSub) this.linkListSub.unsubscribe();
   }
 
   initText() {
     this.isLoading = true;
-    this.linkListSub = this.kiStatusService.loadLinkList().subscribe((list) => {
-      console.log("Lists: ", list);
-      this.demoList = list.demoCards;
-      this.projectList = list.projectCards;
+    this.linkListSub = this.kiStatusService.loadLinkList().subscribe({
+      next: (list) => {
+        this.demoList = list.demoCards;
+        this.projectList = list.projectCards;
 
-      KIToolsHelper.shuffleArray(this.demoList);
-      KIToolsHelper.shuffleArray(this.projectList);
-      this.errorOccurred = false;
-
-    }, error=>{
-      this.errorOccurred = true;
-      console.log("DemoError: ", error);
-    }, ()=>{
-      this.isLoading = false;
+        KIToolsHelper.shuffleArray(this.demoList);
+        KIToolsHelper.shuffleArray(this.projectList);
+        this.errorOccurred = false;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorOccurred = true;
+      },
     });
   }
 }

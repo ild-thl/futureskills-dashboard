@@ -1,4 +1,4 @@
-<div id="offer-list">
+<div id="offer-list" class="pt-4 pt-md-5">
   <div class="container">
     <div class="row">
       <div class="col">
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div *ngIf="isError == true; then showError; else showList"></div>
+    <div *ngIf="isError === true; then showError; else showList"></div>
 
     <!-- Error Block -->
     <ng-template #showError>
@@ -74,9 +74,9 @@
           <button type="button" class="btn btn-light mr-3 mb-3" [routerLink]="lnkLanding">
             Zur Startseite
           </button>
-          <button type="button" class="btn btn-light mr-3 mb-3" (click)="onReloadAfterError()">
+          <!-- <button type="button" class="btn btn-light mr-3 mb-3" (click)="onReloadAfterError()">
             Kursliste neu laden
-          </button>
+          </button> -->
         </div>
       </div>
     </ng-template>
@@ -134,7 +134,7 @@
     </ng-template>
 
     <!-- New -->
-    <div *ngIf="isAuthenticated">
+    <ng-container *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
       <hr />
       <div class="row">
         <div class="col">
@@ -150,6 +150,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>

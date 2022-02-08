@@ -16,6 +16,7 @@ if (environment.production) {
   }
 }
 
+/* eslint-disable no-console */
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch((err) => console.error(err));

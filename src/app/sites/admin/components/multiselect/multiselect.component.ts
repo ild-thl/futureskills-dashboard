@@ -61,7 +61,7 @@ export class MultiselectComponent implements OnInit, ControlValueAccessor {
       if (this.selectedKommaKeyWords != null) {
         this.checkDeleted();
         this.setChipTagsInComponent();
-        console.log('Komma-Liste aus der DB: ', this.selectedKommaKeyWords);
+        //console.log('Komma-Liste aus der DB: ', this.selectedKommaKeyWords);
       }
     }
   }

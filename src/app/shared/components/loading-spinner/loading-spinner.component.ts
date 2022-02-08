@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'fs-loading-spinner',
@@ -10,8 +10,6 @@ import { Component, OnInit } from '@angular/core';
   </div>`,
   styleUrls: ['./loading-spinner.component.scss'],
 })
-export class LoadingSpinnerComponent implements OnInit {
+export class LoadingSpinnerComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
