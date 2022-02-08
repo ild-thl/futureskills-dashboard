@@ -13,7 +13,7 @@ import { LogService } from 'src/app/core/services/logger/log.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 
 @Component({
-  selector: 'app-card',
+  selector: 'fs-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
