@@ -22,8 +22,8 @@ import { LogService } from 'src/app/core/services/logger/log.service';
   styleUrls: ['./offer-list-paginated.component.scss'],
 })
 export class OfferListPaginatedComponent implements OnInit, OnDestroy {
-  private offerSubscription: Subscription;
-  private metaSubscription: Subscription;
+  private offerSubscription: Subscription | undefined;
+  private metaSubscription: Subscription | undefined;
 
   lnkAdminOfferNew = this.staticService.getPathInfo().lnkAdminOfferNew;
   lnkLanding = this.staticService.getPathInfo().lnkLanding;
@@ -73,6 +73,13 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
     this.filterObj = {};
     this.staticFilterList = new Map();
     this.searchString = '';
+
+    this.message = '';
+    this.isError = false;
+    this.isLoading = false;
+
+    this.filterInit = this.statusService.getEmptyOfferFilterValues();
+    this.currentFilter = this.filterInit;
   }
 
   ngOnInit() {

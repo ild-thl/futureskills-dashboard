@@ -130,7 +130,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     if (this.onOfferChange) this.onOfferChange.unsubscribe();
   }
 
-  updateRelatedOffers(event) {
+  updateRelatedOffers(event: any) {
     this.relatedOfferFormArray.reset(event);
   }
 
@@ -233,7 +233,7 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     return strList.map((item) => +item).filter((offer) => offer !== 0);
   }
 
-  private mapMetaData(formData) {
+  private mapMetaData(formData: any) {
     let tmpMetas = new OfferMeta();
     tmpMetas.ects = formData.ects;
     tmpMetas.exam = formData.exam;

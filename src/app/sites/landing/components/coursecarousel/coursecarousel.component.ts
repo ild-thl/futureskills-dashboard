@@ -119,11 +119,11 @@ export class CoursecarouselComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSwipeRight(event, data) {
+  onSwipeRight(event: any, data: any) {
     this.scrollLeft();
   }
 
-  onSwipeLeft(event, data) {
+  onSwipeLeft(event: any, data: any) {
     this.scrollRight();
   }
 }
