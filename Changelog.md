@@ -3,10 +3,16 @@
 ## [Not Released v0.10.0]
 
 ## 2022-02-10/ml
+### changed
 - handling accesstoken, refrehToken in Service
 - no userData in localStorage, only Token
 
+## 2022-02-10/avz
+### changed
+- changed the hardcoded loginname into a dynamic name
+
 ## 2022-02-08/ml
+### changed
 - strictRules
   - strictBindCallApply
   - strictFunctionTypes
