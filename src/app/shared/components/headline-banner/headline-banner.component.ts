@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'fs-headline-banner',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./headline-banner.component.scss']
 })
 export class HeadlineBannerComponent implements OnInit {
+
+  @Input() headline: string;
 
   constructor() { }
 
