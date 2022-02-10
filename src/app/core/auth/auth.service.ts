@@ -1,3 +1,4 @@
+import { StaticService } from 'src/app/config/static.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -29,7 +30,8 @@ export class AuthService {
   constructor(
     private apiService: ApiService,
     private tokenService: TokenService,
-    private logService: LogService
+    private logService: LogService,
+    private staticService: StaticService
   ) {
     this.userAuthenticated$ = this.user$.pipe(
       map((user: User) => {
@@ -48,6 +50,10 @@ export class AuthService {
    * @returns
    */
   public login(email: string, password: string): Observable<User | null> {
+    this.tokenService.removeOldToken(); //TO DELETE
+    this.tokenService.removeAccessToken();
+    this.tokenService.removeRefreshToken();
+
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
         let tmpUser: User = null;
@@ -55,9 +61,10 @@ export class AuthService {
         if (serverResponse.access_token) {
           tmpUser = this.createUserFromToken(serverResponse.access_token);
           if (tmpUser) {
-            this.tokenService.saveToken(serverResponse.access_token, tmpUser.tokenExpirationDate);
-           // this.logService.log('AuthService', 'login', tmpUser);
-            this.logService.log('AuthService', 'login:', tmpUser.name);
+            this.tokenService.saveAccessToken(serverResponse.access_token);
+            this.tokenService.saveRefreshToken(serverResponse.refresh_token);
+            this.logService.log('AuthService', 'login', tmpUser);
+            //this.logService.log('AuthService', 'login:', tmpUser.name);
           }
         }
         if (!tmpUser) {
@@ -77,14 +84,17 @@ export class AuthService {
   public autoLogin() {
     // Userdaten im localStorage
     let tmpUser: User = null;
-    const token = this.tokenService.getToken();
+    this.tokenService.removeOldToken();
+    const token = this.tokenService.getAccessToken();
 
     if (token) {
       tmpUser = this.createUserFromToken(token);
       if (tmpUser) {
         this.logService.log('AuthService', 'autologin: ', tmpUser);
       } else {
-        this.tokenService.removeToken();
+        this.logService.log('AuthService', 'autologout');
+        this.tokenService.removeAccessToken();
+        this.tokenService.removeRefreshToken();
       }
     }
     this.user$.next(tmpUser);
@@ -103,18 +113,18 @@ export class AuthService {
   }
 
   private signOff() {
-    this.tokenService.removeToken();
+    this.tokenService.removeAccessToken();
+    this.tokenService.removeRefreshToken();
     this.user$.next(null);
   }
 
-  private createUserFromToken(token: string): User {
+  private createUserFromToken(token: string): User | null {
     let tmpUser: User = null;
     const decoded = this.tokenService.getDecodedToken(token);
     const expirationDate = new Date(decoded.exp * this.EXPIRES_FACTOR);
-    //console.log('EXP-DATE:', expirationDate);
-    const expirationDuration = expirationDate.getTime() - new Date().getTime();
 
-    if (expirationDuration > 0) {
+    if (this.tokenCheckOk(expirationDate)) {
+      this.logService.log('EXP-DATE:', '', expirationDate);
       // Featurepermission setzen
       const user_role = decoded.user_role == undefined ? UserRoles.DEFAULT : decoded.user_role;
       const user_featurepermission = this.setUserPermissions(user_role);
@@ -124,12 +134,17 @@ export class AuthService {
         undefined,
         decoded.user_name,
         user_role,
-        token,
-        expirationDate,
         user_featurepermission
       );
     }
+
     return tmpUser;
+  }
+
+  private tokenCheckOk(expirationDate: Date): boolean {
+    const expirationDuration = expirationDate.getTime() - new Date().getTime();
+    const logOutAutomatically = this.staticService.getAuthBehaviour().autoLogout;
+    return expirationDuration > 0 || !logOutAutomatically;
   }
 
   private setUserPermissions(user_role: string | string[]): ObjectPermission[] {

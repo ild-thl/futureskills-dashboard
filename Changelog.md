@@ -2,6 +2,10 @@
 
 ## [Not Released v0.10.0]
 
+## 2022-02-10/ml
+- handling accesstoken, refrehToken in Service
+- no userData in localStorage, only Token
+
 ## 2022-02-08/ml
 - strictRules
   - strictBindCallApply

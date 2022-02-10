@@ -12,10 +12,11 @@ import { take, exhaustMap } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserData } from 'src/app/core/data/user/user-data.interface';
+import { TokenService } from 'src/app/core/services/token-check/token.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,  private tokenService: TokenService,) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     //console.log('HTTP-Request: ', request);
@@ -24,13 +25,16 @@ export class AuthInterceptorService implements HttpInterceptor {
       take(1),
       exhaustMap((userData: UserData) => {
         if (userData.isAuth) {
+          const accessToken = this.tokenService.getAccessToken();
+          const refreshToken = this.tokenService.getRefreshToken();
+
           const headerSettings: { [name: string]: string | string[] } = {};
 
           for (const key of request.headers.keys()) {
             headerSettings[key] = request.headers.getAll(key);
           }
 
-          headerSettings['Authorization'] = 'Bearer ' + userData.user.token;
+          headerSettings['Authorization'] = 'Bearer ' + accessToken;
           headerSettings['Content-Type'] = 'application/json';
           const newHeader = new HttpHeaders(headerSettings);
 

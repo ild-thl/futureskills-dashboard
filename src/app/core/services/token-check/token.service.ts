@@ -1,7 +1,6 @@
 import { AuthTokenStructure } from 'src/app/core/auth/auth.interfaces';
 import { Injectable } from '@angular/core';
 import { CookieDataService } from 'src/app/core/services/cookie/cookie-data.service';
-import { User, UserStorageData } from 'src/app/core/models/user';
 import jwt_decode from 'jwt-decode';
 
 /**
@@ -15,37 +14,39 @@ import jwt_decode from 'jwt-decode';
 })
 export class TokenService {
   private EXPIRES_FACTOR = 1000;
+
+  private ACCESS_TOKEN = 'fs_atoken';
+  private REFRESH_TOKEN = 'fs_rtoken';
+
   constructor(private cookieDataService: CookieDataService) {}
 
-  public getToken(): string {
-    const userData: UserStorageData = JSON.parse(
-      this.cookieDataService.getLocalStorageItem('userData')
-    );
-
-    if (!userData || !userData.token) {
-      return null;
-    } else {
-      return userData.token;
-    }
+  // NEW ///////////////////////
+  public saveAccessToken(token: string) {
+    this.cookieDataService.setLocalStorageItem(this.ACCESS_TOKEN, token);
   }
 
-  public removeToken() {
-    this.cookieDataService.deleteLocalStorageItem('userData');
+  public getAccessToken(): string {
+    return this.cookieDataService.getLocalStorageItem(this.ACCESS_TOKEN);
   }
 
-  public saveToken(token: string, tokenExpirationDate: Date) {
-    const saveData: UserStorageData = {
-      token: token,
-      tokenExpirationDate: tokenExpirationDate,
-    };
-    this.cookieDataService.setLocalStorageItem('userData', JSON.stringify(saveData));
+  public saveRefreshToken(token: string) {
+    this.cookieDataService.setLocalStorageItem(this.REFRESH_TOKEN, token);
   }
 
-  public getDecodedToken(token?: string): AuthTokenStructure {
-    if (!token) {
-      token = this.getToken();
-    }
+  public getRefreshToken(): string {
+    return this.cookieDataService.getLocalStorageItem(this.REFRESH_TOKEN);
+  }
 
+  public removeAccessToken() {
+    this.cookieDataService.deleteLocalStorageItem(this.ACCESS_TOKEN);
+  }
+
+  public removeRefreshToken() {
+    this.cookieDataService.deleteLocalStorageItem(this.REFRESH_TOKEN);
+  }
+  /////////////////////////
+
+  public decodeToken(token: string): AuthTokenStructure | null {
     try {
       return jwt_decode(token);
     } catch (Error) {
@@ -64,6 +65,18 @@ export class TokenService {
       return timeDiff > 0;
     }
     return false;
+  }
+
+  public getDecodedToken(token: string): AuthTokenStructure {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
+  }
+
+  public removeOldToken() {
+    this.cookieDataService.deleteLocalStorageItem('userData');
   }
 
 }
