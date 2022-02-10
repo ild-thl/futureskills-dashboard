@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { RoundButtonComponent } from 'src/app/shared/components/round-button/fs-round-button.component';
+import { HeadlineBannerComponent } from 'src/app/shared/components/headline-banner/headline-banner.component';
 import { OfferTileComponent } from 'src/app/shared/components/offer-tile/offer-tile.component';
 import { ErrorBackTextComponent} from 'src/app/shared/components/error-back-text/error-back-text.component';
 import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
@@ -53,7 +54,8 @@ declarations: [
   ConsentVideoComponent,
   SmallOfferTileComponent,
   NavBackDirective,
-  CheckPermissionsDirective
+  CheckPermissionsDirective,
+  HeadlineBannerComponent
 ],
 imports: [
   CommonModule,
@@ -73,7 +75,8 @@ exports: [
   ConsentVideoComponent,
   SmallOfferTileComponent,
   NavBackDirective,
-  CheckPermissionsDirective
+  CheckPermissionsDirective,
+  HeadlineBannerComponent
 ]
 })
 
