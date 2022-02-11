@@ -45,6 +45,7 @@ import { HeaderComponent } from 'src/app/sites/app-root/components/header/header
 import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
 import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
+import { AboutFutureskillsComponent } from './sites/info-teaching/components/about-futureskills/about-futureskills.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.compo
     OfferListPaginatedComponent,
     FilterRowServerDirective,
     SearchFieldComponent,
-    NotAllowedComponent
+    NotAllowedComponent,
+    AboutFutureskillsComponent
   ],
   imports: [
     BrowserModule,
