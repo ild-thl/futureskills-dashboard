@@ -4,10 +4,10 @@
 
   /*&.mission {
     background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-xs.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
-  }*/
+  }
   &.about {
     background-color: #ffffff;
-  }
+  }*/
   &.advantages {
     background-color: rgb(30,174,156);
     border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
@@ -69,13 +69,13 @@
   &.competence {
     background-color: #ffffff;
 
-    figure {
+    /*figure {
       .pyramide {
         width: 70%;
         margin-top: 15px;
         margin-left: 15%;
       }
-    }
+    }*/
   }
   &.ki {
     background-color: black;
@@ -121,7 +121,7 @@
       left: 0;
     }
   }
-  figure {
+  /*figure {
     figcaption {
 
       &.caption-right,
@@ -138,7 +138,7 @@
         text-align: center;
       }
     }
-  }
+  }*/
   .text-bg {
     padding: 10px;
     background-color: rgba(0,0,0,0.7);
@@ -181,13 +181,13 @@
         margin-left: -100%;
       }
     }
-    figure {
+    /*figure {
       figcaption {
         &.caption-right {
           text-align: right;
         }
       }
-    }
+    }*/
   }
   @media(min-width: $md) {
     /*&.mission {
