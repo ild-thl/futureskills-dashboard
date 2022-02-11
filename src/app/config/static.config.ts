@@ -19,6 +19,9 @@ export const CustomConfig = {
     isVisible : {
       loginButton: false,
       logoutButton: true
+    },
+    authBehaviour: {
+      autoLogout: true
     }
   },
   kiConfig: {
