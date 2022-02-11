@@ -5,9 +5,11 @@
 ## 2022-02-10/ml
 ### added
 - API, function for manual logou added
+- new var app/config/static.config.ts -> general/authBehaviour/autologout
 ### changed
 - handling accesstoken, refreshToken in Service
 - no userData in localStorage, only Token
+
 
 ## 2022-02-10/avz
 ### changed

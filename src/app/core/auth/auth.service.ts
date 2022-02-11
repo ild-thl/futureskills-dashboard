@@ -124,6 +124,24 @@ export class AuthService {
     this.user$.next(null);
   }
 
+  /**
+   * not used at the moment
+   * @returns
+   */
+  private logoutWithServerLogout() {
+    this.apiService.logoutUser().subscribe({
+      next: (response: any) => {
+        this.logService.log('AuthService', 'logout(manually ok)', response);
+        this.signOff();
+      },
+      error: (error) => {
+        this.logService.log('AuthService', error);
+        this.signOff();
+      },
+    });
+    return of(true);
+  }
+
   private createUserFromToken(decodedToken: AuthTokenStructure): User {
     let tmpUser: User = null;
     // Featurepermission setzen
