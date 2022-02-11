@@ -46,6 +46,7 @@ import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-pag
 import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
 import { AboutFutureskillsComponent } from './sites/info-teaching/components/about-futureskills/about-futureskills.component';
+import { VideoPresentationComponent } from './sites/info-teaching/components/video-presentation/video-presentation.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { AboutFutureskillsComponent } from './sites/info-teaching/components/abo
     FilterRowServerDirective,
     SearchFieldComponent,
     NotAllowedComponent,
-    AboutFutureskillsComponent
+    AboutFutureskillsComponent,
+    VideoPresentationComponent
   ],
   imports: [
     BrowserModule,
