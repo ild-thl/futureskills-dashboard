@@ -26,7 +26,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       exhaustMap((userData: UserData) => {
         if (userData.isAuth) {
           const accessToken = this.tokenService.getAccessToken();
-          const refreshToken = this.tokenService.getRefreshToken();
+          //const refreshToken = this.tokenService.getRefreshToken();
 
           const headerSettings: { [name: string]: string | string[] } = {};
 
