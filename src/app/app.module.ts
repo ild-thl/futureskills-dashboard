@@ -48,6 +48,7 @@ import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.compo
 import { AboutFutureskillsComponent } from './sites/info-teaching/components/about-futureskills/about-futureskills.component';
 import { VideoPresentationComponent } from './sites/info-teaching/components/video-presentation/video-presentation.component';
 import { CardButtonExternalLinkComponent } from './sites/info-teaching/components/card-button-external-link/card-button-external-link.component';
+import { InfoCardComponent } from './sites/info-teaching/components/info-card/info-card.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { CardButtonExternalLinkComponent } from './sites/info-teaching/component
     NotAllowedComponent,
     AboutFutureskillsComponent,
     VideoPresentationComponent,
-    CardButtonExternalLinkComponent
+    CardButtonExternalLinkComponent,
+    InfoCardComponent
   ],
   imports: [
     BrowserModule,
