@@ -10,7 +10,7 @@ import * as keywords from './modul-data/keywordlist.json';
  */
 export const CustomConfig = {
   cookies: {
-    preferenceCookieName: 'FS_USER_COOKIEPREFS',
+    preferenceCookieName: 'FS_COOKIEPREFS',
     technical: {
       expiresIn: 0, // wie lange wird das notwendige Cookie gespeichert (in Tagen, oder 0 für die Session)
     },

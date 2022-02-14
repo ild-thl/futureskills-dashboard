@@ -1,0 +1,64 @@
+<div *ngIf="visible">
+  <div class="fixed-bottom cookie-container">
+    <ngb-alert [dismissible]="false" [type]="type" class="mb-2 mb-sm-0">
+      <div class="container">
+        <form novalidate (ngSubmit)="saveFormCookieInfo()">
+          <div class="row">
+
+            <div class="col-12 mb-3">
+              <h3 class="cookie-header"><img class="cookie-icon mr-3" src="assets/icons/cookiebanner_icon.svg" width="150" height="150" >Wir verwenden Cookies</h3>
+              <p class="cookie-text mb-0">
+                Wir nutzen Cookies, um unsere Webseiten für Dich optimal zu gestalten.
+                Mehr darüber in unserer <a [routerLink]="['/datenschutz']">Datenschutzerklärung</a>.
+              </p>
+            </div>
+
+            <div class="col-12 d-flex align-items-center mb-3">
+              <div class="form-check form-check-inline cookie-checkbox">
+                <input
+                  id="technicalInlineCheckbox"
+                  name="technicalCheck"
+                  class="form-check-input"
+                  type="checkbox"
+                  [(ngModel)]="formData.technicalCheck"
+                  disabled
+                  checked
+                />
+                <label class="form-check-label" for="technicalInlineCheckbox"
+                  >Notwendig</label
+                >
+              </div>
+
+              <div class="form-check form-check-inline cookie-checkbox">
+                <input
+                  id="functionalInlineCheckbox"
+                  name="functionalCheck"
+                  class="form-check-input"
+                  type="checkbox"
+                  [(ngModel)]="formData.functionalCheck"
+                />
+                <label class="form-check-label" for="functionalInlineCheckbox"
+                  >Funktional</label
+                >
+              </div>
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="fsButton secondary-button mr-2 mb-2 mb-sm-0">
+                Auswahl speichern
+              </button>
+              <button
+                type="button"
+                (click)="saveAllCookieInfo()"
+                class="fsButton primary-button"
+              >
+                Akzeptiere alle
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </ngb-alert>
+  </div>
+</div>
