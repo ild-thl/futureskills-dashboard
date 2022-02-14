@@ -47,6 +47,7 @@ import { SearchFieldComponent } from './sites/offers/components/search-field/sea
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
 import { AboutFutureskillsComponent } from './sites/info-teaching/components/about-futureskills/about-futureskills.component';
 import { VideoPresentationComponent } from './sites/info-teaching/components/video-presentation/video-presentation.component';
+import { CardButtonExternalLinkComponent } from './sites/info-teaching/components/card-button-external-link/card-button-external-link.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { VideoPresentationComponent } from './sites/info-teaching/components/vid
     SearchFieldComponent,
     NotAllowedComponent,
     AboutFutureskillsComponent,
-    VideoPresentationComponent
+    VideoPresentationComponent,
+    CardButtonExternalLinkComponent
   ],
   imports: [
     BrowserModule,
