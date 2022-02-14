@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'fs-card-button-external-link',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-button-external-link.component.scss']
 })
 export class CardButtonExternalLinkComponent implements OnInit {
+
+  @Input() hrefString: string;
 
   constructor() { }
 

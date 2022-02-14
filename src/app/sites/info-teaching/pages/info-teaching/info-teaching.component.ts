@@ -9,6 +9,7 @@ import { StaticService } from 'src/app/config/static.service';
 export class InfoTeachingComponent {
 
   headlineText = "Skills, die Ihre Studierenden für die Zukunft brauchen.";
+  hrefStringText = "https://toolbox.eduloop.de/";
 
   constructor(private staticConfig: StaticService) { }
 
