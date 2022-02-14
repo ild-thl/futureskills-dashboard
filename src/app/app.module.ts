@@ -42,6 +42,7 @@ import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-te
 
 import { FooterComponent } from 'src/app/sites/app-root/components/footer/footer.component';
 import { HeaderComponent } from 'src/app/sites/app-root/components/header/header.component';
+import { CookieBannerComponent } from 'src/app/sites/app-root/components/cookie-banner/cookie-banner.component';
 import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
 import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
@@ -64,7 +65,8 @@ import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.compo
     OfferListPaginatedComponent,
     FilterRowServerDirective,
     SearchFieldComponent,
-    NotAllowedComponent
+    NotAllowedComponent,
+    CookieBannerComponent
   ],
   imports: [
     BrowserModule,

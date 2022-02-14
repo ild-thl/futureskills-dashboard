@@ -2,6 +2,10 @@
 
 ## [Not Released v0.10.0]
 
+## 2022-02-14/ml
+### added
+- Cookie Banner 
+
 ## 2022-02-10/ml
 ### added
 - API, function for manual logou added
