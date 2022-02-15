@@ -25,39 +25,10 @@
                   </div>
                 </div>
                 <h4 class="pt-3  mb-3">Beispiele für die Einbindung</h4>
-                <div class="container bg-white teaching-example">
-                  <div class="row mb-3">
-                      <div class="col-12 col-md-3">
-                          <div class="h-100 teaching-imgcontainer">
-                            <img class="mx-auto d-block p-sm-2" src="assets/images/info-teaching-1.png">
-                          </div>
 
-                      </div>
-                      <div class="col-12 col-md-9 p-3 teaching-example-text">
-                          <h5>Medien & Kommunikation und Social Media & Tools</h5>
-                          <p>Im Modul „Kooperationssysteme und Social Media“ (Pflicht- bzw. Wahlpflichtmodul in den Studiengängen
-                              Informationstechnologie und Design bzw. Informatik/Softwaretechnik der TH Lübeck) erbringen die
-                              Studierenden eine Teilleistung durch die Belegung der Online-Kurse „Medien & Kommunikation“ sowie
-                              „Social Media & Tools“. Die Belegung kann durch ein automatisch generiertes Zertifikat nachgewiesen
-                              werden.</p>
-                      </div>
-                  </div>
-                </div>
+                <fs-info-card [cardContentImage]="image1" [cardContentHeader]="header1" [cardContentText]="text1"></fs-info-card>
+                <fs-info-card [cardContentImage]="image2" [cardContentHeader]="header2" [cardContentText]="text2"></fs-info-card>
 
-                <div class="container bg-white teaching-example">
-                  <div class="row mb-3">
-                      <div class="col-12 col-md-3">
-                          <div class="h-100 teaching-imgcontainer">
-                            <img class="mx-auto d-block p-3" src="assets/images/info-teaching-2.png">
-                          </div>
-
-                      </div>
-                      <div class="col-12 col-md-9 p-3 teaching-example-text">
-                        <h5>FutureSkills KI</h5>
-                        <p>Das Modul „<a [routerLink]="lnkKICoursePackage">FutureSkills KI</a>“ setzt sich aus verschiedenen Online-Kursen zusammen und wird an der CAU Kiel als Wahlmodul (5 ECTS) anerkannt.</p>
-                      </div>
-                  </div>
-                </div>
             </div>
         </div>
 
@@ -84,41 +55,10 @@
               </div>
 
               <h4 class="pt-3 mb-3">Beispiele für die zukünftige Nutzung</h4>
-              <div class="container bg-white teaching-example">
-                <div class="row mb-3">
-                    <div class="col-12 col-md-3">
-                        <div class="h-100 teaching-imgcontainer">
-                          <img class="w-75 mx-auto d-block" src="assets/images/info-teaching-ki.png">
-                        </div>
 
-                    </div>
-                    <div class="col-12 col-md-9 p-3 teaching-example-text">
-                        <h5>Künstliche Intelligenz</h5>
-                        <p>Prof. Mustermann sucht für seine Vorlesung zum Thema Versicherungsrecht eine grundlegende Einführung zum Thema
-                          „Künstliche Intelligenz“, um darauf aufbauend mit seinen Studierenden zu erörtern, welche Rolle KI-basierte Systeme
-                          z.B. bei der Schadensbewertung spielen könnten. Er findet eine Vorlesungsaufzeichnung „Grundlagen von KI-Systemen“
-                          der Kollegin Prof. Musterfrau der CAU und stellt diese seinen Studierenden im Rahmen einer Vorlesungssitzung zur
-                          Verfügung.</p>
-                    </div>
-                </div>
-              </div>
+              <fs-info-card [cardContentImage]="image3" [cardContentHeader]="header3" [cardContentText]="text3"></fs-info-card>
+              <fs-info-card [cardContentImage]="image4" [cardContentHeader]="header4" [cardContentText]="text4"></fs-info-card>
 
-              <div class="container bg-white teaching-example">
-                <div class="row mb-3">
-                    <div class="col-12 col-md-3">
-                        <div class="h-100 teaching-imgcontainer">
-                          <img class="w-75 mx-auto d-block" src="assets/images/info-teaching-videos.png">
-                        </div>
-
-                    </div>
-                    <div class="col-12 col-md-9 p-3 teaching-example-text">
-                      <h5>Videos bereitstellen</h5>
-                      <p>Prof. Meier hat zusammen mit einem Laboringenieur für ihre Praktika grundlegende Versuchsaufbauten gefilmt und den
-                        Studierenden zur Nachbereitung zur Verfügung gestellt. Da andere Lehrende häufig danach  fragten, stellt sie ihre
-                        Videos nun stets über die FutureSkills-Plattform zur freien Nutzung zur Verfügung.</p>
-                    </div>
-                </div>
-              </div>
           </div>
       </div>
 
@@ -129,6 +69,9 @@
         <div class="col-12 col-sm-10">
 
             <h4 class="pt-3 mb-3">Handreichungen für die digitale Lehre</h4>
+
+            <fs-info-card [cardContentImage]="image5" [cardContentHeader]="header5" [cardContentText]="text5"></fs-info-card>
+            <fs-card-button-external-link [hrefString]="hrefStringText"></fs-card-button-external-link>
             <div class="container bg-white teaching-example">
               <div class="row mb-3">
                   <div class="col-12 col-md-3">

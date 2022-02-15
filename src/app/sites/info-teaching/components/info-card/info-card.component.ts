@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'fs-info-card',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoCardComponent implements OnInit {
 
+  @Input() cardContentImage: string;
+  @Input() cardContentHeader: string;
+  @Input() cardContentText: string;
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.cardContentHeader);
   }
 
 }
