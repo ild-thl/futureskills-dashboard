@@ -9,7 +9,6 @@ import { StaticService } from 'src/app/config/static.service';
 export class InfoTeachingComponent {
 
   headlineText = "Skills, die Ihre Studierenden für die Zukunft brauchen.";
-  hrefStringText = "https://toolbox.eduloop.de/";
 
   image1 = "assets/images/info-teaching-1.png";
   header1 = "Medien & Kommunikation und Social Media & Tools";
@@ -30,6 +29,9 @@ export class InfoTeachingComponent {
   image5 = "assets/images/FSToolbox-Kachel.jpg";
   header5 = "Praktische Hilfestellungen für Lehrende";
   text5 = "Die Toolbox stellt Lehrenden verschiedene Informationen und Tipps zur Konzeption und Umsetzung digitaler Lehr-/Lernangebote bereit. Sie beinhaltet eine Übersicht verschiedener digitaler Tools, geordnet nach den Anwendungsszenarien, für die sie eingesetzt werden können, mit einer Darstellung der Potentiale und Nachteile. Darüber hinaus beinhaltet die Toolbox Informationen und Hilfestellungen zu Fragen des Urheberrechts, zum Auffinden von frei verwendbaren Lernmaterialien sowie eine Übersicht zur Verwendung freier Lizenzen.";
+  buttonActive5 = true; //true (button is shown) or false button is not shown)
+  hrefStringText5 = "https://toolbox.eduloop.de/";
+  buttonLabelText5 = "zur Toolbox";
 
   constructor(private staticConfig: StaticService) { }
 

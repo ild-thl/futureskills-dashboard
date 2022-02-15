@@ -8,6 +8,17 @@
     <div class="col-12 col-md-9 p-3 teaching-example-text">
       <h5>{{ cardContentHeader }}</h5>
       <p>{{ cardContentText }}</p>
+      <div *ngIf="buttonActive">
+        <div class="clearfix">
+          <div class="card-button float-right">
+            <a href="{{ hrefString }}" target="_blank">
+              <button class="secondary-button dark">
+              {{ buttonLabel }} <fa-icon class="external-link-alt ml-2" [icon]="['fas', 'external-link-alt']"></fa-icon>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
