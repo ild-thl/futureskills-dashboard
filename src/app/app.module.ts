@@ -49,6 +49,7 @@ import { AboutFutureskillsComponent } from './sites/info-teaching/components/abo
 import { VideoPresentationComponent } from './sites/info-teaching/components/video-presentation/video-presentation.component';
 import { CardButtonExternalLinkComponent } from './sites/info-teaching/components/card-button-external-link/card-button-external-link.component';
 import { InfoCardComponent } from './sites/info-teaching/components/info-card/info-card.component';
+import { TeachingExamplesComponent } from './sites/info-teaching/components/teaching-examples/teaching-examples.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { InfoCardComponent } from './sites/info-teaching/components/info-card/in
     AboutFutureskillsComponent,
     VideoPresentationComponent,
     CardButtonExternalLinkComponent,
-    InfoCardComponent
+    InfoCardComponent,
+    TeachingExamplesComponent
   ],
   imports: [
     BrowserModule,
