@@ -2,6 +2,10 @@
 
 ## [Not Released v0.10.0]
 
+## 2022-02-17/ml
+### added
+- Function to update Token
+
 ## 2022-02-14/ml
 ### added
 - Cookie Banner 
