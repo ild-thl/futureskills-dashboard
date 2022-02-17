@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'fs-teaching-examples',
   templateUrl: './teaching-examples.component.html',
   styleUrls: ['./teaching-examples.component.scss']
 })
-export class TeachingExamplesComponent implements OnInit {
+export class TeachingExamplesComponent {
 
   image1 = "assets/images/info-teaching-1.png";
   header1 = "Medien & Kommunikation und Social Media & Tools";
@@ -29,10 +29,5 @@ export class TeachingExamplesComponent implements OnInit {
   buttonActive5 = true; //true (button is shown) or false button is not shown)
   hrefStringText5 = "https://toolbox.eduloop.de/";
   buttonLabelText5 = "zur Toolbox";
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
