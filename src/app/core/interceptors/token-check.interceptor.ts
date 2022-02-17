@@ -31,7 +31,7 @@ export class TokenCheckInterceptor implements HttpInterceptor {
       take(1),
       exhaustMap((userData: UserData) => {
         if (userData.isAuth) {
-          const token = this.tokenService.getToken();
+          const token = this.tokenService.getAccessToken();
           const isValid = this.tokenService.isTokenValid(token);
 
           if (isValid) {

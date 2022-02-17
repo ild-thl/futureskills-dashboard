@@ -61,6 +61,18 @@ export class ApiService {
       );
   }
 
+  /**
+   * Logout on Server (Carefully! If token isn't valid anymore -> 401)
+   * @returns Observable<any> 
+   */
+  public logoutUser(): Observable<any> {
+    return this.http.get<any>(environment.apiURL + '/api/logout').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
+  }
+
   ////////////////////////////////////////////////
   // Offers Paginated
   ////////////////////////////////////////////////

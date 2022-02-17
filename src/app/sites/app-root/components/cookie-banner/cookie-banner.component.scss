@@ -1,0 +1,100 @@
+@import 'breakpoints';
+$color-primary-blue: var(--color-primary-blue);
+
+button.btn-extra-margin{
+    margin-right: 2em;
+}
+
+.cookie-container {
+  width: 450px;
+  margin: 0 0 15px 15px;
+
+  .alert {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+    .cookie-header {
+      color: #000000;
+      font-size: 18px;
+
+      .cookie-icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    .cookie-text {
+      color: #000000;
+      font-size: 14px;
+    }
+    .cookie-checkbox {
+
+      label {
+        font-size: 14px;
+      }
+    }
+    button {
+      &.fsButton {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.fsButton {
+  border: 1px solid $color-primary-blue;
+  color: #000;
+  padding: 10px 25px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &.primary-button {
+    background-color: $color-primary-blue;
+    color: #fff;
+  }
+  &.secondary-button {
+    background-color: #fff;
+    color: $color-primary-blue;
+  }
+  &:hover {
+    text-decoration: none;
+    opacity: 0.8;
+  }
+  &:active {
+    background-color: #000;
+    border: 1px solid #000;
+    color: #fff;
+  }
+  &.small {
+    padding: 3px 10px;
+    font-size: 14px;
+  }
+}
+
+// @include media-breakpoint-down(lg) {
+// }
+// @include media-breakpoint-down(md) {
+// }
+// @include media-breakpoint-down(sm) {
+// }
+@media (max-width: $xs) {
+  .cookie-container {
+    width: 90%;
+    margin: auto;
+
+    .alert {
+
+      .cookie-header {
+        font-size: 16px;
+
+        .cookie-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .cookie-text {
+        font-size: 14px
+      }
+    }
+  }
+}
