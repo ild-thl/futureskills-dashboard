@@ -2,7 +2,7 @@
   <div class="row mb-3">
     <div class="col-12 col-md-3">
       <div class="h-100 teaching-imgcontainer">
-        <img class="mx-auto d-block p-sm-2" src="{{ cardContentImage }}">
+        <img class="mx-auto d-block p-sm-2" src="{{ cardContentImage }}" />
       </div>
     </div>
     <div class="col-12 col-md-9 p-3 teaching-example-text">
@@ -13,7 +13,11 @@
           <div class="card-button float-right">
             <a href="{{ hrefString }}" target="_blank">
               <button class="secondary-button dark">
-              {{ buttonLabel }} <fa-icon class="external-link-alt ml-2" [icon]="['fas', 'external-link-alt']"></fa-icon>
+                {{ buttonLabel }}
+                <fa-icon
+                  class="external-link-alt ml-2"
+                  [icon]="['fas', 'external-link-alt']"
+                ></fa-icon>
               </button>
             </a>
           </div>
