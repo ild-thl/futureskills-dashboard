@@ -27,7 +27,7 @@ import {
  * Contains API-Calls
  * Handles Errors
  * Created 30.10.2020
- * Updated 27.10.2021/ml
+ * Latest update 17.02.2022/ml
  */
 
 /* eslint-disable no-console */
@@ -63,7 +63,7 @@ export class ApiService {
 
   /**
    * Logout on Server (Carefully! If token isn't valid anymore -> 401)
-   * @returns Observable<any> 
+   * @returns Observable<any>
    */
   public logoutUser(): Observable<any> {
     return this.http.get<any>(environment.apiURL + '/api/logout').pipe(
@@ -71,6 +71,26 @@ export class ApiService {
         return this.handleError(errorResponse);
       })
     );
+  }
+
+  /**
+   * Called, if token is expired
+   * @param refreshToken
+   * @returns
+   */
+  public updateUserSession(refreshToken: string): Observable<any> {
+    return this.http
+      .post<AuthResponseData>(environment.apiURL + '/oauth/token', {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: environment.clientLoginData.clientId,
+        client_secret: environment.clientLoginData.clientSecret,
+      })
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          return this.handleError(errorResponse);
+        })
+      );
   }
 
   ////////////////////////////////////////////////
