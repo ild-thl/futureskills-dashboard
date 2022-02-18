@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { StaticService } from 'src/app/config/static.service';
 
 @Component({
   selector: 'fs-teaching-examples',
@@ -6,6 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./teaching-examples.component.scss']
 })
 export class TeachingExamplesComponent {
+
+  constructor(private staticConfig: StaticService) { }
+
+  lnkKICoursePackage = this.staticConfig.getPathInfo().lnkOffers + this.staticConfig.getCourseNumbers().FS_SuperKI;
+  hrefStringToolbox = "https://toolbox.eduloop.de/";
 
   image1 = "assets/images/info-teaching-1.png";
   header1 = "Medien & Kommunikation und Social Media & Tools";

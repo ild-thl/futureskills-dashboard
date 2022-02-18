@@ -1,6 +1,5 @@
 .card-button {
   display: inline-block;
-
   .secondary-button {
     padding: 5px 40px;
     border-radius: 50px;
@@ -8,14 +7,12 @@
     text-transform: uppercase;
     transition: all 0.2s ease-in;
     border: 0;
-
     &.dark {
       background-color: var(--color-primary-blue);
       color: var(--white);
       position: relative;
       overflow: hidden;
       z-index: 1;
-
       &::after {
         content:"";
         position: absolute;
@@ -30,7 +27,6 @@
       }
       &:hover {
         color: var(--white);
-
         &::after {
           left: 0%;
         }
