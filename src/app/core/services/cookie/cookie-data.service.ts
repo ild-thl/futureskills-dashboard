@@ -56,7 +56,7 @@ export class CookieDataService {
   }
 
   private saveCookiePreferences(cookieData: ICookieData) {
-
+    //console.log("Cookie Data Saved: ", cookieData);
     const cookieConvertedValue = this.convertToCookieString(cookieData);
     const exp: number = this.options.getCookieOptions().technical.expiresIn;
     this.cookieService.set(this.cookieName, cookieConvertedValue, {
@@ -67,7 +67,7 @@ export class CookieDataService {
   private getCookiePreferences(): ICookieData {
     const cookieConvertedValue = this.cookieService.get(this.cookieName);
     const cookieValue = this.convertToDataObject(cookieConvertedValue);
-
+    //console.log("Cookie Data Loaded: ", cookieValue);
     return cookieValue;
   }
 

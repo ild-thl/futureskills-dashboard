@@ -2,7 +2,29 @@
 
 ## [Not Released v0.10.0]
 
+## 2022-02-17/ml
+### added
+- Function to update Token
+
+## 2022-02-14/ml
+### added
+- Cookie Banner 
+
+## 2022-02-10/ml
+### added
+- API, function for manual logou added
+- new var app/config/static.config.ts -> general/authBehaviour/autologout
+### changed
+- handling accesstoken, refreshToken in Service
+- no userData in localStorage, only Token
+
+
+## 2022-02-10/avz
+### changed
+- changed the hardcoded loginname into a dynamic name
+
 ## 2022-02-08/ml
+### changed
 - strictRules
   - strictBindCallApply
   - strictFunctionTypes
