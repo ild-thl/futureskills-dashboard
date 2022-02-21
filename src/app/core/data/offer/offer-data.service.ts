@@ -36,7 +36,12 @@ export class OfferDataService {
   /////////////////////////////////////////////////////
 
   // CourseList
-  public getPaginatedOfferList(page: number, count: number, filterObj: OfferFilterToAPI, searchString: string): Observable<PaginatedOfferData> {
+  public getPaginatedOfferList(
+    page: number,
+    count: number,
+    filterObj: OfferFilterToAPI,
+    searchString: string
+  ): Observable<PaginatedOfferData> {
     return this.offerService.getPaginatedOfferData(page, count, filterObj, searchString);
   }
 
@@ -52,6 +57,13 @@ export class OfferDataService {
 
   // EditForm (für die Kurszuordnungen)
   public getSmallOfferListForEditForm(
+    offerID: number = undefined
+  ): Observable<SmallOfferListForEditForm[]> {
+    return this.offerService.getAllShortOffersListForEditDetail(offerID);
+  }
+
+  // OfferList for Management
+  public getSmallOfferListForManagement(
     offerID: number = undefined
   ): Observable<SmallOfferListForEditForm[]> {
     return this.offerService.getAllShortOffersListForEditDetail(offerID);
@@ -174,5 +186,4 @@ export class OfferDataService {
       return this.offerService.storeOffer(offer);
     }
   }
-
 }

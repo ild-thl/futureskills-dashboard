@@ -49,12 +49,13 @@ export const CustomConfig = {
     lnkPrivacy: '/datenschutz',
     lnkLogin: '/login',
     lnkNotAllowed: '/kein-zugriff',
+    lnkManageOfferList: '/manage/kurse',
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
     lnkKITools_mnist: '/ki-playground/mnist',
     lnkKITools_sentiment: '/ki-playground/sentiment',
-    linkKITools_demonstrators: '/ki-playground/examples'
+    linkKITools_demonstrators: '/ki-playground/examples',
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
