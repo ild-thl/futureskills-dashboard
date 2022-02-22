@@ -17,7 +17,7 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-
   styleUrls: ['./offer-detail.component.scss'],
 })
 export class OfferDetailComponent implements OnInit, OnDestroy {
-  //lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
   //lnkAdminOfferEdit = this.staticConfig.getPathInfo().lnkAdminOfferEdit;
   private userSub: Subscription | undefined;
   private paramsSub: Subscription | undefined;
