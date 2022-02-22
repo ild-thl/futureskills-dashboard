@@ -2,6 +2,10 @@
 
 ## [Not Released v0.10.0]
 
+## 2022-02-22/avz
+### changed
+- Detail Page into components
+
 ## 2022-02-21/avz
 ### changed
 - Teacher Info Page into components
