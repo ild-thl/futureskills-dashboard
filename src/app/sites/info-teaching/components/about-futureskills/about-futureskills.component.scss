@@ -1,0 +1,37 @@
+@import "breakpoints";
+.about {
+  background-color: #ffffff;
+}
+figure {
+  figcaption {
+
+    &.caption-right,
+    &.caption-center {
+      font-style: italic;
+      color: var(--color-primary-blue-dark);
+      font-size: 14px;
+      padding: 10px 0;
+    }
+    &.caption-center {
+      text-align: center;
+    }
+    &.caption-right {
+      text-align: center;
+    }
+  }
+}
+@media(min-width: $xs) {
+}
+@media(min-width: $sm) {
+  figure {
+    figcaption {
+      &.caption-right {
+        text-align: right;
+      }
+    }
+  }
+}
+@media(min-width: $md) {
+}
+@media(min-width: $lg) {
+}

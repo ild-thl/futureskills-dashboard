@@ -50,6 +50,10 @@ import { RecommendedComponent } from './sites/offers/components/recommended/reco
 import { CardComponent } from './sites/offers/components/card/card.component';
 import { OfferTextComponent } from './sites/offers/components/offer-text/offer-text.component';
 import { CardChipsComponent } from './sites/offers/components/card-chips/card-chips.component';
+import { AboutFutureskillsComponent } from './sites/info-teaching/components/about-futureskills/about-futureskills.component';
+import { VideoPresentationComponent } from './sites/info-teaching/components/video-presentation/video-presentation.component';
+import { CardButtonExternalLinkComponent } from './sites/info-teaching/components/card-button-external-link/card-button-external-link.component';
+import { TeachingExamplesComponent } from './sites/info-teaching/components/teaching-examples/teaching-examples.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +78,12 @@ import { CardChipsComponent } from './sites/offers/components/card-chips/card-ch
     CardComponent,
     OfferTextComponent,
     CookieBannerComponent,
-    CardChipsComponent
+    CardChipsComponent,
+    AboutFutureskillsComponent,
+    VideoPresentationComponent,
+    CardButtonExternalLinkComponent,
+    TeachingExamplesComponent,
+    CookieBannerComponent
   ],
   imports: [
     BrowserModule,
