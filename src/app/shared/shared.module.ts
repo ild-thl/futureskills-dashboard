@@ -36,6 +36,7 @@ import {
   faVideo,
   faPlusCircle,
   faEdit,
+  faEye
 } from '@fortawesome/free-solid-svg-icons';
 import { CheckPermissionsDirective } from './directives/check-permissions.directive';
 
@@ -92,7 +93,8 @@ export class SharedModule {
       faVideo,
       faSearch,
       faPlusCircle,
-      faEdit
+      faEdit,
+      faEye
     );
   }
 }

@@ -1,21 +1,27 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Verwaltung</li>
+  </ol>
+</nav>
+
 <div class="container">
   <div class="row mt-5">
     <div class="col-12">
-      <h4>Moin</h4>
+      <h4>Verwaltung</h4>
       <!--<small class="text-muted">Hier könnte noch Text stehen.</small> -->
       <div class="mt-4">
         <div class="card shadow-sm p-3 mb-5 bg-white rounded" style="width: 18rem">
           <div class="card-body">
-            <h5 class="card-title">Kursdaten</h5>
+            <h5 class="card-title">Kursverwaltung</h5>
             <p class="card-text text-muted">
               Auf diesen Seiten können Kursdaten bearbeitet werden.
             </p>
           </div>
           <div class="list-group list-group-flush">
-            <a  [routerLink]="lnkManageOffers" class="list-group-item list-group-item-action">
+            <a [routerLink]="lnkManageOffers" class="list-group-item list-group-item-action">
               <fa-icon [icon]="['fas', 'edit']"></fa-icon> Kurse bearbeiten</a
             >
-            <a href="#" class="list-group-item list-group-item-action">
+            <a [routerLink]="'/manage/kurs/neu'" class="list-group-item list-group-item-action">
               <fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
             >
             <a class="list-group-item list-group-item-action disabled">

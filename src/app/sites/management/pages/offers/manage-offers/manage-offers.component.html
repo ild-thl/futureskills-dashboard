@@ -1,9 +1,21 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="'/manage'">Verwaltung</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Kursverwaltung</li>
+  </ol>
+</nav>
 <div class="container">
   <div class="row mt-5">
-    <div class="col-12">
-      <h4>Kursmanagement</h4>
-
-      
+    <div class="col-10">
+      <h4>Kursverwaltung</h4>
+    </div>
+    <div class="col-2">
+      <a type="button" class="float-right">
+        <fa-icon class="pl-2" [icon]="['fas', 'plus-circle']"></fa-icon>
+      </a>
+    </div>
+    <div class="col-12 mt-3 offer-table">
+      <fs-offer-table [offerList]="shortOfferList"></fs-offer-table>
     </div>
   </div>
 </div>
