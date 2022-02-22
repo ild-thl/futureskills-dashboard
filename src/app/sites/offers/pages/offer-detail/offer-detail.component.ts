@@ -17,8 +17,8 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-
   styleUrls: ['./offer-detail.component.scss'],
 })
 export class OfferDetailComponent implements OnInit, OnDestroy {
-  lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
-  lnkAdminOfferEdit = this.staticConfig.getPathInfo().lnkAdminOfferEdit;
+  //lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+  //lnkAdminOfferEdit = this.staticConfig.getPathInfo().lnkAdminOfferEdit;
   private userSub: Subscription | undefined;
   private paramsSub: Subscription | undefined;
 
@@ -33,10 +33,10 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   constructor(
     private offerDataService: OfferDataService,
     private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal,
+    //private router: Router,
+    //private modalService: NgbModal,
     private staticConfig: StaticService,
-    private logService: LogService,
+    //private logService: LogService,
     private errorHandler: ErrorHandlerService
   ) {
     this.isError = false;
@@ -83,7 +83,7 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteOffer() {
+  /*deleteOffer() {
     // TODO: Lädt-Anzeige an
     if (this.offer) {
       this.offerDataService.deleteOffer(this.offer).subscribe({
@@ -96,13 +96,13 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
       });
     }
   }
-
+*/
   /**
    * @deprecated
    * Aktuell kann nicht subscribed werden
    */
   subscribeToOffer() {}
-
+/*
   forwardToLMS() {
     if (this.offer) {
       if (this.offer.url == null || this.offer.url == undefined) {
@@ -152,17 +152,17 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
       },
       (reason) => {}
     );
-  }
+  }*/
 
   ngOnDestroy(): void {
     if (this.userSub) this.userSub.unsubscribe();
     if (this.paramsSub) this.paramsSub.unsubscribe();
   }
 
-  private isExternalURL(str: string): boolean {
+  /*private isExternalURL(str: string): boolean {
     // Muss mit http(s):// anfangen
     return /^http[s]?:\/\//.test(str);
-  }
+  }*/
 
   private setError() {
     this.isError = true;

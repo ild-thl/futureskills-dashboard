@@ -49,6 +49,7 @@ import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.compo
 import { RecommendedComponent } from './sites/offers/components/recommended/recommended.component';
 import { CardComponent } from './sites/offers/components/card/card.component';
 import { OfferTextComponent } from './sites/offers/components/offer-text/offer-text.component';
+import { CardChipsComponent } from './sites/offers/components/card-chips/card-chips.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { OfferTextComponent } from './sites/offers/components/offer-text/offer-t
     RecommendedComponent,
     CardComponent,
     OfferTextComponent,
-    CookieBannerComponent
+    CookieBannerComponent,
+    CardChipsComponent
   ],
   imports: [
     BrowserModule,
