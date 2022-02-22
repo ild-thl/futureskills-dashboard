@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalLmsContentComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
-import { NgbdModalOfferDeleteComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
+//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbdModalLmsContentComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
+//import { NgbdModalOfferDeleteComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 import { Objects, Permissions } from 'src/app/core/models/permissions';
-import { LogService } from 'src/app/core/services/logger/log.service';
+//import { LogService } from 'src/app/core/services/logger/log.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 
 @Component({
