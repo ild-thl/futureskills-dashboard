@@ -1,0 +1,25 @@
+@import "breakpoints";
+.mission {
+  background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-xs.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+}
+@media(min-width: $xs) {
+}
+@media(min-width: $sm) {
+  .mission {
+    background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-sm.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+  }
+}
+@media(min-width: $md) {
+  .mission {
+    background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-md.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+
+    .comic-header {
+      font-size: 72px;
+    }
+  }
+}
+@media(min-width: $lg) {
+  .mission {
+    background-image: url('~src/styles/ressources/backgrounds/background-halftone-one-stroke-lg.svg'), linear-gradient(-45deg, #d4004b 0%, #a10018 50%);
+  }
+}

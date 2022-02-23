@@ -1,0 +1,74 @@
+<section class="detail-page course-card">
+  <div class="container">
+    <div class="row alignment justify-content-center align-items-center">
+      <div class="col-12 col-md-10">
+        <div class="card">
+          <div class="row no-gutters">
+            <div class="col-12 card-header">
+              <h1>
+                <span *ngIf="offer?.hashtag" class="hashtag text-uppercase"
+                  >#{{ offer?.hashtag }}</span
+                >{{ offer?.title }}
+              </h1>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4">
+              <img class="card-img" src="{{ offer?.image_path }}" alt="Kurs Kachel Image" />
+            </div>
+            <div class="col-12 col-sm-7 col-md-8">
+              <div class="card-body">
+                <div class="card-text">
+                  <fs-card-chips [offer]="offer"></fs-card-chips>
+                </div>
+                <div class="card-text meta-text">
+                  <fa-icon [icon]="['fas', 'door-open']"></fa-icon> Institution:
+                  {{ offer?.institution?.title }}
+                </div>
+                <div class="card-text meta-text">
+                  <fa-icon [icon]="['fas', 'globe-europe']"></fa-icon> Sprache: {offer?.language,
+                  select, de {Deutsch} en {Englisch}}
+                </div>
+                <div class="card-text meta-text">
+                  <fa-icon [icon]="['fas', 'chalkboard-teacher']"></fa-icon> Format: {offer?.type,
+                  select, online-course {Online Kurs} webinar {webinar} presence-event
+                  {Präsenzveranstaltung} presence-series {Präsenzveranstaltungsreihe}
+                  self-study-course {Selbstlernkurs} course-package {Kurspaket} blended-learning
+                  {Blended Learning}}
+                </div>
+                <div class="buttons">
+                  <ng-container *fs-if-allowed="permission.ADMINACCESS; object: object.OFFERS">
+                  <div class="edit-button" ngbDropdown>
+                    <button class="btn btn-light cog" id="dropdownBasic1" ngbDropdownToggle>
+                      <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button
+                        class="btn btn-primary"
+                        [routerLink]="[lnkAdminOfferEdit, offer?.id]"
+                        ngbDropdownItem
+                      >
+                        <fa-icon [icon]="['fas', 'pen']"></fa-icon> Editieren
+                      </button>
+                      <button
+                        class="btn btn-primary"
+                        ngbDropdownItem
+                        (click)="showModalWindowDeleteOffer()"
+                      >
+                        <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon> Löschen
+                      </button>
+                    </div>
+                  </div>
+                  </ng-container>
+                  <div class="card-button">
+                    <button class="secondary-button dark" (click)="showModalWindowToLMS()">
+                      Zum Kurs
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

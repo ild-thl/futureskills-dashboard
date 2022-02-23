@@ -46,6 +46,14 @@ import { CookieBannerComponent } from 'src/app/sites/app-root/components/cookie-
 import { OfferListPaginatedComponent } from './sites/offers/pages/offer-list-paginated/offer-list-paginated.component';
 import { SearchFieldComponent } from './sites/offers/components/search-field/search-field.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
+import { RecommendedComponent } from './sites/offers/components/recommended/recommended.component';
+import { CardComponent } from './sites/offers/components/card/card.component';
+import { OfferTextComponent } from './sites/offers/components/offer-text/offer-text.component';
+import { CardChipsComponent } from './sites/offers/components/card-chips/card-chips.component';
+import { AboutFutureskillsComponent } from './sites/info-teaching/components/about-futureskills/about-futureskills.component';
+import { VideoPresentationComponent } from './sites/info-teaching/components/video-presentation/video-presentation.component';
+import { CardButtonExternalLinkComponent } from './sites/info-teaching/components/card-button-external-link/card-button-external-link.component';
+import { TeachingExamplesComponent } from './sites/info-teaching/components/teaching-examples/teaching-examples.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +74,15 @@ import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.compo
     FilterRowServerDirective,
     SearchFieldComponent,
     NotAllowedComponent,
+    RecommendedComponent,
+    CardComponent,
+    OfferTextComponent,
+    CookieBannerComponent,
+    CardChipsComponent,
+    AboutFutureskillsComponent,
+    VideoPresentationComponent,
+    CardButtonExternalLinkComponent,
+    TeachingExamplesComponent,
     CookieBannerComponent
   ],
   imports: [
