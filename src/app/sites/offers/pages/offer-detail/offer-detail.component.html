@@ -1,3 +1,7 @@
+<div *ngIf="isLoading">
+  <fs-loading-spinner class="d-flex justify-content-center align-items-center my-5"></fs-loading-spinner>
+</div>
+
 <div *ngIf="isError && !isLoading" class="container">
   <div class="row">
     <div class="col-12">
