@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalLmsContentComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
 import { NgbdModalOfferDeleteComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
@@ -9,7 +8,6 @@ import { Offer } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 import { Objects, Permissions } from 'src/app/core/models/permissions';
 import { LogService } from 'src/app/core/services/logger/log.service';
-import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 
 
 @Component({
@@ -28,17 +26,11 @@ export class CardComponent {
 
   constructor(
     private offerDataService: OfferDataService,
-    //private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
     private staticConfig: StaticService,
-    private logService: LogService,
-    //private errorHandler: ErrorHandlerService
-  ) {
-    //this.isError = false;
-    //this.isLoading = false;
-    //this.errMessage = '';
-  }
+    private logService: LogService
+  ) {}
 
   deleteOffer() {
     // TODO: Lädt-Anzeige an
