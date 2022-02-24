@@ -2,6 +2,10 @@
 
 ## [Not Released v0.10.0]
 
+## 2022-02-23/avz
+### added
+- Loading spinner on the Detail Page
+
 ## 2022-02-22/avz
 ### changed
 - Detail Page into components
