@@ -2,10 +2,18 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenCheckInterceptor } from '../interceptors/token-check.interceptor';
 import { AuthInterceptorService } from 'src/app/core/interceptors/auth-interceptor.service';
 
+// export const httpInterceptors = [
+//   {
+//     provide: HTTP_INTERCEPTORS,
+//     useClass: AuthInterceptorService,
+//     multi: true,
+//   },
+// ];
+
 export const httpInterceptors = [
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
+    useClass: TokenCheckInterceptor,
     multi: true,
   },
 ];
