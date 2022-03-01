@@ -1,53 +1,112 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../auth/auth.service';
 import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpHeaders,
   HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse,
+  HttpHeaders,
 } from '@angular/common/http';
-
-import { Observable } from 'rxjs';
-import { take, exhaustMap } from 'rxjs/operators';
-
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { UserData } from 'src/app/core/data/user/user-data.interface';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { take, catchError, switchMap, filter } from 'rxjs/operators';
+import { StaticService } from 'src/app/config/static.service';
 import { TokenService } from 'src/app/core/services/token-check/token.service';
+import { LogService } from 'src/app/core/services/logger/log.service';
+import { TOKEN_PATH } from './../http/api/api.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(private authService: AuthService,  private tokenService: TokenService,) {}
+  private lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private isRefreshing = false;
+  private isAuth = false;
+
+  constructor(
+    private authService: AuthService,
+    private staticConfig: StaticService,
+    private tokenService: TokenService,
+    private logService: LogService,
+    private router: Router
+  ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    //console.log('HTTP-Request: ', request);
+    let authReq = request;
+    const token = this.tokenService.getAccessToken();
+    this.isAuth = token !== null;
+    // console.log('event (request) ->>> ', request);
 
-    const response = this.authService.userAuthenticated$.pipe(
-      take(1),
-      exhaustMap((userData: UserData) => {
-        if (userData.isAuth) {
-          const accessToken = this.tokenService.getAccessToken();
-          //const refreshToken = this.tokenService.getRefreshToken();
+    if (this.isAuth) {
+      authReq = this.addTokenHeader(request, token);
+    }
 
-          const headerSettings: { [name: string]: string | string[] } = {};
-
-          for (const key of request.headers.keys()) {
-            headerSettings[key] = request.headers.getAll(key);
+    // Anfrage absenden
+    // 401 Fehler behandeln, wenn der Token abgelaufen ist
+    return next.handle(authReq).pipe(
+      catchError((error: any) => {
+        if (
+          error instanceof HttpErrorResponse &&
+          error.status === 401 &&
+          !request.url.includes(TOKEN_PATH)
+        ) {
+          if (this.isAuth) {
+            this.logService.error('interceptor', '401 - invalid token:', error);
+            return this.handle401Error(authReq, next);
           }
-
-          headerSettings['Authorization'] = 'Bearer ' + accessToken;
-          headerSettings['Content-Type'] = 'application/json';
-          const newHeader = new HttpHeaders(headerSettings);
-
-          const modifiedReq = request.clone({
-            headers: newHeader,
-          });
-
-          return next.handle(modifiedReq);
-        } else {
-          return next.handle(request);
         }
+        // Alle anderen Fehlernummern und /oauth/token Fehler
+        this.logService.error('interceptor', 'HTTP-Error', error);
+        return throwError(() => error);
       })
     );
-    return response;
+  }
+
+  private handle401Error(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
+      const token = this.tokenService.getRefreshToken();
+      if (token) {
+        return this.authService.refreshToken(token).pipe(
+          switchMap((token: { accessToken: string; refreshToken: string }) => {
+            this.isRefreshing = false;
+            this.refreshTokenSubject.next(token.accessToken);
+            this.authService.refreshLocalTokenUserData(token.accessToken, token.refreshToken);
+            return next.handle(this.addTokenHeader(request, token.accessToken));
+          }),
+          catchError((error: HttpErrorResponse) => {
+            this.logService.error('interceptor', 'HTTP-Error after Token Refresh', error);
+            this.isRefreshing = false;
+            this.authService.logoutUser();
+            return throwError(() => error);
+          })
+        );
+      }
+    }
+    return this.refreshTokenSubject.pipe(
+      filter((token) => token !== null),
+      take(1),
+      switchMap((token) => next.handle(this.addTokenHeader(request, token)))
+    );
+  }
+
+  private addTokenHeader(request: HttpRequest<any>, token: string): HttpRequest<unknown> {
+    const headerSettings: { [name: string]: string | string[] } = {};
+
+    for (const key of request.headers.keys()) {
+      headerSettings[key] = request.headers.getAll(key);
+    }
+
+    headerSettings['Authorization'] = 'Bearer ' + token;
+    headerSettings['Content-Type'] = 'application/json';
+    const newHeader = new HttpHeaders(headerSettings);
+
+    return request.clone({
+      headers: newHeader,
+    });
   }
 }

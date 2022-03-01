@@ -32,6 +32,8 @@ import {
 
 /* eslint-disable no-console */
 
+export const TOKEN_PATH = '/oauth/token';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -47,7 +49,7 @@ export class ApiService {
   ////////////////////////////////////////////////
   public loginUser(email: string, password: string): Observable<AuthResponseData> {
     return this.http
-      .post<AuthResponseData>(environment.apiURL + '/oauth/token', {
+      .post<AuthResponseData>(environment.apiURL + TOKEN_PATH, {
         grant_type: environment.clientLoginData.grantType,
         username: email,
         password: password,
@@ -79,18 +81,13 @@ export class ApiService {
    * @returns
    */
   public updateUserSession(refreshToken: string): Observable<any> {
-    return this.http
-      .post<AuthResponseData>(environment.apiURL + '/oauth/token', {
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-        client_id: environment.clientLoginData.clientId,
-        client_secret: environment.clientLoginData.clientSecret,
-      })
-      .pipe(
-        catchError((errorResponse: HttpErrorResponse) => {
-          return this.handleError(errorResponse);
-        })
-      );
+    // Wichtig, hier kein Fehlerhandling, das übernimmt der Interceptor
+    return this.http.post<AuthResponseData>(environment.apiURL + TOKEN_PATH, {
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: environment.clientLoginData.clientId,
+      client_secret: environment.clientLoginData.clientSecret,
+    });
   }
 
   ////////////////////////////////////////////////
@@ -414,7 +411,11 @@ export class ApiService {
         errorCode = ErrorCodes.E400;
         break;
       case 401:
-        errorCode = ErrorCodes.E401;
+        if (errorRes.error && errorRes.error.error === 'invalid_request') {
+          errorCode = ErrorCodes.E401_1;
+        } else {
+          errorCode = ErrorCodes.E401;
+        }
         break;
       case 403:
         errorCode = ErrorCodes.E403;

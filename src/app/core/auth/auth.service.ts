@@ -112,16 +112,24 @@ export class AuthService {
     return of(true);
   }
 
+// -----------------------------------------------------------------------
+// refreshToken and refreshUserData are used by AuthInterceptor
+// to Update the Token
+
+/**
+ * RefreshToken (used by AuthInterceptor)
+ * @param refreshToken 
+ * @returns accessToken: string; refreshToken: string
+ */
   public refreshToken(
     refreshToken: string
   ): Observable<{ accessToken: string; refreshToken: string } | null> {
-    //console.log('Try to refresh token');
     return this.apiService.updateUserSession(refreshToken).pipe(
       map((serverResponse: AuthResponseData) => {
         if (serverResponse.access_token) {
-          this.logService.log('AuthService', 'Get New Token from Server');
+          // alles ok 
         } else {
-          this.logService.warn('AuthService', 'NoToken from Server');
+          this.logService.warn('AuthService', 'No Token from Server');
         }
         return {
           accessToken: serverResponse.access_token,
@@ -131,47 +139,60 @@ export class AuthService {
     );
   }
 
-  public refreshUserData(accessToken: string, refreshToken: string): User | null{
+  /**
+   * refreshUserData (used by AuthInterceptor)
+   * @param accessToken 
+   * @param refreshToken 
+   * @returns User | null
+   */
+  public refreshLocalTokenUserData(accessToken: string, refreshToken: string): User | null {
     let tmpUser: User = null;
     if (accessToken) {
       const decodedToken = this.tokenService.getDecodedToken(accessToken);
       const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
-      tmpUser = this.createUserFromToken(decodedToken);
-      //this.logService.log('AuthService: Saved new Token', JSON.stringify(decodedToken));
-      this.logService.log('AuthService: Update-Token Login-Exp:', tmpUser.name, expirationDate);
       this.tokenService.saveAccessToken(accessToken);
       this.tokenService.saveRefreshToken(refreshToken);
+      tmpUser = this.createUserFromToken(decodedToken);
+      this.logService.log('AuthService: Update-Token Login-Exp:', tmpUser.name, expirationDate);
     } else {
-      this.logService.warn('AuthService', 'NoToken from Server');
+      this.logService.warn('AuthService', 'No Token from Server');
     }
     this.user$.next(tmpUser);
     return tmpUser;
   }
 
-  // public uupdateUserSession(refreshToken: string): Observable<User | null> {
-  //   //console.log('Try to refresh token');
-  //   return this.apiService.updateUserSession(refreshToken).pipe(
-  //     map((serverResponse: AuthResponseData) => {
-  //       let tmpUser: User = null;
+  // -----------------------------------------------------------------------
+  // -----------------------------------------------------------------------
 
-  //       if (serverResponse.access_token) {
-  //         //console.table(serverResponse);
-  //         const decodedToken = this.tokenService.getDecodedToken(serverResponse.access_token);
-  //         const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
+  /**
+   * Update the token manually (not used at the moment -> Manually when enter the Adminpages)
+   * @param refreshToken 
+   * @returns Observable<User | null>
+   */
+  public updateUserSession(refreshToken: string): Observable<User | null> {
+    //console.log('Try to refresh token');
+    return this.apiService.updateUserSession(refreshToken).pipe(
+      map((serverResponse: AuthResponseData) => {
+        let tmpUser: User = null;
 
-  //         tmpUser = this.createUserFromToken(decodedToken);
-  //         //this.logService.log('AuthService: Saved new Token', JSON.stringify(decodedToken));
-  //         this.logService.log('AuthService: Update-Token Login-Exp:', tmpUser.name, expirationDate);
-  //         this.tokenService.saveAccessToken(serverResponse.access_token);
-  //         this.tokenService.saveRefreshToken(serverResponse.refresh_token);
-  //       } else {
-  //         this.logService.warn('AuthService', 'NoToken from Server');
-  //       }
-  //       this.user$.next(tmpUser);
-  //       return tmpUser;
-  //     })
-  //   );
-  // }
+        if (serverResponse.access_token) {
+          //console.table(serverResponse);
+          const decodedToken = this.tokenService.getDecodedToken(serverResponse.access_token);
+          const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
+
+          tmpUser = this.createUserFromToken(decodedToken);
+          //this.logService.log('AuthService: Saved new Token', JSON.stringify(decodedToken));
+          this.logService.log('AuthService: Update-Token Login-Exp:', tmpUser.name, expirationDate);
+          this.tokenService.saveAccessToken(serverResponse.access_token);
+          this.tokenService.saveRefreshToken(serverResponse.refresh_token);
+        } else {
+          this.logService.warn('AuthService', 'NoToken from Server');
+        }
+        this.user$.next(tmpUser);
+        return tmpUser;
+      })
+    );
+  }
 
   /**
    * not used at the moment
