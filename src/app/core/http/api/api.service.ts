@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 import { Institution } from 'src/app/core/models/institution';
+import { APIErrorResponse } from 'src/app/core/models/error';
 import { Offer } from 'src/app/core/models/offer';
 import { User } from 'src/app/core/models/user';
 import {
@@ -16,11 +17,7 @@ import {
   OfferSearchFilterToAPI,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
-import { LogService } from 'src/app/core/services/logger/log.service';
-import {
-  ErrorCodes,
-  ErrorHandlerService,
-} from 'src/app/core/services/error-handling/error-handling';
+import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling';
 
 /**
  * api.service.ts
@@ -33,16 +30,14 @@ import {
 /* eslint-disable no-console */
 
 export const TOKEN_PATH = '/oauth/token';
+export const MAX_TOKEN_REFRESH = 3;
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(
-    private http: HttpClient,
-    private logService: LogService,
-    private errorHandler: ErrorHandlerService
-  ) {}
+  countTokenCall = 0;
+  constructor(private http: HttpClient) {}
 
   ////////////////////////////////////////////////
   // Authenticate
@@ -82,12 +77,24 @@ export class ApiService {
    */
   public updateUserSession(refreshToken: string): Observable<any> {
     // Wichtig, hier kein Fehlerhandling, das übernimmt der Interceptor
-    return this.http.post<AuthResponseData>(environment.apiURL + TOKEN_PATH, {
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-      client_id: environment.clientLoginData.clientId,
-      client_secret: environment.clientLoginData.clientSecret,
-    });
+    // Die Abfrage nach der Anzahl der Request sperrt mehr als x Abfragen
+    if (++this.countTokenCall > MAX_TOKEN_REFRESH) {
+      return throwError(
+        () =>
+          new APIErrorResponse({
+            error: { error: 'refresh_failure' },
+            status: 429,
+            message: 'refresh_failure',
+          })
+      );
+    } else {
+      return this.http.post<AuthResponseData>(environment.apiURL + TOKEN_PATH, {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: environment.clientLoginData.clientId,
+        client_secret: environment.clientLoginData.clientSecret,
+      });
+    }
   }
 
   ////////////////////////////////////////////////
@@ -400,7 +407,7 @@ export class ApiService {
   // ErrorHandling
   ////////////////////////////////////////////////
   // Todo: Fehlermeldungstexte für die GUI
-  private handleError(errorRes: HttpErrorResponse): Observable<never> {
+  private handleError(errorRes: HttpErrorResponse | APIErrorResponse): Observable<never> {
     let errorCode = ErrorCodes.UNKNOWN;
 
     switch (errorRes.status) {
@@ -427,7 +434,11 @@ export class ApiService {
         errorCode = ErrorCodes.E422;
         break;
       case 429:
-        errorCode = ErrorCodes.E429;
+        if (errorRes.error && errorRes.message === 'refresh_failure') {
+          errorCode = ErrorCodes.E429_1;
+        } else {
+          errorCode = ErrorCodes.E429;
+        }
         break;
       case 500:
         errorCode = ErrorCodes.E500;

@@ -12,6 +12,7 @@ export enum ErrorCodes {
   E404 = 'not_found',
   E422 = 'unprocessable_entity',
   E429 = 'too_many_requests',
+  E429_1 = 'refresh_failure',
   E500 = 'internal_server_errior',
 }
 
@@ -35,6 +36,7 @@ export class ErrorHandlerService {
     E404_OFFER_NOT_FOUND: 'Der Kurs konnte leider nicht gefunden werden.',
     E422_DEFAULT_UNPROCESSABLE: 'Die Daten konnten nicht verarbeitet werden.',
     E429_DEFAULT_TOO_MANY_REQUESTS: 'Ein Fehler ist aufgetreten.',
+    E429_REFRESH_FAILURE: 'Das Verlängern der Session ist fehlgeschlagen. Bitte logge dich erneut ein.',
     E500_DEFAULT_SERVER_ERROR: 'Der Server kann die Anfrage aktuell nicht bearbeiten.',
   };
   public get ERROR_MESSAGES() {
@@ -113,6 +115,9 @@ export class ErrorHandlerService {
 
     // 429 - (Too many requests)
     this.defaultErrorMap.set(ErrorCodes.E429, this.ERROR_MESSAGES.E429_DEFAULT_TOO_MANY_REQUESTS);
+
+     // 429 - (Refresh Failue) Der Code wird vom Client erzugt wenn der Token zu oft upgedated wurde
+    this.defaultErrorMap.set(ErrorCodes.E429_1, this.ERROR_MESSAGES.E429_REFRESH_FAILURE);
 
     // 500 - Serverfehler (meistens ist die Db nicht erreichbar)
     this.defaultErrorMap.set(ErrorCodes.E500, this.ERROR_MESSAGES.E500_DEFAULT_SERVER_ERROR);

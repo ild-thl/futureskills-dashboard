@@ -9,7 +9,7 @@ import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { ObjectPermission, Objects, Permissions, UserRoles } from 'src/app/core/models/permissions';
 import { TokenService } from 'src/app/core/services/token-check/token.service';
-import { LogService } from './../services/logger/log.service';
+import { LogService } from 'src/app/core/services/logger/log.service';
 import { AuthTokenStructure } from './auth.interfaces';
 
 /**
@@ -61,22 +61,7 @@ export class AuthService {
 
     return this.apiService.loginUser(email, password).pipe(
       map((serverResponse: AuthResponseData) => {
-        let tmpUser: User = null;
-
-        if (serverResponse.access_token) {
-          const decodedToken = this.tokenService.getDecodedToken(serverResponse.access_token);
-          const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
-
-          tmpUser = this.createUserFromToken(decodedToken);
-          this.logService.log('AuthService Login-Exp:', tmpUser.name, expirationDate);
-          this.tokenService.saveAccessToken(serverResponse.access_token);
-          this.tokenService.saveRefreshToken(serverResponse.refresh_token);
-        } else {
-          this.logService.warn('AuthService', 'NoToken from Server');
-        }
-
-        this.user$.next(tmpUser);
-        return tmpUser;
+        return this.setUserAndTokenData(serverResponse.access_token, serverResponse.refresh_token);
       })
     );
   }
@@ -112,25 +97,20 @@ export class AuthService {
     return of(true);
   }
 
-// -----------------------------------------------------------------------
-// refreshToken and refreshUserData are used by AuthInterceptor
-// to Update the Token
+  // -----------------------------------------------------------------------
+  // refreshToken and refreshUserData are used by AuthInterceptor
+  // to Update the Token
 
-/**
- * RefreshToken (used by AuthInterceptor)
- * @param refreshToken 
- * @returns accessToken: string; refreshToken: string
- */
+  /**
+   * RefreshToken (used by AuthInterceptor)
+   * @param refreshToken
+   * @returns accessToken: string; refreshToken: string
+   */
   public refreshToken(
     refreshToken: string
   ): Observable<{ accessToken: string; refreshToken: string } | null> {
     return this.apiService.updateUserSession(refreshToken).pipe(
       map((serverResponse: AuthResponseData) => {
-        if (serverResponse.access_token) {
-          // alles ok 
-        } else {
-          this.logService.warn('AuthService', 'No Token from Server');
-        }
         return {
           accessToken: serverResponse.access_token,
           refreshToken: serverResponse.refresh_token,
@@ -141,19 +121,28 @@ export class AuthService {
 
   /**
    * refreshUserData (used by AuthInterceptor)
-   * @param accessToken 
-   * @param refreshToken 
+   * @param accessToken
+   * @param refreshToken
    * @returns User | null
    */
   public refreshLocalTokenUserData(accessToken: string, refreshToken: string): User | null {
+    return this.setUserAndTokenData(accessToken, refreshToken);
+  }
+
+  /**
+   * Updates token in localStorage and Userdata in object
+   * @param accessToken
+   * @param refreshToken
+   * @returns User | null
+   */
+  private setUserAndTokenData(accessToken: string, refreshToken: string): User | null {
     let tmpUser: User = null;
     if (accessToken) {
-      const decodedToken = this.tokenService.getDecodedToken(accessToken);
-      const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
       this.tokenService.saveAccessToken(accessToken);
       this.tokenService.saveRefreshToken(refreshToken);
+      const decodedToken = this.tokenService.getDecodedToken(accessToken);
       tmpUser = this.createUserFromToken(decodedToken);
-      this.logService.log('AuthService: Update-Token Login-Exp:', tmpUser.name, expirationDate);
+      this.logExpDate(decodedToken, tmpUser);
     } else {
       this.logService.warn('AuthService', 'No Token from Server');
     }
@@ -166,7 +155,7 @@ export class AuthService {
 
   /**
    * Update the token manually (not used at the moment -> Manually when enter the Adminpages)
-   * @param refreshToken 
+   * @param refreshToken
    * @returns Observable<User | null>
    */
   public updateUserSession(refreshToken: string): Observable<User | null> {
@@ -275,5 +264,12 @@ export class AuthService {
         break;
     }
     return userPermissions;
+  }
+
+  private logExpDate(decodedToken: AuthTokenStructure, user: User) {
+    try {
+      const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
+      this.logService.log('AuthService Login-Exp:', user.name, expirationDate);
+    } catch (e) {}
   }
 }
