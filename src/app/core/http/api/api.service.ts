@@ -30,6 +30,7 @@ import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling'
 /* eslint-disable no-console */
 
 export const TOKEN_PATH = '/oauth/token';
+export const LOGOUT_PATH = '/api/logout';
 export const MAX_TOKEN_REFRESH = 3;
 
 @Injectable({
@@ -63,7 +64,7 @@ export class ApiService {
    * @returns Observable<any>
    */
   public logoutUser(): Observable<any> {
-    return this.http.get<any>(environment.apiURL + '/api/logout').pipe(
+    return this.http.get<any>(environment.apiURL + LOGOUT_PATH).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         return this.handleError(errorResponse);
       })

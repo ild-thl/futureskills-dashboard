@@ -1,6 +1,6 @@
 import { StaticService } from 'src/app/config/static.service';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { User } from 'src/app/core/models/user';
@@ -29,6 +29,8 @@ export class AuthService {
   private EXPIRES_FACTOR = 1000;
   // Logout if Token is expired on Page Start
   private logOutAutomatically: boolean;
+  // Send LogoutMessage to server
+  private logOutWithServer: boolean;
 
   constructor(
     private apiService: ApiService,
@@ -46,6 +48,7 @@ export class AuthService {
     );
 
     this.logOutAutomatically = this.staticService.getAuthBehaviour().autoLogout;
+    this.logOutWithServer = this.staticService.getAuthBehaviour().logoutWithServer;
   }
 
   /**
@@ -91,14 +94,19 @@ export class AuthService {
     this.user$.next(tmpUser);
   }
 
+  /**
+   * Use to logout user
+   * @returns Observable<boolean>
+   */
   public logoutUser(): Observable<boolean> {
-    this.logService.log('AuthService', 'logout');
-    this.signOff();
-    return of(true);
+    if (this.logOutWithServer){
+      return this.logoutWithServerLogout();
+    } 
+    return this.logoutLocally();
   }
 
   // -----------------------------------------------------------------------
-  // refreshToken and refreshUserData are used by AuthInterceptor
+  //  getRefreshTokenFromServer and refreshLocalTokenUserData are used by AuthInterceptor
   // to Update the Token
 
   /**
@@ -106,7 +114,7 @@ export class AuthService {
    * @param refreshToken
    * @returns accessToken: string; refreshToken: string
    */
-  public refreshToken(
+  public getRefreshTokenFromServer(
     refreshToken: string
   ): Observable<{ accessToken: string; refreshToken: string } | null> {
     return this.apiService.updateUserSession(refreshToken).pipe(
@@ -127,6 +135,23 @@ export class AuthService {
    */
   public refreshLocalTokenUserData(accessToken: string, refreshToken: string): User | null {
     return this.setUserAndTokenData(accessToken, refreshToken);
+  }
+
+  // -----------------------------------------------------------------------
+  // -----------------------------------------------------------------------
+
+  /**
+   * Update the token manually (not used at the moment -> Manually when enter the Adminpages)
+   * @param refreshToken
+   * @returns Observable<User | null>
+   */
+  public updateUserSession(refreshToken: string): Observable<User | null> {
+    //console.log('Try to refresh token');
+    return this.apiService.updateUserSession(refreshToken).pipe(
+      map((serverResponse: AuthResponseData) => {
+        return this.setUserAndTokenData(serverResponse.access_token, serverResponse.refresh_token);
+      })
+    );
   }
 
   /**
@@ -150,71 +175,48 @@ export class AuthService {
     return tmpUser;
   }
 
-  // -----------------------------------------------------------------------
-  // -----------------------------------------------------------------------
-
   /**
-   * Update the token manually (not used at the moment -> Manually when enter the Adminpages)
-   * @param refreshToken
-   * @returns Observable<User | null>
+   * Logout User Locally Only
    */
-  public updateUserSession(refreshToken: string): Observable<User | null> {
-    //console.log('Try to refresh token');
-    return this.apiService.updateUserSession(refreshToken).pipe(
-      map((serverResponse: AuthResponseData) => {
-        let tmpUser: User = null;
-
-        if (serverResponse.access_token) {
-          //console.table(serverResponse);
-          const decodedToken = this.tokenService.getDecodedToken(serverResponse.access_token);
-          const expirationDate = new Date(decodedToken.exp * this.EXPIRES_FACTOR);
-
-          tmpUser = this.createUserFromToken(decodedToken);
-          //this.logService.log('AuthService: Saved new Token', JSON.stringify(decodedToken));
-          this.logService.log('AuthService: Update-Token Login-Exp:', tmpUser.name, expirationDate);
-          this.tokenService.saveAccessToken(serverResponse.access_token);
-          this.tokenService.saveRefreshToken(serverResponse.refresh_token);
-        } else {
-          this.logService.warn('AuthService', 'NoToken from Server');
-        }
-        this.user$.next(tmpUser);
-        return tmpUser;
-      })
-    );
-  }
-
-  /**
-   * not used at the moment
-   * @returns Observable<boolean>
-   */
-  public logoutUserOnTokenExpired(): Observable<boolean> {
-    this.logService.log('AuthService', 'logout(automatically)');
+  private logoutLocally(): Observable<boolean> {
+    this.logService.log('AuthService', 'logout-locally');
     this.signOff();
     return of(true);
   }
 
+  /**
+   * SignOff User
+   * Deletes the tokens and sets user to null
+   * Also sends logout signal to server
+   * not used at the moment
+   * @returns Observable<boolean> if succeeded
+   */
+  private logoutWithServerLogout(): Observable<boolean> {
+    return new Observable((observer$) => {
+      this.apiService.logoutUser().subscribe({
+        next: (response: any) => {
+          this.logService.log('AuthService', 'logout-with server', response);
+          this.signOff();
+          observer$.next(true);
+          observer$.complete();
+        },
+        error: (error) => {
+          this.signOff();
+          observer$.next(true);
+          observer$.complete();
+        },
+      });
+    });
+  }
+
+  /**
+   * SignOff User
+   * Deletes the tokens and sets user to null
+   */
   private signOff() {
     this.tokenService.removeAccessToken();
     this.tokenService.removeRefreshToken();
     this.user$.next(null);
-  }
-
-  /**
-   * not used at the moment
-   * @returns
-   */
-  private logoutWithServerLogout() {
-    this.apiService.logoutUser().subscribe({
-      next: (response: any) => {
-        this.logService.log('AuthService', 'logout(manually ok)', response);
-        this.signOff();
-      },
-      error: (error) => {
-        this.logService.log('AuthService', error);
-        this.signOff();
-      },
-    });
-    return of(true);
   }
 
   private createUserFromToken(decodedToken: AuthTokenStructure): User {

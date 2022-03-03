@@ -14,7 +14,7 @@ import { take, catchError, switchMap, filter } from 'rxjs/operators';
 import { StaticService } from 'src/app/config/static.service';
 import { TokenService } from 'src/app/core/services/token-check/token.service';
 import { LogService } from 'src/app/core/services/logger/log.service';
-import { TOKEN_PATH } from './../http/api/api.service';
+import { TOKEN_PATH, LOGOUT_PATH } from './../http/api/api.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -41,16 +41,12 @@ export class AuthInterceptorService implements HttpInterceptor {
       authReq = this.addTokenHeader(request, token);
     }
 
-    // Anfrage absenden
-    // 401 Fehler behandeln, wenn der Token abgelaufen ist
     return next.handle(authReq).pipe(
       catchError((error: any) => {
-        if (
-          error instanceof HttpErrorResponse &&
-          error.status === 401 &&
-          !request.url.includes(TOKEN_PATH)
-        ) {
-          if (this.isAuth) {
+        // 401 Only and only if logged in
+        if (this.isAuth && error instanceof HttpErrorResponse && error.status === 401) {
+          // Only some paths
+          if (!request.url.includes(TOKEN_PATH) && !request.url.includes(LOGOUT_PATH)) {
             this.logService.error('interceptor', '401 - invalid token:', error);
             return this.handle401Error(authReq, next);
           }
@@ -71,7 +67,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       this.refreshTokenSubject.next(null);
       const token = this.tokenService.getRefreshToken();
       if (token) {
-        return this.authService.refreshToken(token).pipe(
+        return this.authService.getRefreshTokenFromServer(token).pipe(
           switchMap((token: { accessToken: string; refreshToken: string }) => {
             this.isRefreshing = false;
             this.refreshTokenSubject.next(token.accessToken);

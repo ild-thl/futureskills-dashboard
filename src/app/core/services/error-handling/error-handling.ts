@@ -27,7 +27,7 @@ export class ErrorHandlerService {
     E400_DEFAULT_BAD_REQUEST: 'Die Daten sind nicht korrekt.',
     E400_LOGIN_BAD_REQUEST: 'E-Mail oder Passwort sind nicht korrekt.',
     E401_DEFAULT_UNAUTHORIZED: 'Die Anfrage kann ohne Authentifizierung nicht durchgeführt werden.',
-    E401_DEFAULT_INVALID_REFRESH_TOKEN: 'Du warst lange nicht aktiv auf dieser Seite. Du wurdest deshalb ausgeloggt. Bitte logge dich erneut ein.',
+    E401_DEFAULT_INVALID_REFRESH_TOKEN: 'Du warst für längere Zeit nicht aktiv auf dieser Seite. Bitte logge dich erneut ein.',
     E403_DEFAULT_FORBIDDEN: 'Es fehlt die Berechtigung Daten zu lesen oder zu bearbeiten.',
     E403_OFFER_FORBIDDEN: 'Es fehlen die Rechte um diesen Kurs zu bearbeiten.',
     E404_DEFAULT_NOT_FOUND: 'Die angeforderten Daten konnten nicht gefunden werden.',
