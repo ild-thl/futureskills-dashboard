@@ -52,4 +52,7 @@ export class StaticService {
   getComponentVisibility(): any {
     return CustomConfig.general.isVisible;
   }
+  getAuthBehaviour(): any {
+    return CustomConfig.general.authBehaviour;
+  }
 }

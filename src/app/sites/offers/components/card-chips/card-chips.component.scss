@@ -1,0 +1,101 @@
+@import "breakpoints";
+.chip {
+  padding: 3px 10px;
+  background-color: var(--color-function-white);
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+
+  &.tech {
+    border: 1px solid var(--color-tech);
+    color: var(--color-tech);
+
+    &:hover {
+      background-color: var(--color-tech);
+      color: var(--color-function-white);
+    }
+  }
+  &.digital {
+    border: 1px solid var(--color-digital);
+    color: var(--color-digital);
+
+    &:hover {
+      background-color: var(--color-digital);
+      color: var(--color-function-white);
+    }
+  }
+  &.classic {
+    border: 1px solid var(--color-classic);
+    color: var(--color-classic);
+
+    &:hover {
+      background-color: var(--color-classic);
+      color: var(--color-function-white);
+    }
+  }
+  &:nth-child(n+2) {
+    margin-left: 5px;
+  }
+}
+::ng-deep .popover {
+  box-shadow:
+    0px 0px 2.2px rgba(0, 0, 0, 0.07),
+    0px 0px 5.3px rgba(0, 0, 0, 0.101),
+    0px 0px 10px rgba(0, 0, 0, 0.125),
+    0px 0px 17.9px rgba(0, 0, 0, 0.149),
+    0px 0px 33.4px rgba(0, 0, 0, 0.18),
+    0px 0px 80px rgba(0, 0, 0, 0.25)
+  ;
+  border: none;
+
+  .popover-header {
+    background-color: var(--color-secondary-pink);
+    color: var(--color-function-white);
+  }
+  .popover-body {
+    background-color: var(--color-function-white);
+  }
+  &.bs-popover-top >.arrow {
+    &::before {
+      border-top-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+  &.bs-popover-bottom >.arrow {
+    &::before {
+      border-bottom-color: var(--color-secondary-pink);
+    }
+    &::after {
+      border-bottom-color: var(--color-secondary-pink);
+    }
+  }
+  &.bs-popover-bottom > .popover-header {
+    &::before {
+      border-bottom-color: var(--color-secondary-pink);
+    }
+  }
+}
+@media(min-width: $xs) {
+  .chip {
+    font-size: 14px;
+  }
+}
+@media(min-width: $sm) {
+  .chip {
+    font-size: 16px;
+  }
+}
+@media(min-width: $md) {
+  .chip {
+    padding: 3px 10px;
+
+    &:nth-child(n+2) {
+      margin-left: 10px;
+    }
+  }
+}
+@media(min-width: $lg) {
+}

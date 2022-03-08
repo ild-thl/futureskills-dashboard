@@ -1,0 +1,40 @@
+@import "breakpoints";
+.course-metadata {
+  background-color: #EEEEEE;
+  padding: 20px;
+
+  h5 {
+    font-weight: bold;
+  }
+
+  .course-metadata-detail {
+    display: flex;
+    align-items: flex-start;
+
+    .metadata-icon {
+      flex: 1;
+      color: #1EAE9C;
+    }
+    .metadata-content {
+      flex: 11;
+
+      h6 {
+        font-weight: bold;
+      }
+    }
+  }
+  @media(min-width: $sm) {
+    .course-metadata-detail {
+      .metadata-content {
+        flex: 8;
+      }
+    }
+  }
+  @media(min-width: $md) {
+    .course-metadata-detail {
+      .metadata-content {
+        flex: 11;
+      }
+    }
+  }
+}

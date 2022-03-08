@@ -1,5 +1,50 @@
 # Changelog
 
+## [Released v0.10.0]
+
+## 2022-02-23/avz
+### added
+- Loading spinner on the Detail Page
+
+## 2022-02-22/avz
+### changed
+- Detail Page into components
+
+## 2022-02-21/avz
+### changed
+- Teacher Info Page into components
+
+## 2022-02-17/ml
+### added
+- Function to update Token
+
+## 2022-02-14/ml
+### added
+- Cookie Banner 
+
+## 2022-02-10/ml
+### added
+- API, function for manual logou added
+- new var app/config/static.config.ts -> general/authBehaviour/autologout
+### changed
+- handling accesstoken, refreshToken in Service
+- no userData in localStorage, only Token
+
+
+## 2022-02-10/avz
+### changed
+- changed the hardcoded loginname into a dynamic name
+
+## 2022-02-08/ml
+### changed
+- strictRules
+  - strictBindCallApply
+  - strictFunctionTypes
+  - noImplicitThis
+  - noImplicitAny
+- new extern Definitionfile
+- OfferDetail/OfferPagination/FilterService - complete strictmode
+
 ## [Released v0.9]
 
 ## 2022-01-31/ml

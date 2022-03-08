@@ -1,0 +1,30 @@
+<span
+  class="chip tech popinfo"
+  ngbPopover="Mit „TECH“ werden Future Skills Kurse gekennzeichnet, in denen technologische Fähigkeiten erworben werden können. Technologische Fähigkeiten umfassen jene Fähigkeiten, die für die Gestaltung von transformativen Technologien notwendig sind, wie z. B. bei der Webentwicklung oder der Blockchain-Entwicklung."
+  popoverTitle="Was bedeutet TECH?"
+  *ngIf="offer?.competence_tech === 1"
+  >Tech</span
+>
+<span
+  class="chip digital"
+  ngbPopover="Mit „DIGITAL BASIC“ werden Future Skills Kurse gekennzeichnet, in denen digitale Grundfähigkeiten erworben werden können. Digitale Grundfähigkeiten beschreiben Fähigkeiten sich in einer digitalisierten Umwelt zurechtzufinden und aktiv an ihr teilzunehmen, wie z. B. die Fähigkeit zum kollaborativen Arbeiten."
+  popoverTitle="Was bedeutet DIGITAL BASIC?"
+  *ngIf="offer?.competence_digital === 1"
+  >Digital Basic</span
+>
+<span
+  class="chip classic"
+  ngbPopover="Mit „CLASSIC“ werden Future Skills Kurse gekennzeichnet, in denen „klassische“ bzw. nicht-digitale Grundfähigkeiten erworben werden können. Die Bedeutung dieser Fähigkeiten, wie z. B. Adaptionsfähigkeit, Kreativität und Durchhaltevermögen, werden aus Sicht der Unternehmen in den kommenden Jahren im Arbeitsleben zunehmen."
+  popoverTitle="Was bedeutet CLASSIC?"
+  *ngIf="offer?.competence_classic === 1"
+  >Classic</span
+>
+<span
+  class="chip none"
+  *ngIf="
+    offer?.competence_tech !== 1 &&
+    offer?.competence_digital !== 1 &&
+    offer?.competence_classic !== 1
+  "
+  >keine Angabe</span
+>

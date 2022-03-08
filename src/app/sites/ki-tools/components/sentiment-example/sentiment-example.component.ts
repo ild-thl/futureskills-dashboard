@@ -7,6 +7,10 @@ import { AlertList } from '../../services/helper/helper';
 
 import * as tf from '@tensorflow/tfjs';
 
+interface IDictionary {
+  [index: string]: number;
+}
+
 @Component({
   selector: 'fs-sentiment-example',
   templateUrl: './sentiment-example.component.html',
@@ -18,7 +22,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   @Output() modalClose = new EventEmitter<any>();
 
   textAreaText: string;
-  WordToIndex: any[] = [];
+  WordToIndexDict = {} as IDictionary;
   sentimentText: string;
   sentimentNumber: string;
   emojiIndex: number;
@@ -142,7 +146,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
     let wordIds = [];
     const words = edited.split(' ');
     for (var word of words) {
-      let foundWordIndex = this.WordToIndex[word] + 3;
+      let foundWordIndex = this.WordToIndexDict[word] + 3;
 
       if (foundWordIndex > this.NUM_WORDS || Number.isNaN(foundWordIndex)) {
         foundWordIndex = this.UNKNOWN_CHAR;
@@ -155,7 +159,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   }
 
   padLeft(sentenceIds: number[], sentenceLength: number) {
-    const paddedSentence = [];
+    const paddedSentence: any[] = [];
     const maxLength = sentenceLength - sentenceIds.length;
     return paddedSentence.concat(new Array(maxLength).fill(0), sentenceIds);
   }
@@ -198,7 +202,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
     }).subscribe({
       next: (values) => {
         this.model = values.model;
-        this.WordToIndex = values.index;
+        this.WordToIndexDict = values.index;
         this.modelLoaded = true;
         this.modelLoadError = false;
       },
