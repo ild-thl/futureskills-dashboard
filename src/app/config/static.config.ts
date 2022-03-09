@@ -21,7 +21,8 @@ export const CustomConfig = {
       logoutButton: true
     },
     authBehaviour: {
-      autoLogout: true
+      autoLogout: true, // wird man ausgeloggt wenn bei Start der App das Token ungültig ist?
+      logoutWithServer: false // wird der Server benachrichtigt, wenn man sich ausloggt? 
     }
   },
   kiConfig: {

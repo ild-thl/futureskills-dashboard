@@ -7,10 +7,12 @@ export enum ErrorCodes {
   E200 = 'ok',
   E400 = 'bad_request',
   E401 = 'unauthorized',
+  E401_1 = 'invalid_refresh_token',
   E403 = 'forbidden',
   E404 = 'not_found',
   E422 = 'unprocessable_entity',
   E429 = 'too_many_requests',
+  E429_1 = 'refresh_failure',
   E500 = 'internal_server_errior',
 }
 
@@ -25,6 +27,7 @@ export class ErrorHandlerService {
     E400_DEFAULT_BAD_REQUEST: 'Die Daten sind nicht korrekt.',
     E400_LOGIN_BAD_REQUEST: 'E-Mail oder Passwort sind nicht korrekt.',
     E401_DEFAULT_UNAUTHORIZED: 'Die Anfrage kann ohne Authentifizierung nicht durchgeführt werden.',
+    E401_DEFAULT_INVALID_REFRESH_TOKEN: 'Du warst für längere Zeit nicht aktiv auf dieser Seite. Bitte logge dich erneut ein.',
     E403_DEFAULT_FORBIDDEN: 'Es fehlt die Berechtigung Daten zu lesen oder zu bearbeiten.',
     E403_OFFER_FORBIDDEN: 'Es fehlen die Rechte um diesen Kurs zu bearbeiten.',
     E404_DEFAULT_NOT_FOUND: 'Die angeforderten Daten konnten nicht gefunden werden.',
@@ -33,6 +36,7 @@ export class ErrorHandlerService {
     E404_OFFER_NOT_FOUND: 'Der Kurs konnte leider nicht gefunden werden.',
     E422_DEFAULT_UNPROCESSABLE: 'Die Daten konnten nicht verarbeitet werden.',
     E429_DEFAULT_TOO_MANY_REQUESTS: 'Ein Fehler ist aufgetreten.',
+    E429_REFRESH_FAILURE: 'Die Session konnte nicht mehr verlängert werden. Bitte logge dich erneut ein.',
     E500_DEFAULT_SERVER_ERROR: 'Der Server kann die Anfrage aktuell nicht bearbeiten.',
   };
   public get ERROR_MESSAGES() {
@@ -97,6 +101,9 @@ export class ErrorHandlerService {
     // 401 - (Unauthorized) - Zugriff auf Serverbereiche die nicht authorisiert sind
     this.defaultErrorMap.set(ErrorCodes.E401, this.ERROR_MESSAGES.E401_DEFAULT_UNAUTHORIZED);
 
+    // 401 - (Unauthorized-Invalid RefreshToken) - Das Token konnte nicht mehr upgedated werden.
+    this.defaultErrorMap.set(ErrorCodes.E401_1, this.ERROR_MESSAGES.E401_DEFAULT_INVALID_REFRESH_TOKEN);
+
     // 403 - (Forbidden)
     this.defaultErrorMap.set(ErrorCodes.E403, this.ERROR_MESSAGES.E403_DEFAULT_FORBIDDEN);
 
@@ -108,6 +115,9 @@ export class ErrorHandlerService {
 
     // 429 - (Too many requests)
     this.defaultErrorMap.set(ErrorCodes.E429, this.ERROR_MESSAGES.E429_DEFAULT_TOO_MANY_REQUESTS);
+
+     // 429 - (Refresh Failue) Der Code wird vom Client erzugt wenn der Token zu oft upgedated wurde
+    this.defaultErrorMap.set(ErrorCodes.E429_1, this.ERROR_MESSAGES.E429_REFRESH_FAILURE);
 
     // 500 - Serverfehler (meistens ist die Db nicht erreichbar)
     this.defaultErrorMap.set(ErrorCodes.E500, this.ERROR_MESSAGES.E500_DEFAULT_SERVER_ERROR);
@@ -123,6 +133,5 @@ export class ErrorHandlerService {
      // Für offer
     this.offerErrorMap.set(ErrorCodes.E403, this.ERROR_MESSAGES.E403_OFFER_FORBIDDEN);
     this.offerErrorMap.set(ErrorCodes.E404, this.ERROR_MESSAGES.E404_OFFER_NOT_FOUND);
-   
   }
 }
