@@ -1,10 +1,12 @@
 # Changelog
 
-## [Released v0.10.0]
+## [Not Released v0.11.0]
 
 ## 2022-03-01/ml
 ### changed
 - Interceptor/API/AuthService check if 401 error occurs to refresh token
+
+## [Released v0.10.0]
 
 ## 2022-02-23/avz
 ### added
