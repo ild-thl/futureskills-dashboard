@@ -27,7 +27,6 @@ import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling'
  * Latest update 17.02.2022/ml
  */
 
-/* eslint-disable no-console */
 
 export const TOKEN_PATH = '/oauth/token';
 export const LOGOUT_PATH = '/api/logout';
@@ -448,7 +447,7 @@ export class ApiService {
     }
     let newError = new Error(errorCode);
 
-    console.log('ErrorResponse:', errorRes);
+    //console.log('ErrorResponse:', errorRes);
     return throwError(() => newError);
   }
 }
