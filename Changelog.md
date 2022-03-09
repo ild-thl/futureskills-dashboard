@@ -1,6 +1,6 @@
 # Changelog
 
-## [Not Released v0.10.0]
+## [Released v0.10.0]
 
 ## 2022-03-01/ml
 ### changed
