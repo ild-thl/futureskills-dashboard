@@ -36,7 +36,7 @@ export class ErrorHandlerService {
     E404_OFFER_NOT_FOUND: 'Der Kurs konnte leider nicht gefunden werden.',
     E422_DEFAULT_UNPROCESSABLE: 'Die Daten konnten nicht verarbeitet werden.',
     E429_DEFAULT_TOO_MANY_REQUESTS: 'Ein Fehler ist aufgetreten.',
-    E429_REFRESH_FAILURE: 'Das Verlängern der Session ist fehlgeschlagen. Bitte logge dich erneut ein.',
+    E429_REFRESH_FAILURE: 'Die Session konnte nicht mehr verlängert werden. Bitte logge dich erneut ein.',
     E500_DEFAULT_SERVER_ERROR: 'Der Server kann die Anfrage aktuell nicht bearbeiten.',
   };
   public get ERROR_MESSAGES() {

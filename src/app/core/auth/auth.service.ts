@@ -101,7 +101,7 @@ export class AuthService {
   public logoutUser(): Observable<boolean> {
     if (this.logOutWithServer){
       return this.logoutWithServerLogout();
-    } 
+    }
     return this.logoutLocally();
   }
 
@@ -179,7 +179,7 @@ export class AuthService {
    * Logout User Locally Only
    */
   private logoutLocally(): Observable<boolean> {
-    this.logService.log('AuthService', 'logout-locally');
+    this.logService.log('AuthService', 'logout-local');
     this.signOff();
     return of(true);
   }
@@ -195,7 +195,7 @@ export class AuthService {
     return new Observable((observer$) => {
       this.apiService.logoutUser().subscribe({
         next: (response: any) => {
-          this.logService.log('AuthService', 'logout-with server', response);
+          this.logService.log('AuthService', 'logout-server', response);
           this.signOff();
           observer$.next(true);
           observer$.complete();

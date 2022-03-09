@@ -37,13 +37,14 @@ export const MAX_TOKEN_REFRESH = 3;
   providedIn: 'root',
 })
 export class ApiService {
-  countTokenCall = 0;
+  private countTokenCall = 0;
   constructor(private http: HttpClient) {}
 
   ////////////////////////////////////////////////
   // Authenticate
   ////////////////////////////////////////////////
   public loginUser(email: string, password: string): Observable<AuthResponseData> {
+    this.countTokenCall = 0;
     return this.http
       .post<AuthResponseData>(environment.apiURL + TOKEN_PATH, {
         grant_type: environment.clientLoginData.grantType,

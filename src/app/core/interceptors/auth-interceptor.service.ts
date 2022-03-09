@@ -47,7 +47,8 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (this.isAuth && error instanceof HttpErrorResponse && error.status === 401) {
           // Only some paths
           if (!request.url.includes(TOKEN_PATH) && !request.url.includes(LOGOUT_PATH)) {
-            this.logService.error('interceptor', '401 - invalid token:', error);
+            this.logService.warn('interceptor', '401 - invalid token:', error);
+            this.logService.log('interceptor', 'try to get new token');
             return this.handle401Error(authReq, next);
           }
         }
