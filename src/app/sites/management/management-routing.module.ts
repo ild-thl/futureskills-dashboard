@@ -15,13 +15,18 @@ const routes: Routes = [
     component: ManageOffersComponent,
   },
   {
+    path: 'kurs/neu',
+    component: CreateOfferComponent,
+  },
+  {
     path: 'kurs/edit/:id',
     component: EditOfferComponent,
   },
   {
-    path: 'kurs/neu',
-    component: CreateOfferComponent,
+    path: 'kurs/edit',
+    redirectTo: 'kurs/neu'
   },
+
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

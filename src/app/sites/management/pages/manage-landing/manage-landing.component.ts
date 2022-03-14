@@ -9,7 +9,13 @@ import { StaticService } from 'src/app/config/static.service';
 export class ManageLandingComponent {
 
   lnkManageOffers = this.staticConfig.getPathInfo().lnkManageOfferList;
+  lnkManageOfferNew = this.staticConfig.getPathInfo().lnkManageOfferNew;
+  lnkManageOfferEdit =  this.staticConfig.getPathInfo().lnkManageOfferEdit;
 
   constructor(private staticConfig: StaticService) { }
+
+  onEditCourse(){
+
+  }
 
 }

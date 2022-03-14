@@ -61,7 +61,7 @@ const routes: Routes = [
     loadChildren: () => import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
   },
   {
-    path: 'manage',
+    path: 'verwaltung',
     loadChildren: () => import('./sites/management/management.module').then((s) => s.ManagementModule),
     canLoad: [ManagementGuard],
     data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },

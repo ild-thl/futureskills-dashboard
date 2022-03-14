@@ -13,13 +13,10 @@
         <th scope="row">{{ offer.id }}</th>
         <td><img [src]="offer.image" class="me-2" style="width: 20px" /></td>
         <td>
-          <a type="button">{{ offer.title }}</a>
+          <a type="button" [routerLink]="[lnkManageOfferEdit, offer?.id]">{{ offer?.title }}</a>
         </td>
         <td>
           <span class="float-right">
-            <!-- <a type="button" placement="top" ngbTooltip="Editieren"
-              ><fa-icon class="pl-1" [icon]="['fas', 'pen']"></fa-icon
-            ></a> -->
             <a type="button"><fa-icon class="pl-2" [icon]="['fas', 'eye']"></fa-icon></a>
             <a type="button"
               ><fa-icon class="pl-2" style="color: red" [icon]="['fas', 'trash']"></fa-icon

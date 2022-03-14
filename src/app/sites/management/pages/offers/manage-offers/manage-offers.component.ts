@@ -1,15 +1,10 @@
-/* eslint-disable @angular-eslint/no-host-metadata-property */
 import {
   Component,
-  Directive,
-  EventEmitter,
-  Input,
+  OnDestroy,
   OnInit,
-  Output,
-  QueryList,
-  ViewChildren,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { StaticService } from 'src/app/config/static.service';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
@@ -18,19 +13,26 @@ import { SmallOfferDetailData } from 'src/app/core/models/offer';
   templateUrl: './manage-offers.component.html',
   styleUrls: ['./manage-offers.component.scss'],
 })
-export class ManageOffersComponent implements OnInit {
+export class ManageOffersComponent implements OnInit, OnDestroy {
   private offerListSub: Subscription;
   shortOfferList: SmallOfferDetailData[];
   baseShortOfferList: SmallOfferDetailData[];
 
-  constructor(private offerDataService: OfferDataService) {
+  lnkManageOfferNew = this.staticConfig.getPathInfo().lnkManageOfferNew;
+
+  constructor(private offerDataService: OfferDataService, private staticConfig: StaticService) {
     this.shortOfferList = [];
     this.baseShortOfferList = [];
     this.offerListSub = null;
   }
 
+
   ngOnInit(): void {
     this.loadOfferList();
+  }
+
+  ngOnDestroy(): void {
+   if (this.offerListSub) this.offerListSub.unsubscribe();
   }
 
   /**

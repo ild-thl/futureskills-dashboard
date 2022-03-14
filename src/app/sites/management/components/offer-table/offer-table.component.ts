@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { StaticService } from 'src/app/config/static.service';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 export type SortColumn = keyof SmallOfferDetailData | '';
@@ -19,11 +20,13 @@ export class OfferTableComponent implements OnInit, OnChanges {
   baseShortOfferList: SmallOfferDetailData[];
   shortOfferList: SmallOfferDetailData[];
 
+  lnkManageOfferEdit = this.staticService.getPathInfo().lnkManageOfferEdit;
+
   page: number;
   pageSize: number;
   collectionSize: number;
 
-  constructor() {
+  constructor(private staticService: StaticService) {
     this.page = 1;
     this.pageSize = 10;
     this.collectionSize = 0;

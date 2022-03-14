@@ -1,8 +1,4 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">Verwaltung</li>
-  </ol>
-</nav>
+<manage-breadcrumb-header [linkText]="'root'"></manage-breadcrumb-header>
 
 <div class="container">
   <div class="row mt-5">
@@ -21,13 +17,15 @@
             <a [routerLink]="lnkManageOffers" class="list-group-item list-group-item-action">
               <fa-icon [icon]="['fas', 'edit']"></fa-icon> Kurse bearbeiten</a
             >
-            <a [routerLink]="'/manage/kurs/neu'" class="list-group-item list-group-item-action">
+            <a [routerLink]="lnkManageOfferNew" class="list-group-item list-group-item-action">
               <fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
             >
-            <a class="list-group-item list-group-item-action disabled">
-              <fa-icon [icon]="['fas', 'pen']"></fa-icon> Einen Kurs bearbeiten<input type="text"
-            /></a>
+            <!-- <a (click)="onEditCourse()" class="list-group-item list-group-item-action">
+              <fa-icon [icon]="['fas', 'pen']"></fa-icon> Einen Kurs bearbeiten</a>
+              <input type="text"
+              /> -->
           </div>
+
         </div>
       </div>
     </div>

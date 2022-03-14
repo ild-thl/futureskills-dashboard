@@ -22,7 +22,7 @@ export const CustomConfig = {
     },
     authBehaviour: {
       autoLogout: true, // wird man ausgeloggt wenn bei Start der App das Token ungültig ist?
-      logoutWithServer: false // wird der Server benachrichtigt, wenn man sich ausloggt? 
+      logoutWithServer: false // wird der Server benachrichtigt, wenn man sich ausloggt?
     }
   },
   kiConfig: {
@@ -50,7 +50,10 @@ export const CustomConfig = {
     lnkPrivacy: '/datenschutz',
     lnkLogin: '/login',
     lnkNotAllowed: '/kein-zugriff',
-    lnkManageOfferList: '/manage/kurse',
+    lnkManage: '/verwaltung',
+    lnkManageOfferList: '/verwaltung/kurse',
+    lnkManageOfferEdit: '/verwaltung/kurs/edit',
+    lnkManageOfferNew: '/verwaltung/kurs/neu',
     lnkAdminOfferEdit: '/admin/kurs/edit',
     lnkAdminOfferNew: '/admin/kurs/neu',
     lnkKITools: '/ki-playground',
