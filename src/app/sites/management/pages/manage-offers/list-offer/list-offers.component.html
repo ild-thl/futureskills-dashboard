@@ -14,7 +14,7 @@
       <div *ngIf="offersAreLoaded === true; then showList; else showSpinner"></div>
 
       <ng-template #showList>
-        <fs-offer-table [offerList]="shortOfferList"></fs-offer-table>
+        <fs-offer-table [offerList]="shortOfferList" (deleteEvent)="showModalWindowDeleteOffer($event)"></fs-offer-table>
       </ng-template>
 
       <ng-template #showSpinner>

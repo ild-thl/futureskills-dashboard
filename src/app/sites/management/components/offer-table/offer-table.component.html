@@ -18,7 +18,7 @@
         <td>
           <span class="float-right">
             <a type="button"><fa-icon class="pl-2" [icon]="['fas', 'eye']"></fa-icon></a>
-            <a type="button"
+            <a type="button" (click)="onOfferShouldBeDeleted(offer)"
               ><fa-icon class="pl-2" style="color: red" [icon]="['fas', 'trash']"></fa-icon
             ></a>
           </span>

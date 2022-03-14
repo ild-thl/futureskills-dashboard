@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
@@ -16,6 +16,7 @@ export interface SortEvent {
 })
 export class OfferTableComponent implements OnInit, OnChanges {
   @Input() offerList: SmallOfferDetailData[] = [];
+  @Output() deleteEvent = new EventEmitter<SmallOfferDetailData>();
 
   baseShortOfferList: SmallOfferDetailData[];
   shortOfferList: SmallOfferDetailData[];
@@ -52,5 +53,9 @@ export class OfferTableComponent implements OnInit, OnChanges {
     this.shortOfferList = this.offerList;
     this.collectionSize = this.shortOfferList.length;
     this.refreshOffers();
+  }
+
+  onOfferShouldBeDeleted(offer: SmallOfferDetailData) {
+    this.deleteEvent.emit(offer);
   }
 }

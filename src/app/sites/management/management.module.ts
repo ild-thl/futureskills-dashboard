@@ -10,6 +10,7 @@ import { CreateOfferComponent } from './pages/manage-offers/create-offer/create-
 import { BreadcrumbHeaderComponent } from './components/breadcrumb-header/breadcrumb-header.component';
 import { OfferTableComponent } from './components/offer-table/offer-table.component';
 import { SortableHeaderDirective } from './components/offer-table/component/sortable-header.directive';
+import { NgbdModalAskOfferDeleteComponent } from './components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 
 
 
@@ -21,7 +22,8 @@ import { SortableHeaderDirective } from './components/offer-table/component/sort
     CreateOfferComponent,
     OfferTableComponent,
     BreadcrumbHeaderComponent,
-    SortableHeaderDirective
+    SortableHeaderDirective,
+    NgbdModalAskOfferDeleteComponent
   ],
   imports: [
     CommonModule,
