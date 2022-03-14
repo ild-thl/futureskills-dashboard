@@ -10,13 +10,14 @@ import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 @Component({
   selector: 'app-manage-offers',
-  templateUrl: './manage-offers.component.html',
-  styleUrls: ['./manage-offers.component.scss'],
+  templateUrl: './list-offers.component.html',
+  styleUrls: ['./list-offers.component.scss'],
 })
-export class ManageOffersComponent implements OnInit, OnDestroy {
+export class ListOffersComponent implements OnInit, OnDestroy {
   private offerListSub: Subscription;
   shortOfferList: SmallOfferDetailData[];
   baseShortOfferList: SmallOfferDetailData[];
+  offersAreLoaded: boolean;
 
   lnkManageOfferNew = this.staticConfig.getPathInfo().lnkManageOfferNew;
 
@@ -24,6 +25,7 @@ export class ManageOffersComponent implements OnInit, OnDestroy {
     this.shortOfferList = [];
     this.baseShortOfferList = [];
     this.offerListSub = null;
+    this.offersAreLoaded = false;
   }
 
 
@@ -39,16 +41,19 @@ export class ManageOffersComponent implements OnInit, OnDestroy {
    * LoadOfferList
    */
   loadOfferList() {
+    this.offersAreLoaded = false;
     this.offerListSub = this.offerDataService.getSmallOfferListForManagement().subscribe({
       next: (value) => {
         console.log(value);
         this.baseShortOfferList = value;
         this.shortOfferList = value;
+        this.offersAreLoaded = true;
       },
       error: (error) => {
         console.log(error);
         this.baseShortOfferList = [];
         this.shortOfferList = [];
+        this.offersAreLoaded = true;
       },
     });
   }

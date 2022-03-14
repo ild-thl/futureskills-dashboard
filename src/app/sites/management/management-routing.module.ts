@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManageLandingComponent } from './pages/manage-landing/manage-landing.component';
-import { ManageOffersComponent } from './pages/offers/manage-offers/manage-offers.component';
-import { EditOfferComponent } from './pages/offers/edit-offer/edit-offer.component';
-import { CreateOfferComponent } from './pages/offers/create-offer/create-offer.component';
+import { ListOffersComponent } from './pages/manage-offers/list-offer/list-offers.component';
+import { EditOfferComponent } from './pages/manage-offers/edit-offer/edit-offer.component';
+import { CreateOfferComponent } from './pages/manage-offers/create-offer/create-offer.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'kurse',
-    component: ManageOffersComponent,
+    component: ListOffersComponent,
   },
   {
     path: 'kurs/neu',

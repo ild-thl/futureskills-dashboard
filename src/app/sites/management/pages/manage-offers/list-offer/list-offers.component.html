@@ -1,0 +1,29 @@
+<manage-breadcrumb-header [linkText]="'course_list'"></manage-breadcrumb-header>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-10">
+      <h4>Kursverwaltung</h4>
+    </div>
+    <div class="col-2">
+      <a type="button" class="float-right" [routerLink]="[lnkManageOfferNew]">
+        <fa-icon class="pl-2" [icon]="['fas', 'plus-circle']"></fa-icon>
+      </a>
+    </div>
+    <div class="col-12 mt-3 offer-table">
+      <div *ngIf="offersAreLoaded === true; then showList; else showSpinner"></div>
+
+      <ng-template #showList>
+        <fs-offer-table [offerList]="shortOfferList"></fs-offer-table>
+      </ng-template>
+
+      <ng-template #showSpinner>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
