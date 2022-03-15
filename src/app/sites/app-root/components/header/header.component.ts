@@ -6,6 +6,7 @@ import { UserData } from 'src/app/core/data/user/user-data.interface';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { User } from 'src/app/core/models/user';
 import { StaticService } from 'src/app/config/static.service';
+import { Objects, Permissions } from 'src/app/core/models/permissions';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,8 @@ import { StaticService } from 'src/app/config/static.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public isMenuCollapsed = true;
+  object = Objects;
+  permission = Permissions;
 
   loginBtnVisible = this.staticConfig.getComponentVisibility().loginButton;
   logoutBtnVisible = this.staticConfig.getComponentVisibility().logoutButton;
@@ -26,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   lnkKITools = this.staticConfig.getPathInfo().lnkKITools;
   lnkInfoStudents = this.staticConfig.getPathInfo().lnkInfoStudents;
   lnkInfoTeaching = this.staticConfig.getPathInfo().lnkInfoTeaching;
+  lnkManage = this.staticConfig.getPathInfo().lnkManage;
 
   isAuthenticated = false;
   user: User;
@@ -57,5 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate([this.lnkAfterLogout]);
       },
     });
+  }
+
+  onManagement(){
+    this.router.navigate([this.lnkManage]);
   }
 }

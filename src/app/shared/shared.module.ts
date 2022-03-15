@@ -11,6 +11,8 @@ import { InfoBannerComponent } from 'src/app/shared/components/info-banner/info-
 import { ConsentVideoComponent } from 'src/app/shared/components/consent-video/consent-video.component';
 import { SmallOfferTileComponent } from 'src/app/shared/components/small-offer-tile/small-offer-tile.component';
 import { NavBackDirective } from './directives/nav-back.directive';
+import { CheckPermissionsDirective } from './directives/check-permissions.directive';
+import { ToastComponent } from './components/toast/toast.component';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
@@ -39,7 +41,7 @@ import {
   faEdit,
   faEye,
 } from '@fortawesome/free-solid-svg-icons';
-import { CheckPermissionsDirective } from './directives/check-permissions.directive';
+
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { CheckPermissionsDirective } from './directives/check-permissions.direct
     NavBackDirective,
     CheckPermissionsDirective,
     HeadlineBannerComponent,
+    ToastComponent,
   ],
   imports: [CommonModule, NgbModule, RouterModule, FontAwesomeModule],
   exports: [
@@ -69,6 +72,7 @@ import { CheckPermissionsDirective } from './directives/check-permissions.direct
     NavBackDirective,
     CheckPermissionsDirective,
     HeadlineBannerComponent,
+    ToastComponent
   ],
 })
 export class SharedModule {

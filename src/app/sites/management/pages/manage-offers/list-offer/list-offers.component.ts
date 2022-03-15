@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
+import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
+import { MessageService, TOASTCOLOR } from 'src/app/core/services/messages-toasts/message.service';
 
 @Component({
   selector: 'app-manage-offers',
@@ -22,7 +24,9 @@ export class ListOffersComponent implements OnInit, OnDestroy {
   constructor(
     private offerDataService: OfferDataService,
     private staticConfig: StaticService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private errorHandler: ErrorHandlerService,
+    private toastService: MessageService
   ) {
     this.shortOfferList = [];
     this.baseShortOfferList = [];
@@ -60,17 +64,36 @@ export class ListOffersComponent implements OnInit, OnDestroy {
   }
 
   showModalWindowDeleteOffer(event: SmallOfferDetailData) {
-
     const title = event.title;
+    const id = event.id;
     const modalRef = this.modalService.open(NgbdModalAskOfferDeleteComponent, {
       centered: true,
     });
     modalRef.componentInstance.title = event !== undefined ? title : '';
     modalRef.result.then(
       (result) => {
-        console.log("WILL DELETE SOON: ", event);
+        this.deleteOffer(id);
       },
       (reason) => {}
     );
+  }
+
+  private deleteOffer(offerID: number) {
+    // TODO: Lädt-Anzeige an
+    if (offerID && offerID > 0) {
+      this.offerDataService.deleteOfferWithID(offerID).subscribe({
+        next: (value) => {
+          this.toastService.showToast(
+            { header: 'Kurs löschen', body: 'Der Kurs wurde gelöscht.' },
+            TOASTCOLOR.SUCCESS
+          );
+          this.loadOfferList();
+        },
+        error: (error: Error) => {
+          const message = this.errorHandler.getErrorMessage(error, 'offer');
+          this.toastService.showToast({ header: 'Kurs löschen', body: message }, TOASTCOLOR.DANGER);
+        },
+      });
+    }
   }
 }

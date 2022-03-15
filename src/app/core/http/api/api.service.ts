@@ -202,7 +202,7 @@ export class ApiService {
     );
   }
 
-  public deleteOffer(id: number) {
+  public deleteOffer(id: number): Observable<any> {
     return this.http.delete(environment.apiURL + '/api/offer/' + id).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         return this.handleError(errorResponse);

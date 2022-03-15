@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { StaticService } from 'src/app/config/static.service';
@@ -20,6 +20,7 @@ import {
 } from 'src/app/core/models/offer';
 import { DataCacheService } from 'src/app/core/http/api/data-cache.service';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
+import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling';
 
 /**
  * offer.service.ts
@@ -99,7 +100,17 @@ export class OfferService {
     );
   }
 
-  // for EditComponent for Related Lists
+  // For Management-List (not cached)
+  ////////////////////////////////////////////////
+  public getShortOffersListForManagementList(): Observable<SmallOfferListForEditForm[]> {
+    return this.apiService.getAllOfferShortList().pipe(
+      map((results) => {
+        return DataMapping.mapDataInSmallOfferDetailEditData(results);
+      })
+    );
+  }
+
+  // for EditComponent for Related Lists (cached)
   ////////////////////////////////////////////////
   public getAllShortOffersListForEditDetail(
     offerID: number = undefined,
@@ -181,5 +192,13 @@ export class OfferService {
   deleteOffer(offer: Offer) {
     //console.log('Delete Offer:' + offer.id);
     return this.apiService.deleteOffer(offer.id).pipe(tap((_) => {}));
+  }
+
+  public deleteOfferWithID(offerID: number): Observable<any> {
+    if (offerID && offerID > 0) {
+      return this.apiService.deleteOffer(offerID);
+    } else {
+      return throwError(() => new Error(ErrorCodes.E404));
+    }
   }
 }

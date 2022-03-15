@@ -66,7 +66,7 @@ export class OfferDataService {
   public getSmallOfferListForManagement(
     offerID: number = undefined
   ): Observable<SmallOfferListForEditForm[]> {
-    return this.offerService.getAllShortOffersListForEditDetail(offerID);
+    return this.offerService.getShortOffersListForManagementList();
   }
 
   // general function
@@ -105,6 +105,10 @@ export class OfferDataService {
   // delete for Edit
   public deleteOffer(offer: Offer) {
     return this.offerService.deleteOffer(offer);
+  }
+
+  public deleteOfferWithID(offerID: number): Observable<any> {
+    return this.offerService.deleteOfferWithID(offerID);
   }
 
   /////////////////////////////////////////////////////
