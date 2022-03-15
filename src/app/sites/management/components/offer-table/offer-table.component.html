@@ -11,13 +11,22 @@
     <tbody>
       <tr *ngFor="let offer of shortOfferList; index as i">
         <th scope="row">{{ offer.id }}</th>
-        <td><img [src]="offer.image" class="me-2" style="width: 20px" /></td>
+        <td><img [src]="offer?.image" class="me-2" style="width: 20px" /></td>
         <td>
           <a type="button" [routerLink]="[lnkManageOfferEdit, offer?.id]">{{ offer?.title }}</a>
         </td>
         <td>
           <span class="float-right">
-            <a type="button"><fa-icon class="pl-2" [icon]="['fas', 'eye']"></fa-icon></a>
+            <a type="button" style="cursor: crosshair;"
+              ><fa-icon
+                class="pl-2"
+                [ngClass]="{
+                  'visible-offer': offer.isVisible === true,
+                  'invisible-offer': offer.isVisible === false
+                }"
+                [icon]="['fas', 'eye']"
+              ></fa-icon
+            ></a>
             <a type="button" (click)="onOfferShouldBeDeleted(offer)"
               ><fa-icon class="pl-2" style="color: red" [icon]="['fas', 'trash']"></fa-icon
             ></a>

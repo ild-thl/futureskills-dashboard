@@ -15,6 +15,7 @@ import {
   APIToOfferShortList,
   PaginatedOfferDataFromAPI,
   OfferSearchFilterToAPI,
+  APIToOfferMiniList,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling';
@@ -144,6 +145,14 @@ export class ApiService {
 
   public getAllOfferShortList(): Observable<APIToOfferShortList[]> {
     return this.http.get<APIToOfferShortList[]>(environment.apiURL + '/api/list/offer/short').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
+  }
+
+  public getAllOfferMiniList(): Observable<APIToOfferMiniList[]> {
+    return this.http.get<APIToOfferMiniList[]>(environment.apiURL + '/api/manage/offerlist').pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         return this.handleError(errorResponse);
       })

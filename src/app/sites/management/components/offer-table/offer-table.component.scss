@@ -3,4 +3,10 @@
     font-size: smaller;
   }
 
+  fa-icon.visible-offer {
+    color: var(--color-primary-blue-dark);
+  }
+  fa-icon.invisible-offer {
+    color: var(--color-function-grey);
+  }
 }

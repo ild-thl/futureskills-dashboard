@@ -38,6 +38,14 @@ export type APIToOfferShortList = {
   keywords: string;
 };
 
+// From API to Short Offer
+export type APIToOfferMiniList = {
+  id: number;
+  title: string;
+  image_path: string;
+  visible: number;
+};
+
 // Data from Pagination API
 export type PaginatedOfferDataFromAPI = {
   data: APIToOfferShortList[];

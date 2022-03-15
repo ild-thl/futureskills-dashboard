@@ -64,6 +64,10 @@ export type SmallOfferDetailData = {
   title: string;
 };
 
+export type MiniOffersData  = SmallOfferDetailData & {
+  isVisible: boolean; //Pflichtfeld in der DB (nur die 0 ist false)
+}
+
 // For related offers in EditForm
 export type SmallOfferListForEditForm = {
 } & SmallOfferDetailData;

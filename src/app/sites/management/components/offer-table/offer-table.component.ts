@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
-import { SmallOfferDetailData } from 'src/app/core/models/offer';
+import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer';
 
 export type SortColumn = keyof SmallOfferDetailData | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -15,11 +15,11 @@ export interface SortEvent {
   styleUrls: ['./offer-table.component.scss'],
 })
 export class OfferTableComponent implements OnInit, OnChanges {
-  @Input() offerList: SmallOfferDetailData[] = [];
+  @Input() offerList: MiniOffersData[] = [];
   @Output() deleteEvent = new EventEmitter<SmallOfferDetailData>();
 
-  baseShortOfferList: SmallOfferDetailData[];
-  shortOfferList: SmallOfferDetailData[];
+  baseShortOfferList: MiniOffersData[];
+  shortOfferList: MiniOffersData[];
 
   lnkManageOfferEdit = this.staticService.getPathInfo().lnkManageOfferEdit;
 

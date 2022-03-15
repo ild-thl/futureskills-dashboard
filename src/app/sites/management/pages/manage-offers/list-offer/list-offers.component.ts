@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { StaticService } from 'src/app/config/static.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { SmallOfferDetailData } from 'src/app/core/models/offer';
+import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer';
 import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { MessageService, TOASTCOLOR } from 'src/app/core/services/messages-toasts/message.service';
@@ -15,9 +15,11 @@ import { MessageService, TOASTCOLOR } from 'src/app/core/services/messages-toast
 })
 export class ListOffersComponent implements OnInit, OnDestroy {
   private offerListSub: Subscription;
-  shortOfferList: SmallOfferDetailData[];
-  baseShortOfferList: SmallOfferDetailData[];
+  shortOfferList: MiniOffersData[];
+  baseShortOfferList: MiniOffersData[];
   offersAreLoaded: boolean;
+  errorOccured: boolean;
+  errorMessage: string;
 
   lnkManageOfferNew = this.staticConfig.getPathInfo().lnkManageOfferNew;
 
@@ -32,6 +34,8 @@ export class ListOffersComponent implements OnInit, OnDestroy {
     this.baseShortOfferList = [];
     this.offerListSub = null;
     this.offersAreLoaded = false;
+    this.errorOccured = false;
+    this.errorMessage = '';
   }
 
   ngOnInit(): void {
@@ -47,18 +51,24 @@ export class ListOffersComponent implements OnInit, OnDestroy {
    */
   loadOfferList() {
     this.offersAreLoaded = false;
+    this.errorOccured = false;
+    this.errorMessage = '';
+
     this.offerListSub = this.offerDataService.getSmallOfferListForManagement().subscribe({
-      next: (value) => {
-        console.log(value);
+      next: (value: MiniOffersData[]) => {
+        // console.log("OfferList:", value);
         this.baseShortOfferList = value;
         this.shortOfferList = value;
         this.offersAreLoaded = true;
+        this.errorOccured = false;
+        this.errorMessage = '';
       },
       error: (error) => {
-        console.log(error);
         this.baseShortOfferList = [];
         this.shortOfferList = [];
         this.offersAreLoaded = true;
+        this.errorOccured = true;
+        this.errorMessage = this.errorHandler.getErrorMessage(error, 'offers');
       },
     });
   }

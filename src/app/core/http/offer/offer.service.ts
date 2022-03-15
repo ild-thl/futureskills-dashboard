@@ -6,12 +6,14 @@ import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import {
+  APIToOfferMiniList,
   OfferFilterToAPI,
   OfferSearchFilterToAPI,
   OfferToAPI,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
 import {
+  MiniOffersData,
   Offer,
   OfferShortListForTiles,
   PaginatedOfferData,
@@ -102,10 +104,13 @@ export class OfferService {
 
   // For Management-List (not cached)
   ////////////////////////////////////////////////
-  public getShortOffersListForManagementList(): Observable<SmallOfferListForEditForm[]> {
-    return this.apiService.getAllOfferShortList().pipe(
-      map((results) => {
-        return DataMapping.mapDataInSmallOfferDetailEditData(results);
+  public getMiniOffersListForManagementList(): Observable<MiniOffersData[]> {
+    return this.apiService.getAllOfferMiniList().pipe(
+      tap(values=>{
+       // console.log("Values", values);
+      }),
+      map((results: APIToOfferMiniList[]) => {
+        return DataMapping.mapDataInSmallManageData(results);
       })
     );
   }

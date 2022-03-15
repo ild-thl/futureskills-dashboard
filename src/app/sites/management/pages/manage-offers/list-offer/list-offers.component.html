@@ -14,10 +14,22 @@
       <div *ngIf="offersAreLoaded === true; then showList; else showSpinner"></div>
 
       <ng-template #showList>
-        <fs-offer-table
-          [offerList]="shortOfferList"
-          (deleteEvent)="showModalWindowDeleteOffer($event)"
-        ></fs-offer-table>
+        <div *ngIf="errorOccured === true; then showError; else showTable"></div>
+
+        <ng-template #showTable>
+          <fs-offer-table
+            [offerList]="shortOfferList"
+            (deleteEvent)="showModalWindowDeleteOffer($event)"
+          ></fs-offer-table>
+        </ng-template>
+
+        <ng-template #showError>
+          <p>
+            <ngb-alert [dismissible]="false" [type]="'danger'">
+              {{ errorMessage }}
+            </ngb-alert>
+          </p>
+        </ng-template>
       </ng-template>
 
       <ng-template #showSpinner>

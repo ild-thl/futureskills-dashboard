@@ -1,4 +1,5 @@
 import {
+  MiniOffersData,
   OfferShortListForTiles,
   PaginatedOfferData,
   PartialOffer,
@@ -6,6 +7,7 @@ import {
   SmallOfferListForEditForm,
 } from 'src/app/core/models/offer';
 import {
+  APIToOfferMiniList,
   APIToOfferShortList,
   OfferFilterToAPI,
   OfferToAPI,
@@ -65,6 +67,19 @@ export abstract class DataMapping {
       };
     });
   }
+  public static mapDataInSmallManageData(
+    offers:  APIToOfferMiniList[]
+  ): MiniOffersData[]  {
+    return offers.map((data) => {
+      return {
+        id: data.id,
+        image: data.image_path,
+        title: data.title,
+        isVisible: !!data.visible,
+      };
+    });
+  }
+
   /**
    * Small DataStructures for RelatedOffers
    * Returns only id/title/image

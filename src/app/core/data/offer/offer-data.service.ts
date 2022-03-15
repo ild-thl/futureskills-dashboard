@@ -14,6 +14,7 @@ import {
   OfferShortListForTiles,
   PaginatedOfferData,
   SmallOfferDetailData,
+  MiniOffersData,
 } from 'src/app/core/models/offer';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
@@ -65,8 +66,8 @@ export class OfferDataService {
   // OfferList for Management
   public getSmallOfferListForManagement(
     offerID: number = undefined
-  ): Observable<SmallOfferListForEditForm[]> {
-    return this.offerService.getShortOffersListForManagementList();
+  ): Observable<MiniOffersData[]>  {
+    return this.offerService.getMiniOffersListForManagementList();
   }
 
   // general function

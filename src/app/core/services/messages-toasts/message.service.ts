@@ -4,7 +4,7 @@ export type Toast = {
   header: string;
   body: string;
   classname?: string;
-  delay?: Number;
+  delay?: number;
 };
 
 export enum TOASTCOLOR {
