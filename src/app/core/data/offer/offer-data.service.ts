@@ -64,9 +64,7 @@ export class OfferDataService {
   }
 
   // OfferList for Management
-  public getSmallOfferListForManagement(
-    offerID: number = undefined
-  ): Observable<MiniOffersData[]>  {
+  public getSmallOfferListForManagement(): Observable<MiniOffersData[]>  {
     return this.offerService.getMiniOffersListForManagementList();
   }
 

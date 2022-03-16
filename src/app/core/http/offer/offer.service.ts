@@ -106,9 +106,6 @@ export class OfferService {
   ////////////////////////////////////////////////
   public getMiniOffersListForManagementList(): Observable<MiniOffersData[]> {
     return this.apiService.getAllOfferMiniList().pipe(
-      tap(values=>{
-       // console.log("Values", values);
-      }),
       map((results: APIToOfferMiniList[]) => {
         return DataMapping.mapDataInSmallManageData(results);
       })

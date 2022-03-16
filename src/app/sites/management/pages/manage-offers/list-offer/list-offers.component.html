@@ -1,46 +1,52 @@
 <manage-breadcrumb-header [linkText]="'course_list'"></manage-breadcrumb-header>
 
-<div class="container">
-  <div class="row mt-5">
-    <div class="col-10">
-      <h4>Kursverwaltung</h4>
+<div id="offer-list">
+  <div class="container mt-5">
+    <!--HEADER-->
+    <div class="row">
+      <div class="col-10">
+        <h4>Kursverwaltung</h4>
+      </div>
+      <div class="col-2">
+        <a type="button" class="float-right" [routerLink]="[lnkManageOfferNew]">
+          <fa-icon class="pl-2" [icon]="['fas', 'plus-circle']"></fa-icon>
+        </a>
+      </div>
     </div>
-    <div class="col-2">
-      <a type="button" class="float-right" [routerLink]="[lnkManageOfferNew]">
-        <fa-icon class="pl-2" [icon]="['fas', 'plus-circle']"></fa-icon>
-      </a>
-    </div>
-    <div class="col-12 mt-3 offer-table">
-      <div *ngIf="offersAreLoaded === true; then showList; else showSpinner"></div>
 
-      <ng-template #showList>
-        <div *ngIf="errorOccured === true; then showError; else showTable"></div>
+    <div class="row mt-3">
+      <div class="col-12 offer-table">
+        <div *ngIf="offersAreLoaded === true; then showList; else showSpinner"></div>
 
-        <ng-template #showTable>
-          <fs-offer-table
-            [offerList]="shortOfferList"
-            (deleteEvent)="showModalWindowDeleteOffer($event)"
-          ></fs-offer-table>
+        <ng-template #showList>
+          <div *ngIf="errorOccured === true; then showError; else showTable"></div>
+
+          <!-- TABLE BEGIN-->
+          <ng-template #showTable>
+            <fs-offer-table
+              [offerList]="shortOfferList"
+              (deleteEvent)="showModalWindowDeleteOffer($event)"
+            ></fs-offer-table>
+          </ng-template>
+          <!-- TABLE ENDE-->
+
+          <ng-template #showError>
+            <p>
+              <ngb-alert [dismissible]="false" [type]="'danger'">
+                {{ errorMessage }}
+              </ngb-alert>
+            </p>
+          </ng-template>
         </ng-template>
 
-        <ng-template #showError>
-          <p>
-            <ngb-alert [dismissible]="false" [type]="'danger'">
-              {{ errorMessage }}
-            </ngb-alert>
-          </p>
-        </ng-template>
-      </ng-template>
-
-      <ng-template #showSpinner>
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
+        <ng-template #showSpinner>
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
-        </div>
-      </ng-template>
-
-      <ts-toast aria-live="polite" aria-atomic="true"></ts-toast>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>

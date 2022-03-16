@@ -35,7 +35,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     let authReq = request;
     const token = this.tokenService.getAccessToken();
     this.isAuth = token !== null;
-    // console.log('event (request) ->>> ', request);
+    console.log('event (request) ->>> ', request);
 
     if (this.isAuth) {
       authReq = this.addTokenHeader(request, token);

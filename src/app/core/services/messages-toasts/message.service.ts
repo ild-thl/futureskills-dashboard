@@ -43,6 +43,37 @@ export class MessageService {
   removeToast(toast: Toast) {
     this.toasts = this.toasts.filter((t) => t != toast);
   }
-
   constructor() {}
+}
+
+
+export interface IShowAlerts {
+  alerts: Alert[];
+  addAlert(type: string, message: string): void;
+  closeAlert(alert: Alert): void;
+  closeaAllAlerts(): void;
+}
+
+export interface Alert {
+  type: string;
+  message: string;
+}
+
+/**
+ * allgemeinere AlertList
+ */
+export class AlertList implements IShowAlerts{
+  private _alerts: Alert[] = [];
+  public get alerts(): Alert[] {
+    return this._alerts;
+  }
+  addAlert(type: string, message: string) {
+    this._alerts.push({ type, message });
+  }
+  closeAlert(alert: Alert) {
+    this._alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+  closeaAllAlerts() {
+    this._alerts = [];
+  }
 }
