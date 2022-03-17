@@ -6,25 +6,48 @@
       <h4>Verwaltung</h4>
       <!--<small class="text-muted">Hier könnte noch Text stehen.</small> -->
       <div class="mt-4">
-        <div class="card-columns">
-          <div class="card shadow-sm p-3 mb-5 bg-white rounded" style="width: 18rem">
+        <div class="card-deck">
+          <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Kursverwaltung</h5>
-              <p class="card-text text-muted">
-                Auf diesen Seiten können Kursdaten bearbeitet werden.
+              <h5 class="card-title">Kurse</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <a [routerLink]="lnkManageOffers"
+                    ><fa-icon [icon]="['fas', 'edit']"></fa-icon> Kursliste</a
+                  >
+                </li>
+                <li class="list-group-item">
+                  <a [routerLink]="lnkManageOfferNew"
+                    ><fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
+                  >
+                </li>
+                <li class="list-group-item">
+                  <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+                  <span class="text-muted"> Kurs bearbeiten</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Institutionen</h5>
+              <p class="card-text">
+                <span class="text-muted"
+                  >Hier könnte man neue Institutionen eingeben und den Cache leeren</span
+                >
               </p>
             </div>
-            <div class="list-group list-group-flush">
-              <a [routerLink]="lnkManageOffers" class="list-group-item list-group-item-action">
-                <fa-icon [icon]="['fas', 'edit']"></fa-icon> Kurse bearbeiten</a
-              >
-              <a [routerLink]="lnkManageOfferNew" class="list-group-item list-group-item-action">
-                <fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
-              >
-              <!-- <a (click)="onEditCourse()" class="list-group-item list-group-item-action">
-              <fa-icon [icon]="['fas', 'pen']"></fa-icon> Einen Kurs bearbeiten</a>
-              <input type="text"
-              /> -->
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Alte Formulare</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <a [routerLink]="lnkAdminOfferNew"
+                    ><fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
         </div>

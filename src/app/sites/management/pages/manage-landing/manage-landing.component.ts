@@ -10,6 +10,7 @@ export class ManageLandingComponent {
   lnkManageOffers = this.staticConfig.getPathInfo().lnkManageOfferList;
   lnkManageOfferNew = this.staticConfig.getPathInfo().lnkManageOfferNew;
   lnkManageOfferEdit = this.staticConfig.getPathInfo().lnkManageOfferEdit;
+  lnkAdminOfferNew = this.staticConfig.getPathInfo().lnkAdminOfferNew;
 
   constructor(private staticConfig: StaticService) {}
 

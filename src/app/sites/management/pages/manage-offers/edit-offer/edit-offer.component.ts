@@ -1,21 +1,24 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { Offer, OfferMeta } from 'src/app/core/models/offer';
+import { Offer, OfferMeta, SmallOfferDetailData } from 'src/app/core/models/offer';
+import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 import { KeyWordItem } from '../components/multiselect/multiselect.component';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
-
-interface Alert {
-  type: string;
-  message: string;
-}
+import {
+  TOASTCOLOR,
+  MessageService,
+  AlertList,
+} from 'src/app/core/services/messages-toasts/message.service';
+import { DataHelper } from 'src/app/core/services/helper/data-helper';
 
 @Component({
   selector: 'app-edit-offer',
@@ -24,6 +27,7 @@ interface Alert {
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
+  lnkManageOfferList = this.staticConfig.getPathInfo().lnkManageOfferList;
 
   // Offer
   public offer: Offer = new Offer(null);
@@ -39,12 +43,14 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   // KeyWords {key, item}
   availableKeyWordList: KeyWordItem[];
 
-  public isLoading = true;
+  isLoading = true;
+  isSaving = false;
+
   public createNewOffer = false;
   public isCollapsed = true;
   public isError = false;
   errMessage: string = '';
-  alerts: Alert[] = [];
+  alertList: AlertList = new AlertList();
 
   offerEditForm: FormGroup;
 
@@ -57,7 +63,10 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private metaDataService: MetaDataService,
     private route: ActivatedRoute,
     private staticConfig: StaticService,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private modalService: NgbModal,
+    private messageService: MessageService,
+    private router: Router,
   ) {}
 
   editorConfig: AngularEditorConfig = {
@@ -202,7 +211,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
    */
   private saveOfferData(offerdata: any) {
     this.isLoading = true;
-    this.closeaAllAlerts();
+    this.isSaving = true;
+    this.alertList.closeaAllAlerts();
 
     const id = this.createNewOffer ? null : this.offer.id;
     const relatedIntOffers: number[] = this.mapRelatedOfferListToNumberList(
@@ -214,13 +224,56 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       (offer: Offer) => {
         this.offer = offer;
         this.isLoading = false;
-        this.addAlert('success', 'Speichern war erfolgreich');
+        this.isSaving = false;
+        this.alertList.addAlert('success', 'Speichern war erfolgreich');
+        this.messageService.showToast(
+          { header: 'Kurs speichern', body: 'Speichern war erfolgreich' },
+          TOASTCOLOR.SUCCESS
+        );
       },
       (error: Error) => {
-        this.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
+        this.alertList.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
+        this.messageService.showToast(
+          { header: 'Kurs speichern', body: this.errorHandler.getErrorMessage(error, 'offer') },
+          TOASTCOLOR.SUCCESS
+        );
         this.isLoading = false;
+        this.isSaving = false;
       }
     );
+  }
+
+  showModalWindowDeleteOffer(event: Event) {
+    const title = this.offer.title;
+    const id = this.offer.id;
+    const modalRef = this.modalService.open(NgbdModalAskOfferDeleteComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.title = event !== undefined ? title : '';
+    modalRef.result.then(
+      (result) => {
+        this.deleteOffer(id);
+      },
+      (reason) => {}
+    );
+  }
+
+  private deleteOffer(offerID: number) {
+    if (offerID && offerID > 0) {
+      this.offerDataService.deleteOfferWithID(offerID).subscribe({
+        next: (value) => {
+          this.messageService.showToast(
+            { header: 'Kurs löschen', body: 'Der Kurs wurde gelöscht.' },
+            TOASTCOLOR.SUCCESS
+          );
+          this.router.navigate([this.lnkManageOfferList]);
+        },
+        error: (error: Error) => {
+          const message = this.errorHandler.getErrorMessage(error, 'offer');
+          this.messageService.showToast({ header: 'Kurs löschen', body: message }, TOASTCOLOR.DANGER);
+        },
+      });
+    }
   }
 
   /**
@@ -298,18 +351,4 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       description: item.description,
     };
   }
-
-  // Alert Functions
-
-  addAlert(type: string, message: string) {
-    this.alerts.push({ type, message });
-  }
-  closeAlert(alert: Alert) {
-    this.alerts.splice(this.alerts.indexOf(alert), 1);
-  }
-  closeaAllAlerts() {
-    this.alerts = [];
-  }
-
-
 }

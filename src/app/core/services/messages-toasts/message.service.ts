@@ -47,14 +47,18 @@ export class MessageService {
 }
 
 
+/**
+ * Class for Alerts
+ */
+
 export interface IShowAlerts {
-  alerts: Alert[];
+  alerts: IAlert[];
   addAlert(type: string, message: string): void;
-  closeAlert(alert: Alert): void;
+  closeAlert(alert: IAlert): void;
   closeaAllAlerts(): void;
 }
 
-export interface Alert {
+export interface IAlert {
   type: string;
   message: string;
 }
@@ -63,14 +67,14 @@ export interface Alert {
  * allgemeinere AlertList
  */
 export class AlertList implements IShowAlerts{
-  private _alerts: Alert[] = [];
-  public get alerts(): Alert[] {
+  private _alerts: IAlert[] = [];
+  public get alerts(): IAlert[] {
     return this._alerts;
   }
   addAlert(type: string, message: string) {
     this._alerts.push({ type, message });
   }
-  closeAlert(alert: Alert) {
+  closeAlert(alert: IAlert) {
     this._alerts.splice(this.alerts.indexOf(alert), 1);
   }
   closeaAllAlerts() {

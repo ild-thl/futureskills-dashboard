@@ -46,7 +46,7 @@ export class OfferTableComponent implements OnInit, OnChanges {
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
-  onSort({ column, direction }: SortEvent) {}
+  onSort({ column, direction }: any) {}
 
   initTableValues() {
     this.baseShortOfferList = this.offerList;
