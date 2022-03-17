@@ -2,6 +2,9 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-30-17/ml
+- tsconfig->strictTemplates=true
+
 ## 2022-03-01/ml
 ### changed
 - Interceptor/API/AuthService check if 401 error occurs to refresh token
