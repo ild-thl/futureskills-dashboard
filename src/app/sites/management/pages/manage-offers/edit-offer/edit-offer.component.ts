@@ -11,8 +11,11 @@ import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 import { KeyWordItem } from '../components/multiselect/multiselect.component';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
-import { TOASTCOLOR, MessageService } from 'src/app/core/services/messages-toasts/message.service';
-import { DataHelper } from 'src/app/core/services/helper/data-helper';
+
+interface Alert {
+  type: string;
+  message: string;
+}
 
 @Component({
   selector: 'app-edit-offer',
@@ -20,15 +23,11 @@ import { DataHelper } from 'src/app/core/services/helper/data-helper';
   styleUrls: ['./edit-offer.component.scss'],
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
-  private paramSub: Subscription | undefined;
-
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
 
   // Offer
+  public offer: Offer = new Offer(null);
   private onOfferChange: Subscription;
-  offerEditForm: FormGroup;
-  offer: Offer;
-  offerLoaded: Offer;
 
   // PropertyMetaData
   propertiesLoaded = false;
@@ -40,9 +39,14 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   // KeyWords {key, item}
   availableKeyWordList: KeyWordItem[];
 
-  isLoading: boolean;
-  isError: boolean;
-  errMessage: string;
+  public isLoading = true;
+  public createNewOffer = false;
+  public isCollapsed = true;
+  public isError = false;
+  errMessage: string = '';
+  alerts: Alert[] = [];
+
+  offerEditForm: FormGroup;
 
   get relatedOfferFormArray() {
     return this.offerEditForm.get('relatedOffers') as FormArray;
@@ -53,15 +57,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private metaDataService: MetaDataService,
     private route: ActivatedRoute,
     private staticConfig: StaticService,
-    private errorHandler: ErrorHandlerService,
-    private toastService: MessageService
-  ) {
-    this.isLoading = false;
-    this.isError = false;
-    this.errMessage = '';
-    this.offer = new Offer(null);
-    this.offerLoaded = new Offer(null);
-  }
+    private errorHandler: ErrorHandlerService
+  ) {}
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -85,57 +82,11 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     ],
   };
 
-  ngOnInit(): void {
-    this.isLoading = false;
-    this.isError = false;
-    this.errMessage = '';
+  ngOnInit() {
+    const offerId = +this.route.snapshot.params.id;
 
-    this.initializeFormData();
+    this.loadPropertyMetaData();
 
-    this.paramSub = this.route.paramMap.subscribe((params) => {
-      const strParam = params.get('id');
-      if (strParam && strParam.length > 0) {
-        const offerId: number = +strParam;
-
-        if (Number.isNaN(offerId)) {
-          this.setError();
-          this.isLoading = false;
-        } else {
-          this.resetError();
-          this.isLoading = true;
-          this.loadPropertyMetaData();
-          this.loadFormData(offerId);
-        }
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.paramSub) this.paramSub.unsubscribe();
-    if (this.onOfferChange) this.onOfferChange.unsubscribe();
-  }
-  updateRelatedOffers(event: any) {
-    this.relatedOfferFormArray.reset(event);
-  }
-
-  onSaveData(offerdata: any) {
-    this.saveOfferData(offerdata);
-    //this.onSaveClicked();
-  }
-
-  onSaveClicked() {
-    console.log('EditForm', this.offerEditForm.value);
-    this.toastService.showToast(
-      { header: 'Kurs speichern', body: 'Der Kurs wird bald gespeichert.' },
-      TOASTCOLOR.SUCCESS
-    );
-  }
-
-  //////////////////////////////////////////////
-  // FORM DATA
-  //////////////////////////////////////////////
-
-  private initializeFormData() {
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
       title: new FormControl(null, Validators.required),
@@ -166,10 +117,39 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       keywords: new FormControl(undefined),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
+
+    if (offerId) {
+      this.createNewOffer = false;
+      this.loadOfferData(offerId);
+    } else {
+      this.createNewOffer = true;
+    }
   }
 
-  private loadFormData(offerID: number) {
-    this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerID).subscribe({
+  ngOnDestroy(): void {
+    if (this.onOfferChange) this.onOfferChange.unsubscribe();
+  }
+
+  updateRelatedOffers(event: any) {
+    this.relatedOfferFormArray.reset(event);
+  }
+
+  /**
+   * SubmitEvent
+   * @param offerdata
+   */
+  onSaveData(offerdata: any) {
+    this.saveOfferData(offerdata);
+  }
+
+  //////////// DATA ////////////////
+
+  /**
+   * Loads Offer Data and fills form fields
+   * @param offerId
+   */
+  private loadOfferData(offerId: number) {
+    this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe({
       next: (offer) => {
         this.offer = offer;
         this.offerEditForm.get('id').setValue(this.offer.id);
@@ -205,7 +185,6 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.errMessage = '';
         this.isError = false;
-        console.log('OFFER', offer);
       },
       error: (error: Error) => {
         this.isError = true;
@@ -223,33 +202,25 @@ export class EditOfferComponent implements OnInit, OnDestroy {
    */
   private saveOfferData(offerdata: any) {
     this.isLoading = true;
+    this.closeaAllAlerts();
 
-    const id = this.offer.id;
+    const id = this.createNewOffer ? null : this.offer.id;
     const relatedIntOffers: number[] = this.mapRelatedOfferListToNumberList(
       this.relatedOfferFormArray.value
     );
     offerdata.meta = this.mapMetaData(this.offerEditForm.value);
 
-    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe({
-      next: (offer: Offer) => {
+    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
+      (offer: Offer) => {
         this.offer = offer;
         this.isLoading = false;
-        this.toastService.showToast(
-          { header: 'Kurs speichern', body: 'Der Kurs wurde gespeichert.' },
-          TOASTCOLOR.SUCCESS
-        );
+        this.addAlert('success', 'Speichern war erfolgreich');
       },
-      error: (error: Error) => {
+      (error: Error) => {
+        this.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
         this.isLoading = false;
-        this.toastService.showToast(
-          {
-            header: 'Fehler Kurs speichern',
-            body: this.errorHandler.getErrorMessage(error, 'offer'),
-          },
-          TOASTCOLOR.SUCCESS
-        );
-      },
-    });
+      }
+    );
   }
 
   /**
@@ -310,14 +281,14 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       return this.cloneItem(item);
     });
 
-    console.log('Institutions: ', this.propInstitutions);
-    console.log('Competences: ', this.propCompetences);
-    console.log('Formats: ', this.propFormats);
-    console.log('Languages: ', this.propLanguages);
+    //console.log('Institutions: ', this.propInstitutions);
+    //console.log('Competences: ', this.propCompetences);
+    //console.log('Formats: ', this.propFormats);
+    //console.log('Languages: ', this.propLanguages);
   }
 
   private capitalizeFirstLetter(text: string) {
-    return DataHelper.capitalizeFirstLetter(text);
+    return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
   private cloneItem(item: PropertyItem) {
@@ -328,12 +299,17 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     };
   }
 
-  private setError() {
-    this.isError = true;
-    this.errMessage = this.errorHandler.ERROR_MESSAGES.E404_OFFER_NOT_FOUND;
+  // Alert Functions
+
+  addAlert(type: string, message: string) {
+    this.alerts.push({ type, message });
   }
-  private resetError() {
-    this.isError = false;
-    this.errMessage = '';
+  closeAlert(alert: Alert) {
+    this.alerts.splice(this.alerts.indexOf(alert), 1);
   }
+  closeaAllAlerts() {
+    this.alerts = [];
+  }
+
+
 }

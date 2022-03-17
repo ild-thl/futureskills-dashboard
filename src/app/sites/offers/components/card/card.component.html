@@ -50,10 +50,10 @@
                       </button>
                       <button
                         class="btn btn-primary"
+                        [routerLink]="[lnkManageOfferEdit, offer?.id]"
                         ngbDropdownItem
-                        (click)="showModalWindowDeleteOffer()"
                       >
-                        <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon> Löschen
+                        <fa-icon [icon]="['fas', 'pen']"></fa-icon> Editieren (neu)
                       </button>
                     </div>
                   </div>

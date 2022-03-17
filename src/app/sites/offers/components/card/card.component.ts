@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalLmsContentComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-to-lms/ngbd-modal-lmscontent';
-import { NgbdModalOfferDeleteComponent } from 'src/app/sites/offers/components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
 import { Offer } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
@@ -19,10 +18,13 @@ import { LogService } from 'src/app/core/services/logger/log.service';
 export class CardComponent {
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
   lnkAdminOfferEdit = this.staticConfig.getPathInfo().lnkAdminOfferEdit;
+  lnkManageOfferEdit = this.staticConfig.getPathInfo().lnkManageOfferEdit;
 
   @Input() offer: Offer;
-  @Input() object = Objects;
-  @Input() permission = Permissions;
+
+  // Permission-Set
+  object = Objects;
+  permission = Permissions;
 
   constructor(
     private offerDataService: OfferDataService,
@@ -32,19 +34,6 @@ export class CardComponent {
     private logService: LogService
   ) {}
 
-  deleteOffer() {
-    // TODO: Lädt-Anzeige an
-    if (this.offer) {
-      this.offerDataService.deleteOffer(this.offer).subscribe({
-        next: (value) => {
-          this.router.navigate([this.lnkOffers]);
-        },
-        error: (error: Error) => {
-          // TODO: Rückmeldung?
-        },
-      });
-    }
-  }
 
   /**
    * @deprecated
@@ -87,19 +76,6 @@ export class CardComponent {
         // Cancel by button or ModalDismissReasons
         // console.log('Cancel ', reason);
       }
-    );
-  }
-
-  showModalWindowDeleteOffer() {
-    const modalRef = this.modalService.open(NgbdModalOfferDeleteComponent, {
-      centered: true,
-    });
-    modalRef.componentInstance.title = this.offer !== undefined ? this.offer.title : '';
-    modalRef.result.then(
-      (result) => {
-        this.deleteOffer();
-      },
-      (reason) => {}
     );
   }
 

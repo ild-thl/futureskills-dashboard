@@ -4,6 +4,7 @@ import { ManageLandingComponent } from './pages/manage-landing/manage-landing.co
 import { ListOffersComponent } from './pages/manage-offers/list-offer/list-offers.component';
 import { EditOfferComponent } from './pages/manage-offers/edit-offer/edit-offer.component';
 import { CreateOfferComponent } from './pages/manage-offers/create-offer/create-offer.component';
+import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,14 @@ const routes: Routes = [
     path: 'kurs/edit',
     redirectTo: 'kurs/neu'
   },
+  {
+    path: 'kurs/alt/edit/:id',
+    component: OfferEditComponent
+  },
+  {
+    path: 'kurs/alt/neu',
+    component: OfferEditComponent
+  }
 
 ];
 @NgModule({

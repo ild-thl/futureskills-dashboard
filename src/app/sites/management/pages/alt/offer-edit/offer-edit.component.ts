@@ -9,8 +9,8 @@ import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
-import { KeyWordItem } from '../../components/multiselect/multiselect.component';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
+import { KeyWordItem } from '../../manage-offers/components/multiselect/multiselect.component';
 
 interface Alert {
   type: string;

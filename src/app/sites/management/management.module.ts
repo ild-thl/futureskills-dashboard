@@ -8,12 +8,13 @@ import { ManagementRoutingModule } from './management-routing.module';
 import { EditOfferComponent } from './pages/manage-offers/edit-offer/edit-offer.component';
 import { CreateOfferComponent } from './pages/manage-offers/create-offer/create-offer.component';
 import { BreadcrumbHeaderComponent } from './components/breadcrumb-header/breadcrumb-header.component';
-import { OfferTableComponent } from './components/offer-table/offer-table.component';
-import { SortableHeaderDirective } from './components/offer-table/component/sortable-header.directive';
-import { NgbdModalAskOfferDeleteComponent } from './components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
+import { OfferTableComponent } from './pages/manage-offers/components/offer-table/offer-table.component';
+import { SortableHeaderDirective } from './pages/manage-offers/components/offer-table/component/sortable-header.directive';
 import { MultiselectComponent } from './pages/manage-offers/components/multiselect/multiselect.component';
 import { OfferRelationsSelectionComponent } from './pages/manage-offers/components/offer-relations-selection/offer-relations-selection.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+
+import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component'; //toDelete
 
 
 @NgModule({
@@ -21,11 +22,11 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     ManageLandingComponent,
     ListOffersComponent,
     EditOfferComponent,
+    OfferEditComponent,
     CreateOfferComponent,
     OfferTableComponent,
     BreadcrumbHeaderComponent,
     SortableHeaderDirective,
-    NgbdModalAskOfferDeleteComponent,
     MultiselectComponent,
     OfferRelationsSelectionComponent,
   ],
