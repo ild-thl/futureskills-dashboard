@@ -38,18 +38,16 @@
             <div class="form-group">
               <label for="selectExampleText">Beispieltexte</label>
               <select
-                [(ngModel)]="nrSelect"
+                [(ngModel)]="selectedOption"
                 class="form-control form-control-sm"
                 id="selectExampleText"
-                (change)="onSelectChange($event.target.value)"
+                (change)="onSelectChange($event.target)"
               >
                 <option value="" selected disabled>choose an example</option>
                 <option>Aristocats is so great because I love cats!</option>
                 <option>This is a film which should be seen by anybody interested in.</option>
                 <option>I can not form an opinion.</option>
-                <option>
-                  I don't want you to waste your time when you could see something else.
-                </option>
+                <option>I don't want you to waste your time when you could see something else.</option>
                 <option>This is one of my three all-time favorite movies.</option>
                 <option>This film is profoundly disturbing.</option>
               </select>
