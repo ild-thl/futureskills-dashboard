@@ -14,7 +14,8 @@ import { MultiselectComponent } from './pages/manage-offers/components/multisele
 import { OfferRelationsSelectionComponent } from './pages/manage-offers/components/offer-relations-selection/offer-relations-selection.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
-import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component'; //toDelete
+import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component';
+import { BoostrapValidationDirective } from './components/directives/boostrap-validation.directive';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component'
     SortableHeaderDirective,
     MultiselectComponent,
     OfferRelationsSelectionComponent,
+    BoostrapValidationDirective,
   ],
   imports: [
     CommonModule,

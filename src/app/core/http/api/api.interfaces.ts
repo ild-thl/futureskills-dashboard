@@ -44,6 +44,7 @@ export type APIToOfferMiniList = {
   title: string;
   image_path: string;
   visible: number;
+  sortflag: number;
 };
 
 // Data from Pagination API

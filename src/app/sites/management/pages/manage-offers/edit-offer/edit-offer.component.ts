@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { Offer, OfferMeta, SmallOfferDetailData } from 'src/app/core/models/offer';
+import { Offer, OfferMeta } from 'src/app/core/models/offer';
 import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -26,6 +26,8 @@ import { DataHelper } from 'src/app/core/services/helper/data-helper';
   styleUrls: ['./edit-offer.component.scss'],
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
+  private paramSub: Subscription | undefined;
+
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
   lnkManageOfferList = this.staticConfig.getPathInfo().lnkManageOfferList;
 
@@ -66,7 +68,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     private errorHandler: ErrorHandlerService,
     private modalService: NgbModal,
     private messageService: MessageService,
-    private router: Router,
+    private router: Router
   ) {}
 
   editorConfig: AngularEditorConfig = {
@@ -92,10 +94,54 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
-    const offerId = +this.route.snapshot.params.id;
+    this.isLoading = false;
+    this.isError = false;
+    this.errMessage = '';
 
+    this.initializeFormData();
+
+    //TODO Warten bis die da sind.
     this.loadPropertyMetaData();
 
+    this.paramSub = this.route.paramMap.subscribe((params) => {
+      const strParam = params.get('id');
+      if (strParam && strParam.length > 0) {
+        const offerId: number = +strParam;
+
+        if (Number.isNaN(offerId)) {
+          this.setError();
+          this.isLoading = false;
+        } else {
+          this.resetError();
+          this.isLoading = true;
+          this.loadPropertyMetaData();
+          this.loadOfferData(offerId);
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.onOfferChange) this.onOfferChange.unsubscribe();
+    if (this.paramSub) this.paramSub.unsubscribe();
+  }
+
+  updateRelatedOffers(event: any) {
+    this.relatedOfferFormArray.reset(event);
+  }
+
+  /**
+   * SubmitEvent
+   * @param offerdata
+   */
+  onSaveData(offerdata: any) {
+    this.saveOfferData(offerdata);
+  }
+
+  //////////////////////////////////////////////
+  // FORM DATA
+  //////////////////////////////////////////////
+  private initializeFormData() {
     this.offerEditForm = new FormGroup({
       id: new FormControl(null),
       title: new FormControl(null, Validators.required),
@@ -126,38 +172,9 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       keywords: new FormControl(undefined),
       relatedOffers: new FormArray([new FormControl(), new FormControl(), new FormControl()]),
     });
-
-    if (offerId) {
-      this.createNewOffer = false;
-      this.loadOfferData(offerId);
-    } else {
-      this.createNewOffer = true;
-    }
   }
 
-  ngOnDestroy(): void {
-    if (this.onOfferChange) this.onOfferChange.unsubscribe();
-  }
-
-  updateRelatedOffers(event: any) {
-    this.relatedOfferFormArray.reset(event);
-  }
-
-  /**
-   * SubmitEvent
-   * @param offerdata
-   */
-  onSaveData(offerdata: any) {
-    this.saveOfferData(offerdata);
-  }
-
-  //////////// DATA ////////////////
-
-  /**
-   * Loads Offer Data and fills form fields
-   * @param offerId
-   */
-  private loadOfferData(offerId: number) {
+   private loadOfferData(offerId: number) {
     this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe({
       next: (offer) => {
         this.offer = offer;
@@ -270,10 +287,26 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         },
         error: (error: Error) => {
           const message = this.errorHandler.getErrorMessage(error, 'offer');
-          this.messageService.showToast({ header: 'Kurs löschen', body: message }, TOASTCOLOR.DANGER);
+          this.messageService.showToast(
+            { header: 'Kurs löschen', body: message },
+            TOASTCOLOR.DANGER
+          );
         },
       });
     }
+  }
+
+  goToDetailPage(){
+
+    if (this.offerEditForm.pristine===false){
+      this.messageService.showToast(
+        { header: 'Nicht gespeichert.', body: 'Das Formular wurde noch nicht gespeichert.' },
+        TOASTCOLOR.DANGER
+      );
+    } else {
+      this.router.navigate([this.lnkOffers, this.offer.id]);
+    }
+
   }
 
   /**
@@ -350,5 +383,15 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       identifier: item.identifier,
       description: item.description,
     };
+  }
+
+  private setError() {
+    this.isError = true;
+    this.errMessage = this.errorHandler.ERROR_MESSAGES.E404_OFFER_NOT_FOUND;
+  }
+
+  private resetError() {
+    this.isError = false;
+    this.errMessage = '';
   }
 }

@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th scope="col" sortable="id" (sort)="onSort($event)" style="width: 0em">ID</th>
+        <th scope="col" sortable="flag" (sort)="onSort($event)" style="width: 0em">S</th>
         <th scope="col" style="width: 22px"></th>
         <th scope="col" sortable="title" (sort)="onSort($event)">Titel</th>
         <th scope="col" style="width: 120px">&nbsp;</th>
@@ -11,13 +12,14 @@
     <tbody>
       <tr *ngFor="let offer of shortOfferList; index as i">
         <th scope="row">{{ offer.id }}</th>
+        <td>{{ offer.sortflag }}</td>
         <td><img [src]="offer?.image" class="me-2" style="width: 20px" /></td>
         <td>
           <a type="button" [routerLink]="[lnkManageOfferEdit, offer?.id]">{{ offer?.title }}</a>
         </td>
         <td>
           <span class="float-right">
-            <a type="button" style="cursor: crosshair;"
+            <a type="button" style="cursor: crosshair"
               ><fa-icon
                 class="pl-2"
                 [ngClass]="{

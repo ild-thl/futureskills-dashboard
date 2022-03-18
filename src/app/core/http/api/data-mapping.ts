@@ -76,6 +76,7 @@ export abstract class DataMapping {
         image: data.image_path,
         title: data.title,
         isVisible: !!data.visible,
+        sortflag: data.sortflag
       };
     });
   }
