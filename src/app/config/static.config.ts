@@ -1,4 +1,3 @@
-
 /**
  * JSON-Dateien als Modul-Importe
  */
@@ -16,14 +15,14 @@ export const CustomConfig = {
     },
   },
   general: {
-    isVisible : {
+    isVisible: {
       loginButton: false,
-      logoutButton: true
+      logoutButton: true,
     },
     authBehaviour: {
       autoLogout: true, // wird man ausgeloggt wenn bei Start der App das Token ungültig ist?
-      logoutWithServer: false // wird der Server benachrichtigt, wenn man sich ausloggt?
-    }
+      logoutWithServer: false, // wird der Server benachrichtigt, wenn man sich ausloggt?
+    },
   },
   kiConfig: {
     online: true,
@@ -31,15 +30,15 @@ export const CustomConfig = {
     mnistPath: 'mnistnumber',
     sentimentPath: {
       en: 'sentiment/en',
-      de: 'sentiment/de'
+      de: 'sentiment/de',
     },
-    linkListPath: 'kiplayground/lnklist'
+    linkListPath: 'kiplayground/lnklist',
   },
-  filterParams:{
+  filterParams: {
     institutions: 'institutions',
     languages: 'languages',
     competences: 'competences',
-    formats: 'formats'
+    formats: 'formats',
   },
   paths: {
     lnkLanding: '/',
@@ -61,18 +60,23 @@ export const CustomConfig = {
     lnkKITools_sentiment: '/ki-playground/sentiment',
     linkKITools_demonstrators: '/ki-playground/examples',
   },
+  assets: {
+    images: {
+      default: '/assets/images/FutureSkills_default.png'
+    }
+  },
   routingInfo: {
     lnkAfterLogin: '/kurse',
     lnkAfterLogout: '/',
-    lnkTrailerAboutUs: '/info-lehrende'
+    lnkTrailerAboutUs: '/info-lehrende',
   },
   courseNumbers: {
     FS_SuperKI: '/615',
-    FS_NeuronaleNetze: '/602'
+    FS_NeuronaleNetze: '/602',
   },
   courseKeyWords: (keywords as any).default,
   courseKeyWordKeys: {
     keyForSuperKIKurs: 'fssuperkikurs',
-    keyForPlaygroundKIKurs: 'fskiplayground'
-  }
+    keyForPlaygroundKIKurs: 'fskiplayground',
+  },
 };

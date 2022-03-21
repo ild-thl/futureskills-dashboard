@@ -10,6 +10,7 @@ import {
   OfferFilterToAPI,
   OfferSearchFilterToAPI,
   OfferToAPI,
+  OfferToAPICreate,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
 import {
@@ -175,18 +176,20 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
-  storeOffer(data: OfferToAPI) {
+  storeOffer(data: OfferToAPI | OfferToAPICreate) {
+    console.log('Send New Offer To API-> :', data);
     return this.apiService.postOffer(data).pipe(
       tap((savedOffer) => {
-        //console.log('New Offer:', savedOffer);
+        console.log('<- Got New Offer From API:', savedOffer);
       })
     );
   }
 
   updateOffer(id: number, data: OfferToAPI) {
+    console.log('Send Offer To API-> :', data);
     return this.apiService.putOffer(id, data).pipe(
       tap((savedOffer) => {
-        //console.log('Updated Offer:', savedOffer);
+        console.log('<- Got Updated Offer From API:', savedOffer);
       })
     );
   }

@@ -2,7 +2,7 @@
 
 <div id="offer-edit">
   <div class="container mt-5">
-    <div *ngIf="isLoading; then showSpinner; else showSite"></div>
+    <div *ngIf="!propertiesLoaded; then showSpinner; else showSite"></div>
 
     <ng-template #showSpinner>
       <div class="d-flex justify-content-center">
@@ -49,7 +49,7 @@
           <!--EDITFORM-->
 
           <div class="form-group">
-            <label for="title">Titel</label>*
+            <label for="title" class="col-form-label col-form-label-sm">Titel</label>*
             <input
               class="form-control"
               formControlName="title"
@@ -63,7 +63,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="institution_id">Institution</label>*
+              <label for="institution_id" class="col-form-label col-form-label-sm">Institution</label>*
               <select
                 formControlName="institution_id"
                 class="form-control"
@@ -78,7 +78,7 @@
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label for="type">Format</label>*
+              <label for="type" class="col-form-label col-form-label-sm">Format</label>*
               <select
                 formControlName="offertype_id"
                 class="form-control"
@@ -93,9 +93,64 @@
             </div>
           </div>
 
+          <!-- Kompetenzen und Autor -->
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <fieldset>
+                <legend>Programm</legend>
+                <div class="form-group checkcontainer">
+                  <div class="custom-control custom-checkbox custom-control-inline">
+                    <input
+                      formControlName="competence_classic"
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="competence_classic"
+                      name="competence_classic"
+                    />
+                    <label class="custom-control-label" for="competence_classic">Classic</label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox custom-control-inline">
+                    <input
+                      formControlName="competence_digital"
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="competence_digital"
+                      name="competence_digital"
+                    />
+                    <label class="custom-control-label" for="competence_digital">Digital</label>
+                  </div>
+                  <div class="custom-control custom-checkbox custom-control-inline">
+                    <input
+                      formControlName="competence_tech"
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="competence_tech"
+                      name="competence_tech"
+                    />
+                    <label class="custom-control-label" for="competence_tech">Tech</label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="author" class="col-form-label col-form-label-sm">Autor/innen</label>
+              <input
+                formControlName="author"
+                class="form-control"
+                type="author"
+                id="author"
+                name="author"
+              />
+            </div>
+          </div>
+          <!-- -->
+
+          <!-- Sprache und URL-->
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label for="language">Sprache</label>*
+              <label class="col-form-label col-form-label-sm" for="language">Sprache</label>*
               <select
                 formControlName="language_id"
                 class="form-control"
@@ -109,7 +164,7 @@
               </select>
             </div>
             <div class="form-group col-md-8">
-              <label for="url">Kurs-URL</label>
+              <label class="col-form-label col-form-label-sm" for="url">Kurs-URL</label>
               <input formControlName="url" class="form-control" type="url" id="url" name="url" />
             </div>
           </div>
@@ -120,7 +175,7 @@
               <div class="media">
                 <img [src]="imagePath" class="minIcon mr-3" alt="..." />
                 <div class="media-body">
-                  <label for="image_path">Bild URL</label>
+                  <label class="col-form-label col-form-label-sm" for="image_path">Bild URL</label>
                   <div class="input-group">
                     <input
                       formControlName="image_path"
@@ -145,7 +200,7 @@
           <!-- Beschreibung -->
           <div class="mt-3">
             <div class="form-group">
-              <label for="description">Beschreibung</label>
+              <label class="col-form-label col-form-label-sm" for="description">Beschreibung</label>
               <angular-editor
                 formControlName="description"
                 name="description"
@@ -157,6 +212,25 @@
           </div>
 
           <!--EDITFORM-->
+
+          <hr />
+
+          <div class="row align-items-center justify-content-center">
+            <div class="col-12 mb-5">
+              <div class="btn-toolbar" role="toolbar" class="float-right">
+                <div class="btn-group btn-group-sm mr-2" role="group">
+                  <button
+                    *ngIf="!isSaving"
+                    [disabled]="!offerEditForm.valid || isSaving"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    <fa-icon [icon]="['fas', 'save']"></fa-icon> Speichern
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
       </ng-template>
 

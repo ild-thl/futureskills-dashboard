@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 
-import { OfferFilterToAPI, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
+import {
+  OfferFilterToAPI,
+  OfferToAPI,
+  OfferToAPICreate,
+} from 'src/app/core/http/api/api.interfaces';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferService } from 'src/app/core/http/offer/offer.service';
 import { UserData, UserOfferData } from 'src/app/core/data/user/user-data.interface';
@@ -15,6 +19,7 @@ import {
   PaginatedOfferData,
   SmallOfferDetailData,
   MiniOffersData,
+  PartialOffer,
 } from 'src/app/core/models/offer';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
@@ -64,7 +69,7 @@ export class OfferDataService {
   }
 
   // OfferList for Management
-  public getSmallOfferListForManagement(): Observable<MiniOffersData[]>  {
+  public getSmallOfferListForManagement(): Observable<MiniOffersData[]> {
     return this.offerService.getMiniOffersListForManagementList();
   }
 
@@ -99,6 +104,10 @@ export class OfferDataService {
       relatedOffers
     );
     return this.saveOrCreateNewOfferDataWithoutLoginCheck(offerid, mappedData);
+  }
+
+  public createNewOfferData(offer: OfferToAPICreate) {
+    return this.createNewOfferDataWithoutLoginCheck(offer);
   }
 
   // delete for Edit
@@ -188,5 +197,9 @@ export class OfferDataService {
     } else {
       return this.offerService.storeOffer(offer);
     }
+  }
+
+  private createNewOfferDataWithoutLoginCheck(offer: OfferToAPICreate) {
+    return this.offerService.storeOffer(offer);
   }
 }

@@ -174,7 +174,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     });
   }
 
-   private loadOfferData(offerId: number) {
+  private loadOfferData(offerId: number) {
     this.onOfferChange = this.offerDataService.getOfferDataForEdit(offerId).subscribe({
       next: (offer) => {
         this.offer = offer;
@@ -211,6 +211,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.errMessage = '';
         this.isError = false;
+
+        console.log("OFFER FROM API", this.offer);
       },
       error: (error: Error) => {
         this.isError = true;
@@ -236,6 +238,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
       this.relatedOfferFormArray.value
     );
     offerdata.meta = this.mapMetaData(this.offerEditForm.value);
+
+      console.log("OFFERDATA", offerdata);
 
     this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
       (offer: Offer) => {
@@ -296,9 +300,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToDetailPage(){
-
-    if (this.offerEditForm.pristine===false){
+  goToDetailPage() {
+    if (this.offerEditForm.pristine === false) {
       this.messageService.showToast(
         { header: 'Nicht gespeichert.', body: 'Das Formular wurde noch nicht gespeichert.' },
         TOASTCOLOR.DANGER
@@ -306,7 +309,6 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate([this.lnkOffers, this.offer.id]);
     }
-
   }
 
   /**

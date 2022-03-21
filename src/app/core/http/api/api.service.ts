@@ -16,6 +16,7 @@ import {
   PaginatedOfferDataFromAPI,
   OfferSearchFilterToAPI,
   APIToOfferMiniList,
+  OfferToAPICreate,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling';
@@ -203,7 +204,7 @@ export class ApiService {
     );
   }
 
-  public postOffer(data: OfferToAPI): Observable<Offer> {
+  public postOffer(data: OfferToAPI | OfferToAPICreate): Observable<Offer> {
     return this.http.post<Offer>(environment.apiURL + '/api/offer', data).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         return this.handleError(errorResponse);

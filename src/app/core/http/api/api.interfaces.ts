@@ -93,6 +93,20 @@ export type OfferToAPI = {
   relatedOffers: number[];
 };
 
+export type OfferToAPICreate = {
+  title: string;
+  institution_id: number;
+  offertype_id: number;
+  language_id: number;
+  url: string;
+  image_path: string;
+  description: string;
+  competence_tech: boolean | number;
+  competence_digital: boolean | number;
+  competence_classic: boolean | number;
+  author: string;
+}
+
 export type OfferFilterToAPI = {
   institution_id?: number[];
   language_id?: number[];

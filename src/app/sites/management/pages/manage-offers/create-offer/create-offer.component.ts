@@ -5,8 +5,7 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@ang
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { Offer, OfferMeta, SmallOfferDetailData } from 'src/app/core/models/offer';
-import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
+import { Offer, OfferMeta } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
@@ -19,6 +18,7 @@ import {
   AlertList,
 } from 'src/app/core/services/messages-toasts/message.service';
 import { DataHelper } from 'src/app/core/services/helper/data-helper';
+import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
 
 @Component({
   selector: 'app-create-offer',
@@ -27,19 +27,18 @@ import { DataHelper } from 'src/app/core/services/helper/data-helper';
 })
 export class CreateOfferComponent implements OnInit, OnDestroy {
   private paramSub: Subscription | undefined;
+  private onOfferSave: Subscription | undefined;
 
   lnkOffers = this.staticConfig.getPathInfo().lnkOffers;
   lnkManageOfferList = this.staticConfig.getPathInfo().lnkManageOfferList;
+  lnkManageOfferEdit = this.staticConfig.getPathInfo().lnkManageOfferEdit;
 
   // Offer
-  public offer: Offer = new Offer(null);
-  private onOfferChange: Subscription;
+  offer: Offer = new Offer(null);
 
   // Imgae
-  imagePath: string = '/assets/images/FutureSkills_default.png';
+  imagePath: string = this.staticConfig.getAssetPaths().images.default;
 
-  // PropertyMetaData
-  propertiesLoaded = false;
   // PropertyItem (id, identifier, description)
   propInstitutions: PropertyItem[];
   propLanguages: PropertyItem[];
@@ -48,14 +47,10 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   // KeyWords {key, item}
   availableKeyWordList: KeyWordItem[];
 
-  isLoading = true;
-  isSaving = false;
-
-  public createNewOffer = false;
-  public isCollapsed = true;
-  public isError = false;
+  isSaving: boolean;
+  isError: boolean;
+  propertiesLoaded: boolean;
   errMessage: string = '';
-  alertList: AlertList = new AlertList();
 
   offerEditForm: FormGroup;
 
@@ -73,7 +68,12 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private router: Router,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.propertiesLoaded = false;
+    this.isError = false;
+    this.isSaving = false;
+    this.errMessage = '';
+  }
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -98,60 +98,15 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
-    this.isLoading = false;
-    this.isError = false;
-    this.errMessage = '';
-
-    //this.initializeFormData();
-    this.initFormData();
-
-    //TODO Warten bis die da sind.
+    this.resetStatusVars();
     this.loadPropertyMetaData();
-
-    this.setOfferDefaults();
+    this.initFormData();
   }
 
   ngOnDestroy(): void {
-    if (this.onOfferChange) this.onOfferChange.unsubscribe();
+    if (this.onOfferSave) this.onOfferSave.unsubscribe();
     if (this.paramSub) this.paramSub.unsubscribe();
   }
-
-  updateRelatedOffers(event: any) {
-    this.relatedOfferFormArray.reset(event);
-  }
-
-  /**
-   * SubmitEvent
-   * @param offerdata
-   */
-  onSaveData(offerdata: any) {
-    this.saveOfferData(offerdata);
-  }
-
-  //////////////////////////////////////////////
-  // FORM DATA
-  //////////////////////////////////////////////
-  private initializeFormData() {
-    this.offerEditForm = new FormGroup({
-      title: new FormControl(),
-      image_path: new FormControl(this.imagePath),
-      offertype_id: new FormControl(-1, Validators.required),
-      language_id: new FormControl(-1, Validators.required),
-      institution_id: new FormControl(-1, Validators.required),
-      description: new FormControl(null),
-      subtitle: new FormControl(null),
-      hashtag: new FormControl(null),
-      author: new FormControl(null),
-      target_group: new FormControl(null),
-      sort_flag: new FormControl(null),
-      url: new FormControl(null),
-      competence_tech: new FormControl(null),
-      competence_classic: new FormControl(null),
-      competence_digital: new FormControl(null),
-      keywords: new FormControl(undefined),
-    });
-  }
-
   private initFormData() {
     this.offerEditForm = this.fb.group({
       title: [null, Validators.required],
@@ -161,57 +116,61 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
       url: [null],
       image_path: [this.imagePath],
       description: [null],
+      competence_classic: [false],
+      competence_digital: [false],
+      competence_tech: [false],
+      author: [null],
     });
   }
 
-  private setOfferDefaults() {}
+  onSaveOffer(offer: any) {
+    console.log('FORMDATA', offer);
 
-  onSaveOffer(formValue: any){
-    console.log("FORM", formValue);
-    this.messageService.showToast(
-      { header: 'Kurs speichern', body: 'Speichern kommt noch...' },
-      TOASTCOLOR.STANDARD
-    );
+    const classic = !!offer.competence_classic == true ? 1 : 0;
+    const digital = !!offer.competence_digital == true ? 1 : 0;
+    const tech = !!offer.competence_tech == true ? 1 : 0;
 
+    this.isSaving = true;
+    const offerdata: OfferToAPICreate = {
+      title: offer.title,
+      institution_id: offer.institution_id,
+      offertype_id: offer.offertype_id,
+      language_id: offer.language_id,
+      url: offer.url,
+      image_path: offer.image_path,
+      description: offer.description,
+      competence_classic: classic,
+      competence_digital: digital,
+      competence_tech: tech,
+      author: offer.author,
+    };
+
+    this.onOfferSave = this.offerDataService.createNewOfferData(offerdata).subscribe({
+      next: (data) => {
+        this.isSaving = false;
+        this.messageService.showToast(
+          { header: 'Kurs speichern', body: 'Speichern war erfolgreich.' },
+          TOASTCOLOR.SUCCESS
+        );
+        if (data.id) {
+          this.router.navigate([this.lnkManageOfferEdit, data.id]);
+        } else {
+          this.router.navigate([this.lnkManageOfferList]);
+        }
+      },
+      error: (error: Error) => {
+        this.isSaving = false;
+        this.messageService.showToast(
+          { header: 'Kurs speichern', body: 'Der Kurs konnte nicht gespeichert werden.' },
+          TOASTCOLOR.DANGER
+        );
+      },
+    });
   }
 
-  onResetForm(){
+  onResetForm() {
     this.offerEditForm.reset();
     this.initFormData();
-  }
-
-
-  /**
-   * Saves OfferData
-   * Abspeichern der Offer-Daten
-   * Abspeichern der zugeordneten Kurse aus this.relatedOfferFormArray.value
-   * @param offerdata
-   */
-  private saveOfferData(offerdata: any) {
-    this.isLoading = true;
-    this.isSaving = true;
-  }
-
-
-  /**
-   * Convert stringArray to intArray
-   * deletes entries with 0 values
-   * @param strList
-   */
-  private mapRelatedOfferListToNumberList(strList: string[]): number[] {
-    if (strList == null || strList.length == 0) return [];
-    return strList.map((item) => +item).filter((offer) => offer !== 0);
-  }
-
-  private mapMetaData(formData: any) {
-    let tmpMetas = new OfferMeta();
-    tmpMetas.ects = formData.ects;
-    tmpMetas.exam = formData.exam;
-    tmpMetas.niveau = formData.niveau;
-    tmpMetas.requirements = formData.requirements;
-    tmpMetas.sponsor = formData.sponsor;
-    tmpMetas.time_requirement = formData.time_requirement;
-    return tmpMetas;
   }
 
   //////////////////////////////////////////////
@@ -223,6 +182,8 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
       next: (filterMap: Map<string, OfferPropertyList>) => {
         this.setPropertyOutput(filterMap);
         this.propertiesLoaded = true;
+        this.isError = false;
+        this.errMessage = '';
       },
       error: (error: Error) => {
         this.propCompetences = [];
@@ -230,6 +191,9 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
         this.propFormats = [];
         this.propLanguages = [];
         this.propertiesLoaded = false;
+
+        this.isError = true;
+        this.errMessage = 'Es konnten keine Servervorgaben geladen werden.';
       },
     });
   }
@@ -269,13 +233,10 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     };
   }
 
-  private setError() {
-    this.isError = true;
-    this.errMessage = this.errorHandler.ERROR_MESSAGES.E404_OFFER_NOT_FOUND;
-  }
-
-  private resetError() {
+  private resetStatusVars() {
+    this.propertiesLoaded = false;
     this.isError = false;
+    this.isSaving = false;
     this.errMessage = '';
   }
 }
