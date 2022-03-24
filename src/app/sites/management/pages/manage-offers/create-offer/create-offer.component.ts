@@ -1,11 +1,11 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
-import { Offer, OfferMeta } from 'src/app/core/models/offer';
+import { Offer } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
@@ -15,9 +15,7 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-
 import {
   TOASTCOLOR,
   MessageService,
-  AlertList,
 } from 'src/app/core/services/messages-toasts/message.service';
-import { DataHelper } from 'src/app/core/services/helper/data-helper';
 import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
 
 @Component({
@@ -124,7 +122,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   }
 
   onSaveOffer(offer: any) {
-    console.log('FORMDATA', offer);
+    //console.log('FORMDATA', offer);
 
     const classic = !!offer.competence_classic == true ? 1 : 0;
     const digital = !!offer.competence_digital == true ? 1 : 0;

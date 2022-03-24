@@ -24,6 +24,7 @@
               <div class="btn-toolbar" role="toolbar" class="float-right">
                 <div class="btn-group btn-group-sm mr-2" role="group">
                   <button
+                    [disabled]="!offerEditForm.valid || isSaving"
                     *ngIf="!isSaving"
                     type="button"
                     class="btn btn-primary"
@@ -106,6 +107,7 @@
                   <option value="4">KI-Campus</option>
                   <option value="6">OpenCampus</option>
                   <option value="7">CAU Kiel</option> -->
+                  <option value="null" selected disabled>Bitte Auswählen</option>
                   <option *ngFor="let int of propInstitutions" [ngValue]="int.id">
                     {{ int.description }}
                   </option>
@@ -127,8 +129,9 @@
                   <option value="presence-series">Präsenz Veranstaltungsreihe</option>
                   <option value="course-package">Kurspaket</option>
                   <option value="blended-learning">Blended Learning</option> -->
+                  <option value="null" selected disabled>Bitte Auswählen</option>
                   <option *ngFor="let format of propFormats" [ngValue]="format.identifier">
-                    {{ format.identifier }}
+                    {{ format.description }}
                   </option>
                 </select>
               </div>
@@ -225,8 +228,9 @@
                   name="language"
                   value="de"
                 >
+                  <option value="null" selected disabled>Bitte Auswählen</option>
                   <option *ngFor="let lang of propLanguages" [ngValue]="lang.identifier">
-                    {{ lang.identifier }}
+                    {{ lang.description }}
                   </option>
                   <!-- <option value="de" selected="selected">Deutsch</option>
                   <option value="en">English</option> -->
@@ -411,6 +415,25 @@
           </div>
 
           <!--EDITFORM-->
+
+          <hr />
+
+          <div class="row align-items-center justify-content-center">
+            <div class="col-12 mb-5">
+              <div class="btn-toolbar" role="toolbar" class="float-right">
+                <div class="btn-group btn-group-sm mr-2" role="group">
+                  <button
+                    [disabled]="!offerEditForm.valid || isSaving"
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="onSaveData(offerEditForm.value)"
+                  >
+                    <fa-icon [icon]="['fas', 'save']"></fa-icon> Speichern
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
 
         <!-- <p *ngFor="let alert of alertList.alerts">

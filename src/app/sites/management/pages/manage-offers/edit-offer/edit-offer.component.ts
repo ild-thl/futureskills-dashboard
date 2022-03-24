@@ -18,7 +18,6 @@ import {
   MessageService,
   AlertList,
 } from 'src/app/core/services/messages-toasts/message.service';
-import { DataHelper } from 'src/app/core/services/helper/data-helper';
 
 @Component({
   selector: 'app-edit-offer',
@@ -212,7 +211,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
         this.errMessage = '';
         this.isError = false;
 
-        console.log("OFFER FROM API", this.offer);
+        //console.log("OFFER FROM API", this.offer);
       },
       error: (error: Error) => {
         this.isError = true;
@@ -239,7 +238,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     );
     offerdata.meta = this.mapMetaData(this.offerEditForm.value);
 
-      console.log("OFFERDATA", offerdata);
+     //console.log("OFFERDATA", offerdata);
 
     this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
       (offer: Offer) => {
@@ -301,14 +300,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   goToDetailPage() {
-    if (this.offerEditForm.pristine === false) {
-      this.messageService.showToast(
-        { header: 'Nicht gespeichert.', body: 'Das Formular wurde noch nicht gespeichert.' },
-        TOASTCOLOR.DANGER
-      );
-    } else {
-      this.router.navigate([this.lnkOffers, this.offer.id]);
-    }
+    this.router.navigate([this.lnkOffers, this.offer.id]);
   }
 
   /**
