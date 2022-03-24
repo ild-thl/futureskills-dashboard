@@ -2,7 +2,25 @@
 
 ## [Not Released v0.11.0]
 
-## 2022-30-17/ml
+## 2022-03-24/ml
+### added
+- New Management Pages
+  - Dashboard, Courselist(table)
+  - NewComponent, new form (shorter, without relatedoffers) -> redirect to Edit Component after saving
+  - New Functions to create new offer
+- New Entry in Header if Admin->link to ManagementPages
+- New Messaging Service 
+  - Toasts, that can be called from any class
+  - Alert Class with AlertList
+- Icons added, Background Image Added
+
+### changed
+- EditComponent (Properties in Comboboxes ok)
+
+### deleted
+- Admin Pages (old form is under alt/management)
+
+## 2022-03-17/ml
 - tsconfig->strictTemplates=true
 
 ## 2022-03-01/ml

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from 'src/app/core/guards/auth-guard';
-import { ManagementGuard } from 'src/app/core/guards/management.guard';
 
 // Pages
 import { LandingComponent } from 'src/app/sites/landing/pages/landing/landing.components';
@@ -57,7 +56,6 @@ const routes: Routes = [
   {
     path: 'verwaltung',
     loadChildren: () => import('./sites/management/management.module').then((s) => s.ManagementModule),
-    canLoad: [ManagementGuard],
     canActivate: [AuthGuard],
     data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
   },
