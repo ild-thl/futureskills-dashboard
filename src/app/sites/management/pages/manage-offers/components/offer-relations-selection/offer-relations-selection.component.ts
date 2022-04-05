@@ -11,7 +11,7 @@ interface Alert {
 }
 
 @Component({
-  selector: 'app-offer-relations-selection',
+  selector: 'fs-offer-relations-selection',
   templateUrl: './offer-relations-selection.component.html',
   styleUrls: ['./offer-relations-selection.component.scss'],
 })

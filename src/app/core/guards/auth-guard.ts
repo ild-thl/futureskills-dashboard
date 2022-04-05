@@ -35,12 +35,13 @@ export class AuthGuard implements CanActivate {
         if (!isAuth) {
           return this.router.createUrlTree([this.lnkLogin]);
         } else {
-          if (this.permissionService.checkPermission(user, route.data.object, route.data.permission)){
+          if (
+            this.permissionService.checkPermission(user, route.data.object, route.data.permission)
+          ) {
             return true;
           } else {
             return this.router.createUrlTree([this.lnkNotAllowed]);
           }
-
         }
       })
     );

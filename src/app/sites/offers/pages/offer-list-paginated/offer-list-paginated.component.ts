@@ -29,6 +29,7 @@ export class OfferListPaginatedComponent implements OnInit, OnDestroy {
   lnkLanding = this.staticService.getPathInfo().lnkLanding;
   lnkOffers = this.staticService.getPathInfo().lnkOffers;
 
+  // Permission-Set (unused)
   object = Objects;
   permission = Permissions;
 

@@ -359,14 +359,14 @@
 
         <!-- Kurs-Relation-->
         <div class="form-group">
-          <app-offer-relations-selection
+          <fs-offer-relations-selection
             formControlArray="relatedOfferFormArray"
             (relatedOffersOutput)="updateRelatedOffers($event)"
             [offer]="offer"
             *ngIf="!isLoading"
             class="col-12 no-gutters"
           >
-          </app-offer-relations-selection>
+          </fs-offer-relations-selection>
         </div>
 
         <div class="form-group col-12 p-0">

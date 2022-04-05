@@ -6,7 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './ngbd-modal-offerdelete.html',
   styleUrls: ['./ngbd-modal-offerdelete.scss'],
 })
-export class NgbdModalOfferDeleteComponent {
+export class NgbdModalAskOfferDeleteComponent {
   @Input() title: string;
 
   constructor(public activeModal: NgbActiveModal) {}

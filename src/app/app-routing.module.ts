@@ -50,14 +50,14 @@ const routes: Routes = [
     component: InfoStudentsComponent,
   },
   {
-    path: 'admin',
-    loadChildren: () => import('./sites/admin/admin.module').then((module) => module.AdminModule),
-    canActivate: [AuthGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
-  },
-  {
     path: 'ki-playground',
     loadChildren: () => import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
+  },
+  {
+    path: 'verwaltung',
+    loadChildren: () => import('./sites/management/management.module').then((s) => s.ManagementModule),
+    canActivate: [AuthGuard],
+    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
   },
   {
     path: 'auth',

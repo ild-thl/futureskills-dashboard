@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li
+      *ngFor="let element of stages; let i = index"
+      class="breadcrumb-item"
+      [ngClass]="{ active: i === stages.length - 1 }"
+    >
+      <span *ngIf="i < stages.length - 1">
+        <a [routerLink]="element.link">{{ element.name }}</a>
+      </span>
+      <span *ngIf="i === stages.length - 1">
+        {{ element.name }}
+      </span>
+    </li>
+  </ol>
+</nav>

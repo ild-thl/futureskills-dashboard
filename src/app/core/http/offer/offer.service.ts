@@ -1,17 +1,21 @@
+/* eslint-disable no-console */
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api/api.service';
 import { StaticService } from 'src/app/config/static.service';
 import { environment } from 'src/environments/environment';
 
 import {
+  APIToOfferMiniList,
   OfferFilterToAPI,
   OfferSearchFilterToAPI,
   OfferToAPI,
+  OfferToAPICreate,
   PaginatedOfferDataFromAPI,
 } from 'src/app/core/http/api/api.interfaces';
 import {
+  MiniOffersData,
   Offer,
   OfferShortListForTiles,
   PaginatedOfferData,
@@ -20,6 +24,7 @@ import {
 } from 'src/app/core/models/offer';
 import { DataCacheService } from 'src/app/core/http/api/data-cache.service';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
+import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling';
 
 /**
  * offer.service.ts
@@ -99,7 +104,17 @@ export class OfferService {
     );
   }
 
-  // for EditComponent for Related Lists
+  // For Management-List (not cached)
+  ////////////////////////////////////////////////
+  public getMiniOffersListForManagementList(): Observable<MiniOffersData[]> {
+    return this.apiService.getAllOfferMiniList().pipe(
+      map((results: APIToOfferMiniList[]) => {
+        return DataMapping.mapDataInSmallManageData(results);
+      })
+    );
+  }
+
+  // for EditComponent for Related Lists (cached)
   ////////////////////////////////////////////////
   public getAllShortOffersListForEditDetail(
     offerID: number = undefined,
@@ -162,18 +177,20 @@ export class OfferService {
     return this.apiService.getOffer(id);
   }
 
-  storeOffer(data: OfferToAPI) {
+  storeOffer(data: OfferToAPI | OfferToAPICreate) {
+    console.log('Send New Offer To API-> :', data);
     return this.apiService.postOffer(data).pipe(
       tap((savedOffer) => {
-        //console.log('New Offer:', savedOffer);
+        console.log('<- Got New Offer From API:', savedOffer);
       })
     );
   }
 
   updateOffer(id: number, data: OfferToAPI) {
+    console.log('Send Offer To API-> :', data);
     return this.apiService.putOffer(id, data).pipe(
       tap((savedOffer) => {
-        //console.log('Updated Offer:', savedOffer);
+        console.log('<- Got Updated Offer From API:', savedOffer);
       })
     );
   }
@@ -181,5 +198,13 @@ export class OfferService {
   deleteOffer(offer: Offer) {
     //console.log('Delete Offer:' + offer.id);
     return this.apiService.deleteOffer(offer.id).pipe(tap((_) => {}));
+  }
+
+  public deleteOfferWithID(offerID: number): Observable<any> {
+    if (offerID && offerID > 0) {
+      return this.apiService.deleteOffer(offerID);
+    } else {
+      return throwError(() => new Error(ErrorCodes.E404));
+    }
   }
 }

@@ -15,6 +15,8 @@ import {
   APIToOfferShortList,
   PaginatedOfferDataFromAPI,
   OfferSearchFilterToAPI,
+  APIToOfferMiniList,
+  OfferToAPICreate,
 } from './api.interfaces';
 import { AuthResponseData } from 'src/app/core/auth/auth.interfaces';
 import { ErrorCodes } from 'src/app/core/services/error-handling/error-handling';
@@ -150,6 +152,14 @@ export class ApiService {
     );
   }
 
+  public getAllOfferMiniList(): Observable<APIToOfferMiniList[]> {
+    return this.http.get<APIToOfferMiniList[]>(environment.apiURL + '/api/manage/offerlist').pipe(
+      catchError((errorResponse: HttpErrorResponse) => {
+        return this.handleError(errorResponse);
+      })
+    );
+  }
+
   /**
    * @deprecated keine lange Liste nötig, besser getAllOfferShortList
    * @returns Observable<Offer[]>
@@ -194,7 +204,7 @@ export class ApiService {
     );
   }
 
-  public postOffer(data: OfferToAPI): Observable<Offer> {
+  public postOffer(data: OfferToAPI | OfferToAPICreate): Observable<Offer> {
     return this.http.post<Offer>(environment.apiURL + '/api/offer', data).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         return this.handleError(errorResponse);
@@ -202,7 +212,7 @@ export class ApiService {
     );
   }
 
-  public deleteOffer(id: number) {
+  public deleteOffer(id: number): Observable<any> {
     return this.http.delete(environment.apiURL + '/api/offer/' + id).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         return this.handleError(errorResponse);
