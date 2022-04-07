@@ -1,13 +1,19 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  Output,
+  EventEmitter,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { StaticService } from 'src/app/config/static.service';
 import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer';
+import { SortableHeaderDirective, SortEvent } from './component/sortable-header.directive';
 
-export type SortColumn = keyof SmallOfferDetailData | '';
-export type SortDirection = 'asc' | 'desc' | '';
-export interface SortEvent {
-  column: SortColumn;
-  direction: SortDirection;
-}
+const compare = (v1: string | number, v2: string | number) => (v1 < v2 ? -1 : v1 > v2 ? 1 : 0);
 
 @Component({
   selector: 'fs-offer-table',
@@ -22,6 +28,8 @@ export class OfferTableComponent implements OnInit, OnChanges {
   shortOfferList: MiniOffersData[];
 
   lnkManageOfferEdit = this.staticService.getPathInfo().lnkManageOfferEdit;
+
+  @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
   page: number;
   pageSize: number;
@@ -46,7 +54,26 @@ export class OfferTableComponent implements OnInit, OnChanges {
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
-  onSort({ column, direction }: any) {}
+  onSort(event: SortEvent) {
+    const column = event.column;
+    const direction = event.direction;
+    console.log('EVENT', event);
+
+    this.headers.forEach((header) => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    if (direction === '' || column === '') {
+      this.shortOfferList = this.baseShortOfferList;
+    } else {
+      this.shortOfferList = [...this.baseShortOfferList].sort((a, b) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
 
   initTableValues() {
     this.baseShortOfferList = this.offerList;

@@ -1,10 +1,39 @@
-import { Directive } from '@angular/core';
+/* eslint-disable @angular-eslint/no-host-metadata-property */
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SmallOfferDetailData } from 'src/app/core/models/offer';
+
+export type SortColumn = keyof SmallOfferDetailData | '';
+export type SortDirection = 'asc' | 'desc' | '';
+const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+
+export interface SortEvent {
+  column: SortColumn;
+  direction: SortDirection;
+}
+
 
 @Directive({
-  selector: '[sortable]'
+  selector: 'th[sortable]',
+  host: {
+    '[class.asc]': 'direction === "asc"',
+    '[class.desc]': 'direction === "desc"',
+    '(click)': 'rotate()',
+  },
 })
-export class SortableHeaderDirective {
+export class SortableHeaderDirective implements OnInit{
 
-  constructor() { }
+  @Input() sortable: SortColumn = '';
+  @Input() direction: SortDirection = '';
+  @Output() sort = new EventEmitter<SortEvent>();
 
+  ngOnInit(): void {
+    console.log("Sortable", this.sortable);
+
+  }
+
+  rotate() {
+    console.log("Rotate");
+    this.direction = rotate[this.direction];
+    this.sort.emit({column: this.sortable, direction: this.direction});
+  }
 }
