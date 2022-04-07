@@ -15,6 +15,7 @@ import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-te
 import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
 import { Objects, Permissions } from 'src/app/core/models/permissions';
+import { ManagementGuard } from './core/guards/management.guard';
 
 // Routing
 // see at src/app/config for RouteVars in Links
@@ -56,7 +57,8 @@ const routes: Routes = [
   {
     path: 'verwaltung',
     loadChildren: () => import('./sites/management/management.module').then((s) => s.ManagementModule),
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
+    canActivate: [ManagementGuard],
     data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
   },
   {
