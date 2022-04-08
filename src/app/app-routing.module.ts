@@ -58,8 +58,6 @@ const routes: Routes = [
     path: 'verwaltung',
     loadChildren: () => import('./sites/management/management.module').then((s) => s.ManagementModule),
     canLoad: [AuthGuard],
-    canActivate: [ManagementGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
   },
   {
     path: 'auth',

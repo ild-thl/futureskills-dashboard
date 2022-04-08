@@ -11,46 +11,42 @@ import { Objects, Permissions } from 'src/app/core/models/permissions';
 const routes: Routes = [
   {
     path: '',
-    component: ManageLandingComponent,
-    canActivate: [ManagementGuard],
+    canActivateChild: [ManagementGuard],
     data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
+    children: [
+      {
+        path: '',
+        component: ManageLandingComponent,
+      },
+      {
+        path: 'kurse',
+        component: ListOffersComponent,
+      },
+      {
+        path: 'kurs/neu',
+        component: CreateOfferComponent,
+      },
+      {
+        path: 'kurs/edit/:id',
+        component: EditOfferComponent,
+      },
+      {
+        path: 'kurs/edit',
+        redirectTo: 'kurs/neu',
+      },
+      {
+        path: 'kurs/alt/edit/:id',
+        component: OfferEditComponent,
+      },
+      {
+        path: 'kurs/alt/neu',
+        component: OfferEditComponent,
+      },
+    ],
   },
-  {
-    path: 'kurse',
-    component: ListOffersComponent,
-  },
-  {
-    path: 'kurs/neu',
-    component: CreateOfferComponent,
-    canActivate: [ManagementGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
-  },
-  {
-    path: 'kurs/edit/:id',
-    component: EditOfferComponent,
-    canActivate: [ManagementGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
-  },
-  {
-    path: 'kurs/edit',
-    redirectTo: 'kurs/neu'
-  },
-  {
-    path: 'kurs/alt/edit/:id',
-    component: OfferEditComponent,
-    canActivate: [ManagementGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
-  },
-  {
-    path: 'kurs/alt/neu',
-    component: OfferEditComponent,
-    canActivate: [ManagementGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
-  }
-
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ManagementRoutingModule {}

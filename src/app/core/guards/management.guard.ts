@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  CanLoad,
-  Route,
+  CanActivateChild,
   Router,
   RouterStateSnapshot,
-  UrlSegment,
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,18 +17,38 @@ import { PermissionService } from 'src/app/core/services/permissions/permission.
 @Injectable({
   providedIn: 'root',
 })
-export class ManagementGuard implements CanActivate {
+export class ManagementGuard implements CanActivate, CanActivateChild {
   lnkLogin = this.staticConfig.getPathInfo().lnkLogin;
   lnkNotAllowed = this.staticConfig.getPathInfo().lnkNotAllowed;
   constructor(
     private authService: AuthService,
     private router: Router,
     private permissionService: PermissionService,
-    private staticConfig: StaticService,
+    private staticConfig: StaticService
   ) {}
+
+  // canActivateChild checks all child-routes
+  canActivateChild(
+    childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    return this.checkPermissions(childRoute);
+  }
+  // canActivate checks current route
   canActivate(
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot
+  ): boolean | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> | UrlTree {
+    return this.checkPermissions(route);
+  }
+
+  /**
+   * Only if Permission is set
+   * @param route
+   * @returns
+   */
+  checkPermissions(
+    route: ActivatedRouteSnapshot
   ): boolean | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> | UrlTree {
     return this.authService.user$.pipe(
       take(1),
