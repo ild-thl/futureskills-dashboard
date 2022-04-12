@@ -2,6 +2,11 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-04-07/ml
+### added
+- General AuthGuard checks if user is logged in, if yes management Pages can be loaded
+- Management AuthGuard checks if route can be activated for specific rights on pages
+
 ## 2022-03-24/ml
 ### added
 - New Management Pages
