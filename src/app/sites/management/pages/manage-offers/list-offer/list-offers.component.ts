@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { StaticService } from 'src/app/config/static.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
@@ -7,6 +7,7 @@ import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer'
 import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { MessageService, TOASTCOLOR } from 'src/app/core/services/messages-toasts/message.service';
+import { ManageCourseListService } from '../../../services/manage-course-list.service';
 
 @Component({
   selector: 'app-manage-offers',
@@ -30,7 +31,6 @@ export class ListOffersComponent implements OnInit, OnDestroy {
     private errorHandler: ErrorHandlerService,
     private toastService: MessageService
   ) {
-    this.shortOfferList = [];
     this.baseShortOfferList = [];
     this.offerListSub = null;
     this.offersAreLoaded = false;
@@ -38,6 +38,7 @@ export class ListOffersComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
   }
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     this.loadOfferList();
   }
@@ -86,6 +87,10 @@ export class ListOffersComponent implements OnInit, OnDestroy {
       },
       (reason) => {}
     );
+  }
+
+  setOfferInvisibleStatus(event: { offerID: number; visible: boolean }) {
+    // Todo
   }
 
   private deleteOffer(offerID: number) {

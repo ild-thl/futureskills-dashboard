@@ -26,6 +26,7 @@
             <fs-offer-table
               [offerList]="shortOfferList"
               (deleteEvent)="showModalWindowDeleteOffer($event)"
+              (visibleEvent)="setOfferInvisibleStatus($event)"
             ></fs-offer-table>
           </ng-template>
           <!-- TABLE ENDE-->
