@@ -8,11 +8,16 @@ import {
   EventEmitter,
   ViewChildren,
   QueryList,
+  AfterViewInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StaticService } from 'src/app/config/static.service';
 import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer';
-import { ManageCourseListService } from 'src/app/sites/management/services/manage-course-list.service';
+import {
+  ManageCourseListService,
+  State,
+} from 'src/app/sites/management/services/manage-course-list.service';
 import {
   SortableHeaderDirective,
   SortColumn,
@@ -20,76 +25,66 @@ import {
   SortEvent,
 } from './component/sortable-header.directive';
 
-const altcompare = (v1: string | number, v2: string | number) => (v1 < v2 ? -1 : v1 > v2 ? 1 : 0);
-
-interface State {
-  searchTerm: string;
-  sortColumn: SortColumn;
-  sortDirection: SortDirection;
-}
-
 @Component({
   selector: 'fs-offer-table',
   templateUrl: './offer-table.component.html',
   styleUrls: ['./offer-table.component.scss'],
 })
-export class OfferTableComponent implements  OnChanges {
+export class OfferTableComponent implements OnChanges, AfterViewInit {
   @Input() offerList: MiniOffersData[] = [];
   @Output() deleteEvent = new EventEmitter<SmallOfferDetailData>();
   @Output() visibleEvent = new EventEmitter<{ offerID: number; visible: boolean }>();
 
+  @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
+
+  lnkManageOfferEdit = this.staticService.getPathInfo().lnkManageOfferEdit;
+  maxSize = 4;
+
   baseShortOfferList: MiniOffersData[];
   sortedOfferList: MiniOffersData[];
 
-  lnkManageOfferEdit = this.staticService.getPathInfo().lnkManageOfferEdit;
-
-  @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
-
-  page: number;
-  pageSize: number;
+  state: State;
   collectionSize: number;
-  sortColumn: SortColumn;
-  sortDirection: SortDirection;
 
-  constructor(private offerService: ManageCourseListService, private staticService: StaticService) {
-    this.page = 1;
-    this.pageSize = 10;
+  constructor(
+    private offerService: ManageCourseListService,
+    private manageCourseListService: ManageCourseListService,
+    private staticService: StaticService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
     this.collectionSize = 0;
-    this.sortColumn = '';
-    this.sortDirection = '';
+    this.state = this.manageCourseListService.getClearState();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.baseShortOfferList = this.offerList;
-    this.collectionSize = this.baseShortOfferList.length;
-    console.log('OriginalList:', this.offerList);
-    this.refreshOfferList();
+    //console.log('SAVED STATE', this.manageCourseListService.state);
+    this.state = this.manageCourseListService.state;
+    // Auf die erste Seite?
+    this.initTableValues();
   }
 
-  onRefreshOfferList() {
-    this.refreshOfferList();
+  ngAfterViewInit(): void {
+    this.initializeHeaderValues();
+    this.changeDetectorRef.detectChanges();
+
   }
 
-  private refreshOfferList(){
-    // Sort
-    const sort = this.sortOfferList(this.baseShortOfferList, this.sortColumn, this.sortDirection);
-    console.log('SortedLIst:', sort);
-    // Paginate
-    this.sortedOfferList = this.paginateOfferList(sort, this.pageSize, this.page);
+  onPaginationChanged() {
+    this.refreshOfferList();
   }
 
   onSort(event: SortEvent) {
-    this.sortColumn = event.column;
-    this.sortDirection = event.direction;
-    console.log('EVENT', event);
+    this.state.sortColumn = event.column;
+    this.state.sortDirection = event.direction;
+    //console.log('EVENT', event);
 
     this.headers.forEach((header) => {
-      if (header.sortable !== this.sortColumn) {
+      if (header.sortable !== this.state.sortColumn) {
         header.direction = '';
       }
     });
 
-    this.onRefreshOfferList();
+    this.refreshOfferList();
   }
 
   onOfferShouldBeDeleted(offer: SmallOfferDetailData) {
@@ -108,19 +103,52 @@ export class OfferTableComponent implements  OnChanges {
     if (direction === '' || column === '') {
       return offers;
     } else {
-      const sortedList = [...offers].sort((a, b) => {
+      return [...offers].sort((a, b) => {
         const res = this.compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
-      return sortedList;
     }
   }
 
-  private paginateOfferList(offers: MiniOffersData[], pageSize: number, page: number): MiniOffersData[] {
+  private paginateOfferList(
+    offers: MiniOffersData[],
+    pageSize: number,
+    page: number
+  ): MiniOffersData[] {
     const sortedList = offers
       .map((offer, i) => ({ id: i + 1, ...offer }))
       .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return sortedList;
   }
 
+  private refreshOfferList() {
+    const { page, pageSize, searchTerm, sortColumn, sortDirection } = this.state;
+
+    // Sort
+    const sortedList = this.sortOfferList(this.baseShortOfferList, sortColumn, sortDirection);
+
+    // Paginate
+    this.sortedOfferList = this.paginateOfferList(sortedList, pageSize, page);
+
+    // Save State
+    this.manageCourseListService.state = this.state;
+    //console.log('SAVED STATE', this.manageCourseListService.state);
+  }
+
+  private initTableValues() {
+    this.baseShortOfferList = this.offerList;
+    this.collectionSize = this.baseShortOfferList.length;
+    //console.log('OriginalList:', this.offerList);
+
+    this.refreshOfferList();
+  }
+
+  private initializeHeaderValues() {
+    this.headers.forEach((header) => {
+      //console.log('HEADER', header);
+      if (header.sortable === this.state.sortColumn) {
+        header.direction = this.state.sortDirection;
+      }
+    });
+  }
 }

@@ -4,13 +4,12 @@ import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
 export type SortColumn = keyof SmallOfferDetailData | '';
 export type SortDirection = 'asc' | 'desc' | '';
-const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+const rotate: { [key: string]: SortDirection } = { asc: 'desc', desc: '', '': 'asc' };
 
 export interface SortEvent {
   column: SortColumn;
   direction: SortDirection;
 }
-
 
 @Directive({
   selector: 'th[sortable]',
@@ -20,20 +19,18 @@ export interface SortEvent {
     '(click)': 'rotate()',
   },
 })
-export class SortableHeaderDirective implements OnInit{
-
+export class SortableHeaderDirective implements OnInit {
   @Input() sortable: SortColumn = '';
   @Input() direction: SortDirection = '';
   @Output() sort = new EventEmitter<SortEvent>();
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    console.log("Sortable", this.sortable);
-
+    // console.log('Sortable Header', this.sortable);
   }
 
   rotate() {
-    console.log("Rotate");
     this.direction = rotate[this.direction];
-    this.sort.emit({column: this.sortable, direction: this.direction});
+    this.sort.emit({ column: this.sortable, direction: this.direction });
   }
 }

@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let offer of sortedOfferList;">
+        <tr *ngFor="let offer of sortedOfferList">
           <th scope="row">{{ offer.id }}</th>
           <td>{{ offer.sortflag }}</td>
           <td><img [src]="offer?.image" class="me-2" style="width: 20px" /></td>
@@ -42,14 +42,26 @@
       </tbody>
     </table>
 
-    <div class="d-flex justify-content-between p-2">
-      <ngb-pagination
-        [collectionSize]="collectionSize"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        (pageChange)="onRefreshOfferList()"
-      >
-      </ngb-pagination>
+    <div class="mt-6">
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          class="d-flex justify-content-start"
+          [rotate]="true"
+          [ellipses]="false"
+          [maxSize]="maxSize"
+          [boundaryLinks]="true"
+          [collectionSize]="collectionSize"
+          [(page)]="state.page"
+          [pageSize]="state.pageSize"
+          (pageChange)="onPaginationChanged()"
+        >
+        </ngb-pagination>
+        <!-- <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="state.pageSize">
+          <option [ngValue]="2">2 items per page</option>
+          <option [ngValue]="4">4 items per page</option>
+          <option [ngValue]="6">6 items per page</option>
+        </select> -->
+      </div>
     </div>
   </form>
 </div>
