@@ -18,7 +18,6 @@ import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component'
 import { BoostrapValidationDirective } from './components/directives/boostrap-validation.directive';
 import { ManageCourseListService } from './services/manage-course-list.service';
 
-
 @NgModule({
   declarations: [
     ManageLandingComponent,
@@ -39,8 +38,8 @@ import { ManageCourseListService } from './services/manage-course-list.service';
     ManagementRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularEditorModule
+    AngularEditorModule,
   ],
-  providers: [ManageCourseListService]
+  providers: [ManageCourseListService],
 })
 export class ManagementModule {}

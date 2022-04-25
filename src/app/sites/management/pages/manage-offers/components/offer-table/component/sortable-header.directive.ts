@@ -2,7 +2,12 @@
 import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SmallOfferDetailData } from 'src/app/core/models/offer';
 
-export type SortColumn = keyof SmallOfferDetailData | '';
+// Mögliche Felder zum Sortieren (number/string Felder)
+export type SortableKeysInHeader = SmallOfferDetailData & {
+  sortflag: number;
+};
+
+export type SortColumn = keyof SortableKeysInHeader | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = { asc: 'desc', desc: '', '': 'asc' };
 

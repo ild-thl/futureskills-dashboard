@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { OfferDataService } from 'src/app/core/data/offer/offer-data.service';
+import { ManagementConfig } from '../config/config';
 import {
   SortColumn,
   SortDirection,
@@ -24,7 +23,7 @@ export class ManageCourseListService {
     this._state = value;
   }
 
-  constructor(private offerDataService: OfferDataService) {
+  constructor() {
     this.resetState();
   }
 
@@ -36,7 +35,7 @@ export class ManageCourseListService {
   public getClearState(): State {
     return {
       page: 1,
-      pageSize: 5,
+      pageSize: ManagementConfig.courses.table.length,
       searchTerm: '',
       sortColumn: '',
       sortDirection: '',

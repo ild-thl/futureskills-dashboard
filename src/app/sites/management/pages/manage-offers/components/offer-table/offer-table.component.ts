@@ -1,7 +1,6 @@
 import {
   Component,
   Input,
-  OnInit,
   OnChanges,
   SimpleChanges,
   Output,
@@ -11,7 +10,6 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import { StaticService } from 'src/app/config/static.service';
 import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer';
 import {
@@ -47,7 +45,6 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
   collectionSize: number;
 
   constructor(
-    private offerService: ManageCourseListService,
     private manageCourseListService: ManageCourseListService,
     private staticService: StaticService,
     private changeDetectorRef: ChangeDetectorRef
@@ -66,7 +63,6 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     this.initializeHeaderValues();
     this.changeDetectorRef.detectChanges();
-
   }
 
   onPaginationChanged() {
@@ -76,7 +72,6 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
   onSort(event: SortEvent) {
     this.state.sortColumn = event.column;
     this.state.sortDirection = event.direction;
-    //console.log('EVENT', event);
 
     this.headers.forEach((header) => {
       if (header.sortable !== this.state.sortColumn) {
@@ -145,7 +140,6 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
 
   private initializeHeaderValues() {
     this.headers.forEach((header) => {
-      //console.log('HEADER', header);
       if (header.sortable === this.state.sortColumn) {
         header.direction = this.state.sortDirection;
       }

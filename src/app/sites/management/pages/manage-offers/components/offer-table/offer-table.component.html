@@ -1,13 +1,10 @@
 <div id="offer-table">
   <form>
-    <div class="form-group form-inline">
-      Suche: <input class="form-control ml-2" type="text" name="searchTerm" />
-    </div>
     <table class="table table-striped table-hover smallfont">
       <thead>
         <tr>
           <th scope="col" sortable="id" (sort)="onSort($event)" style="width: 0em">ID</th>
-          <th scope="col" style="width: 0em">Sort</th>
+          <th scope="col" sortable="sortflag" (sort)="onSort($event)" style="width: 0em">Sort</th>
           <th scope="col" style="width: 22px"></th>
           <th scope="col" sortable="title" (sort)="onSort($event)">Titel</th>
           <th scope="col" style="width: 120px">&nbsp;</th>
@@ -56,11 +53,6 @@
           (pageChange)="onPaginationChanged()"
         >
         </ngb-pagination>
-        <!-- <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="state.pageSize">
-          <option [ngValue]="2">2 items per page</option>
-          <option [ngValue]="4">4 items per page</option>
-          <option [ngValue]="6">6 items per page</option>
-        </select> -->
       </div>
     </div>
   </form>

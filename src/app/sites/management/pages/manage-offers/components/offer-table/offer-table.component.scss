@@ -16,7 +16,8 @@
     -webkit-user-select: none;
   }
 
-  th[sortable].desc:before, th[sortable].asc:before {
+  th[sortable].desc:before,
+  th[sortable].asc:before {
     content: '';
     display: block;
     background-image: url(~src/styles/ressources/backgrounds/icons/arrow-up-short.svg);
