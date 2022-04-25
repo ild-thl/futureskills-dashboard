@@ -2,6 +2,10 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-04-25/ml
+### added
+- Management: Header are sortable (asc/desc)
+
 ## 2022-04-07/ml
 ### added
 - General AuthGuard checks if user is logged in, if yes management Pages can be loaded
