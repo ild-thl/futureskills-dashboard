@@ -2,6 +2,10 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-04-26/ml
+### added
+- QuestionAid added to KI Tools
+
 ## 2022-04-07/ml
 ### added
 - General AuthGuard checks if user is logged in, if yes management Pages can be loaded

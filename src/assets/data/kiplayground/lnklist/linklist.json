@@ -1,6 +1,14 @@
 {
   "demoCards": [
     {
+      "title": "QuestionAid",
+      "subtitle": "Generierung von Fragebögen",
+      "text": "Generiert aus Texten Fragebögen, die in Lernsysteme exportiert werden können.",
+      "url": "https://www.question-aid.com",
+      "urlText": "question-aid.com",
+      "style": "cardText"
+    },
+    {
       "title": "DeepL",
       "subtitle": "Übersetzung",
       "text": "Übersetzung von Texten in viele Sprachen.",
