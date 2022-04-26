@@ -238,7 +238,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     );
     offerdata.meta = this.mapMetaData(this.offerEditForm.value);
 
-     //console.log("OFFERDATA", offerdata);
+    //console.log("OFFERDATA", offerdata);
 
     this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
       (offer: Offer) => {

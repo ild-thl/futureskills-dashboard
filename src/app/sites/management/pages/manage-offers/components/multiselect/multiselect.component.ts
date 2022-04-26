@@ -131,7 +131,7 @@ export class MultiselectComponent implements OnInit, ControlValueAccessor {
 
   private changeValues() {
     this.selectedKommaKeyWords = this.getKeyWordList(this.selectedKeyWordList);
-    this.deletedError=false;
+    this.deletedError = false;
     this.onChange(this.selectedKommaKeyWords);
   }
 

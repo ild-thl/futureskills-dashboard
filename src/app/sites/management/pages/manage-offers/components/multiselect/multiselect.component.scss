@@ -34,18 +34,16 @@ $base-color: var(--color-primary-blue-dark);
       background-color: #fff;
     }
 
-    .toggleArea{
+    .toggleArea {
       background-color: #fff;
       text-align: right;
 
-      .caret{
+      .caret {
         line-height: 16px;
         cursor: pointer;
         min-width: 20px;
       }
     }
-
-
   }
 
   .chip {
@@ -56,10 +54,10 @@ $base-color: var(--color-primary-blue-dark);
     color: #fff;
     border-radius: 4px;
     float: left;
-   // display: flex;
+    // display: flex;
     max-width: fit-content;
     margin-bottom: 1px;
-    margin-top:1px;
+    margin-top: 1px;
     span {
       overflow: hidden;
       text-overflow: ellipsis;
