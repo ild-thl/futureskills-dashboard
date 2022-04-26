@@ -2,6 +2,10 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-04-26/ml
+### added
+- QuestionAid added to KI Tools
+- 
 ## 2022-04-25/ml
 ### added
 - Management: Header are sortable (asc/desc)
