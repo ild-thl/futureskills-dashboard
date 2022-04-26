@@ -16,7 +16,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component';
 import { BoostrapValidationDirective } from './components/directives/boostrap-validation.directive';
-
+import { ManageCourseListService } from './services/manage-course-list.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { BoostrapValidationDirective } from './components/directives/boostrap-va
     ManagementRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularEditorModule
+    AngularEditorModule,
   ],
+  providers: [ManageCourseListService],
 })
 export class ManagementModule {}

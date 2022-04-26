@@ -30,7 +30,6 @@ export class ListOffersComponent implements OnInit, OnDestroy {
     private errorHandler: ErrorHandlerService,
     private toastService: MessageService
   ) {
-    this.shortOfferList = [];
     this.baseShortOfferList = [];
     this.offerListSub = null;
     this.offersAreLoaded = false;
@@ -86,6 +85,10 @@ export class ListOffersComponent implements OnInit, OnDestroy {
       },
       (reason) => {}
     );
+  }
+
+  setOfferInvisibleStatus(event: { offerID: number; visible: boolean }) {
+    // Todo
   }
 
   private deleteOffer(offerID: number) {

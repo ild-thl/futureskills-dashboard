@@ -1,7 +1,6 @@
 @import '../../../styles/management.scss';
 
-#offer-edit{
-
+#offer-edit {
   .minIcon {
     width: 80px;
   }
@@ -22,7 +21,7 @@
       flex-wrap: nowrap;
       justify-content: space-between;
 
-      .custom-control-label{
+      .custom-control-label {
         padding-top: calc(0.25rem + 1px);
         font-size: 0.875rem;
       }

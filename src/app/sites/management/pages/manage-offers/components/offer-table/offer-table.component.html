@@ -1,50 +1,59 @@
 <div id="offer-table">
-  <table class="table table-striped smallfont">
-    <thead>
-      <tr>
-        <th scope="col" sortable="id" (sort)="onSort($event)" style="width: 0em">ID</th>
-        <th scope="col" sortable="flag" (sort)="onSort($event)" style="width: 0em">S</th>
-        <th scope="col" style="width: 22px"></th>
-        <th scope="col" sortable="title" (sort)="onSort($event)">Titel</th>
-        <th scope="col" style="width: 120px">&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let offer of shortOfferList; index as i">
-        <th scope="row">{{ offer.id }}</th>
-        <td>{{ offer.sortflag }}</td>
-        <td><img [src]="offer?.image" class="me-2" style="width: 20px" /></td>
-        <td>
-          <a type="button" [routerLink]="[lnkManageOfferEdit, offer?.id]">{{ offer?.title }}</a>
-        </td>
-        <td>
-          <span class="float-right">
-            <a type="button" style="cursor: crosshair"
-              ><fa-icon
-                class="pl-2"
-                [ngClass]="{
-                  'visible-offer': offer.isVisible === true,
-                  'invisible-offer': offer.isVisible === false
-                }"
-                [icon]="['fas', 'eye']"
-              ></fa-icon
-            ></a>
-            <a type="button" (click)="onOfferShouldBeDeleted(offer)"
-              ><fa-icon class="pl-2" style="color: red" [icon]="['fas', 'trash']"></fa-icon
-            ></a>
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <form>
+    <table class="table table-striped table-hover smallfont">
+      <thead>
+        <tr>
+          <th scope="col" sortable="id" (sort)="onSort($event)" style="width: 0em">ID</th>
+          <th scope="col" sortable="sortflag" (sort)="onSort($event)" style="width: 0em">Sort</th>
+          <th scope="col" style="width: 22px"></th>
+          <th scope="col" sortable="title" (sort)="onSort($event)">Titel</th>
+          <th scope="col" style="width: 120px">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let offer of sortedOfferList">
+          <th scope="row">{{ offer.id }}</th>
+          <td>{{ offer.sortflag }}</td>
+          <td><img [src]="offer?.image" class="me-2" style="width: 20px" /></td>
+          <td>
+            <a type="button" [routerLink]="[lnkManageOfferEdit, offer?.id]">{{ offer?.title }}</a>
+          </td>
+          <td>
+            <span class="float-right">
+              <a type="button" style="cursor: crosshair"
+                ><fa-icon
+                  class="pl-2"
+                  [ngClass]="{
+                    'visible-offer': offer.isVisible === true,
+                    'invisible-offer': offer.isVisible === false
+                  }"
+                  [icon]="['fas', 'eye']"
+                ></fa-icon
+              ></a>
+              <a type="button" (click)="onOfferShouldBeDeleted(offer)"
+                ><fa-icon class="pl-2" style="color: red" [icon]="['fas', 'trash']"></fa-icon
+              ></a>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-  <div class="d-flex justify-content-between p-2">
-    <ngb-pagination
-      [collectionSize]="collectionSize"
-      [(page)]="page"
-      [pageSize]="pageSize"
-      (pageChange)="refreshOffers()"
-    >
-    </ngb-pagination>
-  </div>
+    <div class="mt-6">
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          class="d-flex justify-content-start"
+          [rotate]="true"
+          [ellipses]="false"
+          [maxSize]="maxSize"
+          [boundaryLinks]="true"
+          [collectionSize]="collectionSize"
+          [(page)]="state.page"
+          [pageSize]="state.pageSize"
+          (pageChange)="onPaginationChanged()"
+        >
+        </ngb-pagination>
+      </div>
+    </div>
+  </form>
 </div>
