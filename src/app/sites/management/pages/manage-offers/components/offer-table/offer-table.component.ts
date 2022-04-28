@@ -69,6 +69,11 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
     this.refreshOfferList();
   }
 
+  onSearchTextChanged(searchTerm: any){
+    console.log("SearchTerm", searchTerm);
+    this.refreshOfferList();
+  }
+
   onSort(event: SortEvent) {
     this.state.sortColumn = event.column;
     this.state.sortDirection = event.direction;
@@ -88,6 +93,10 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
 
   private compare(v1: string | number, v2: string | number) {
     return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+  }
+
+  private  matches(course: MiniOffersData, term: string) {
+    return course.title.toLowerCase().includes(term);
   }
 
   private sortOfferList(
@@ -118,6 +127,10 @@ export class OfferTableComponent implements OnChanges, AfterViewInit {
 
   private refreshOfferList() {
     const { page, pageSize, searchTerm, sortColumn, sortDirection } = this.state;
+
+    // Filter
+    const filteredList = this.baseShortOfferList.filter(course => this.matches (course, searchTerm));
+    //console.log("FILTER", filteredList);
 
     // Sort
     const sortedList = this.sortOfferList(this.baseShortOfferList, sortColumn, sortDirection);

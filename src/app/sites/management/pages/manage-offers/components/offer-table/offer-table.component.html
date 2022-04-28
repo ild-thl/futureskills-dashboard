@@ -1,5 +1,21 @@
 <div id="offer-table">
-  <form>
+  <form #searchForm="ngForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group float-right">
+          <input
+            class="form-control form-control-sm search-field"
+            type="text"
+            name="searchTerm"
+            placeholder="Suche"
+            [(ngModel)]="state.searchTerm"
+            (input)="onSearchTextChanged(state.searchTerm)"
+            maxlength="20"
+          />
+        </div>
+      </div>
+    </div>
+
     <table class="table table-striped table-hover smallfont">
       <thead>
         <tr>
