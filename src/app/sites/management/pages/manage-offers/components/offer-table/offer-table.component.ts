@@ -13,6 +13,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import {
+  BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
   Observable,
@@ -51,6 +52,7 @@ export class OfferTableComponent implements OnChanges, AfterViewInit, OnInit, On
 
   keyUp$ = new Subject<string>();
   keyUpSubsciption: Subscription;
+  loading$ = new BehaviorSubject<boolean>(false);
   defaultText: string;
 
   baseShortOfferList: MiniOffersData[];
@@ -109,6 +111,7 @@ export class OfferTableComponent implements OnChanges, AfterViewInit, OnInit, On
 
   searchTextChanged(searchTerm: any) {
     this.state.searchTerm = searchTerm;
+    this.state.page = 1;
     this.refreshOfferList();
   }
 
@@ -164,6 +167,7 @@ export class OfferTableComponent implements OnChanges, AfterViewInit, OnInit, On
   }
 
   private refreshOfferList() {
+    this.loading$.next(true);
     const { page, pageSize, searchTerm, sortColumn, sortDirection } = this.state;
 
     // Filter
@@ -171,16 +175,21 @@ export class OfferTableComponent implements OnChanges, AfterViewInit, OnInit, On
       this.matches(course, searchTerm)
     );
     this.collectionSize = filteredList.length;
+    //console.log('Filtered List', filteredList);
 
     // Sort
     const sortedList = this.sortOfferList(filteredList, sortColumn, sortDirection);
+    //console.log('Sorted List', sortedList);
 
     // Paginate
     this.sortedOfferList = this.paginateOfferList(sortedList, pageSize, page);
+    //console.log('Paginated List', this.sortedOfferList);
 
     // Save State
     this.manageCourseListService.state = this.state;
-    //console.log('SAVED STATE', this.manageCourseListService.state);
+     //console.log('SAVED STATE', this.manageCourseListService.state);
+
+    this.loading$.next(false);
   }
 
   private initTableValues() {

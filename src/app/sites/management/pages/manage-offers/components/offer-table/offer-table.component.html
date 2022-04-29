@@ -1,6 +1,14 @@
 <div id="offer-table">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-1">
+      <div *ngIf="loading$ | async">
+        <div class="spinner-grow" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-11">
       <div class="float-right">
         <app-search-field-auto
           [disabled]="false"
