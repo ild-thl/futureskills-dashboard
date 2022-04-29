@@ -1,0 +1,14 @@
+<form novalidate (keydown.enter)="$event.preventDefault()" #searchForm="ngForm">
+  <input
+    type="text"
+    name="searchField"
+    class="form-control form-control-sm search-field"
+    placeholder="Suche im Titel"
+    aria-label="Suche"
+    maxlength="20"
+    pattern="[a-zA-Z0-9 ]*"
+    [ngModel]="searchString"
+    (ngModelChange)="onKeyUpEvent($event)"
+  />
+
+</form>
