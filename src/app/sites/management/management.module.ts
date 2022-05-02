@@ -17,6 +17,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component';
 import { BoostrapValidationDirective } from './components/directives/boostrap-validation.directive';
 import { ManageCourseListService } from './services/manage-course-list.service';
+import { SearchFieldAutoComponent } from './pages/manage-offers/components/search-field-auto/search-field-auto.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ManageCourseListService } from './services/manage-course-list.service';
     MultiselectComponent,
     OfferRelationsSelectionComponent,
     BoostrapValidationDirective,
+    SearchFieldAutoComponent,
   ],
   imports: [
     CommonModule,
