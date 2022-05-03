@@ -2,6 +2,11 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-05-03/ml
+### added
+- courses/page field (15 Default)
+- new course (switched buttons)
+
 ## 2022-04-29/ml
 ### added
 - Auto-Search Field
