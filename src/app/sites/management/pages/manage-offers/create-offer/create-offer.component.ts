@@ -14,6 +14,7 @@ import { KeyWordItem } from '../components/multiselect/multiselect.component';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { TOASTCOLOR, MessageService } from 'src/app/core/services/messages-toasts/message.service';
 import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
+import { NgbdModalAskAfterCreationComponent } from '../../../components/modalWindows/modal-new-offer/modal-new-offer.component';
 
 @Component({
   selector: 'app-create-offer',
@@ -102,6 +103,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     if (this.onOfferSave) this.onOfferSave.unsubscribe();
     if (this.paramSub) this.paramSub.unsubscribe();
   }
+
   private initFormData() {
     this.offerEditForm = this.fb.group({
       title: [null, Validators.required],
@@ -143,15 +145,17 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     this.onOfferSave = this.offerDataService.createNewOfferData(offerdata).subscribe({
       next: (data) => {
         this.isSaving = false;
-        this.messageService.showToast(
-          { header: 'Kurs speichern', body: 'Speichern war erfolgreich.' },
-          TOASTCOLOR.SUCCESS
-        );
-        if (data.id) {
-          this.router.navigate([this.lnkManageOfferEdit, data.id]);
-        } else {
+
+        // Eine ID sollte auf jeden Fall im Datensatz sein
+        if (!data.id) {
+          this.messageService.showToast(
+            { header: 'Kurs speichern', body: 'Es wurde keine Kurs-ID gefunden.' },
+            TOASTCOLOR.WARNING
+          );
           this.router.navigate([this.lnkManageOfferList]);
         }
+
+        this.showModalWindowAfterSaving(data);
       },
       error: (error: Error) => {
         this.isSaving = false;
@@ -161,6 +165,29 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
         );
       },
     });
+  }
+
+  showModalWindowAfterSaving(data: Offer) {
+    const modalRef = this.modalService.open(NgbdModalAskAfterCreationComponent, {
+      centered: true,
+      backdrop: false,
+      keyboard: false,
+    });
+    modalRef.componentInstance.title = 'Speichern erfolgreich';
+    modalRef.result.then(
+      (result) => {
+        console.log('RESULT', result);
+
+        if (result === 'goNew') {
+          this.onResetForm();
+        } else if (result === 'goEdit') {
+          this.router.navigate([this.lnkManageOfferEdit, data.id]);
+        }
+      },
+      (reason) => {
+        console.log('REASON', reason);
+      }
+    );
   }
 
   onResetForm() {

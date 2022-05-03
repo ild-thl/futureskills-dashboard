@@ -18,6 +18,7 @@ import { OfferEditComponent } from './pages/alt/offer-edit/offer-edit.component'
 import { BoostrapValidationDirective } from './components/directives/boostrap-validation.directive';
 import { ManageCourseListService } from './services/manage-course-list.service';
 import { SearchFieldAutoComponent } from './pages/manage-offers/components/search-field-auto/search-field-auto.component';
+import { NgbdModalAskAfterCreationComponent } from './components/modalWindows/modal-new-offer/modal-new-offer.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SearchFieldAutoComponent } from './pages/manage-offers/components/searc
     OfferRelationsSelectionComponent,
     BoostrapValidationDirective,
     SearchFieldAutoComponent,
+    NgbdModalAskAfterCreationComponent,
   ],
   imports: [
     CommonModule,

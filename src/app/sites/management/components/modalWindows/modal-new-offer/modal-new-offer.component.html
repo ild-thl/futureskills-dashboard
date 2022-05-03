@@ -1,0 +1,23 @@
+<div id="modalAskAfterNew">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+  </div>
+  <div class="modal-body">
+    <p>
+      Der Kurs wurde gespeichert. Du kannst einen weiteren Kurs anlegen oder den gespeicherten Kurs weiter bearbeiten.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-outline-primary"
+      (click)="activeModal.close('goEdit')"
+    >
+     Weiter bearbeiten
+    </button>
+    <button type="button" class="btn btn-primary" (click)="activeModal.close('goNew')">
+      Neuen Kurs anlegen
+    </button>
+  </div>
+</div>
