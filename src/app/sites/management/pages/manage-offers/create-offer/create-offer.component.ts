@@ -15,6 +15,7 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-
 import { TOASTCOLOR, MessageService } from 'src/app/core/services/messages-toasts/message.service';
 import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
 import { NgbdModalAskAfterCreationComponent } from '../../../components/modalWindows/modal-new-offer/modal-new-offer.component';
+import { OfferFormValidators } from 'src/app/core/validators/offer-form.validator';
 
 @Component({
   selector: 'app-create-offer',
@@ -105,13 +106,14 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   }
 
   private initFormData() {
+    this.imagePath = this.staticConfig.getAssetPaths().images.default;
     this.offerEditForm = this.fb.group({
       title: [null, Validators.required],
       institution_id: [null, Validators.required],
       offertype_id: [null, Validators.required],
       language_id: [null, Validators.required],
       url: [null],
-      image_path: [this.imagePath],
+      image_path: [this.imagePath, OfferFormValidators.imgPath],
       description: [null],
       competence_classic: [false],
       competence_digital: [false],
@@ -120,7 +122,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSaveOffer(offer: any) {
+  onSaveOffer(offer: Partial<Offer>) {
     //console.log('FORMDATA', offer);
 
     const classic = !!offer.competence_classic == true ? 1 : 0;
@@ -193,6 +195,20 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   onResetForm() {
     this.offerEditForm.reset();
     this.initFormData();
+  }
+
+  onShowNewImage() {
+    const newImagePath = this.offerEditForm.value.image_path;
+    this.imagePath = newImagePath;
+  }
+
+  onErrorUrl(event: any) {
+    this.imagePath = this.staticConfig.getAssetPaths().images.default;
+    this.offerEditForm.controls['image_path'].setValue(this.imagePath);
+    this.messageService.showToast(
+      { header: 'Bildangabe', body: 'Die Bild-Url wurde nicht gefunden.' },
+      TOASTCOLOR.DANGER
+    );
   }
 
   //////////////////////////////////////////////
