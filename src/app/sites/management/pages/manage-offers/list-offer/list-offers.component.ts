@@ -7,6 +7,7 @@ import { MiniOffersData, SmallOfferDetailData } from 'src/app/core/models/offer'
 import { NgbdModalAskOfferDeleteComponent } from '../../../components/modalWindows/modal-offer-delete/ngbd-modal-offerdelete';
 import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { MessageService, TOASTCOLOR } from 'src/app/core/services/messages-toasts/message.service';
+import { CourseCacheService } from '../../../services/course-cache.service';
 
 @Component({
   selector: 'app-manage-offers',
@@ -24,6 +25,7 @@ export class ListOffersComponent implements OnInit, OnDestroy {
   lnkManageOfferNew = this.staticConfig.getPathInfo().lnkManageOfferNew;
 
   constructor(
+    private courseCacheService: CourseCacheService,
     private offerDataService: OfferDataService,
     private staticConfig: StaticService,
     private modalService: NgbModal,
@@ -53,7 +55,7 @@ export class ListOffersComponent implements OnInit, OnDestroy {
     this.errorOccured = false;
     this.errorMessage = '';
 
-    this.offerListSub = this.offerDataService.getSmallOfferListForManagement().subscribe({
+    this.offerListSub = this.courseCacheService.getManagementCourseList().subscribe({
       next: (value: MiniOffersData[]) => {
         //console.log("OfferList:", value);
         this.baseShortOfferList = value;
@@ -62,13 +64,16 @@ export class ListOffersComponent implements OnInit, OnDestroy {
         this.errorOccured = false;
         this.errorMessage = '';
       },
-      error: (error) => {
+      error: (error: Error) => {
         this.baseShortOfferList = [];
         this.shortOfferList = [];
         this.offersAreLoaded = true;
         this.errorOccured = true;
         this.errorMessage = this.errorHandler.getErrorMessage(error, 'offers');
       },
+      complete: () => {
+       // console.log("COMPLETED");
+      }
     });
   }
 
@@ -100,6 +105,8 @@ export class ListOffersComponent implements OnInit, OnDestroy {
             { header: 'Kurs löschen', body: 'Der Kurs wurde gelöscht.' },
             TOASTCOLOR.SUCCESS
           );
+          if (this.offerListSub) this.offerListSub.unsubscribe();
+          this.courseCacheService.updateCourseData();
           this.loadOfferList();
         },
         error: (error: Error) => {

@@ -19,6 +19,7 @@ import { BoostrapValidationDirective } from './components/directives/boostrap-va
 import { ManageCourseListService } from './services/manage-course-list.service';
 import { SearchFieldAutoComponent } from './pages/manage-offers/components/search-field-auto/search-field-auto.component';
 import { NgbdModalAskAfterCreationComponent } from './components/modalWindows/modal-new-offer/modal-new-offer.component';
+import { CourseCacheService } from './services/course-cache.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,6 @@ import { NgbdModalAskAfterCreationComponent } from './components/modalWindows/mo
     FormsModule,
     AngularEditorModule,
   ],
-  providers: [ManageCourseListService],
+  providers: [ManageCourseListService, CourseCacheService],
 })
 export class ManagementModule {}

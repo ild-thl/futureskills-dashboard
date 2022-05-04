@@ -109,6 +109,7 @@ export class OfferService {
   public getMiniOffersListForManagementList(): Observable<MiniOffersData[]> {
     return this.apiService.getAllOfferMiniList().pipe(
       map((results: APIToOfferMiniList[]) => {
+        console.log("New Course-List from API loaded (cache).");
         return DataMapping.mapDataInSmallManageData(results);
       })
     );

@@ -9,6 +9,7 @@
 - modal if course was created (new or edit)
 - image in create offer can be reloaded
 - LandingPage + Search for ID
+- Data is cached and reloaded after course changes: (new/edit/delete)
 
 ## 2022-04-29/ml
 ### added

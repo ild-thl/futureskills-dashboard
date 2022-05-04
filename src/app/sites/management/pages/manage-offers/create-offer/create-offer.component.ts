@@ -15,6 +15,7 @@ import { TOASTCOLOR, MessageService } from 'src/app/core/services/messages-toast
 import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
 import { NgbdModalAskAfterCreationComponent } from '../../../components/modalWindows/modal-new-offer/modal-new-offer.component';
 import { OfferFormValidators } from 'src/app/core/validators/offer-form.validator';
+import { CourseCacheService } from '../../../services/course-cache.service';
 
 @Component({
   selector: 'app-create-offer',
@@ -55,6 +56,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private courseCacheService: CourseCacheService,
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private staticConfig: StaticService,
@@ -144,6 +146,8 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     this.onOfferSave = this.offerDataService.createNewOfferData(offerdata).subscribe({
       next: (data) => {
         this.isSaving = false;
+
+        this.courseCacheService.updateCourseData();
 
         // Eine ID sollte auf jeden Fall im Datensatz sein
         if (!data.id) {

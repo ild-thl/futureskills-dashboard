@@ -18,6 +18,7 @@ import {
   MessageService,
   AlertList,
 } from 'src/app/core/services/messages-toasts/message.service';
+import { CourseCacheService } from '../../../services/course-cache.service';
 
 @Component({
   selector: 'app-edit-offer',
@@ -60,6 +61,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private courseCacheService: CourseCacheService,
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private route: ActivatedRoute,
@@ -242,6 +244,9 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 
     this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
       (offer: Offer) => {
+
+        this.courseCacheService.updateCourseData();
+
         this.offer = offer;
         this.isLoading = false;
         this.isSaving = false;
