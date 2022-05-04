@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -11,7 +11,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 import { KeyWordItem } from '../components/multiselect/multiselect.component';
-import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { TOASTCOLOR, MessageService } from 'src/app/core/services/messages-toasts/message.service';
 import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
 import { NgbdModalAskAfterCreationComponent } from '../../../components/modalWindows/modal-new-offer/modal-new-offer.component';
@@ -58,9 +57,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   constructor(
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
-    private route: ActivatedRoute,
     private staticConfig: StaticService,
-    private errorHandler: ErrorHandlerService,
     private modalService: NgbModal,
     private messageService: MessageService,
     private router: Router,

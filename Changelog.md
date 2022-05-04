@@ -7,7 +7,8 @@
 - courses/page field (15 Default)
 - new course (switched buttons)
 - modal if course was created (new or edit)
-- imgage in create offer can be reloaded
+- image in create offer can be reloaded
+- LandingPage + Search for ID
 
 ## 2022-04-29/ml
 ### added
