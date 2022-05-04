@@ -55,7 +55,7 @@ export class ListOffersComponent implements OnInit, OnDestroy {
 
     this.offerListSub = this.offerDataService.getSmallOfferListForManagement().subscribe({
       next: (value: MiniOffersData[]) => {
-        console.log("OfferList:", value);
+        //console.log("OfferList:", value);
         this.baseShortOfferList = value;
         this.shortOfferList = value;
         this.offersAreLoaded = true;

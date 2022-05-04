@@ -175,8 +175,6 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.title = 'Speichern erfolgreich';
     modalRef.result.then(
       (result) => {
-        console.log('RESULT', result);
-
         if (result === 'goNew') {
           this.onResetForm();
         } else if (result === 'goEdit') {
@@ -184,7 +182,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
         }
       },
       (reason) => {
-        console.log('REASON', reason);
+        //
       }
     );
   }
