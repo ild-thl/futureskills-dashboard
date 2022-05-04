@@ -1,4 +1,5 @@
 <div id="offer-table">
+  <!-- Spinner/Search-->
   <div class="row">
     <div class="col-sm-1">
       <div *ngIf="loading$ | async">
@@ -19,6 +20,7 @@
     </div>
   </div>
 
+  <!-- Table -->
   <div class="row">
     <div class="col-12">
       <div *ngIf="sortedOfferList.length > 0; else nocoursedata">
@@ -64,37 +66,39 @@
             </tr>
           </tbody>
         </table>
-
-        <div class="mt-6">
-          <div class="d-flex justify-content-between p-2">
-            <ngb-pagination
-              class="d-flex justify-content-start"
-              [rotate]="true"
-              [ellipses]="false"
-              [maxSize]="maxSize"
-              [boundaryLinks]="true"
-              [collectionSize]="collectionSize"
-              [(page)]="state.page"
-              [pageSize]="state.pageSize"
-              (pageChange)="onPaginationChanged()"
-            >
-            </ngb-pagination>
-            <select
-              class="custom-select"
-              style="width: auto"
-              name="pageSize"
-              (change)="onPageSizeChange()"
-              [(ngModel)]="state.pageSize"
-            >
-              <option [ngValue]="5">5 Kurse</option>
-              <option [ngValue]="10">10 Kurse</option>
-              <option [ngValue]="15">15 Kurse</option>
-              <option [ngValue]="20">20 Kurse</option>
-              <option [ngValue]="20">30 Kurse</option>
-            </select>
-          </div>
-        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="row align-items-end">
+    <div class="col text-left align-self-start">
+      <ngb-pagination
+        [maxSize]="1"
+        [boundaryLinks]="true"
+        [collectionSize]="collectionSize"
+        [rotate]="true"
+        [(page)]="state.page"
+        [pageSize]="state.pageSize"
+        (pageChange)="onPaginationChanged()"
+      >
+      </ngb-pagination>
+    </div>
+    <div class="col text-right align-self-start">
+      <select
+        class="custom-select"
+        style="width: auto"
+        name="pageSize"
+        (change)="onPageSizeChange()"
+        [(ngModel)]="state.pageSize"
+      >
+        <option [ngValue]="5">5 Kurse</option>
+        <option [ngValue]="10">10 Kurse</option>
+        <option [ngValue]="15">15 Kurse</option>
+        <option [ngValue]="20">20 Kurse</option>
+        <option [ngValue]="30">30 Kurse</option>
+        <option [ngValue]="50">50 Kurse</option>
+      </select>
     </div>
   </div>
 
