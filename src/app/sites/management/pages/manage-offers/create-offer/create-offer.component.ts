@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -11,9 +11,11 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MetaDataService } from 'src/app/core/data/meta/meta-data.service';
 import { OfferPropertyList, PropertyItem } from 'src/app/core/models/offer-properties';
 import { KeyWordItem } from '../components/multiselect/multiselect.component';
-import { ErrorHandlerService } from 'src/app/core/services/error-handling/error-handling';
 import { TOASTCOLOR, MessageService } from 'src/app/core/services/messages-toasts/message.service';
 import { OfferToAPICreate } from 'src/app/core/http/api/api.interfaces';
+import { NgbdModalAskAfterCreationComponent } from '../../../components/modalWindows/modal-new-offer/modal-new-offer.component';
+import { OfferFormValidators } from 'src/app/core/validators/offer-form.validator';
+import { CourseCacheService } from '../../../services/course-cache.service';
 
 @Component({
   selector: 'app-create-offer',
@@ -54,11 +56,10 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private courseCacheService: CourseCacheService,
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
-    private route: ActivatedRoute,
     private staticConfig: StaticService,
-    private errorHandler: ErrorHandlerService,
     private modalService: NgbModal,
     private messageService: MessageService,
     private router: Router,
@@ -102,14 +103,16 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     if (this.onOfferSave) this.onOfferSave.unsubscribe();
     if (this.paramSub) this.paramSub.unsubscribe();
   }
+
   private initFormData() {
+    this.imagePath = this.staticConfig.getAssetPaths().images.default;
     this.offerEditForm = this.fb.group({
       title: [null, Validators.required],
       institution_id: [null, Validators.required],
       offertype_id: [null, Validators.required],
       language_id: [null, Validators.required],
       url: [null],
-      image_path: [this.imagePath],
+      image_path: [this.imagePath, OfferFormValidators.imgPath],
       description: [null],
       competence_classic: [false],
       competence_digital: [false],
@@ -118,7 +121,7 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSaveOffer(offer: any) {
+  onSaveOffer(offer: Partial<Offer>) {
     //console.log('FORMDATA', offer);
 
     const classic = !!offer.competence_classic == true ? 1 : 0;
@@ -143,15 +146,19 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     this.onOfferSave = this.offerDataService.createNewOfferData(offerdata).subscribe({
       next: (data) => {
         this.isSaving = false;
-        this.messageService.showToast(
-          { header: 'Kurs speichern', body: 'Speichern war erfolgreich.' },
-          TOASTCOLOR.SUCCESS
-        );
-        if (data.id) {
-          this.router.navigate([this.lnkManageOfferEdit, data.id]);
-        } else {
+
+        this.courseCacheService.updateCourseData();
+
+        // Eine ID sollte auf jeden Fall im Datensatz sein
+        if (!data.id) {
+          this.messageService.showToast(
+            { header: 'Kurs speichern', body: 'Es wurde keine Kurs-ID gefunden.' },
+            TOASTCOLOR.WARNING
+          );
           this.router.navigate([this.lnkManageOfferList]);
         }
+
+        this.showModalWindowAfterSaving(data);
       },
       error: (error: Error) => {
         this.isSaving = false;
@@ -163,9 +170,44 @@ export class CreateOfferComponent implements OnInit, OnDestroy {
     });
   }
 
+  showModalWindowAfterSaving(data: Offer) {
+    const modalRef = this.modalService.open(NgbdModalAskAfterCreationComponent, {
+      centered: true,
+      backdrop: false,
+      keyboard: false,
+    });
+    modalRef.componentInstance.title = 'Speichern erfolgreich';
+    modalRef.result.then(
+      (result) => {
+        if (result === 'goNew') {
+          this.onResetForm();
+        } else if (result === 'goEdit') {
+          this.router.navigate([this.lnkManageOfferEdit, data.id]);
+        }
+      },
+      (reason) => {
+        //
+      }
+    );
+  }
+
   onResetForm() {
     this.offerEditForm.reset();
     this.initFormData();
+  }
+
+  onShowNewImage() {
+    const newImagePath = this.offerEditForm.value.image_path;
+    this.imagePath = newImagePath;
+  }
+
+  onErrorUrl(event: any) {
+    this.imagePath = this.staticConfig.getAssetPaths().images.default;
+    this.offerEditForm.controls['image_path'].setValue(this.imagePath);
+    this.messageService.showToast(
+      { header: 'Bildangabe', body: 'Die Bild-Url wurde nicht gefunden.' },
+      TOASTCOLOR.DANGER
+    );
   }
 
   //////////////////////////////////////////////

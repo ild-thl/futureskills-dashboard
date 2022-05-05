@@ -48,7 +48,6 @@ export class OfferTableComponent implements OnChanges, AfterViewInit, OnInit, On
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
   lnkManageOfferEdit = this.staticService.getPathInfo().lnkManageOfferEdit;
-  maxSize = 4;
 
   keyUp$ = new Subject<string>();
   keyUpSubsciption: Subscription;
@@ -102,6 +101,11 @@ export class OfferTableComponent implements OnChanges, AfterViewInit, OnInit, On
   }
 
   onPaginationChanged() {
+    this.refreshOfferList();
+  }
+
+  onPageSizeChange() {
+    this.state.page = 1;
     this.refreshOfferList();
   }
 

@@ -9,6 +9,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Kurse</h5>
+              <form novalidate [formGroup]="courseForm" (ngSubmit)="onEditCourse(courseForm.value)">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <a [routerLink]="lnkManageOffers"
@@ -20,18 +21,44 @@
                     ><fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
                   >
                 </li>
-                <!-- <li class="list-group-item">
-                  <fa-icon [icon]="['fas', 'pen']"></fa-icon>
-                  <span class="text-muted"> Kurs bearbeiten</span>
-                </li> -->
+                <li class="list-group-item">
+
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      formControlName="courseId"
+                      id="courseId"
+                      class="form-control"
+                      placeholder="Kursnummer"
+                      name="courseId"
+                      maxlength="8"
+                      pattern="[0-9]*"
+                      required
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-outline-primary"
+                        type="submit"
+                        [disabled]="!courseForm.valid"
+                      >
+                        <span>
+                          <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+                        </span>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </li>
               </ul>
+              </form>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Institutionen</h5>
               <p class="card-text">
-                <span class="text-muted">Institutionen bearbeiten und Cache leeren</span>
+                <span class="text-muted">Neue Funktion: Institutionen bearbeiten und Cache leeren</span>
               </p>
             </div>
           </div>
@@ -54,8 +81,7 @@
         <div class="card-body">
           <h5 class="card-title">Notizen</h5>
           <span class="text-muted"
-            >Alte Formulare unter verwaltung/kurs/alt/neu und
-            verwaltung/kurs/alt/edit/kursnummer</span
+            >Aktuell keine Notizen</span
           >
         </div>
       </div>

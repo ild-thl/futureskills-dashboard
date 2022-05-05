@@ -109,17 +109,19 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
    * LoadOfferList
    */
   loadOfferList(offerid: number | null) {
-    this.onOffersListChange = this.offerDataService.getSmallOfferListForEditForm(offerid).subscribe(
-      (offers: SmallOfferListForEditForm[]) => {
-        this.completeOfferList = offers;
-        this.showLoadedRelatedOffers();
-        this.offerListIsLoaded = true;
-      },
-      (error: Error) => {
-        this.offerListIsLoaded = false;
-        this.completeOfferList = [];
-      }
-    );
+    this.onOffersListChange = this.offerDataService
+      .getSmallOfferListForEditForm(offerid)
+      .subscribe({
+        next: (offers: SmallOfferListForEditForm[]) => {
+          this.completeOfferList = offers;
+          this.showLoadedRelatedOffers();
+          this.offerListIsLoaded = true;
+        },
+        error: (error: Error) => {
+          this.offerListIsLoaded = false;
+          this.completeOfferList = [];
+        },
+      });
   }
 
   showLoadedRelatedOffers() {
@@ -132,7 +134,6 @@ export class OfferRelationsSelectionComponent implements OnInit, OnDestroy {
         this.relatedOffersArray.push(tmpOffer);
       }
     }
-
   }
   ngOnDestroy(): void {
     if (this.onOffersListChange) this.onOffersListChange.unsubscribe();

@@ -18,6 +18,7 @@ import {
   MessageService,
   AlertList,
 } from 'src/app/core/services/messages-toasts/message.service';
+import { CourseCacheService } from '../../../services/course-cache.service';
 
 @Component({
   selector: 'app-edit-offer',
@@ -60,6 +61,7 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private courseCacheService: CourseCacheService,
     private offerDataService: OfferDataService,
     private metaDataService: MetaDataService,
     private route: ActivatedRoute,
@@ -240,27 +242,29 @@ export class EditOfferComponent implements OnInit, OnDestroy {
 
     //console.log("OFFERDATA", offerdata);
 
-    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
-      (offer: Offer) => {
+    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe({
+      next: (offer: Offer) => {
+        this.courseCacheService.updateCourseData();
+
         this.offer = offer;
         this.isLoading = false;
         this.isSaving = false;
-        this.alertList.addAlert('success', 'Speichern war erfolgreich');
+        //this.alertList.addAlert('success', 'Speichern war erfolgreich');
         this.messageService.showToast(
           { header: 'Kurs speichern', body: 'Speichern war erfolgreich' },
           TOASTCOLOR.SUCCESS
         );
       },
-      (error: Error) => {
-        this.alertList.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
+      error: (error: Error) => {
+        //this.alertList.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
         this.messageService.showToast(
           { header: 'Kurs speichern', body: this.errorHandler.getErrorMessage(error, 'offer') },
           TOASTCOLOR.SUCCESS
         );
         this.isLoading = false;
         this.isSaving = false;
-      }
-    );
+      },
+    });
   }
 
   showModalWindowDeleteOffer(event: Event) {
@@ -282,6 +286,8 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     if (offerID && offerID > 0) {
       this.offerDataService.deleteOfferWithID(offerID).subscribe({
         next: (value) => {
+          this.courseCacheService.updateCourseData();
+
           this.messageService.showToast(
             { header: 'Kurs löschen', body: 'Der Kurs wurde gelöscht.' },
             TOASTCOLOR.SUCCESS

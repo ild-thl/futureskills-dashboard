@@ -2,6 +2,15 @@
 
 ## [Not Released v0.11.0]
 
+## 2022-05-03/ml
+### added
+- courses/page field (15 Default)
+- new course (switched buttons)
+- modal if course was created (new or edit)
+- image in create offer can be reloaded
+- LandingPage + Search for ID
+- Data is cached and reloaded after course changes: (new/edit/delete)
+
 ## 2022-04-29/ml
 ### added
 - Auto-Search Field

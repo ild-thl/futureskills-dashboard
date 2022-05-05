@@ -19,10 +19,27 @@
         <form [formGroup]="offerEditForm">
           <!--HEADER-->
           <div class="row align-items-center justify-content-center">
-            <div class="col-8"><span class="man-header">Kurs bearbeiten</span></div>
-            <div class="col-4">
+            <div class="col-6"><span class="man-header">Kurs bearbeiten (ID: {{ offer.id }})</span></div>
+            <div class="col-6">
               <div class="btn-toolbar" role="toolbar" class="float-right">
-                <div class="btn-group btn-group-sm mr-2" role="group">
+                <div class="btn-group btn-group-sm mr-4" role="group" aria-label="Third group">
+                  <button (click)="goToDetailPage()" type="button" class="btn btn-light">
+                    <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+                    Detailseite
+                  </button>
+                </div>
+
+                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Delete group">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="showModalWindowDeleteOffer($event)"
+                  >
+                    <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+                  </button>
+                </div>
+
+                <div class="btn-group btn-group-sm" role="group">
                   <button
                     [disabled]="!offerEditForm.valid || isSaving"
                     *ngIf="!isSaving"
@@ -38,26 +55,6 @@
                       role="status"
                       aria-hidden="true"
                     ></span>
-                  </button>
-                </div>
-
-                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Delete group">
-                  <button disabled type="button" class="btn btn-primary">
-                    <fa-icon [icon]="['fas', 'undo']"></fa-icon>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    (click)="showModalWindowDeleteOffer($event)"
-                  >
-                    <fa-icon [icon]="['fas', 'trash']"></fa-icon>
-                  </button>
-                </div>
-
-                <div class="btn-group btn-group-sm" role="group" aria-label="Third group">
-                  <button (click)="goToDetailPage()" type="button" class="btn btn-light">
-                    <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
-                    Detailseite
                   </button>
                 </div>
               </div>
@@ -101,12 +98,6 @@
                   name="institution_id"
                   deactivated
                 >
-                  <!-- <option value="1">FutureSkills</option>
-                  <option value="2">Microsoft Learn</option>
-                  <option value="3">OPEN vhb</option>
-                  <option value="4">KI-Campus</option>
-                  <option value="6">OpenCampus</option>
-                  <option value="7">CAU Kiel</option> -->
                   <option value="null" selected disabled>Bitte Auswählen</option>
                   <option *ngFor="let int of propInstitutions" [ngValue]="int.id">
                     {{ int.description }}
@@ -122,13 +113,6 @@
               <div class="form-group">
                 <label for="type">Format</label>*
                 <select formControlName="type" class="form-control" id="type" name="type">
-                  <!-- <option value="online-course">Online Kurs</option>
-                  <option value="self-study-course">Selbstlernkurs</option>
-                  <option value="webinar">Webinar</option>
-                  <option value="presence-event">Präsenz Veranstaltung</option>
-                  <option value="presence-series">Präsenz Veranstaltungsreihe</option>
-                  <option value="course-package">Kurspaket</option>
-                  <option value="blended-learning">Blended Learning</option> -->
                   <option value="null" selected disabled>Bitte Auswählen</option>
                   <option *ngFor="let format of propFormats" [ngValue]="format.identifier">
                     {{ format.description }}
@@ -153,8 +137,6 @@
                 <fs-multiselect formControlName="keywords"></fs-multiselect>
               </div>
             </div>
-
-            <!-- -->
 
             <div class="col-12 col-md-6">
               <div class="form-group">
@@ -232,8 +214,6 @@
                   <option *ngFor="let lang of propLanguages" [ngValue]="lang.identifier">
                     {{ lang.description }}
                   </option>
-                  <!-- <option value="de" selected="selected">Deutsch</option>
-                  <option value="en">English</option> -->
                 </select>
               </div>
 

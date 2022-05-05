@@ -210,17 +210,17 @@ export class OfferEditComponent implements OnInit, OnDestroy {
     );
     offerdata.meta = this.mapMetaData(this.offerEditForm.value);
 
-    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe(
-      (offer: Offer) => {
+    this.offerDataService.saveOfferDataForEdit(id, offerdata, relatedIntOffers).subscribe({
+      next: (offer: Offer)=>{
         this.offer = offer;
         this.isLoading = false;
         this.addAlert('success', 'Speichern war erfolgreich');
       },
-      (error: Error) => {
+      error: (error: Error) => {
         this.addAlert('danger', this.errorHandler.getErrorMessage(error, 'offer'));
         this.isLoading = false;
       }
-    );
+    });
   }
 
   /**
