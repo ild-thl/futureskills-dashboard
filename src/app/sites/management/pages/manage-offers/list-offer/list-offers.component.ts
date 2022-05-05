@@ -96,6 +96,10 @@ export class ListOffersComponent implements OnInit, OnDestroy {
     // Todo
   }
 
+  reloadCourseList(){
+    this.refreshCourseData();
+  }
+
   private deleteOffer(offerID: number) {
     // TODO: Lädt-Anzeige an
     if (offerID && offerID > 0) {
@@ -105,9 +109,7 @@ export class ListOffersComponent implements OnInit, OnDestroy {
             { header: 'Kurs löschen', body: 'Der Kurs wurde gelöscht.' },
             TOASTCOLOR.SUCCESS
           );
-          if (this.offerListSub) this.offerListSub.unsubscribe();
-          this.courseCacheService.updateCourseData();
-          this.loadOfferList();
+          this.refreshCourseData();
         },
         error: (error: Error) => {
           const message = this.errorHandler.getErrorMessage(error, 'offer');
@@ -115,5 +117,11 @@ export class ListOffersComponent implements OnInit, OnDestroy {
         },
       });
     }
+  }
+
+  private refreshCourseData() {
+    if (this.offerListSub) this.offerListSub.unsubscribe();
+    this.courseCacheService.updateCourseData();
+    this.loadOfferList();
   }
 }

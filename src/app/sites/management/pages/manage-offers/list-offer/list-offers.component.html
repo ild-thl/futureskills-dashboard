@@ -8,8 +8,11 @@
         <h4>Kursverwaltung</h4>
       </div>
       <div class="col-2">
-        <a type="button" class="float-right" [routerLink]="[lnkManageOfferNew]">
+        <a type="button" placement="top" ngbTooltip="Neuer Kurs" class="float-right pl-2" [routerLink]="[lnkManageOfferNew]">
           <fa-icon class="pl-2" [icon]="['fas', 'plus-circle']"></fa-icon>
+        </a>
+        <a type="button" placement="top" ngbTooltip="Liste aktualisieren" class="float-right" (click)="reloadCourseList()">
+          <fa-icon class="pl-2" [icon]="['fas', 'sync']"></fa-icon>
         </a>
       </div>
     </div>

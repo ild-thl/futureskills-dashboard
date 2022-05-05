@@ -40,7 +40,8 @@ import {
   faPlusCircle,
   faEdit,
   faEye,
-  faSave
+  faSave,
+  faSync
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -103,7 +104,8 @@ export class SharedModule {
       faPlusCircle,
       faEdit,
       faEye,
-      faSave
+      faSave,
+      faSync
     );
   }
 }
