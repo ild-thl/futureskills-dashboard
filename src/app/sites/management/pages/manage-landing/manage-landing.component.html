@@ -1,0 +1,90 @@
+<manage-breadcrumb-header [linkText]="'root'"></manage-breadcrumb-header>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4>Verwaltung</h4>
+      <div class="mt-4">
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Kurse</h5>
+              <form novalidate [formGroup]="courseForm" (ngSubmit)="onEditCourse(courseForm.value)">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <a [routerLink]="lnkManageOffers"
+                    ><fa-icon [icon]="['fas', 'edit']"></fa-icon> Kursliste</a
+                  >
+                </li>
+                <li class="list-group-item">
+                  <a [routerLink]="lnkManageOfferNew"
+                    ><fa-icon [icon]="['fas', 'plus-circle']"></fa-icon> Neuen Kurs anlegen</a
+                  >
+                </li>
+                <li class="list-group-item">
+
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      formControlName="courseId"
+                      id="courseId"
+                      class="form-control"
+                      placeholder="Kursnummer"
+                      name="courseId"
+                      maxlength="8"
+                      pattern="[0-9]*"
+                      required
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-outline-primary"
+                        type="submit"
+                        [disabled]="!courseForm.valid"
+                      >
+                        <span>
+                          <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+                        </span>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </li>
+              </ul>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Institutionen</h5>
+              <p class="card-text">
+                <span class="text-muted">Neue Funktion: Institutionen bearbeiten und Cache leeren</span>
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sonstiges</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Notizen</h5>
+          <span class="text-muted"
+            >Aktuell keine Notizen</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

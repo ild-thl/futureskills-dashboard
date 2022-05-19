@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Offer } from 'src/app/core/models/offer';
+import { OfferShortListForTiles } from 'src/app/core/models/offer';
 import { StaticService } from 'src/app/config/static.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { StaticService } from 'src/app/config/static.service';
   styleUrls: ['./offer-tile.component.scss']
 })
 export class OfferTileComponent {
-  @Input() offerForTile: Offer;
+  @Input() offerForTile: OfferShortListForTiles;
   @Input() isSubscribed: boolean;
   @Input() displayMode: string;
 

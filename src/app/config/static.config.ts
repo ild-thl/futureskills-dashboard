@@ -1,4 +1,3 @@
-
 /**
  * JSON-Dateien als Modul-Importe
  */
@@ -16,29 +15,30 @@ export const CustomConfig = {
     },
   },
   general: {
-    isVisible : {
+    isVisible: {
       loginButton: false,
-      logoutButton: true
+      logoutButton: true,
     },
     authBehaviour: {
-      autoLogout: true
-    }
+      autoLogout: true, // wird man ausgeloggt wenn bei Start der App das Token ungültig ist?
+      logoutWithServer: false, // wird der Server benachrichtigt, wenn man sich ausloggt?
+    },
   },
   kiConfig: {
     online: true,
-    linkListDate: '17.01.2022',
+    linkListDate: '26.04.2022',
     mnistPath: 'mnistnumber',
     sentimentPath: {
       en: 'sentiment/en',
-      de: 'sentiment/de'
+      de: 'sentiment/de',
     },
-    linkListPath: 'kiplayground/lnklist'
+    linkListPath: 'kiplayground/lnklist',
   },
-  filterParams:{
+  filterParams: {
     institutions: 'institutions',
     languages: 'languages',
     competences: 'competences',
-    formats: 'formats'
+    formats: 'formats',
   },
   paths: {
     lnkLanding: '/',
@@ -49,25 +49,34 @@ export const CustomConfig = {
     lnkPrivacy: '/datenschutz',
     lnkLogin: '/login',
     lnkNotAllowed: '/kein-zugriff',
-    lnkAdminOfferEdit: '/admin/kurs/edit',
-    lnkAdminOfferNew: '/admin/kurs/neu',
+    lnkManage: '/verwaltung',
+    lnkManageOfferList: '/verwaltung/kurse',
+    lnkManageOfferEdit: '/verwaltung/kurs/edit',
+    lnkManageOfferNew: '/verwaltung/kurs/neu',
+    lnkAdminOfferEdit: '/verwaltung/kurs/alt/edit',
+    lnkAdminOfferNew: '/verwaltung/kurs/alt/neu',
     lnkKITools: '/ki-playground',
     lnkKITools_mnist: '/ki-playground/mnist',
     lnkKITools_sentiment: '/ki-playground/sentiment',
-    linkKITools_demonstrators: '/ki-playground/examples'
+    linkKITools_demonstrators: '/ki-playground/examples',
+  },
+  assets: {
+    images: {
+      default: '/assets/images/FutureSkills_default.png'
+    }
   },
   routingInfo: {
     lnkAfterLogin: '/kurse',
     lnkAfterLogout: '/',
-    lnkTrailerAboutUs: '/info-lehrende'
+    lnkTrailerAboutUs: '/info-lehrende',
   },
   courseNumbers: {
     FS_SuperKI: '/615',
-    FS_NeuronaleNetze: '/602'
+    FS_NeuronaleNetze: '/602',
   },
   courseKeyWords: (keywords as any).default,
   courseKeyWordKeys: {
     keyForSuperKIKurs: 'fssuperkikurs',
-    keyForPlaygroundKIKurs: 'fskiplayground'
-  }
+    keyForPlaygroundKIKurs: 'fskiplayground',
+  },
 };

@@ -14,7 +14,6 @@ import { InfoStudentsComponent } from 'src/app/sites/info-students/pages/info-st
 import { InfoTeachingComponent } from 'src/app/sites/info-teaching/pages/info-teaching/info-teaching.component';
 import { OfferDetailComponent } from 'src/app/sites/offers/pages/offer-detail/offer-detail.component';
 import { NotAllowedComponent } from './sites/not-allowed/pages/not-allowed.component';
-import { Objects, Permissions } from 'src/app/core/models/permissions';
 
 // Routing
 // see at src/app/config for RouteVars in Links
@@ -50,14 +49,13 @@ const routes: Routes = [
     component: InfoStudentsComponent,
   },
   {
-    path: 'admin',
-    loadChildren: () => import('./sites/admin/admin.module').then((module) => module.AdminModule),
-    canActivate: [AuthGuard],
-    data: { object: Objects.OFFERS, permission: Permissions.ADMINACCESS },
-  },
-  {
     path: 'ki-playground',
     loadChildren: () => import('./sites/ki-tools/ki-tools.module').then((s) => s.KiToolsModule),
+  },
+  {
+    path: 'verwaltung',
+    loadChildren: () => import('./sites/management/management.module').then((s) => s.ManagementModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'auth',

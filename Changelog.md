@@ -1,5 +1,59 @@
 # Changelog
 
+## [Released v0.11.0]
+
+## 2022-05-03/ml
+### added
+- courses/page field (15 Default)
+- new course (switched buttons)
+- modal if course was created (new or edit)
+- image in create offer can be reloaded
+- LandingPage + Search for ID
+- Data is cached and reloaded after course changes: (new/edit/delete)
+
+## 2022-04-29/ml
+### added
+- Auto-Search Field
+- Spinner (searching)
+
+## 2022-04-26/ml
+### added
+- QuestionAid added to KI Tools
+ 
+## 2022-04-25/ml
+### added
+- Management: Header are sortable (asc/desc)
+
+## 2022-04-07/ml
+### added
+- General AuthGuard checks if user is logged in, if yes management Pages can be loaded
+- Management AuthGuard checks if route can be activated for specific rights on pages
+
+## 2022-03-24/ml
+### added
+- New Management Pages
+  - Dashboard, Courselist(table)
+  - NewComponent, new form (shorter, without relatedoffers) -> redirect to Edit Component after saving
+  - New Functions to create new offer
+- New Entry in Header if Admin->link to ManagementPages
+- New Messaging Service 
+  - Toasts, that can be called from any class
+  - Alert Class with AlertList
+- Icons added, Background Image Added
+
+### changed
+- EditComponent (Properties in Comboboxes ok)
+
+### deleted
+- Admin Pages (old form is under alt/management)
+
+## 2022-03-17/ml
+- tsconfig->strictTemplates=true
+
+## 2022-03-01/ml
+### changed
+- Interceptor/API/AuthService check if 401 error occurs to refresh token
+
 ## [Released v0.10.0]
 
 ## 2022-02-23/avz

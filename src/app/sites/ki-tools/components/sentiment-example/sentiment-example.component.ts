@@ -27,7 +27,7 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   sentimentNumber: string;
   emojiIndex: number;
   isCalculating: boolean;
-  nrSelect: any;
+  selectedOption: string;
   sentimentArray = [
     'negativ',
     'eher negativ',
@@ -83,11 +83,11 @@ export class SentimentExampleComponent implements OnInit, OnChanges {
   refreshText() {
     this.sentimentText = 'Noch kein Text zur Auswertung.';
     this.sentimentNumber = '';
-    this.nrSelect = '';
+    this.selectedOption = '';
   }
 
-  onSelectChange(value: string) {
-    this.textAreaText = value;
+  onSelectChange(htmlElement: any) {
+    this.textAreaText = this.selectedOption;
   }
 
   startPrediction() {

@@ -1,0 +1,40 @@
+#offer-table {
+  :host{
+    margin-bottom: 10px;
+  }
+
+  .smallfont {
+    font-size: smaller;
+  }
+
+  fa-icon.visible-offer {
+    color: var(--color-primary-blue-dark);
+  }
+  fa-icon.invisible-offer {
+    color: var(--color-function-grey);
+  }
+
+  th[sortable] {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  th[sortable].desc:before,
+  th[sortable].asc:before {
+    content: '';
+    display: block;
+    background-image: url(~src/styles/ressources/backgrounds/icons/arrow-up-short.svg);
+    background-repeat: no-repeat;
+    background-size: 22px;
+    width: 22px;
+    height: 22px;
+    float: left;
+    margin-left: -22px;
+  }
+
+  th[sortable].desc:before {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+  }
+}

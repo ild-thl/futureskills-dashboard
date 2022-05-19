@@ -18,6 +18,8 @@ export class OfferDetailComponent implements OnInit, OnDestroy {
   private paramsSub: Subscription | undefined;
 
   offer: Offer | undefined;
+
+  // Permission-Set (unused)
   object = Objects;
   permission = Permissions;
 

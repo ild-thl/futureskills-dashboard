@@ -55,4 +55,7 @@ export class StaticService {
   getAuthBehaviour(): any {
     return CustomConfig.general.authBehaviour;
   }
+  getAssetPaths():any{
+    return CustomConfig.assets;
+  }
 }

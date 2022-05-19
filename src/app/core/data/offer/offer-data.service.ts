@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 
-import { OfferFilterToAPI, OfferToAPI } from 'src/app/core/http/api/api.interfaces';
+import {
+  OfferFilterToAPI,
+  OfferToAPI,
+  OfferToAPICreate,
+} from 'src/app/core/http/api/api.interfaces';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { OfferService } from 'src/app/core/http/offer/offer.service';
 import { UserData, UserOfferData } from 'src/app/core/data/user/user-data.interface';
@@ -14,6 +18,8 @@ import {
   OfferShortListForTiles,
   PaginatedOfferData,
   SmallOfferDetailData,
+  MiniOffersData,
+  PartialOffer,
 } from 'src/app/core/models/offer';
 import { DataMapping } from 'src/app/core/http/api/data-mapping';
 
@@ -36,7 +42,12 @@ export class OfferDataService {
   /////////////////////////////////////////////////////
 
   // CourseList
-  public getPaginatedOfferList(page: number, count: number, filterObj: OfferFilterToAPI, searchString: string): Observable<PaginatedOfferData> {
+  public getPaginatedOfferList(
+    page: number,
+    count: number,
+    filterObj: OfferFilterToAPI,
+    searchString: string
+  ): Observable<PaginatedOfferData> {
     return this.offerService.getPaginatedOfferData(page, count, filterObj, searchString);
   }
 
@@ -55,6 +66,11 @@ export class OfferDataService {
     offerID: number = undefined
   ): Observable<SmallOfferListForEditForm[]> {
     return this.offerService.getAllShortOffersListForEditDetail(offerID);
+  }
+
+  // OfferList for Management
+  public getSmallOfferListForManagement(): Observable<MiniOffersData[]> {
+    return this.offerService.getMiniOffersListForManagementList();
   }
 
   // general function
@@ -90,9 +106,17 @@ export class OfferDataService {
     return this.saveOrCreateNewOfferDataWithoutLoginCheck(offerid, mappedData);
   }
 
+  public createNewOfferData(offer: OfferToAPICreate) {
+    return this.createNewOfferDataWithoutLoginCheck(offer);
+  }
+
   // delete for Edit
   public deleteOffer(offer: Offer) {
     return this.offerService.deleteOffer(offer);
+  }
+
+  public deleteOfferWithID(offerID: number): Observable<any> {
+    return this.offerService.deleteOfferWithID(offerID);
   }
 
   /////////////////////////////////////////////////////
@@ -175,4 +199,7 @@ export class OfferDataService {
     }
   }
 
+  private createNewOfferDataWithoutLoginCheck(offer: OfferToAPICreate) {
+    return this.offerService.storeOffer(offer);
+  }
 }
