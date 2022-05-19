@@ -1,6 +1,6 @@
 # Changelog
 
-## [Not Released v0.11.0]
+## [Released v0.11.0]
 
 ## 2022-05-03/ml
 ### added
