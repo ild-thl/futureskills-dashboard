@@ -41,14 +41,6 @@
       "style": "cardImages"
     },
     {
-      "title": "DeepArt",
-      "subtitle": "Bildverfremdung",
-      "text": "Fotos erhalten in den Stil eines Kunstwerks.",
-      "url": "https://deepart.io",
-      "urlText": "deepart.io",
-      "style": "cardImages"
-    },
-    {
       "title": "ThisWordDoesNotExist",
       "subtitle": "Textgenerierung gpt-2",
       "text": "Kreation neuer Wörter.",
@@ -127,6 +119,14 @@
       "url": "https://copilot.github.com/",
       "urlText": "copilot.github.com",
       "style": "cardText"
+    },
+    {
+      "title": "Elicit",
+      "subtitle": "Forschung",
+      "text": "Sucht relevante Papers nach Keywords und fasst Schlüsselinformationen aus diesen zusammen",
+      "url": "https://elicit.org",
+      "urlText": "elicit.org",
+      "style": "cardText"
     }
   ],
   "projectCards": [
@@ -140,7 +140,7 @@
     {
       "title": "OpenAI",
       "text": "Beschäftigt sich mit der Forschung und Entwicklung von KI. Wichtige Projekte: gpt-2, gpt-3, Codex",
-      "url": "https://www.openai.com",
+      "url": "https://openai.com",
       "urlText": "openai.com",
       "style": "cardProject"
     },

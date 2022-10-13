@@ -26,7 +26,7 @@ export const CustomConfig = {
   },
   kiConfig: {
     online: true,
-    linkListDate: '26.04.2022',
+    linkListDate: '13.10.2022',
     mnistPath: 'mnistnumber',
     sentimentPath: {
       en: 'sentiment/en',
